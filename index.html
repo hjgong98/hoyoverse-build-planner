@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hoyoverse Build Planner</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <h1>Character Build Planner</h1>
+    </header>
+
+    <!-- Navigation Buttons -->
+    <nav class="nav-grid">
+      <button data-page="characters">Characters</button>
+      <button data-page="data">Data</button>
+      <button data-page="inventory">Inventory</button>
+      <button data-page="calendar">Calendar</button>
+    </nav>
+
+    <!-- Page Content -->
+    <main id="page-content">
+      <p>Select a tab above to get started!</p>
+    </main>
+
+    <!-- Modal -->
+    <div id="modal" class="modal" style="display: none">
+      <div class="modal-content" id="modal-content"></div>
+    </div>
+
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
