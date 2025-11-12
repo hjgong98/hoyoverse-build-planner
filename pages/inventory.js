@@ -1,10 +1,5 @@
 // pages/inventory.js
 
-// todo list:
-// - add buttons to show only one game inventory at a time
-// - add search bar to filter items
-// - make a separate box for each item and make their quantity editable
-
 import { ASCENSION_MATERIALS } from "../data/ascension-mats.js";
 import {
   addMaterial,
@@ -109,7 +104,7 @@ function render() {
         <button onclick="window.openAddModal()"
                 style="padding: 12px 24px; font-size: 16px; background: #2ecc71; color: white;
                        border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
-          ➕ Add Material
+          Add Material
         </button>
       </div>
     </div>
@@ -269,11 +264,15 @@ window.saveAdd = () => {
   render();
 };
 
-// 🛠️ Helpers
+// Helpers
 function escapeQuotes(str) {
   return str.replace(/'/g, "&#39;").replace(/"/g, "&quot;");
 }
 
 function gameLabel(game) {
-  return { genshin: "Genshin", hsr: "Star Rail", zzz: "Zenless" }[game] || game;
+  return {
+    genshin: "Genshin",
+    hsr: "Honkai Star Rail",
+    zzz: "Zenless Zone Zero",
+  }[game] || game;
 }
