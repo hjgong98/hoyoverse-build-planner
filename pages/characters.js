@@ -4,6 +4,7 @@
 // - edit custom character so that it asks what kind of mats
 // - edit set build goal so that it lets me select a weapon from a list
 // - edit set build goal so that it shows talents names of a specific character
+// - add custom character weapon type
 
 import { addCharacter, loadMyCharacters } from "../saved/my-characters.js";
 import { ALL_CHARACTERS } from "../data/all-characters.js";

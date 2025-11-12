@@ -5,6 +5,7 @@
 // - import data button
 
 import { clearAllSavedData } from "../saved/my-characters.js";
+import { clearAllMaterialData } from "../saved/materials-inventory.js";
 
 export function initDataScene() {
   const content = document.getElementById("page-content");
@@ -89,6 +90,7 @@ export function clearData() {
     )
   ) {
     clearAllSavedData();
+    clearAllMaterialData();
     alert("All data cleared! Starting fresh.");
     window.location.reload();
   }
