@@ -44,6 +44,12 @@ function render() {
   // Flatten all materials
   const allMats = [...ungrouped, ...Object.values(groups).flat()];
 
+  // FILTER: Only show materials with count > 0
+  const materialsToShow = allMats.filter((mat) => {
+    const count = materialsCurrent[mat.name] || 0;
+    return count > 0;
+  });
+
   // Render material grid (responsive flex-wrap)
   const materialGrid = `
     <div style="
@@ -55,7 +61,7 @@ function render() {
       max-width: 100%;
       box-sizing: border-box;">
       ${
-    allMats.map((mat) => {
+    materialsToShow.map((mat) => {
       const count = materialsCurrent[mat.name] || 0;
       return renderMaterialItem(mat, count);
     }).join("")
@@ -92,9 +98,9 @@ function render() {
 
       <!-- Responsive Material Grid -->
       ${
-    allMats.length > 0 ? materialGrid : `
+    materialsToShow.length > 0 ? materialGrid : `
         <p style="text-align: center; color: #888; margin: 20px 0; font-size: 14px;">
-          No materials tracked yet.
+          No materials in inventory. Click "Add Material" to get started!
         </p>
       `
   }
@@ -198,7 +204,7 @@ window.saveEdit = (game, matName) => {
   render();
 };
 
-// ✅ Add Modal (Centered)
+// add modal
 window.openAddModal = () => {
   const inv = materials[currentGame] || {};
   const available = (ASCENSION_MATERIALS[currentGame] || []).filter(
@@ -208,14 +214,14 @@ window.openAddModal = () => {
   const options = available.length > 0
     ? available.map((mat) => `<option value="${mat.name}">${mat.name}</option>`)
       .join("")
-    : `<option disabled>No untracked materials</option>`;
+    : `<option disabled>All materials are already in inventory</option>`;
 
   window.openModal(`
     <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
       <div style="background: #16232b; border-radius: 12px; width: 300px; color: white;
                   border: 2px solid #00ffff; box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);">
         <div style="padding: 20px;">
-          <h3 style="color: #00ffff; margin: 0 0 16px; font-size: 18px; text-align: center;">➕ Add Material</h3>
+          <h3 style="color: #00ffff; margin: 0 0 16px; font-size: 18px; text-align: center;">Add Material</h3>
 
           <div style="margin-bottom: 12px; text-align: left;">
             <strong style="color: #ddd;">Material</strong>
@@ -227,7 +233,7 @@ window.openAddModal = () => {
           <div style="margin-bottom: 16px; text-align: left;">
             <strong style="color: #ddd;">Amount</strong>
             <input id="add-count" type="number" min="1" value="1"
-                   style="width: 100%; padding: 10px; font-size: 14px; text-align: center;
+                   style="width: 75%; padding: 10px; font-size: 14px; text-align: center;
                           background: #0f1a20; color: white; border: 1px solid #3498db; border-radius: 6px;" />
           </div>
 
