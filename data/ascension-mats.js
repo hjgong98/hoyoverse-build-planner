@@ -274,6 +274,12 @@ export const ASCENSION_MATERIALS = {
       tags: ["common", "warrant", 3],
     },
 
+    // prism(maiden), concealed, statuette,
+    // nucleus, chaos(drake), prism(construct),
+    // shell(beast), flower, water, breacher,
+    // watch, fin, hilt, ignited, will, source,
+    // mimesis, shell(weasel), frostnight,
+    // radiant, mistshroud
     // Elite Enemy Drops - Tier 1
     {
       name: "Heavy Horn",
@@ -285,54 +291,136 @@ export const ASCENSION_MATERIALS = {
       img: "/genshin/dead ley line branch.webp",
       tags: ["elite", "branch", 2],
     },
-    { name: "Chaos Device", img: "", tags: ["elite", "machine", 4] },
-    { name: "Mist Grass Pollen", img: "", tags: ["elite", "mist", 4] },
+    {
+      name: "Chaos Device",
+      img: "/genshin/chaos device.webp",
+      tags: ["elite", "chaos_ruin", 2],
+    },
+    {
+      name: "Mist Grass Pollen",
+      img: "mist grass pollen.webp",
+      tags: ["elite", "mist", 2],
+    },
     {
       name: "Hunter's Sacrificial Knife",
-      img: "",
-      tags: ["elite", "knife", 4],
+      img: "/genshin/hunter sacrificial knife.webp",
+      tags: ["elite", "knife", 2],
     },
-    { name: "Fragile Bone Shard", img: "", tags: ["elite", "bone shard", 4] },
-    { name: "Chaos Storage", img: "", tags: ["elite", "chaos_sentinel", 4] },
-    { name: "Dismal Prism", img: "", tags: ["elite", "prism_maiden", 4] },
-    { name: "Concealed Claw", img: "", tags: ["elite", "concealed", 4] },
-    { name: "Gloomy Statuette", img: "", tags: ["elite", "statuette", 4] },
-    { name: "Rift Core", img: "", tags: ["elite", "nucleus", 4] },
-    { name: "Chaos Storage", img: "", tags: ["elite", "chaos_drake", 4] },
-    { name: "Dismal Prism", img: "", tags: ["elite", "prism_construct", 4] },
-    { name: "Perpetual Heart", img: "", tags: ["elite", "heart", 4] },
-    { name: "Smoldering Pearl", img: "", tags: ["elite", "pearl", 4] },
-    { name: "Dew of Repudiation", img: "", tags: ["elite", "dew", 4] },
-    { name: "Storm Beads", img: "", tags: ["elite", "beads", 4] },
-    { name: "Riftborn Regalia", img: "", tags: ["elite", "regalia", 4] },
-    { name: "Dragonheir's False Fin", img: "", tags: ["elite", "fin", 4] },
-    { name: "Runic Fang", img: "", tags: ["elite", "fang", 4] },
-    { name: "Majestic Hooked Beak", img: "", tags: ["elite", "beak", 4] },
-    { name: "Thunderclap Fruitcore", img: "", tags: ["elite", "fruitcore", 4] },
-    { name: "Perpetual Caliber", img: "", tags: ["elite", "caliber", 4] },
     {
-      name: "Light Guiding Tetrahedron",
-      img: "",
-      tags: ["elite", "tetrahedron", 4],
+      name: "Fragile Bone Shard",
+      img: "/genshin/fragile bone shard.png",
+      tags: ["elite", "bone shard", 2],
     },
-    { name: "Pseudo-Stamens", img: "", tags: ["elite", "stamens", 4] },
-    { name: "Quelled Creeper", img: "", tags: ["elite", "creeper", 4] },
-    { name: "Evergloom Ring", img: "", tags: ["elite", "ring", 4] },
     {
-      name: "Water That Failed To Transcend",
-      img: "",
-      tags: ["elite", "water", 4],
+      name: "Chaos Gear",
+      img: "/genshin/chaos gear.webp",
+      tags: ["elite", "chaos_sentinel", 2],
     },
-    { name: "Tourbillon Device", img: "", tags: ["elite", "device", 4] },
     {
-      name: "Artificed Spare Clockwork Component",
-      img: "",
-      tags: ["elite", "component", 4],
+      name: "Dismal Prism",
+      img: "/genshin/dismal prism.webp",
+      tags: ["elite", "prism_maiden", 2],
     },
-    { name: "Fontemer Unihorn", img: "", tags: ["elite", "unihorn", 4] },
-    { name: "Emperor's Resolution", img: "", tags: ["elite", "resolution", 4] },
-    { name: "Cloudseam Scale", img: "", tags: ["elite", "scale", 4] },
-    { name: "Ember of the Fierce Fire", img: "", tags: ["elite", "ember", 4] },
+    {
+      name: "Concealed Claw",
+      img: "/genshin/concealed claw.webp",
+      tags: ["elite", "concealed", 2],
+    },
+    {
+      name: "Gloomy Statuette",
+      img: "/genshin/gloomy statuette.webp",
+      tags: ["elite", "statuette", 2],
+    },
+    {
+      name: "Inactivated Fungal Nucleus",
+      img: "/genshin/inactivated fungal nucleus.webp",
+      tags: ["elite", "nucleus", 2],
+    },
+    {
+      name: "Chaos Storage",
+      img: "/genshin/chaos storage.webp",
+      tags: ["elite", "chaos_drake", 2],
+    },
+    {
+      name: "Damaged Prism",
+      img: "/genshin/damaged prism.webp",
+      tags: ["elite", "prism_construct", 2],
+    },
+    {
+      name: "Desiccated Shell",
+      img: "/genshin/desiccated shell.webp",
+      tags: ["elite", "shell_beast", 2],
+    },
+    {
+      name: "A FLower Yet to Bloom",
+      img: "/genshin/a flower yet to bloom.webp",
+      tags: ["elite", "flower", 2],
+    },
+    {
+      name: "Drop of Tainted Water",
+      img: "/genshin/drop of tainted water.webp",
+      tags: ["elite", "water", 2],
+    },
+    {
+      name: "Rift Core",
+      img: "/genshin/rift core.webp",
+      tags: ["elite", "breacher", 2],
+    },
+    {
+      name: "Old Operative's Watch",
+      img: "/genshin/old operative watch.webp",
+      tags: ["elite", "watch", 2],
+    },
+    {
+      name: "Feathery Fin",
+      img: "/genshin/feathery fin.png",
+      tags: ["elite", "fin", 2],
+    },
+    {
+      name: "Ruined Hilt",
+      img: "/genshin/ruined hilt.webp",
+      tags: ["elite", "hilt", 2],
+    },
+    {
+      name: "Ignited Stone",
+      img: "/genshin/ignited stone.webp",
+      tags: ["elite", "ignited", 2],
+    },
+    {
+      name: "Shard of a Shattered Will",
+      img: "/genshin/shard of a shattered will.webp",
+      tags: ["elite", "will", 2],
+    },
+    {
+      name: "Axis of the Secret Source",
+      img: "/genshin/axis of the secret source.webp",
+      tags: ["elite", "source", 2],
+    },
+    {
+      name: "Refractive Bud",
+      img: "/genshin/refractive bud.webp",
+      tags: ["elite", "mimesis", 2],
+    },
+    {
+      name: "Cold-Cracked Shellshard",
+      img: "/genshin/cold cracked shellshard.webp",
+      tags: ["elite", "shell_weasel", 2],
+    },
+    {
+      name: "Frostnight's Glimmer",
+      img: "/genshin/frostnight glimmer.webp",
+      tags: ["elite", "frostnight", 2],
+    },
+    {
+      name: "Lightless Bone",
+      img: "/genshin/lightless bone.webp",
+      tags: ["elite", "radient", 2],
+    },
+    {
+      name: "Mistshroud Manifestation",
+      img: "/genshin/mistshroud manifestation.webp",
+      tags: ["elite", "mistshroud", 2],
+    },
 
     // Elite Enemy Drops - Tier 2
     {
@@ -345,17 +433,136 @@ export const ASCENSION_MATERIALS = {
       img: "/genshin/dead ley line leaves.webp",
       tags: ["elite", "branch", 3],
     },
-    { name: "Chaos Circuit", img: "", tags: ["elite", "machine", 5] },
-    { name: "Mist Grass", img: "", tags: ["elite", "mist", 5] },
-    { name: "Agent's Sacrificial Knife", img: "", tags: ["elite", "knife", 5] },
-    { name: "Sturdy Bone Shard", img: "", tags: ["elite", "bone shard", 5] },
-    { name: "Chaos Module", img: "", tags: ["elite", "chaos_sentinel", 5] },
-    { name: "Crystal Prism", img: "", tags: ["elite", "prism_maiden", 5] },
-    { name: "Concealed Unguis", img: "", tags: ["elite", "concealed", 5] },
-    { name: "Dark Statuette", img: "", tags: ["elite", "statuette", 5] },
-    { name: "Foreign Synapse", img: "", tags: ["elite", "nucleus", 5] },
-    { name: "Chaos Module", img: "", tags: ["elite", "chaos_drake", 5] },
-    { name: "Crystal Prism", img: "", tags: ["elite", "prism_construct", 5] },
+    {
+      name: "Chaos Circuit",
+      img: "/genshin/chaos circuit.webp",
+      tags: ["elite", "chaos_ruin", 3],
+    },
+    {
+      name: "Mist Grass",
+      img: "/genshin/mist grass.webp",
+      tags: ["elite", "mist", 3],
+    },
+    {
+      name: "Agent's Sacrificial Knife",
+      img: "/genshin/agent sacrificial knife.webp",
+      tags: ["elite", "knife", 3],
+    },
+    {
+      name: "Sturdy Bone Shard",
+      img: "/genshin/sturdy bone shard.webp",
+      tags: ["elite", "bone shard", 3],
+    },
+    {
+      name: "Chaos Axis",
+      img: "/genshin/chaos axis.webp",
+      tags: ["elite", "chaos_sentinel", 3],
+    },
+    {
+      name: "Crystal Prism",
+      img: "/genshin/crystal prism.png",
+      tags: ["elite", "prism_maiden", 3],
+    },
+    {
+      name: "Concealed Unguis",
+      img: "/genshin/concealed unguis.webp",
+      tags: ["elite", "concealed", 3],
+    },
+    {
+      name: "Dark Statuette",
+      img: "/genshin/dark statuette.webp",
+      tags: ["elite", "statuette", 3],
+    },
+    {
+      name: "Dormant Fungal Nucleus",
+      img: "/genshin/dormant fungal nucleus.webp",
+      tags: ["elite", "nucleus", 3],
+    },
+    {
+      name: "Chaos Module",
+      img: "/genshin/chaos module.webp",
+      tags: ["elite", "chaos_drake", 3],
+    },
+    {
+      name: "Turbid Prism",
+      img: "/genshin/turbid prism.webp",
+      tags: ["elite", "prism_construct", 3],
+    },
+    {
+      name: "Sturdy Shell",
+      img: "/genshin/sturdy shell.webp",
+      tags: ["elite", "shell_beast", 3],
+    },
+    {
+      name: "Treasured Flower",
+      img: "/genshin/treasured flower.webp",
+      tags: ["elite", "flower", 3],
+    },
+    {
+      name: "Scoop of Tainted Water",
+      img: "/genshin/scoop of tainted water.webp",
+      tags: ["elite", "water", 3],
+    },
+    {
+      name: "Foreign Synapse",
+      img: "/genshin/foreign synapse.webp",
+      tags: ["elite", "breacher", 3],
+    },
+    {
+      name: "Operative's Standard Pocket Watch",
+      img: "/genshin/operative standard pocket watch.webp",
+      tags: ["elite", "watch", 3],
+    },
+    {
+      name: "Lunar Fin",
+      img: "/genshin/lunar fin.webp",
+      tags: ["elite", "fin", 3],
+    },
+    {
+      name: "Splintered Hilt",
+      img: "/genshin/splintered hilt.webp",
+      tags: ["elite", "hilt", 3],
+    },
+    {
+      name: "Ignited Seed of Life",
+      img: "/genshin/ignted seed of life.webp",
+      tags: ["elite", "ignited", 3],
+    },
+    {
+      name: "Locus of a Clear Will",
+      img: "/genshin/locus of cear will.webp",
+      tags: ["elite", "will", 3],
+    },
+    {
+      name: "Sheath of the Secret Source",
+      img: "/genshin/sheath of the secret source.webp",
+      tags: ["elite", "source", 3],
+    },
+    {
+      name: "Bewildering Broadleaf",
+      img: "/genshin/bewildering broadleaf.webp",
+      tags: ["elite", "mimesis", 3],
+    },
+    {
+      name: "Warm Back-Shell",
+      img: "/genshin/warm back shell.webp",
+      tags: ["elite", "shell_weasel", 3],
+    },
+    {
+      name: "Frostnight's Glow",
+      img: "/genshin/frostnight glow.webp",
+      tags: ["elite", "frostnight", 3],
+    },
+    {
+      name: "Glowing Remains",
+      img: "/genshin/glowing remains.webp",
+      tags: ["elite", "radient", 3],
+    },
+    {
+      name: "Mistshroud Plate",
+      img: "/genshin/mistshroud plate.webp",
+      tags: ["elite", "mistshroud", 3],
+    },
 
     // Elite Enemy Drops - Tier 3
     {
@@ -368,28 +575,135 @@ export const ASCENSION_MATERIALS = {
       img: "/genshin/ley line sprout.webp",
       tags: ["elite", "branch", 4],
     },
-    { name: "Chaos Core", img: "", tags: ["elite", "machine", 6] },
-    { name: "Mist Grass Wick", img: "", tags: ["elite", "mist", 6] },
+    {
+      name: "Chaos Core",
+      img: "/genshin/chaos core.webp",
+      tags: ["elite", "chaos_ruin", 4],
+    },
+    {
+      name: "Mist Grass Wick",
+      img: "/genshin/mist grass wick.webp",
+      tags: ["elite", "mist", 4],
+    },
     {
       name: "Inspector's Sacrificial Knife",
-      img: "",
-      tags: ["elite", "knife", 6],
+      img: "/genshin/inspector sacrificial knife.webp",
+      tags: ["elite", "knife", 4],
     },
     {
       name: "Fossilized Bone Shard",
-      img: "",
-      tags: ["elite", "bone shard", 6],
+      img: "/genshin/fossilized bone shard.webp",
+      tags: ["elite", "bone shard", 4],
     },
-    { name: "Chaos Bolt", img: "", tags: ["elite", "chaos_sentinel", 6] },
-    { name: "Polarizing Prism", img: "", tags: ["elite", "prism_maiden", 6] },
-    { name: "Concealed Talon", img: "", tags: ["elite", "concealed", 6] },
-    { name: "Deathly Statuette", img: "", tags: ["elite", "statuette", 6] },
-    { name: "Alien Life Core", img: "", tags: ["elite", "nucleus", 6] },
-    { name: "Chaos Bolt", img: "", tags: ["elite", "chaos_drake", 6] },
+    {
+      name: "Chaos Occulus",
+      img: "/genshin/chaos occulus.png",
+      tags: ["elite", "chaos_sentinel", 4],
+    },
     {
       name: "Polarizing Prism",
-      img: "",
-      tags: ["elite", "prism_construct", 6],
+      img: "/genshin/polarizing prism.webp",
+      tags: ["elite", "prism_maiden", 4],
+    },
+    {
+      name: "Concealed Talon",
+      img: "/genshin/concealed talon.webp",
+      tags: ["elite", "concealed", 4],
+    },
+    {
+      name: "Deathly Statuette",
+      img: "/genshin/deathly statuette.webp",
+      tags: ["elite", "statuette", 4],
+    },
+    {
+      name: "Robust Fungal Nucleus",
+      img: "/genshin/robust fungal nucleus.webp",
+      tags: ["elite", "nucleus", 4],
+    },
+    {
+      name: "Chaos Bolt",
+      img: "/genshin/chaos bolt.webp",
+      tags: ["elite", "chaos_drake", 4],
+    },
+    {
+      name: "Radiant Prism",
+      img: "/genshin/radiant prism.webp",
+      tags: ["elite", "prism_construct", 4],
+    },
+    {
+      name: "Marked Shell",
+      img: "/genshin/marked shell.webp",
+      tags: ["elite", "shell_beast", 4],
+    },
+    {
+      name: "Wanderer's Blooming Flower",
+      img: "/genshin/wanderer blooming flower.webp",
+      tags: ["elite", "flower", 4],
+    },
+    {
+      name: "Newborn Tainted Hydro Phantasm",
+      img: "/genshin/newborn tainted hydro phantasm.webp",
+      tags: ["elite", "water", 4],
+    },
+    {
+      name: "Alien Life Core",
+      img: "/genshin/alien life core.webp",
+      tags: ["elite", "breacher", 4],
+    },
+    {
+      name: "Operative Constancy",
+      img: "/genshin/operative cconstancy.webp",
+      tags: ["elite", "watch", 4],
+    },
+    {
+      name: "Chasmlight Fin",
+      img: "/genshin/chasmlight fin.png",
+      tags: ["elite", "fin", 4],
+    },
+    {
+      name: "Still-Smoldering Hilt",
+      img: "/genshin/still smoldering hilt.webp",
+      tags: ["elite", "hilt", 4],
+    },
+    {
+      name: "Ignited Seeing Eye",
+      img: "/genshin/ignited seeing eye.webp",
+      tags: ["elite", "ignited", 4],
+    },
+    {
+      name: "Sigil of a Striding Will",
+      img: "/genshin/locus of cear will.webp",
+      tags: ["elite", "will", 4],
+    },
+    {
+      name: "Heart of the Secret Source",
+      img: "/genshin/heart of the secret source.webp",
+      tags: ["elite", "source", 4],
+    },
+    {
+      name: "Illusory Leafcoil",
+      img: "/genshin/illusory leafcoil.webp",
+      tags: ["elite", "mimesis", 4],
+    },
+    {
+      name: "Blazing Prismshell",
+      img: "/genshin/blazing prismshell.webp",
+      tags: ["elite", "shell_weasel", 4],
+    },
+    {
+      name: "Frostnight's Glory",
+      img: "/genshin/frostnight glory.webp",
+      tags: ["elite", "frostnight", 4],
+    },
+    {
+      name: "Radiant Exoskeleton",
+      img: "/genshin/radiant exoskeleton.webp",
+      tags: ["elite", "radient", 4],
+    },
+    {
+      name: "Mistshroud Helmet",
+      img: "/genshin/mistshroud helmet.webp",
+      tags: ["elite", "mistshroud", 4],
     },
 
     // Elemental Gemstones - Tier 1
@@ -410,7 +724,7 @@ export const ASCENSION_MATERIALS = {
     {
       name: "Brilliant Diamond Fragment",
       img: "",
-      tags: ["gem", "elemental", 3],
+      tags: ["gem", "traveler", 3],
     },
     { name: "Agnidus Agate Fragment", img: "", tags: ["gem", "pyro", 3] },
     { name: "Varunada Lazurite Fragment", img: "", tags: ["gem", "hydro", 3] },
@@ -421,28 +735,71 @@ export const ASCENSION_MATERIALS = {
     { name: "Nagadus Emerald Fragment", img: "", tags: ["gem", "dendro", 3] },
 
     // Elemental Gemstones - Tier 3
-    { name: "Brilliant Diamond Chunk", img: "", tags: ["gem", "elemental", 4] },
-    { name: "Agnidus Agate Chunk", img: "", tags: ["gem", "pyro", 4] },
-    { name: "Varunada Lazurite Chunk", img: "", tags: ["gem", "hydro", 4] },
-    { name: "Vajrada Amethyst Chunk", img: "", tags: ["gem", "electro", 4] },
-    { name: "Vayuda Turquoise Chunk", img: "", tags: ["gem", "anemo", 4] },
-    { name: "Shivada Jade Chunk", img: "", tags: ["gem", "cryo", 4] },
-    { name: "Prithiva Topaz Chunk", img: "", tags: ["gem", "geo", 4] },
-    { name: "Nagadus Emerald Chunk", img: "", tags: ["gem", "dendro", 4] },
+    {
+      name: "Brilliant Diamond Chunk",
+      img: "/genshin/",
+      tags: ["gem", "traveler", 4],
+    },
+    { name: "Agnidus Agate Chunk", img: "/genshin/", tags: ["gem", "pyro", 4] },
+    {
+      name: "Varunada Lazurite Chunk",
+      img: "/genshin/",
+      tags: ["gem", "hydro", 4],
+    },
+    {
+      name: "Vajrada Amethyst Chunk",
+      img: "/genshin/",
+      tags: ["gem", "electro", 4],
+    },
+    {
+      name: "Vayuda Turquoise Chunk",
+      img: "/genshin/",
+      tags: ["gem", "anemo", 4],
+    },
+    { name: "Shivada Jade Chunk", img: "/genshin/", tags: ["gem", "cryo", 4] },
+    { name: "Prithiva Topaz Chunk", img: "/genshin/", tags: ["gem", "geo", 4] },
+    {
+      name: "Nagadus Emerald Chunk",
+      img: "/genshin/",
+      tags: ["gem", "dendro", 4],
+    },
 
     // Elemental Gemstones - Tier 4
     {
-      name: "Brilliant Diamond Gemstone",
-      img: "",
-      tags: ["gem", "elemental", 5],
+      name: "Agnidus Agate Gemstone",
+      img: "/genshin/",
+      tags: ["gem", "pyro", 5],
     },
-    { name: "Agnidus Agate Gemstone", img: "", tags: ["gem", "pyro", 5] },
-    { name: "Varunada Lazurite Gemstone", img: "", tags: ["gem", "hydro", 5] },
-    { name: "Vajrada Amethyst Gemstone", img: "", tags: ["gem", "electro", 5] },
-    { name: "Vayuda Turquoise Gemstone", img: "", tags: ["gem", "anemo", 5] },
-    { name: "Shivada Jade Gemstone", img: "", tags: ["gem", "cryo", 5] },
-    { name: "Prithiva Topaz Gemstone", img: "", tags: ["gem", "geo", 5] },
-    { name: "Nagadus Emerald Gemstone", img: "", tags: ["gem", "dendro", 5] },
+    {
+      name: "Varunada Lazurite Gemstone",
+      img: "/genshin/",
+      tags: ["gem", "hydro", 5],
+    },
+    {
+      name: "Vajrada Amethyst Gemstone",
+      img: "/genshin/",
+      tags: ["gem", "electro", 5],
+    },
+    {
+      name: "Vayuda Turquoise Gemstone",
+      img: "/genshin/",
+      tags: ["gem", "anemo", 5],
+    },
+    {
+      name: "Shivada Jade Gemstone",
+      img: "/genshin/",
+      tags: ["gem", "cryo", 5],
+    },
+    {
+      name: "Prithiva Topaz Gemstone",
+      img: "/genshin/",
+      tags: ["gem", "geo", 5],
+    },
+    {
+      name: "Nagadus Emerald Gemstone",
+      img: "/genshin/",
+      tags: ["gem", "dendro", 5],
+    },
 
     // Local Specialties - Mondstadt
     { name: "Calla Lily", img: "", tags: ["local", "mondstadt", 1] },
@@ -498,6 +855,8 @@ export const ASCENSION_MATERIALS = {
 
     // Local Specialties - Natlan
     { name: "Flowfire Flower", img: "", tags: ["local", "natlan", 1] },
+
+    // local Specialities - Nod Krai
 
     // Talent Books - Mondstadt
     {

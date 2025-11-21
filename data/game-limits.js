@@ -1,7 +1,7 @@
 // /data/game-limits.js
 export const GAME_LIMITS = {
   genshin: {
-    maxCharLevel: 90,
+    maxCharLevel: 100,
     maxWeaponLevel: 90,
     talentCount: 3,
     maxTalent: 10,

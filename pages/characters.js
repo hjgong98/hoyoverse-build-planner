@@ -5,9 +5,9 @@
 // - edit set build goal so that it lets me select a weapon from a list
 // - edit set build goal so that it shows talents names of a specific character
 // - add custom character weapon type
-// /pages/characters.js
 
 import { addCharacter, loadMyCharacters } from "../saved/my-characters.js";
+import { renderCharacterDetail } from "../components/character-details.js";
 import { ALL_CHARACTERS } from "../data/all-characters.js";
 import { GAME_LIMITS } from "../data/game-limits.js";
 import { ASCENSION_MATERIALS } from "../data/ascension-mats.js";
@@ -674,8 +674,49 @@ function renderGenshinBuildGoal(
   `);
 }
 
-// Similar functions for HSR and ZZZ build goals would go here...
-// [You would implement renderHSRBuildGoal and renderZZZBuildGoal following the same pattern]
+// Honkai Star rail looks like
+// Customize Character
+// Name: ________
+// Path: {select a path}
+// Type: {Select a type}
+// Rarity: {4 or 5}
+// trace  ascension
+// [ + ]  [   +   ] <- same clickable buttons
+// enemy  weekly
+// [ + ]  [ +  ]
+// same logic - looks in ascension-mats.js in the hsr section, trace mats looks for tags[0] = "trace" and tags[1] = {chosen path}, ascension looks for tags[0] = "ascension" and tags[1] = {chosen type}, enemy looks for tags[0] = "drops", weekly looks for tags[0]="weekly"
+
+// Character Build Goal
+// character name:
+// character level: 1/20 - {chose from 20/20, 20/40. 40/40, 40/50, 50/50, 50/60, 60/60, 60/70, 70/70, 70/80, 80/80}
+// light cone: {select from character's path type in all-weapons.js}
+// light level: 1/20 - {chose from 20/20, 20/40. 40/40, 40/50, 50/50, 50/60, 60/60, 60/70, 70/70, 70/80, 80/80}
+// Basic Attack: 1 - {select 1 - 6}
+// Skill: 1 - {select from 1 - 10}
+// Ultimate: 1 - {select from 1 - 10}
+// Talent: 1 - {select from 1 - 10}
+// [] Bonus Abilities (all 3)  (mark to turn off)
+// [] minor traces [all] (mark to turn on)
+
+// Zenless Zone Zero looks like
+// Customize Character
+// Name: ___________
+// Role: {select a role}
+// type: {Select a type}
+// core skill   weekly
+// [    +   ]   [ +  ]
+// same logic, click buttons, open list of materials imported from ascension-mats.js in the zzz section, core skill looks for tags[0]= "core", weekly looks for tags[0] = "weekly"
+
+// Character Build Goal
+// character name:
+// character level: 1/20 - {chose from 20/20, 20/40. 40/40, 40/50, 50/50, 50/60, 60/60}
+// engine: {select from character's role type in all-weapons.js}
+// enginelevel: 1/20 - {chose from 20/20, 20/40. 40/40, 40/50, 50/50, 50/60, 60/60}
+// Basic attack: 1 - {select 1 - 12}
+// Dodge: 1 - {select 1 - 12}
+// Assist: 1 - {select 1 - 12}
+// Special Attack: 1 - {select 1 - 12}
+// Chain Attack: 1 - {select 1 - 12}
 
 // Step 5: Save the full build (existing function)
 window.saveBuildGoal = (name, game, customMats) => {
