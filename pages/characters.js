@@ -793,3 +793,5 @@ window.saveBuildGoal = (name, game, customMats) => {
   window.closeModal?.();
   renderCharacterList();
 };
+
+window.initCharactersScene = initCharactersScene;

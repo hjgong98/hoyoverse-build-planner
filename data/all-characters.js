@@ -18,7 +18,6 @@ export const ALL_CHARACTERS = {
       weekly: "Dvalin's Sigh",
       icon: "./assets/genshin/Amber Icon.webp",
       picture: "./assets/genshin/Amber Card.webp",
-      additional: { type: "ATK", value: 24 },
     },
     "Barbara": {
       weapon: "Catalyst",
@@ -32,7 +31,6 @@ export const ALL_CHARACTERS = {
       weekly: "Ring of Boreas",
       icon: "./assets/genshin/Barbara Icon.webp",
       picture: "./assets/genshin/Barbara Card.webp",
-      additional: { type: "HP", value: 24 },
     },
     "Beidou": {
       weapon: "Claymore",
@@ -46,7 +44,6 @@ export const ALL_CHARACTERS = {
       weekly: "Dvalin's Sigh",
       icon: "./assets/genshin/Beidou Icon.webp",
       picture: "./assets/genshin/Beidou Card.webp",
-      additional: { type: "Electro DMG Bonus", value: 24 },
     },
     "Bennett": {
       weapon: "Sword",
@@ -60,7 +57,6 @@ export const ALL_CHARACTERS = {
       weekly: "Dvalin's Plume",
       icon: "./assets/genshin/Bennett Icon.webp",
       picture: "./assets/genshin/Bennett Card.webp",
-      additional: { type: "Energy Recharge", value: 26.8 },
     },
     "Chongyun": {
       weapon: "Claymore",
@@ -74,7 +70,6 @@ export const ALL_CHARACTERS = {
       weekly: "Dvalin's Sigh",
       icon: "./assets/genshin/Chongyun Icon.webp",
       picture: "./assets/genshin/Chongyun Card.webp",
-      additional: { type: "ATK", value: 24 },
     },
     "Diluc": {
       weapon: "Claymore",
@@ -88,7 +83,6 @@ export const ALL_CHARACTERS = {
       weekly: "Dvalin's Plume",
       icon: "./assets/genshin/Diluc Icon.webp",
       picture: "./assets/genshin/Diluc Card.webp",
-      additional: { type: "CRIT RATE", value: 19.2 },
     },
     "Fischl": {
       weapon: "Bow",
@@ -102,7 +96,6 @@ export const ALL_CHARACTERS = {
       weekly: "Spirit Locket of Boreas",
       icon: "./assets/genshin/Fischl Icon.webp",
       picture: "./assets/genshin/Fischl Card.webp",
-      additional: { type: "ATK", value: 24 },
     },
     "Jean": {
       weapon: "Sword",
@@ -116,7 +109,6 @@ export const ALL_CHARACTERS = {
       weekly: "Dvalin's Plume",
       icon: "./assets/genshin/Jean Icon.webp",
       picture: "./assets/genshin/Jean Card.webp",
-      additional: { type: "Healing Bonus", value: 22 },
     },
     "Kaeya": {
       weapon: "Sword",
@@ -130,7 +122,6 @@ export const ALL_CHARACTERS = {
       weekly: "Spirit Locket of Boreas",
       icon: "./assets/genshin/Kaeya Icon.webp",
       picture: "./assets/genshin/Kaeya Card.webp",
-      additional: { type: "Energy Recharge", value: 26.8 },
     },
     "Keqing": {
       weapon: "Sword",
@@ -144,7 +135,6 @@ export const ALL_CHARACTERS = {
       weekly: "Ring of Boreas",
       icon: "./assets/genshin/Keqing Icon.webp",
       picture: "./assets/genshin/Keqing Card.webp",
-      additional: { type: "CRIT DMG", value: 38.4 },
     },
     "Lisa": {
       weapon: "Catalyst",
@@ -158,7 +148,6 @@ export const ALL_CHARACTERS = {
       weekly: "Dvalin's Claw",
       icon: "./assets/genshin/Lisa Icon.webp",
       picture: "./assets/genshin/Lisa Card.webp",
-      additional: { type: "Elemental Mastery", value: 96 },
     },
     "Mona": {
       weapon: "Catalyst",
@@ -172,7 +161,6 @@ export const ALL_CHARACTERS = {
       weekly: "Ring of Boreas",
       icon: "./assets/genshin/Mona Icon.webp",
       picture: "./assets/genshin/Mona Card.webp",
-      additional: { type: "Energy Recharge", value: 32 },
     },
     "Ningguang": {
       weapon: "Catalyst",
@@ -186,7 +174,6 @@ export const ALL_CHARACTERS = {
       weekly: "Spirit Locket of Boreas",
       icon: "./assets/genshin/Ningguang Icon.webp",
       picture: "./assets/genshin/Ningguang Card.webp",
-      additional: { type: "Geo DMG Bonus", value: 24 },
     },
     "Noelle": {
       weapon: "Claymore",
@@ -200,7 +187,6 @@ export const ALL_CHARACTERS = {
       weekly: "Dvalin's Claw",
       icon: "./assets/genshin/Noelle Icon.webp",
       picture: "./assets/genshin/Noelle Card.webp",
-      additional: { type: "DEF", value: 30 },
     },
     "Qiqi": {
       weapon: "Sword",
@@ -214,7 +200,6 @@ export const ALL_CHARACTERS = {
       weekly: "Tail of Boreas",
       icon: "./assets/genshin/Qiqi Icon.webp",
       picture: "./assets/genshin/Qiqi Card.webp",
-      additional: { type: "Healing Bonus", value: 22 },
     },
     "Razor": {
       weapon: "Claymore",
@@ -228,7 +213,6 @@ export const ALL_CHARACTERS = {
       weekly: "Dvalin's Claw",
       icon: "./assets/genshin/Razor Icon.webp",
       picture: "./assets/genshin/Razor Card.webp",
-      additional: { type: "Physical DMG Bonus", value: 30 },
     },
     "Sucrose": {
       weapon: "Catalyst",
@@ -242,7 +226,6 @@ export const ALL_CHARACTERS = {
       weekly: "Spirit Locket of Boreas",
       icon: "./assets/genshin/Sucrose Icon.webp",
       picture: "./assets/genshin/Sucrose Card.webp",
-      additional: { type: "Anemo DMG Bonus", value: 24 },
     },
     "Traveler (Anemo)": {
       weapon: "Sword",
@@ -256,7 +239,6 @@ export const ALL_CHARACTERS = {
       weekly: "Adaptive",
       icon: "./assets/genshin/Traveler Icon.webp",
       picture: "./assets/genshin/Traveler Card.webp",
-      additional: { type: "ATK", value: 24 },
     },
     "Traveler (Geo)": {
       weapon: "Sword",
@@ -270,7 +252,6 @@ export const ALL_CHARACTERS = {
       weekly: "Adaptive",
       icon: "./assets/genshin/Traveler Icon.webp",
       picture: "./assets/genshin/Traveler Card.webp",
-      additional: { type: "ATK", value: 24 },
     },
     "Traveler (Electro)": {
       weapon: "Sword",
@@ -284,7 +265,6 @@ export const ALL_CHARACTERS = {
       weekly: "Adaptive",
       icon: "./assets/genshin/Traveler Icon.webp",
       picture: "./assets/genshin/Traveler Card.webp",
-      additional: { type: "ATK", value: 24 },
     },
     "Traveler (Dendro)": {
       weapon: "Sword",
@@ -298,7 +278,6 @@ export const ALL_CHARACTERS = {
       weekly: "Adaptive",
       icon: "./assets/genshin/Traveler Icon.webp",
       picture: "./assets/genshin/Traveler Card.webp",
-      additional: { type: "ATK", value: 24 },
     },
     "Traveler (Hydro)": {
       weapon: "Sword",
@@ -312,7 +291,6 @@ export const ALL_CHARACTERS = {
       weekly: "Adaptive",
       icon: "./assets/genshin/Traveler Icon.webp",
       picture: "./assets/genshin/Traveler Card.webp",
-      additional: { type: "ATK", value: 24 },
     },
     "Traveler (Pyro)": {
       weapon: "Sword",
@@ -326,7 +304,6 @@ export const ALL_CHARACTERS = {
       weekly: "Adaptive",
       icon: "./assets/genshin/Traveler Icon.webp",
       picture: "./assets/genshin/Traveler Card.webp",
-      additional: { type: "ATK", value: 24 },
     },
     "Venti": {
       weapon: "Bow",
@@ -340,7 +317,6 @@ export const ALL_CHARACTERS = {
       weekly: "Tail of Boreas",
       icon: "./assets/genshin/Venti Icon.webp",
       picture: "./assets/genshin/Venti Card.webp",
-      additional: { type: "Energy Recharge", value: 32 },
     },
     "Xiangling": {
       weapon: "Polearm",
@@ -354,7 +330,6 @@ export const ALL_CHARACTERS = {
       weekly: "Dvalin's Claw",
       icon: "./assets/genshin/Xiangling Icon.webp",
       picture: "./assets/genshin/Xiangling Card.webp",
-      additional: { type: "Elemental Mastery", value: 96 },
     },
     "Xingqiu": {
       weapon: "Sword",
@@ -368,7 +343,6 @@ export const ALL_CHARACTERS = {
       weekly: "Tail of Boreas",
       icon: "./assets/genshin/Xingqiu Icon.webp",
       picture: "./assets/genshin/Xingqiu Card.webp",
-      additional: { type: "ATK", value: 24 },
     },
     "Klee": {
       weapon: "Catalyst",
@@ -382,7 +356,6 @@ export const ALL_CHARACTERS = {
       weekly: "Ring of Boreas",
       icon: "./assets/genshin/Klee Icon.webp",
       picture: "./assets/genshin/Klee Card.webp",
-      additional: { type: "Pyro DMG Bonus", value: 28.8 },
     },
     "Diona": {
       weapon: "Bow",
@@ -396,7 +369,6 @@ export const ALL_CHARACTERS = {
       weekly: "Shard of a Foul Legacy",
       icon: "./assets/genshin/Diona Icon.webp",
       picture: "./assets/genshin/Diona Card.webp",
-      additional: { type: "Cryo DMG Bonus", value: 12 },
     },
     "Tartaglia": {
       weapon: "Bow",
@@ -410,7 +382,6 @@ export const ALL_CHARACTERS = {
       weekly: "Shard of a Foul Legacy",
       icon: "./assets/genshin/Tartaglia Icon.webp",
       picture: "./assets/genshin/Tartaglia Card.webp",
-      additional: { type: "Hydro DMG Bonus", value: 28.8 },
     },
     "Xinyan": {
       weapon: "Claymore",
@@ -424,7 +395,6 @@ export const ALL_CHARACTERS = {
       weekly: "Tusk of Monoceros Caeli",
       icon: "./assets/genshin/Xinyan Icon.webp",
       picture: "./assets/genshin/Xinyan Card.webp",
-      additional: { type: "ATK", value: 24 },
     },
     "Zhongli": {
       weapon: "Polearm",
@@ -438,7 +408,6 @@ export const ALL_CHARACTERS = {
       weekly: "Tusk of Monoceros Caeli",
       icon: "./assets/genshin/Zhongli Icon.webp",
       picture: "./assets/genshin/Zhongli Card.webp",
-      additional: { type: "Geo DMG Bonus", value: 28.8 },
     },
     "Albedo": {
       weapon: "Sword",
@@ -452,7 +421,6 @@ export const ALL_CHARACTERS = {
       weekly: "Tusk of Monoceros Caeli",
       icon: "./assets/genshin/Albedo Icon.webp",
       picture: "./assets/genshin/Albedo Card.webp",
-      additional: { type: "Geo DMG Bonus", value: 28.8 },
     },
     "Ganyu": {
       weapon: "Bow",
@@ -466,7 +434,6 @@ export const ALL_CHARACTERS = {
       weekly: "Shadow of the Warrior",
       icon: "./assets/genshin/Ganyu Icon.webp",
       picture: "./assets/genshin/Ganyu Card.webp",
-      additional: { type: "CRIT DMG", value: 38.4 },
     },
     "Xiao": {
       weapon: "Polearm",
@@ -480,7 +447,6 @@ export const ALL_CHARACTERS = {
       weekly: "Shadow of the Warrior",
       icon: "./assets/genshin/Xiao Icon.webp",
       picture: "./assets/genshin/Xiao Card.webp",
-      additional: { type: "CRIT RATE", value: 19.2 },
     },
     "Hu Tao": {
       weapon: "Polearm",
@@ -494,7 +460,6 @@ export const ALL_CHARACTERS = {
       weekly: "Shard of a Foul Legacy",
       icon: "./assets/genshin/Hu Tao Icon.webp",
       picture: "./assets/genshin/Hu Tao Card.webp",
-      additional: { type: "CRIT DMG", value: 38.4 },
     },
     "Rosaria": {
       weapon: "Polearm",
@@ -508,7 +473,6 @@ export const ALL_CHARACTERS = {
       weekly: "Shadow of the Warrior",
       icon: "./assets/genshin/Rosaria Icon.webp",
       picture: "./assets/genshin/Rosaria Card.webp",
-      additional: { type: "ATK", value: 24 },
     },
     "Yanfei": {
       weapon: "Catalyst",
@@ -522,7 +486,6 @@ export const ALL_CHARACTERS = {
       weekly: "Bloodjade Branch",
       icon: "./assets/genshin/Yanfei Icon.webp",
       picture: "./assets/genshin/Yanfei Card.webp",
-      additional: { type: "Pyro DMG Bonus", value: 24 },
     },
     "Eula": {
       weapon: "Claymore",
@@ -536,7 +499,6 @@ export const ALL_CHARACTERS = {
       weekly: "Dragon Lord's Crown",
       icon: "./assets/genshin/Eula Icon.webp",
       picture: "./assets/genshin/Eula Card.webp",
-      additional: { type: "CRIT DMG", value: 38.4 },
     },
     "Kaedehara Kazuha": {
       weapon: "Sword",
@@ -550,7 +512,6 @@ export const ALL_CHARACTERS = {
       weekly: "Gilded Scale",
       icon: "./assets/genshin/Kaedehara Kazuha Icon.webp",
       picture: "./assets/genshin/Kaedehara Kazuha Card.webp",
-      additional: { type: "Elemental Mastery", value: 115.2 },
     },
     "Kamisato Ayaka": {
       weapon: "Sword",
@@ -564,7 +525,6 @@ export const ALL_CHARACTERS = {
       weekly: "Bloodjade Branch",
       icon: "./assets/genshin/Kamisato Ayaka Icon.webp",
       picture: "./assets/genshin/Kamisato Ayaka Card.webp",
-      additional: { type: "CRIT DMG", value: 38.4 },
     },
     "Sayu": {
       weapon: "Claymore",
@@ -578,7 +538,6 @@ export const ALL_CHARACTERS = {
       weekly: "Gilded Scale",
       icon: "./assets/genshin/Sayu Icon.webp",
       picture: "./assets/genshin/Sayu Card.webp",
-      additional: { type: "Elemental Mastery", value: 96 },
     },
     "Yoimiya": {
       weapon: "Bow",
@@ -592,7 +551,6 @@ export const ALL_CHARACTERS = {
       weekly: "Dragon Lord's Crown",
       icon: "./assets/genshin/Yoimiya Icon.webp",
       picture: "./assets/genshin/Yoimiya Card.webp",
-      additional: { type: "CRIT RATE", value: 19.2 },
     },
     "Aloy": {
       weapon: "Bow",
@@ -606,7 +564,6 @@ export const ALL_CHARACTERS = {
       weekly: "Molten Moment",
       icon: "./assets/genshin/Aloy Icon.webp",
       picture: "./assets/genshin/Aloy Card.webp",
-      additional: { type: "Cryo DMG Bonus", value: 28.8 },
     },
     "Kujou Sara": {
       weapon: "Bow",
@@ -620,7 +577,6 @@ export const ALL_CHARACTERS = {
       weekly: "Ashen Heart",
       icon: "./assets/genshin/Kujou Sara Icon.webp",
       picture: "./assets/genshin/Kujou Sara Card.webp",
-      additional: { type: "ATK", value: 24 },
     },
     "Raiden Shogun": {
       weapon: "Polearm",
@@ -634,7 +590,6 @@ export const ALL_CHARACTERS = {
       weekly: "Molten Moment",
       icon: "./assets/genshin/Raiden Shogun Icon.webp",
       picture: "./assets/genshin/Raiden Shogun Card.webp",
-      additional: { type: "Energy Recharge", value: 32 },
     },
     "Sangonomiya Kokomi": {
       weapon: "Catalyst",
@@ -648,7 +603,6 @@ export const ALL_CHARACTERS = {
       weekly: "Hellfire Butterfly",
       icon: "./assets/genshin/Sangonomiya Kokomi Icon.webp",
       picture: "./assets/genshin/Sangonomiya Kokomi Card.webp",
-      additional: { type: "Hydro DMG Bonus", value: 28.8 },
     },
     "Thoma": {
       weapon: "Polearm",
@@ -662,7 +616,6 @@ export const ALL_CHARACTERS = {
       weekly: "Hellfire Butterfly",
       icon: "./assets/genshin/Thoma Icon.webp",
       picture: "./assets/genshin/Thoma Card.webp",
-      additional: { type: "ATK", value: 24 },
     },
     "Arataki Itto": {
       weapon: "Claymore",
@@ -676,7 +629,6 @@ export const ALL_CHARACTERS = {
       weekly: "Ashen Heart",
       icon: "./assets/genshin/Arataki Itto Icon.webp",
       picture: "./assets/genshin/Arataki Itto Card.webp",
-      additional: { type: "CRIT RATE", value: 19.2 },
     },
     "Gorou": {
       weapon: "Bow",
@@ -690,7 +642,9 @@ export const ALL_CHARACTERS = {
       weekly: "Molten Moment",
       icon: "./assets/genshin/Gorou Icon.webp",
       picture: "./assets/genshin/Gorou Card.webp",
-      additional: { type: "Geo DMG Bonus", value: 24 },
+      normal: "Ripping Fang Fletching",
+      skill: "Inuzaka All-Round Defense",
+      burst: "Juuga: Forward Unto Victory",
     },
     "Shenhe": {
       weapon: "Polearm",
@@ -704,7 +658,6 @@ export const ALL_CHARACTERS = {
       weekly: "Hellfire Butterfly",
       icon: "./assets/genshin/Shenhe Icon.webp",
       picture: "./assets/genshin/Shenhe Card.webp",
-      additional: { type: "ATK", value: 28.8 },
     },
     "Yun Jin": {
       weapon: "Polearm",
@@ -718,7 +671,6 @@ export const ALL_CHARACTERS = {
       weekly: "Ashen Heart",
       icon: "./assets/genshin/Yun Jin Icon.webp",
       picture: "./assets/genshin/Yun Jin Card.webp",
-      additional: { type: "Energy Recharge", value: 26.8 },
     },
     "Yae Miko": {
       weapon: "Catalyst",
@@ -732,7 +684,6 @@ export const ALL_CHARACTERS = {
       weekly: "The Meaning of Aeons",
       icon: "./assets/genshin/Yae Miko Icon.webp",
       picture: "./assets/genshin/Yae Miko Card.webp",
-      additional: { type: "CRIT RATE", value: 19.2 },
     },
     "Kamisato Ayato": {
       weapon: "Sword",
@@ -746,7 +697,6 @@ export const ALL_CHARACTERS = {
       weekly: "Mudra of the Malefic General",
       icon: "./assets/genshin/Kamisato Ayato Icon.webp",
       picture: "./assets/genshin/Kamisato Ayato Card.webp",
-      additional: { type: "CRIT DMG", value: 38.4 },
     },
     "Yelan": {
       weapon: "Bow",
@@ -760,7 +710,6 @@ export const ALL_CHARACTERS = {
       weekly: "Gilded Scale",
       icon: "./assets/genshin/Yelan Icon.webp",
       picture: "./assets/genshin/Yelan Card.webp",
-      additional: { type: "CRIT RATE", value: 19.2 },
     },
     "Kuki Shinobu": {
       weapon: "Sword",
@@ -774,7 +723,6 @@ export const ALL_CHARACTERS = {
       weekly: "Tears of the Calamitous God",
       icon: "./assets/genshin/Kuki Shinobu Icon.webp",
       picture: "./assets/genshin/Kuki Shinobu Card.webp",
-      additional: { type: "HP", value: 24 },
     },
     "Shikanoin Heizou": {
       weapon: "Catalyst",
@@ -788,7 +736,6 @@ export const ALL_CHARACTERS = {
       weekly: "The Meaning of Aeons",
       icon: "./assets/genshin/Shikanoin Heizou Icon.webp",
       picture: "./assets/genshin/Shikanoin Heizou Card.webp",
-      additional: { type: "Anemo DMG Bonus", value: 24 },
     },
     "Collei": {
       weapon: "Bow",
@@ -802,7 +749,6 @@ export const ALL_CHARACTERS = {
       weekly: "Tears of the Calamitous God",
       icon: "./assets/genshin/Collei Icon.webp",
       picture: "./assets/genshin/Collei Card.webp",
-      additional: { type: "ATK", value: 24 },
     },
     "Tighnari": {
       weapon: "Bow",
@@ -816,7 +762,6 @@ export const ALL_CHARACTERS = {
       weekly: "The Meaning of Aeons",
       icon: "./assets/genshin/Tighnari Icon.webp",
       picture: "./assets/genshin/Tighnari Card.webp",
-      additional: { type: "Dendro DMG Bonus", value: 28.8 },
     },
     "Dori": {
       weapon: "Claymore",
@@ -830,7 +775,6 @@ export const ALL_CHARACTERS = {
       weekly: "Bloodjade Branch",
       icon: "./assets/genshin/Dori Icon.webp",
       picture: "./assets/genshin/Dori Card.webp",
-      additional: { type: "HP", value: 24 },
     },
     "Candace": {
       weapon: "Polearm",
@@ -844,7 +788,6 @@ export const ALL_CHARACTERS = {
       weekly: "Tears of the Calamitous God",
       icon: "./assets/genshin/Candace Icon.webp",
       picture: "./assets/genshin/Candace Card.webp",
-      additional: { type: "HP", value: 24 },
     },
     "Cyno": {
       weapon: "Polearm",
@@ -858,7 +801,6 @@ export const ALL_CHARACTERS = {
       weekly: "Mudra of the Malefic General",
       icon: "./assets/genshin/Cyno Icon.webp",
       picture: "./assets/genshin/Cyno Card.webp",
-      additional: { type: "CRIT DMG", value: 38.4 },
     },
     "Nilou": {
       weapon: "Sword",
@@ -872,7 +814,6 @@ export const ALL_CHARACTERS = {
       weekly: "Tears of the Calamitous God",
       icon: "./assets/genshin/Nilou Icon.webp",
       picture: "./assets/genshin/Nilou Card.webp",
-      additional: { type: "HP", value: 28.8 },
     },
     "Nahida": {
       weapon: "Catalyst",
@@ -886,7 +827,6 @@ export const ALL_CHARACTERS = {
       weekly: "Puppet Strings",
       icon: "./assets/genshin/Nahida Icon.webp",
       picture: "./assets/genshin/Nahida Card.webp",
-      additional: { type: "Elemental Mastery", value: 115.2 },
     },
     "Layla": {
       weapon: "Sword",
@@ -900,7 +840,6 @@ export const ALL_CHARACTERS = {
       weekly: "Mirror of Mushin",
       icon: "./assets/genshin/Layla Icon.webp",
       picture: "./assets/genshin/Layla Card.webp",
-      additional: { type: "HP", value: 24 },
     },
     "Faruzan": {
       weapon: "Bow",
@@ -914,7 +853,6 @@ export const ALL_CHARACTERS = {
       weekly: "Puppet Strings",
       icon: "./assets/genshin/Faruzan Icon.webp",
       picture: "./assets/genshin/Faruzan Card.webp",
-      additional: { type: "ATK", value: 24 },
     },
     "Wanderer": {
       weapon: "Catalyst",
@@ -928,7 +866,6 @@ export const ALL_CHARACTERS = {
       weekly: "Daka's Bell",
       icon: "./assets/genshin/Wanderer Icon.webp",
       picture: "./assets/genshin/Wanderer Card.webp",
-      additional: { type: "CRIT RATE", value: 19.2 },
     },
     "Alhaitham": {
       weapon: "Sword",
@@ -942,7 +879,6 @@ export const ALL_CHARACTERS = {
       weekly: "Mirror of Mushin",
       icon: "./assets/genshin/Alhaitham Icon.webp",
       picture: "./assets/genshin/Alhaitham Card.webp",
-      additional: { type: "Dendro DMG Bonus", value: 28.8 },
     },
     "Yaoyao": {
       weapon: "Polearm",
@@ -956,7 +892,6 @@ export const ALL_CHARACTERS = {
       weekly: "Daka's Bell",
       icon: "./assets/genshin/Yaoyao Icon.webp",
       picture: "./assets/genshin/Yaoyao Card.webp",
-      additional: { type: "HP", value: 24 },
     },
     "Dehya": {
       weapon: "Claymore",
@@ -970,7 +905,6 @@ export const ALL_CHARACTERS = {
       weekly: "Puppet Strings",
       icon: "./assets/genshin/Dehya Icon.webp",
       picture: "./assets/genshin/Dehya Card.webp",
-      additional: { type: "HP", value: 28.8 },
     },
     "Mika": {
       weapon: "Polearm",
@@ -984,7 +918,6 @@ export const ALL_CHARACTERS = {
       weekly: "Mirror of Mushin",
       icon: "./assets/genshin/Mika Icon.webp",
       picture: "./assets/genshin/Mika Card.webp",
-      additional: { type: "HP", value: 24 },
     },
     "Baizhu": {
       weapon: "Catalyst",
@@ -998,7 +931,6 @@ export const ALL_CHARACTERS = {
       weekly: "Worldspan Fern",
       icon: "./assets/genshin/Baizhu Icon.webp",
       picture: "./assets/genshin/Baizhu Card.webp",
-      additional: { type: "HP", value: 28.8 },
     },
     "Kaveh": {
       weapon: "Claymore",
@@ -1012,7 +944,6 @@ export const ALL_CHARACTERS = {
       weekly: "Primordial Greenbloom",
       icon: "./assets/genshin/Kaveh Icon.webp",
       picture: "./assets/genshin/Kaveh Card.webp",
-      additional: { type: "Elemental Mastery", value: 96 },
     },
     "Kirara": {
       weapon: "Sword",
@@ -1026,7 +957,6 @@ export const ALL_CHARACTERS = {
       weekly: "Everamber",
       icon: "./assets/genshin/Kirara Icon.webp",
       picture: "./assets/genshin/Kirara Card.webp",
-      additional: { type: "HP", value: 24 },
     },
     "Lynette": {
       weapon: "Sword",
@@ -1040,7 +970,6 @@ export const ALL_CHARACTERS = {
       weekly: "Everamber",
       icon: "./assets/genshin/Lynette Icon.webp",
       picture: "./assets/genshin/Lynette Card.webp",
-      additional: { type: "Anemo DMG Bonus", value: 24 },
     },
     "Lyney": {
       weapon: "Bow",
@@ -1054,7 +983,6 @@ export const ALL_CHARACTERS = {
       weekly: "Primordial Greenbloom",
       icon: "./assets/genshin/Lyney Icon.webp",
       picture: "./assets/genshin/Lyney Card.webp",
-      additional: { type: "CRIT RATE", value: 19.2 },
     },
     "Freminet": {
       weapon: "Claymore",
@@ -1068,7 +996,6 @@ export const ALL_CHARACTERS = {
       weekly: "Worldspan Fern",
       icon: "./assets/genshin/Freminet Icon.webp",
       picture: "./assets/genshin/Freminet Card.webp",
-      additional: { type: "ATK", value: 24 },
     },
     "Neuvillette": {
       weapon: "Catalyst",
@@ -1082,7 +1009,6 @@ export const ALL_CHARACTERS = {
       weekly: "Everamber",
       icon: "./assets/genshin/Neuvillette Icon.webp",
       picture: "./assets/genshin/Neuvillette Card.webp",
-      additional: { type: "CRIT DMG", value: 38.4 },
     },
     "Wriothesley": {
       weapon: "Catalyst",
@@ -1096,7 +1022,6 @@ export const ALL_CHARACTERS = {
       weekly: "Primor­dial Green­bloom",
       icon: "./assets/genshin/Wriothesley Icon.webp",
       picture: "./assets/genshin/Wriothesley Card.webp",
-      additional: { type: "CRIT DMG", value: 38.4 },
     },
     "Charlotte": {
       weapon: "Catalyst",
@@ -1110,7 +1035,6 @@ export const ALL_CHARACTERS = {
       weekly: "Light­less Silk String",
       icon: "./assets/genshin/Charlotte Icon.webp",
       picture: "./assets/genshin/Charlotte Card.webp",
-      additional: { type: "ATK", value: 24 },
     },
     "Furina": {
       weapon: "Sword",
@@ -1124,7 +1048,6 @@ export const ALL_CHARACTERS = {
       weekly: "Lightless Mass",
       icon: "./assets/genshin/Furina Icon.webp",
       picture: "./assets/genshin/Furina Card.webp",
-      additional: { type: "CRIT RATE", value: 19.2 },
     },
     "Navia": {
       weapon: "Claymore",
@@ -1138,7 +1061,6 @@ export const ALL_CHARACTERS = {
       weekly: "Light­less Silk String",
       icon: "./assets/genshin/Navia Icon.webp",
       picture: "./assets/genshin/Navia Card.webp",
-      additional: { type: "CRIT DMG", value: 38.4 },
     },
     "Chevreuse": {
       weapon: "Polearm",
@@ -1152,7 +1074,6 @@ export const ALL_CHARACTERS = {
       weekly: "Light­less Eye of the Mael­strom",
       icon: "./assets/genshin/Chevreuse Icon.webp",
       picture: "./assets/genshin/Chevreuse Card.webp",
-      additional: { type: "HP", value: 24 },
     },
     "Gaming": {
       weapon: "Claymore",
@@ -1166,7 +1087,6 @@ export const ALL_CHARACTERS = {
       weekly: "Lightless Mass",
       icon: "./assets/genshin/Gaming Icon.webp",
       picture: "./assets/genshin/Gaming Card.webp",
-      additional: { type: "ATK", value: 24 },
     },
     "Xianyun": {
       weapon: "Catalyst",
@@ -1180,7 +1100,6 @@ export const ALL_CHARACTERS = {
       weekly: "Light­less Eye of the Mael­strom",
       icon: "./assets/genshin/Xianyun Icon.webp",
       picture: "./assets/genshin/Xianyun Card.webp",
-      additional: { type: "ATK", value: 28.8 },
     },
     "Chiori": {
       weapon: "Sword",
@@ -1194,7 +1113,6 @@ export const ALL_CHARACTERS = {
       weekly: "Lightless Silk String",
       icon: "./assets/genshin/Chiori Icon.webp",
       picture: "./assets/genshin/Chiori Card.webp",
-      additional: { type: "CRIT RATE", value: 19.2 },
     },
     "Arlecchino": {
       weapon: "Polearm",
@@ -1208,7 +1126,6 @@ export const ALL_CHARACTERS = {
       weekly: "Fading Candle",
       icon: "./assets/genshin/Arlecchino Icon.webp",
       picture: "./assets/genshin/Arlecchino Card.webp",
-      additional: { type: "CRIT DMG", value: 38.4 },
     },
     "Clorinde": {
       weapon: "Sword",
@@ -1222,7 +1139,6 @@ export const ALL_CHARACTERS = {
       weekly: "Everamber",
       icon: "./assets/genshin/Clorinde Icon.webp",
       picture: "./assets/genshin/Clorinde Card.webp",
-      additional: { type: "CRIT RATE", value: 19.2 },
     },
     "Sethos": {
       weapon: "Bow",
@@ -1236,7 +1152,6 @@ export const ALL_CHARACTERS = {
       weekly: "Daka's Bell",
       icon: "./assets/genshin/Sethos Icon.webp",
       picture: "./assets/genshin/Sethos Card.webp",
-      additional: { type: "Elemental Mastery", value: 96 },
     },
     "Sigewinne": {
       weapon: "Bow",
@@ -1250,7 +1165,6 @@ export const ALL_CHARACTERS = {
       weekly: "Lightless Eye of the Maelstrom",
       icon: "./assets/genshin/Sigewinne Icon.webp",
       picture: "./assets/genshin/Sigewinne Card.webp",
-      additional: { type: "HP", value: 28.8 },
     },
     "Emilie": {
       weapon: "Polearm",
@@ -1264,7 +1178,6 @@ export const ALL_CHARACTERS = {
       weekly: "Silken Feather",
       icon: "./assets/genshin/Emilie Icon.webp",
       picture: "./assets/genshin/Emilie Card.webp",
-      additional: { type: "CRIT DMG", value: 38.4 },
     },
     "Kachina": {
       weapon: "Polearm",
@@ -1278,7 +1191,6 @@ export const ALL_CHARACTERS = {
       weekly: "Fading Candle",
       icon: "./assets/genshin/Kachina Icon.webp",
       picture: "./assets/genshin/Kachina Card.webp",
-      additional: { type: "Geo DMG Bonus", value: 24 },
     },
     "Mualani": {
       weapon: "Catalyst",
@@ -1292,7 +1204,6 @@ export const ALL_CHARACTERS = {
       weekly: "Lightless Mass",
       icon: "./assets/genshin/Mualani Icon.webp",
       picture: "./assets/genshin/Mualani Card.webp",
-      additional: { type: "CRIT RATE", value: 19.2 },
     },
     "Kinich": {
       weapon: "Claymore",
@@ -1306,7 +1217,6 @@ export const ALL_CHARACTERS = {
       weekly: "Denial and Judgement",
       icon: "./assets/genshin/Kinich Icon.webp",
       picture: "./assets/genshin/Kinich Card.webp",
-      additional: { type: "CRIT DMG", value: 38.8 },
     },
     "Xilonen": {
       weapon: "Sword",
@@ -1320,7 +1230,6 @@ export const ALL_CHARACTERS = {
       weekly: "Mirror of Mushin",
       icon: "./assets/genshin/Xilonen Icon.webp",
       picture: "./assets/genshin/Xilonen Card.webp",
-      additional: { type: "DEF", value: 36 },
     },
     "Chasca": {
       weapon: "Bow",
@@ -1334,7 +1243,6 @@ export const ALL_CHARACTERS = {
       weekly: "Silken Feather",
       icon: "./assets/genshin/Chasca Icon.webp",
       picture: "./assets/genshin/Chasca Card.webp",
-      additional: { type: "CRIT RATE", value: 19.2 },
     },
     "Ororun": {
       weapon: "Bow",
@@ -1348,7 +1256,6 @@ export const ALL_CHARACTERS = {
       weekly: "Lightless Silk String",
       icon: "./assets/genshin/Ororun Icon.webp",
       picture: "./assets/genshin/Ororun Card.webp",
-      additional: { type: "ATK", value: 24 },
     },
     "Citlali": {
       weapon: "Catalyst",
@@ -1362,7 +1269,6 @@ export const ALL_CHARACTERS = {
       weekly: "Denial and Judgement",
       icon: "./assets/genshin/Citlali Icon.webp",
       picture: "./assets/genshin/Citlali Card.webp",
-      additional: { type: "Elemental Mastery", value: 115.2 },
     },
     "Mavuika": {
       weapon: "Claymore",
@@ -1376,7 +1282,6 @@ export const ALL_CHARACTERS = {
       weekly: "Eroded Horn",
       icon: "./assets/genshin/Mavuika Icon.webp",
       picture: "./assets/genshin/Mavuika Card.webp",
-      additional: { type: "CRIT DMG", value: 38.4 },
     },
     "Lan Yan": {
       weapon: "Catalyst",
@@ -1390,7 +1295,6 @@ export const ALL_CHARACTERS = {
       weekly: "Eroded Sunfire",
       icon: "./assets/genshin/Lan Yan Icon.webp",
       picture: "./assets/genshin/Lan Yan Card.webp",
-      additional: { type: "ATK", value: 24 },
     },
     "Yumemizuki Mizuki": {
       weapon: "Catalyst",
@@ -1404,7 +1308,6 @@ export const ALL_CHARACTERS = {
       weekly: "Fading Candle",
       icon: "./assets/genshin/Yumemizuki Mizuki Icon.webp",
       picture: "./assets/genshin/Yumemizuki Mizuki Card.webp",
-      additional: { type: "Elemental Mastery", value: 115.2 },
     },
     "Iansan": {
       weapon: "Polearm",
@@ -1418,7 +1321,6 @@ export const ALL_CHARACTERS = {
       weekly: "Denial and Judgement",
       icon: "./assets/genshin/Iansan Icon.webp",
       picture: "./assets/genshin/Iansan Card.webp",
-      additional: { type: "ATK", value: 24 },
     },
     "Varesa": {
       weapon: "Catalyst",
@@ -1432,7 +1334,6 @@ export const ALL_CHARACTERS = {
       weekly: "Eroded Scale-Feather",
       icon: "./assets/genshin/Varesa Icon.webp",
       picture: "./assets/genshin/Varesa Card.webp",
-      additional: { type: "CRIT RATE", value: 19.2 },
     },
     "Escoffier": {
       weapon: "Polearm",
@@ -1446,7 +1347,6 @@ export const ALL_CHARACTERS = {
       weekly: "Eroded Horn",
       icon: "./assets/genshin/Escoffier Icon.webp",
       picture: "./assets/genshin/Escoffier Card.webp",
-      additional: { type: "CRIT RATE", value: 19.2 },
     },
     "Ifa": {
       weapon: "Catalyst",
@@ -1460,7 +1360,6 @@ export const ALL_CHARACTERS = {
       weekly: "Ascended Sample: Rook",
       icon: "./assets/genshin/Ifa Icon.webp",
       picture: "./assets/genshin/Ifa Card.webp",
-      additional: { type: "Elemental Mastery", value: 96 },
     },
     "Dahlia": {
       weapon: "Sword",
@@ -1474,7 +1373,6 @@ export const ALL_CHARACTERS = {
       weekly: "Eroded Scale-Feather",
       icon: "./assets/genshin/Dahlia Icon.webp",
       picture: "./assets/genshin/Dahlia Card.webp",
-      additional: { type: "HP", value: 24 },
     },
     "Skirk": {
       weapon: "Sword",
@@ -1488,7 +1386,6 @@ export const ALL_CHARACTERS = {
       weekly: "Ascended Sample: Knight",
       icon: "./assets/genshin/Skirk Icon.webp",
       picture: "./assets/genshin/Skirk Card.webp",
-      additional: { type: "CRIT DMG", value: 38.4 },
     },
     "Ineffa": {
       weapon: "Polearm",
@@ -1502,7 +1399,6 @@ export const ALL_CHARACTERS = {
       weekly: "Eroded Sunfire",
       icon: "./assets/genshin/Ineffa Icon.webp",
       picture: "./assets/genshin/Ineffa Card.webp",
-      additional: { type: "CRIT RATE", value: 19.2 },
     },
     "Lauma": {
       weapon: "Catalyst",
@@ -1516,7 +1412,6 @@ export const ALL_CHARACTERS = {
       weekly: "Eroded Scale-Feather",
       icon: "./assets/genshin/Lauma Icon.webp",
       picture: "./assets/genshin/Lauma Card.webp",
-      additional: { type: "Elemental Mastery", value: 115.2 },
     },
     "Aino": {
       weapon: "Claymore",
@@ -1530,7 +1425,6 @@ export const ALL_CHARACTERS = {
       weekly: "Silken Feather",
       icon: "./assets/genshin/Aino Icon.webp",
       picture: "./assets/genshin/Aino Card.webp",
-      additional: { type: "Elemental Mastery", value: 96 },
     },
     "Flins": {
       weapon: "Polearm",
@@ -1544,7 +1438,6 @@ export const ALL_CHARACTERS = {
       weekly: "Ascended Sample: Queen",
       icon: "./assets/genshin/Flins Icon.webp",
       picture: "./assets/genshin/Flins Card.webp",
-      additional: { type: "CRIT DMG", value: 38.4 },
     },
     "Nefer": {
       weapon: "Catalyst",
@@ -1558,7 +1451,6 @@ export const ALL_CHARACTERS = {
       weekly: "Ascended Sample: Rook",
       icon: "./assets/genshin/Nefer Icon.webp",
       picture: "./assets/genshin/Nefer Card.webp",
-      additional: { type: "CRIT DMG", value: 38.4 },
     },
   },
   hsr: {

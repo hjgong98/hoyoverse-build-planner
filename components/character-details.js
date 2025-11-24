@@ -10,6 +10,7 @@ import { loadMaterialsInventory } from "../saved/materials-inventory.js";
 import { ALL_CHARACTERS } from "../data/all-characters.js";
 import { ALL_WEAPONS } from "../data/all-weapons.js";
 import { ASCENSION_MATERIALS } from "../data/ascension-mats.js";
+import { initCharacterGearScene } from "../saved/character-gear.js";
 import {
   calculateCharacterAscensionMaterials,
   calculateTalentMaterials,
@@ -30,6 +31,201 @@ function getFullGameName(gameKey) {
     zzz: "Zenless Zone Zero",
   };
   return names[gameKey] || gameKey;
+}
+
+// Helper functions
+function getGearType(game) {
+  const gearTypes = {
+    genshin: "Artifacts",
+    hsr: "Relics",
+    zzz: "Discs",
+  };
+  return gearTypes[game] || "Gear";
+}
+
+function getTalentName(game, index) {
+  const talentNames = {
+    genshin: ["Normal Attack", "Elemental Skill", "Elemental Burst"],
+    hsr: ["Basic Attack", "Skill", "Ultimate", "Talent"],
+    zzz: ["Basic Attack", "Dodge", "Assist", "Special Attack", "Chain Attack"],
+  };
+  return talentNames[game]?.[index] || `Talent ${index + 1}`;
+}
+
+function getTalentDisplayName(char, index) {
+  const charData = ALL_CHARACTERS[char.game]?.[char.name];
+
+  // Check for custom talent names in character data
+  const customNames = {
+    genshin: {
+      0: charData?.normal, // Normal Attack
+      1: charData?.skill, // Elemental Skill
+      2: charData?.burst, // Elemental Burst
+    },
+    hsr: {
+      0: charData?.basic, // Basic Attack
+      1: charData?.skill, // Skill
+      2: charData?.ultimate, // Ultimate
+      3: charData?.talent, // Talent
+    },
+    zzz: {
+      0: charData?.basic, // Basic Attack
+      1: charData?.dodge, // Dodge
+      2: charData?.assist, // Assist
+      3: charData?.special, // Special Attack
+      4: charData?.chain, // Chain Attack
+    },
+  };
+
+  // Get custom name if available
+  const customName = customNames[char.game]?.[index];
+  if (customName) {
+    return customName;
+  }
+
+  // Fallback to default names
+  return getTalentName(char.game, index);
+}
+
+function isCharacterMaxed(char, limits) {
+  const isCharMaxed = char.currentLevel >= (limits.maxCharLevel || 90);
+  const isWeaponMaxed =
+    char.currentWeaponLevel >= (limits.maxWeaponLevel || 90);
+
+  let areTalentsMaxed = true;
+  if (Array.isArray(char.talentsCurrent)) {
+    areTalentsMaxed = char.talentsCurrent.every((talent) =>
+      talent >= (limits.maxTalent || 10)
+    );
+  }
+
+  return isCharMaxed && isWeaponMaxed && areTalentsMaxed;
+}
+
+function isTalentMaxed(char, talentIndex, limits) {
+  if (!Array.isArray(char.talentsCurrent)) return false;
+  return char.talentsCurrent[talentIndex] >= (limits.maxTalent || 10);
+}
+
+function getMilestoneOptions(game) {
+  const gameMilestones = {
+    genshin: [20, 40, 50, 60, 70, 80, 90],
+    hsr: [20, 30, 40, 50, 60, 70, 80],
+    zzz: [20, 30, 40, 50, 60],
+  };
+  return gameMilestones[game] || [20, 40, 50, 60, 70, 80, 90];
+}
+
+function calculateOverallProgress(char, limits) {
+  let totalWeight = 0;
+  let completedWeight = 0;
+
+  // Character Level (30% weight)
+  const charMax = char.goalLevel || limits.maxCharLevel;
+  const charProgress = char.currentLevel >= charMax
+    ? 100
+    : ((char.currentLevel || 1) / charMax) * 100;
+  totalWeight += 30;
+  completedWeight += charProgress * 0.3;
+
+  // Weapon Level (25% weight)
+  const weaponMax = char.goalWeaponLevel || limits.maxWeaponLevel;
+  const weaponProgress = char.currentWeaponLevel >= weaponMax
+    ? 100
+    : ((char.currentWeaponLevel || 1) / weaponMax) * 100;
+  totalWeight += 25;
+  completedWeight += weaponProgress * 0.25;
+
+  // Talents (35% weight)
+  if (Array.isArray(char.talentsGoal)) {
+    const talentWeight = 35 / char.talentsGoal.length;
+    char.talentsGoal.forEach((goal, i) => {
+      const current = char.talentsCurrent?.[i] || 1;
+      const talentProgress = current >= goal ? 100 : (current / goal) * 100;
+      completedWeight += talentProgress * (talentWeight / 100);
+    });
+    totalWeight += 35;
+  }
+
+  // HSR Traces (10% weight)
+  if (char.game === "hsr") {
+    totalWeight += 10;
+    if (char.majorTraces) completedWeight += 5;
+    if (char.minorTraces) completedWeight += 5;
+  }
+
+  return Math.min(100, Math.round((completedWeight / totalWeight) * 100));
+}
+
+function getFuelName(game) {
+  const fuelNames = {
+    genshin: "Resin",
+    hsr: "Trailblaze Power",
+    zzz: "Battery Charge",
+  };
+  return fuelNames[game] || "Fuel";
+}
+
+function getWeaponImage(char) {
+  if (!char.weaponName) return "";
+
+  const charData = ALL_CHARACTERS[char.game]?.[char.name];
+  const weaponType = charData?.weapon;
+
+  if (!weaponType) return "";
+
+  const weapons = ALL_WEAPONS[char.game]?.[weaponType] || [];
+  const weapon = weapons.find((w) => w.name === char.weaponName);
+
+  if (weapon && weapon.image) {
+    return weapon.image;
+  }
+
+  // Fallback image path
+  return `/assets/${char.game}/weapons/${char.weaponName}.webp`;
+}
+
+function getRarityColor(char) {
+  if (!char.weaponName) return "#95a5a6";
+
+  const charData = ALL_CHARACTERS[char.game]?.[char.name];
+  const weaponType = charData?.weapon;
+
+  if (!weaponType) return "#95a5a6";
+
+  const weapons = ALL_WEAPONS[char.game]?.[weaponType] || [];
+  const weapon = weapons.find((w) => w.name === char.weaponName);
+
+  if (!weapon) return "#95a5a6";
+
+  const rarity = weapon.rarity || weapon.rarity;
+  switch (rarity) {
+    case 5:
+      return "#ffd700";
+    case 4:
+      return "#c0c0c0";
+    case 3:
+      return "#cd7f32";
+    default:
+      return "#95a5a6";
+  }
+}
+
+function getWeaponRarity(char) {
+  if (!char.weaponName) return "";
+
+  const charData = ALL_CHARACTERS[char.game]?.[char.name];
+  const weaponType = charData?.weapon;
+
+  if (!weaponType) return "";
+
+  const weapons = ALL_WEAPONS[char.game]?.[weaponType] || [];
+  const weapon = weapons.find((w) => w.name === char.weaponName);
+
+  if (!weapon) return "";
+
+  const rarity = weapon.rarity || weapon.rarity;
+  return rarity ? `${rarity}★` : "";
 }
 
 // Define AND export the function
@@ -108,8 +304,28 @@ export function renderCharacterDetail(char) {
             <!-- Weapon Info -->
             <div style="background: #1c2b33; padding: 20px; border-radius: 12px; border: 2px solid #00ffff44;">
               <strong style="font-size: 16px;">${weaponLabel}:</strong>
-              <div style="margin-top: 12px; color: #ccc; font-size: 14px; margin-bottom: 15px;">
-                ${char.weaponName || "No weapon selected"}
+              <div style="display: flex; align-items: center; gap: 12px; margin-top: 12px; margin-bottom: 15px;">
+                ${
+    char.weaponName
+      ? `
+                  <img src="${getWeaponImage(char)}" alt="${char.weaponName}" 
+                      style="width: 48px; height: 48px; border-radius: 6px; object-fit: cover; border: 2px solid ${
+        getRarityColor(char)
+      };">
+                  <div style="flex: 1;">
+                    <div style="color: #00ffff; font-weight: bold; font-size: 14px;">${char.weaponName}</div>
+                    <div style="color: #ccc; font-size: 12px;">${
+        getWeaponRarity(char)
+      }</div>
+                  </div>
+                `
+      : `
+                  <div style="width: 48px; height: 48px; border-radius: 6px; background: #2c3e50; display: flex; align-items: center; justify-content: center; border: 2px dashed #ccc;">
+                    <span style="color: #ccc; font-size: 20px;">?</span>
+                  </div>
+                  <div style="color: #ccc; font-size: 14px;">No weapon selected</div>
+                `
+  }
               </div>
               <button onclick="window.openWeaponSelector('${char.id}')" 
                       style="padding: 12px 16px; background: #9b59b6; color: white; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; width: 100%; font-weight: bold;">
@@ -123,43 +339,85 @@ export function renderCharacterDetail(char) {
             <h4 style="margin: 0 0 20px 0; color: #00ffff; font-size: 22px;">Upgrade Progress</h4>
             
             <!-- Character Level -->
-            <div style="margin-bottom: 20px; background: #2c3e50; padding: 20px; border-radius: 12px;">
+            <div style="margin-bottom: 20px; background: #2c3e50; padding: 20px; border-radius: 12px; ${
+    char.currentLevel >= limits.maxCharLevel ? "border: 2px solid #27ae60;" : ""
+  }">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                <strong style="font-size: 16px;">Character Level</strong>
+                <strong style="font-size: 16px; ${
+    char.currentLevel >= limits.maxCharLevel ? "color: #27ae60;" : ""
+  }">
+                  Character Level ${
+    char.currentLevel >= limits.maxCharLevel ? "★" : ""
+  }
+                </strong>
                 <div style="display: flex; align-items: center; gap: 12px;">
                   <span style="font-size: 16px; color: #ccc; font-weight: bold;">${
     char.currentLevel || 1
   }</span>
-                  <span style="font-size: 18px;">→</span>
-                  <input type="number" 
-                         id="char-new-level" 
-                         value="${char.newLevel || char.currentLevel + 1}" 
-                         min="${char.currentLevel || 1}" 
-                         max="${limits.maxCharLevel}"
-                         style="width: 80px; padding: 8px; background: #1c2b33; border: 2px solid #00ffff; border-radius: 6px; color: white; text-align: center; font-size: 16px; font-weight: bold;">
+                  ${
+    char.currentLevel >= limits.maxCharLevel
+      ? '<span style="font-size: 14px; color: #27ae60; font-weight: bold;">MAX</span>'
+      : `
+                        <span style="font-size: 18px;">→</span>
+                        <input type="number" 
+                               id="char-new-level" 
+                               value="${
+        char.newLevel || char.currentLevel + 1
+      }" 
+                               min="${char.currentLevel || 1}" 
+                               max="${limits.maxCharLevel}"
+                               style="width: 80px; padding: 8px; background: #1c2b33; border: 2px solid #00ffff; border-radius: 6px; color: white; text-align: center; font-size: 16px; font-weight: bold;">
+                      `
+  }
                 </div>
               </div>
+              ${
+    char.currentLevel >= limits.maxCharLevel
+      ? '<div style="font-size: 12px; color: #27ae60; text-align: center;">Character is at maximum level!</div>'
+      : ""
+  }
             </div>
 
             <!-- Weapon Level -->
-            <div style="margin-bottom: 20px; background: #2c3e50; padding: 20px; border-radius: 12px;">
+            <div style="margin-bottom: 20px; background: #2c3e50; padding: 20px; border-radius: 12px; ${
+    char.currentWeaponLevel >= limits.maxWeaponLevel
+      ? "border: 2px solid #27ae60;"
+      : ""
+  }">
               <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                <strong style="font-size: 16px;">${weaponLabel} Level</strong>
+                <strong style="font-size: 16px; ${
+    char.currentWeaponLevel >= limits.maxWeaponLevel ? "color: #27ae60;" : ""
+  }">
+                  ${weaponLabel} Level ${
+    char.currentWeaponLevel >= limits.maxWeaponLevel ? "★" : ""
+  }
+                </strong>
                 <div style="display: flex; align-items: center; gap: 12px;">
                   <span style="font-size: 16px; color: #ccc; font-weight: bold;">${
     char.currentWeaponLevel || 1
   }</span>
-                  <span style="font-size: 18px;">→</span>
-                  <input type="number" 
-                         id="weapon-new-level" 
-                         value="${
-    char.newWeaponLevel || char.currentWeaponLevel + 1
-  }" 
-                         min="${char.currentWeaponLevel || 1}" 
-                         max="${limits.maxWeaponLevel}"
-                         style="width: 80px; padding: 8px; background: #1c2b33; border: 2px solid #00ffff; border-radius: 6px; color: white; text-align: center; font-size: 16px; font-weight: bold;">
+                  ${
+    char.currentWeaponLevel >= limits.maxWeaponLevel
+      ? '<span style="font-size: 14px; color: #27ae60; font-weight: bold;">MAX</span>'
+      : `
+                        <span style="font-size: 18px;">→</span>
+                        <input type="number" 
+                               id="weapon-new-level" 
+                               value="${
+        char.newWeaponLevel || char.currentWeaponLevel + 1
+      }" 
+                               min="${char.currentWeaponLevel || 1}" 
+                               max="${limits.maxWeaponLevel}"
+                               style="width: 80px; padding: 8px; background: #1c2b33; border: 2px solid #00ffff; border-radius: 6px; color: white; text-align: center; font-size: 16px; font-weight: bold;">
+                      `
+  }
                 </div>
               </div>
+              ${
+    char.currentWeaponLevel >= limits.maxWeaponLevel
+      ? `<div style="font-size: 12px; color: #27ae60; text-align: center;">${weaponLabel} is at maximum level!</div>`
+      : ""
+  }
             </div>
 
             <!-- Talents -->
@@ -168,36 +426,65 @@ export function renderCharacterDetail(char) {
               ${
     Array.isArray(char.talentsCurrent)
       ? char.talentsCurrent.map((current, i) => {
-        const talentName = getTalentName(char.game, i);
+        const talentName = getTalentDisplayName(char, i);
         const newLevel = char.talentsNew?.[i] || current + 1;
+        const isMaxed = isTalentMaxed(char, i, limits);
+        const talentGoal = char.talentsGoal?.[i] || limits.maxTalent;
 
+        // If talent is maxed, show static display
+        if (isMaxed) {
+          return `
+                          <div style="background: #2c3e50; padding: 15px; border-radius: 8px; margin-bottom: 12px; border: 2px solid #27ae60;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                              <div>
+                                <strong style="font-size: 14px; color: #27ae60;">${talentName} ★</strong>
+                                <div style="font-size: 11px; color: #ccc;">MAX LEVEL</div>
+                              </div>
+                              <span style="font-size: 16px; color: #27ae60; font-weight: bold;">${current}</span>
+                            </div>
+                          </div>
+                        `;
+        }
+
+        // If talent is not maxed, show upgrade interface
         return `
-                      <div style="background: #2c3e50; padding: 15px; border-radius: 8px; margin-bottom: 12px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                          <strong style="font-size: 14px;">${talentName}</strong>
-                          <div style="display: flex; align-items: center; gap: 10px;">
-                            <span style="font-size: 14px; color: #ccc; font-weight: bold;">${current}</span>
-                            <span style="font-size: 16px;">→</span>
-                            <input type="number" 
-                                   id="talent-new-${i}" 
-                                   value="${newLevel}" 
-                                   min="${current}" 
-                                   max="${limits.maxTalent}"
-                                   style="width: 70px; padding: 6px; background: #1c2b33; border: 2px solid #00ffff; border-radius: 6px; color: white; text-align: center; font-size: 14px;">
+                        <div style="background: #2c3e50; padding: 15px; border-radius: 8px; margin-bottom: 12px;">
+                          <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <strong style="font-size: 14px;">${talentName}</strong>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                              <span style="font-size: 14px; color: #ccc; font-weight: bold;">${current}</span>
+                              <span style="font-size: 16px;">→</span>
+                              <input type="number" 
+                                     id="talent-new-${i}" 
+                                     value="${newLevel}" 
+                                     min="${current}" 
+                                     max="${limits.maxTalent}"
+                                     style="width: 70px; padding: 6px; background: #1c2b33; border: 2px solid #00ffff; border-radius: 6px; color: white; text-align: center; font-size: 14px;">
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    `;
+                      `;
       }).join("")
       : '<div style="color: #ccc; text-align: center; padding: 20px;">No talents set</div>'
   }
             </div>
 
             <!-- Single Complete Button -->
-            <button onclick="window.completeAllUpgrades('${char.id}')" 
-                    style="padding: 15px 25px; background: #27ae60; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px;">
-              🚀 Complete All Upgrades
-            </button>
+            ${
+    isCharacterMaxed(char, limits)
+      ? `
+                  <div style="background: #27ae60; padding: 15px 25px; border-radius: 8px; text-align: center; margin-top: 10px;">
+                    <div style="font-size: 16px; font-weight: bold; color: white;">🎉 Character Fully Maxed! 🎉</div>
+                    <div style="font-size: 12px; color: #d4f8d4; margin-top: 5px;">All levels are at maximum!</div>
+                  </div>
+                `
+      : `
+                  <button onclick="window.completeAllUpgrades('${char.id}')" 
+                          style="padding: 15px 25px; background: #27ae60; color: white; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px;">
+                    🚀 Complete All Upgrades
+                  </button>
+                `
+  }
           </div>
         </div>
 
@@ -417,13 +704,17 @@ window.openWeaponSelector = (charId) => {
   const allWeapons = ALL_WEAPONS[char.game]?.[weaponType] || [];
 
   const weaponOptions = allWeapons.length > 0
-    ? allWeapons.map((weapon) =>
-      `<option value="${weapon.name}" ${
-        char.weaponName === weapon.name ? "selected" : ""
+    ? allWeapons.map((weapon) => {
+      const weaponImage = weapon.image ||
+        `/assets/${char.game}/weapons/${weapon.name}.webp`;
+      return `
+        <option value="${weapon.name}" ${
+        char.gear.weapon === weapon.name ? "selected" : ""
       }>
           ${weapon.name} ${weapon.rarity ? `(${weapon.rarity}★)` : ""}
-        </option>`
-    ).join("")
+        </option>
+      `;
+    }).join("")
     : `<option value="">No weapons available</option>`;
 
   window.openModal?.(`
@@ -471,35 +762,44 @@ window.completeAllUpgrades = (charId) => {
   const limits = GAME_LIMITS[char.game];
   let updated = false;
 
-  // Character Level
-  const newCharLevel =
-    parseInt(document.getElementById("char-new-level")?.value) ||
-    char.currentLevel;
-  if (newCharLevel > char.currentLevel && newCharLevel <= limits.maxCharLevel) {
-    char.currentLevel = newCharLevel;
-    updated = true;
+  // Character Level (only if not maxed)
+  if (char.currentLevel < limits.maxCharLevel) {
+    const newCharLevel =
+      parseInt(document.getElementById("char-new-level")?.value) ||
+      char.currentLevel;
+    if (
+      newCharLevel > char.currentLevel && newCharLevel <= limits.maxCharLevel
+    ) {
+      char.currentLevel = newCharLevel;
+      updated = true;
+    }
   }
 
-  // Weapon Level
-  const newWeaponLevel =
-    parseInt(document.getElementById("weapon-new-level")?.value) ||
-    char.currentWeaponLevel;
-  if (
-    newWeaponLevel > char.currentWeaponLevel &&
-    newWeaponLevel <= limits.maxWeaponLevel
-  ) {
-    char.currentWeaponLevel = newWeaponLevel;
-    updated = true;
+  // Weapon Level (only if not maxed)
+  if (char.currentWeaponLevel < limits.maxWeaponLevel) {
+    const newWeaponLevel =
+      parseInt(document.getElementById("weapon-new-level")?.value) ||
+      char.currentWeaponLevel;
+    if (
+      newWeaponLevel > char.currentWeaponLevel &&
+      newWeaponLevel <= limits.maxWeaponLevel
+    ) {
+      char.currentWeaponLevel = newWeaponLevel;
+      updated = true;
+    }
   }
 
-  // Talents
+  // Talents (only if not maxed)
   if (Array.isArray(char.talentsCurrent)) {
     char.talentsCurrent.forEach((current, i) => {
-      const newTalentLevel =
-        parseInt(document.getElementById(`talent-new-${i}`)?.value) || current;
-      if (newTalentLevel > current && newTalentLevel <= limits.maxTalent) {
-        char.talentsCurrent[i] = newTalentLevel;
-        updated = true;
+      if (current < limits.maxTalent) {
+        const newTalentLevel =
+          parseInt(document.getElementById(`talent-new-${i}`)?.value) ||
+          current;
+        if (newTalentLevel > current && newTalentLevel <= limits.maxTalent) {
+          char.talentsCurrent[i] = newTalentLevel;
+          updated = true;
+        }
       }
     });
   }
@@ -512,117 +812,6 @@ window.completeAllUpgrades = (charId) => {
     console.log("No valid upgrades to complete!");
   }
 };
-
-// Helper functions
-function getGearType(game) {
-  const gearTypes = {
-    genshin: "Artifacts",
-    hsr: "Relics",
-    zzz: "Discs",
-  };
-  return gearTypes[game] || "Gear";
-}
-
-function getTalentName(game, index) {
-  const talentNames = {
-    genshin: ["Normal Attack", "Skill", "Ultimate"],
-    hsr: ["Basic Attack", "Skill", "Ultimate", "Talent"],
-    zzz: ["Basic Attack", "Dodge", "Assist", "Special Attack", "Chain Attack"],
-  };
-  return talentNames[game]?.[index] || `Talent ${index + 1}`;
-}
-
-function getMilestoneOptions(game) {
-  const gameMilestones = {
-    genshin: [20, 40, 50, 60, 70, 80, 90],
-    hsr: [20, 30, 40, 50, 60, 70, 80],
-    zzz: [20, 30, 40, 50, 60],
-  };
-  return gameMilestones[game] || [20, 40, 50, 60, 70, 80, 90];
-}
-
-function calculateOverallProgress(char, limits) {
-  let totalWeight = 0;
-  let completedWeight = 0;
-
-  // Character Level (30% weight) - FIXED: uses current level vs final goal
-  const charMax = char.goalLevel || limits.maxCharLevel;
-  const charProgress = ((char.currentLevel || 1) / charMax) * 100;
-  totalWeight += 30;
-  completedWeight += charProgress * 0.3;
-
-  // Weapon Level (25% weight) - FIXED: uses current level vs final goal
-  const weaponMax = char.goalWeaponLevel || limits.maxWeaponLevel;
-  const weaponProgress = ((char.currentWeaponLevel || 1) / weaponMax) * 100;
-  totalWeight += 25;
-  completedWeight += weaponProgress * 0.25;
-
-  // Talents (35% weight) - FIXED: uses current talent levels vs final goals
-  if (Array.isArray(char.talentsGoal)) {
-    const talentWeight = 35 / char.talentsGoal.length;
-    char.talentsGoal.forEach((goal, i) => {
-      const current = char.talentsCurrent?.[i] || 1;
-      const talentProgress = (current / goal) * 100;
-      completedWeight += talentProgress * (talentWeight / 100);
-    });
-    totalWeight += 35;
-  }
-
-  // HSR Traces (10% weight)
-  if (char.game === "hsr") {
-    totalWeight += 10;
-    if (char.majorTraces) completedWeight += 5;
-    if (char.minorTraces) completedWeight += 5;
-  }
-
-  return Math.min(100, Math.round((completedWeight / totalWeight) * 100));
-}
-
-function getFuelName(game) {
-  const fuelNames = {
-    genshin: "Resin",
-    hsr: "Trailblaze Power",
-    zzz: "Battery Charge",
-  };
-  return fuelNames[game] || "Fuel";
-}
-
-function calculateEndDate(timeEstimate) {
-  const today = new Date();
-  const endDate = new Date(today);
-
-  // Extract the maximum time from the range for end date calculation
-  let maxTimeMinutes = 0;
-
-  if (timeEstimate.includes(" - ")) {
-    const timeParts = timeEstimate.split(" - ");
-    const maxTimeStr = timeParts[1];
-
-    if (maxTimeStr.includes("days")) {
-      const days = parseInt(maxTimeStr);
-      endDate.setDate(today.getDate() + days);
-    } else if (maxTimeStr.includes("h") && maxTimeStr.includes("m")) {
-      // Handle "Xh Ym" format
-      const [hours, minutes] = maxTimeStr.split(" ").map((part) =>
-        parseInt(part)
-      );
-      endDate.setHours(today.getHours() + hours);
-      endDate.setMinutes(today.getMinutes() + minutes);
-    } else if (maxTimeStr.includes("h")) {
-      const hours = parseInt(maxTimeStr);
-      endDate.setHours(today.getHours() + hours);
-    } else if (maxTimeStr.includes("m")) {
-      const minutes = parseInt(maxTimeStr);
-      endDate.setMinutes(today.getMinutes() + minutes);
-    } else {
-      endDate.setDate(today.getDate() + 7);
-    }
-  } else {
-    endDate.setDate(today.getDate() + 7);
-  }
-
-  return endDate.toLocaleDateString();
-}
 
 // Action functions
 window.updateCharacterImage = (charId) => {
@@ -686,7 +875,7 @@ window.completeTalentUpgrade = (charId, talentIndex) => {
   if (newLevel > current && newLevel <= limits.maxTalent) {
     char.talentsCurrent[talentIndex] = newLevel;
     saveMyCharacters();
-    const talentName = getTalentName(char.game, talentIndex);
+    const talentName = getTalentDisplayName(char, talentIndex);
     console.log(`${talentName} upgraded to level ${newLevel}!`);
     setTimeout(() => renderCharacterDetail(char), 100);
   } else {
@@ -737,7 +926,7 @@ window.setGoalpost = (charId) => {
         ${
     Array.isArray(char.talentsCurrent)
       ? char.talentsCurrent.map((current, i) => {
-        const talentName = getTalentName(char.game, i);
+        const talentName = getTalentDisplayName(char, i);
         return `
                   <div style="margin-top: 15px; display: flex; justify-content: space-between; align-items: center; background: #2c3e50; padding: 12px; border-radius: 8px;">
                     <label style="font-size: 14px; color: #ccc;">${talentName}:</label>
@@ -806,11 +995,15 @@ window.saveFinalGoals = (charId) => {
 
 window.openGearCalculator = (charId) => {
   const char = getCharacterById(charId);
-  const gearType = getGearType(char.game);
-  console.log(`Redirecting to characters-gear.js for ${char.name}`);
+  console.log(`Opening gear calculator for ${char.name}`);
 
-  // Redirect to characters-gear.js
-  window.location.href = `#characters-gear?character=${charId}`;
+  // Close the character details modal first
+  window.closeModal?.();
+
+  // Initialize the gear scene
+  setTimeout(() => {
+    initCharacterGearScene(charId);
+  }, 100);
 };
 
 // Add this function to display material requirements
@@ -1342,3 +1535,4 @@ function setupLevelChangeListeners(charId) {
 }
 
 setTimeout(() => setupLevelChangeListeners(char.id), 100);
+window.renderCharacterDetail = renderCharacterDetail;
