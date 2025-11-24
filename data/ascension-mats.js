@@ -274,30 +274,30 @@ export const ASCENSION_MATERIALS = {
       tags: ["common", "warrant", 3],
     },
 
-    // prism(maiden), concealed, statuette, 
-    // nucleus, chaos(drake), prism(construct), 
-    // shell(beast), flower, water, breacher, 
-    // watch, fin, hilt, ignited, will, source, 
-    // mimesis, shell(weasel), frostnight, 
+    // prism(maiden), concealed, statuette,
+    // nucleus, chaos(drake), prism(construct),
+    // shell(beast), flower, water, breacher,
+    // watch, fin, hilt, ignited, will, source,
+    // mimesis, shell(weasel), frostnight,
     // radiant, mistshroud
     // Elite Enemy Drops - Tier 1
     {
-      name: "Heavy Horn", 
+      name: "Heavy Horn",
       img: "/genshin/heavy horn.webp",
       tags: ["elite", "horn", 2],
     },
     {
-      name: "Dead Ley Line Branch", 
+      name: "Dead Ley Line Branch",
       img: "/genshin/dead ley line branch.webp",
       tags: ["elite", "branch", 2],
     },
     {
-      name: "Chaos Device", 
+      name: "Chaos Device",
       img: "/genshin/chaos device.webp",
       tags: ["elite", "chaos_ruin", 2],
     },
     {
-      name: "Mist Grass Pollen", 
+      name: "Mist Grass Pollen",
       img: "mist grass pollen.webp",
       tags: ["elite", "mist", 2],
     },
@@ -307,12 +307,12 @@ export const ASCENSION_MATERIALS = {
       tags: ["elite", "knife", 2],
     },
     {
-      name:"Fragile Bone Shard",
+      name: "Fragile Bone Shard",
       img: "/genshin/fragile bone shard.png",
       tags: ["elite", "bone shard", 2],
     },
     {
-      name: "Chaos Gear", 
+      name: "Chaos Gear",
       img: "/genshin/chaos gear.webp",
       tags: ["elite", "chaos_sentinel", 2],
     },
@@ -434,12 +434,12 @@ export const ASCENSION_MATERIALS = {
       tags: ["elite", "branch", 3],
     },
     {
-      name: "Chaos Circuit", 
+      name: "Chaos Circuit",
       img: "/genshin/chaos circuit.webp",
       tags: ["elite", "chaos_ruin", 3],
     },
     {
-      name: "Mist Grass", 
+      name: "Mist Grass",
       img: "/genshin/mist grass.webp",
       tags: ["elite", "mist", 3],
     },
@@ -449,15 +449,15 @@ export const ASCENSION_MATERIALS = {
       tags: ["elite", "knife", 3],
     },
     {
-      name:"Sturdy Bone Shard",
+      name: "Sturdy Bone Shard",
       img: "/genshin/sturdy bone shard.webp",
       tags: ["elite", "bone shard", 3],
     },
     {
-      name: "Chaos Axis", 
+      name: "Chaos Axis",
       img: "/genshin/chaos axis.webp",
       tags: ["elite", "chaos_sentinel", 3],
-    },   
+    },
     {
       name: "Crystal Prism",
       img: "/genshin/crystal prism.png",
@@ -576,12 +576,12 @@ export const ASCENSION_MATERIALS = {
       tags: ["elite", "branch", 4],
     },
     {
-      name: "Chaos Core", 
+      name: "Chaos Core",
       img: "/genshin/chaos core.webp",
       tags: ["elite", "chaos_ruin", 4],
     },
     {
-      name: "Mist Grass Wick", 
+      name: "Mist Grass Wick",
       img: "/genshin/mist grass wick.webp",
       tags: ["elite", "mist", 4],
     },
@@ -591,12 +591,12 @@ export const ASCENSION_MATERIALS = {
       tags: ["elite", "knife", 4],
     },
     {
-      name:"Fossilized Bone Shard",
+      name: "Fossilized Bone Shard",
       img: "/genshin/fossilized bone shard.webp",
       tags: ["elite", "bone shard", 4],
     },
     {
-      name: "Chaos Occulus", 
+      name: "Chaos Occulus",
       img: "/genshin/chaos occulus.png",
       tags: ["elite", "chaos_sentinel", 4],
     },
@@ -707,220 +707,436 @@ export const ASCENSION_MATERIALS = {
     },
 
     // Elemental Gemstones - Tier 1
-    { 
-      name: "Agnidus Agate Sliver", 
-      img: "/genshin/Agnidus Agate Sliver.webp", 
-      tags: ["gem", "pyro", 2] 
+    {
+      name: "Agnidus Agate Sliver",
+      img: "/genshin/Agnidus Agate Sliver.webp",
+      tags: ["gem", "pyro", 2],
     },
-    { 
-      name: "Varunada Lazurite Sliver", 
-      img: "/genshin/Varunada Lazurite Sliver.webp", 
-      tags: ["gem", "hydro", 2] 
+    {
+      name: "Varunada Lazurite Sliver",
+      img: "/genshin/Varunada Lazurite Sliver.webp",
+      tags: ["gem", "hydro", 2],
     },
-    { 
-      name: "Vajrada Amethyst Sliver", 
-      img: "/genshin/Vajrada Amethyst Sliver.webp", 
-      tags: ["gem", "electro", 2] 
+    {
+      name: "Vajrada Amethyst Sliver",
+      img: "/genshin/Vajrada Amethyst Sliver.webp",
+      tags: ["gem", "electro", 2],
     },
-    { 
-      name: "Vayuda Turquoise Sliver", 
-      img: "/genshin/Vayuda Turquoise Sliver.webp", 
-      tags: ["gem", "anemo", 2] 
+    {
+      name: "Vayuda Turquoise Sliver",
+      img: "/genshin/Vayuda Turquoise Sliver.webp",
+      tags: ["gem", "anemo", 2],
     },
-    { 
-      name: "Shivada Jade Sliver", 
-      img: "/genshin/Shivada Jade Sliver.webp", 
-      tags: ["gem", "cryo", 2] 
+    {
+      name: "Shivada Jade Sliver",
+      img: "/genshin/Shivada Jade Sliver.webp",
+      tags: ["gem", "cryo", 2],
     },
-    { 
-      name: "Prithiva Topaz Sliver", 
-      img: "/genshin/Prithiva Topaz Sliver.webp", 
-      tags: ["gem", "geo", 2] 
+    {
+      name: "Prithiva Topaz Sliver",
+      img: "/genshin/Prithiva Topaz Sliver.webp",
+      tags: ["gem", "geo", 2],
     },
-    { 
-      name: "Nagadus Emerald Sliver", 
-      img: "/genshin/Nagadus Emerald Sliver.webp", 
-      tags: ["gem", "dendro", 2] 
+    {
+      name: "Nagadus Emerald Sliver",
+      img: "/genshin/Nagadus Emerald Sliver.webp",
+      tags: ["gem", "dendro", 2],
     },
 
     // Elemental Gemstones - Tier 2
-    { 
-      name: "Agnidus Agate Fragment", 
-      img: "/genshin/Agnidus Agate Fragment.png", 
-      tags: ["gem", "pyro", 3] 
+    {
+      name: "Agnidus Agate Fragment",
+      img: "/genshin/Agnidus Agate Fragment.png",
+      tags: ["gem", "pyro", 3],
     },
-    { 
-      name: "Varunada Lazurite Fragment", 
-      img: "/genshin/Varunada Lazurite Fragment.webp", 
-      tags: ["gem", "hydro", 3] 
+    {
+      name: "Varunada Lazurite Fragment",
+      img: "/genshin/Varunada Lazurite Fragment.webp",
+      tags: ["gem", "hydro", 3],
     },
-    { 
-      name: "Vajrada Amethyst Fragment", 
-      img: "/genshin/Vajrada Amethyst Fragment.webp", 
-      tags: ["gem", "electro", 3] 
+    {
+      name: "Vajrada Amethyst Fragment",
+      img: "/genshin/Vajrada Amethyst Fragment.webp",
+      tags: ["gem", "electro", 3],
     },
-    { 
-      name: "Vayuda Turquoise Fragment", 
-      img: "/genshin/Vayuda Turquoise Fragment.webp", 
-      tags: ["gem", "anemo", 3] 
+    {
+      name: "Vayuda Turquoise Fragment",
+      img: "/genshin/Vayuda Turquoise Fragment.webp",
+      tags: ["gem", "anemo", 3],
     },
-    { 
-      name: "Shivada Jade Fragment", 
-      img: "/genshin/Shivada Jade Fragment.webp", 
-      tags: ["gem", "cryo", 3]
+    {
+      name: "Shivada Jade Fragment",
+      img: "/genshin/Shivada Jade Fragment.webp",
+      tags: ["gem", "cryo", 3],
     },
-    { 
-      name: "Prithiva Topaz Fragment", 
-      img: "/genshin/Prithiva Topaz Fragment.webp", 
-      tags: ["gem", "geo", 3] 
+    {
+      name: "Prithiva Topaz Fragment",
+      img: "/genshin/Prithiva Topaz Fragment.webp",
+      tags: ["gem", "geo", 3],
     },
-    { 
-      name: "Nagadus Emerald Fragment", 
-      img: "/genshin/Nagadus Emerald Fragment.webp", 
-      tags: ["gem", "dendro", 3] 
+    {
+      name: "Nagadus Emerald Fragment",
+      img: "/genshin/Nagadus Emerald Fragment.webp",
+      tags: ["gem", "dendro", 3],
     },
 
     // Elemental Gemstones - Tier 3
-    { 
-      name: "Agnidus Agate Chunk", 
-      img: "/genshin/Agnidus Agate Chunk.webp", 
-      tags: ["gem", "pyro", 4] 
+    {
+      name: "Agnidus Agate Chunk",
+      img: "/genshin/Agnidus Agate Chunk.webp",
+      tags: ["gem", "pyro", 4],
     },
-    { 
-      name: "Varunada Lazurite Chunk", 
-      img: "/genshin/Varunada Lazurite Chunk.webp", 
-      tags: ["gem", "hydro", 4] 
+    {
+      name: "Varunada Lazurite Chunk",
+      img: "/genshin/Varunada Lazurite Chunk.webp",
+      tags: ["gem", "hydro", 4],
     },
-    { 
-      name: "Vajrada Amethyst Chunk", 
-      img: "/genshin/Vajrada Amethyst Chunk.webp", 
-      tags: ["gem", "electro", 4] 
+    {
+      name: "Vajrada Amethyst Chunk",
+      img: "/genshin/Vajrada Amethyst Chunk.webp",
+      tags: ["gem", "electro", 4],
     },
-    { 
-      name: "Vayuda Turquoise Chunk", 
-      img: "/genshin/Vayuda Turquoise Chunk.webp", 
-      tags: ["gem", "anemo", 4] 
+    {
+      name: "Vayuda Turquoise Chunk",
+      img: "/genshin/Vayuda Turquoise Chunk.webp",
+      tags: ["gem", "anemo", 4],
     },
-    { 
-      name: "Shivada Jade Chunk", 
-      img: "/genshin/Shivada Jade Chunk.webp", 
-      tags: ["gem", "cryo", 4] 
+    {
+      name: "Shivada Jade Chunk",
+      img: "/genshin/Shivada Jade Chunk.webp",
+      tags: ["gem", "cryo", 4],
     },
-    { 
-      name: "Prithiva Topaz Chunk", 
-      img: "/genshin/Prithiva Topaz Chunk.webp", 
-      tags: ["gem", "geo", 4] 
+    {
+      name: "Prithiva Topaz Chunk",
+      img: "/genshin/Prithiva Topaz Chunk.webp",
+      tags: ["gem", "geo", 4],
     },
-    { 
-      name: "Nagadus Emerald Chunk", 
-      img: "/genshin/Nagadus Emerald Chunk.webp", 
-      tags: ["gem", "dendro", 4] 
+    {
+      name: "Nagadus Emerald Chunk",
+      img: "/genshin/Nagadus Emerald Chunk.webp",
+      tags: ["gem", "dendro", 4],
     },
 
     // Elemental Gemstones - Tier 4
-    { 
-      name: "Agnidus Agate Gemstone", 
-      img: "/genshin/Agnidus Agate Gemstone.webp", 
-      tags: ["gem", "pyro", 5] 
+    {
+      name: "Agnidus Agate Gemstone",
+      img: "/genshin/Agnidus Agate Gemstone.webp",
+      tags: ["gem", "pyro", 5],
     },
-    { 
-      name: "Varunada Lazurite Gemstone", 
-      img: "/genshin/Varunada Lazurite Gemstone.webp", 
-      tags: ["gem", "hydro", 5] 
+    {
+      name: "Varunada Lazurite Gemstone",
+      img: "/genshin/Varunada Lazurite Gemstone.webp",
+      tags: ["gem", "hydro", 5],
     },
-    { 
-      name: "Vajrada Amethyst Gemstone", 
-      img: "/genshin/Vajrada Amethyst Gemstone.webp", 
-      tags: ["gem", "electro", 5] 
+    {
+      name: "Vajrada Amethyst Gemstone",
+      img: "/genshin/Vajrada Amethyst Gemstone.webp",
+      tags: ["gem", "electro", 5],
     },
-    { 
-      name: "Vayuda Turquoise Gemstone", 
-      img: "/genshin/Vayuda Turquoise Gemstone.webp", 
-      tags: ["gem", "anemo", 5] 
+    {
+      name: "Vayuda Turquoise Gemstone",
+      img: "/genshin/Vayuda Turquoise Gemstone.webp",
+      tags: ["gem", "anemo", 5],
     },
-    { 
-      name: "Shivada Jade Gemstone", 
-      img: "/genshin/Shivada Jade Gemstone.webp", 
-      tags: ["gem", "cryo", 5] 
+    {
+      name: "Shivada Jade Gemstone",
+      img: "/genshin/Shivada Jade Gemstone.webp",
+      tags: ["gem", "cryo", 5],
     },
-    { 
-      name: "Prithiva Topaz Gemstone", 
-      img: "/genshin/Prithiva Topaz Gemstone.webp", 
-      tags: ["gem", "geo", 5] 
+    {
+      name: "Prithiva Topaz Gemstone",
+      img: "/genshin/Prithiva Topaz Gemstone.webp",
+      tags: ["gem", "geo", 5],
     },
-    { 
-      name: "Nagadus Emerald Gemstone", 
-      img: "/genshin/Nagadus Emerald Gemstone.webp", 
-      tags: ["gem", "dendro", 5] 
+    {
+      name: "Nagadus Emerald Gemstone",
+      img: "/genshin/Nagadus Emerald Gemstone.webp",
+      tags: ["gem", "dendro", 5],
     },
 
     // Local Specialties - Mondstadt
-    { name: "Calla Lily", img: "/genshin/Calla Lily.webp", tags: ["local", "mondstadt", 1] },
-    { name: "Cecilia", img: "/genshin/Cecilia.webp", tags: ["local", "mondstadt", 1] },
-    { name: "Dandelion Seed", img: "/genshin/Dandelion Seed.webp", tags: ["local", "mondstadt", 1] },
-    { name: "Philanemo Mushroom", img: "/genshin/Philanemo Mushroom.webp", tags: ["local", "mondstadt", 1] },
-    { name: "Small Lamp Grass", img: "/genshin/Small Lamp Grass.webp", tags: ["local", "mondstadt", 1] },
-    { name: "Valberry", img: "/genshin/Valberry.webp", tags: ["local", "mondstadt", 1] },
-    { name: "Windwheel Aster", img: "/genshin/Windwheel Aster.webp", tags: ["local", "mondstadt", 1] },
-    { name: "Wolfhook", img: "/genshin/Wolfhook.webp", tags: ["local", "mondstadt", 1] },
+    {
+      name: "Calla Lily",
+      img: "/genshin/Calla Lily.webp",
+      tags: ["local", "mondstadt", 1],
+    },
+    {
+      name: "Cecilia",
+      img: "/genshin/Cecilia.webp",
+      tags: ["local", "mondstadt", 1],
+    },
+    {
+      name: "Dandelion Seed",
+      img: "/genshin/Dandelion Seed.webp",
+      tags: ["local", "mondstadt", 1],
+    },
+    {
+      name: "Philanemo Mushroom",
+      img: "/genshin/Philanemo Mushroom.webp",
+      tags: ["local", "mondstadt", 1],
+    },
+    {
+      name: "Small Lamp Grass",
+      img: "/genshin/Small Lamp Grass.webp",
+      tags: ["local", "mondstadt", 1],
+    },
+    {
+      name: "Valberry",
+      img: "/genshin/Valberry.webp",
+      tags: ["local", "mondstadt", 1],
+    },
+    {
+      name: "Windwheel Aster",
+      img: "/genshin/Windwheel Aster.webp",
+      tags: ["local", "mondstadt", 1],
+    },
+    {
+      name: "Wolfhook",
+      img: "/genshin/Wolfhook.webp",
+      tags: ["local", "mondstadt", 1],
+    },
 
     // Local Specialties - Liyue
-    { name: "Cor Lapis", img: "/genshin/Cor Lapis.webp", tags: ["local", "liyue", 1] },
-    { name: "Glaze Lily", img: "/genshin/Glaze Lily.webp", tags: ["local", "liyue", 1] },
-    { name: "Jueyun Chili", img: "/genshin/Jueyun Chili.webp", tags: ["local", "liyue", 1] },
-    { name: "Noctilucous Jade", img: "/genshin/Noctilucous Jade.webp", tags: ["local", "liyue", 1] },
-    { name: "Qingxin", img: "/genshin/Qingxin.webp", tags: ["local", "liyue", 1] },
-    { name: "Silk Flower", img: "/genshin/Silk Flower.webp", tags: ["local", "liyue", 1] },
-    { name: "Starconch", img: "/genshin/Starconch.webp", tags: ["local", "liyue", 1] },
-    { name: "Violetgrass", img: "/genshin/Violetgrass.webp", tags: ["local", "liyue", 1] },
-    { name: "Clearwater Jade", img: "/genshin/Clearwater Jade.webp", tags: ["local", "liyue", 1] },
+    {
+      name: "Cor Lapis",
+      img: "/genshin/Cor Lapis.webp",
+      tags: ["local", "liyue", 1],
+    },
+    {
+      name: "Glaze Lily",
+      img: "/genshin/Glaze Lily.webp",
+      tags: ["local", "liyue", 1],
+    },
+    {
+      name: "Jueyun Chili",
+      img: "/genshin/Jueyun Chili.webp",
+      tags: ["local", "liyue", 1],
+    },
+    {
+      name: "Noctilucous Jade",
+      img: "/genshin/Noctilucous Jade.webp",
+      tags: ["local", "liyue", 1],
+    },
+    {
+      name: "Qingxin",
+      img: "/genshin/Qingxin.webp",
+      tags: ["local", "liyue", 1],
+    },
+    {
+      name: "Silk Flower",
+      img: "/genshin/Silk Flower.webp",
+      tags: ["local", "liyue", 1],
+    },
+    {
+      name: "Starconch",
+      img: "/genshin/Starconch.webp",
+      tags: ["local", "liyue", 1],
+    },
+    {
+      name: "Violetgrass",
+      img: "/genshin/Violetgrass.webp",
+      tags: ["local", "liyue", 1],
+    },
+    {
+      name: "Clearwater Jade",
+      img: "/genshin/Clearwater Jade.webp",
+      tags: ["local", "liyue", 1],
+    },
 
     // Local Specialties - Inazuma
-    { name: "Amakumo Fruit", img: "/genshin/Amakumo Fruit.webp", tags: ["local", "inazuma", 1] },
-    { name: "Crystal Marrow", img: "/genshin/Crystal Marrow.webp", tags: ["local", "inazuma", 1] },
-    { name: "Dendrobium", img: "/genshin/Dendrobium.webp", tags: ["local", "inazuma", 1] },
-    { name: "Fluorescent Fungus", img: "/genshin/Fluorescent Fungus.webp", tags: ["local", "inazuma", 1] },
-    { name: "Naku Weed", img: "/genshin/Naku Weed.webp", tags: ["local", "inazuma", 1] },
-    { name: "Onikabuto", img: "/genshin/Onikabuto.webp", tags: ["local", "inazuma", 1] },
-    { name: "Sakura Bloom", img: "/genshin/Sakura Bloom.webp", tags: ["local", "inazuma", 1] },
-    { name: "Sango Pearl", img: "/genshin/Sango Pearl.webp", tags: ["local", "inazuma", 1] },
-    { name: "Sea Ganoderma", img: "/genshin/Sea Ganoderma.webp", tags: ["local", "inazuma", 1] },
+    {
+      name: "Amakumo Fruit",
+      img: "/genshin/Amakumo Fruit.webp",
+      tags: ["local", "inazuma", 1],
+    },
+    {
+      name: "Crystal Marrow",
+      img: "/genshin/Crystal Marrow.webp",
+      tags: ["local", "inazuma", 1],
+    },
+    {
+      name: "Dendrobium",
+      img: "/genshin/Dendrobium.webp",
+      tags: ["local", "inazuma", 1],
+    },
+    {
+      name: "Fluorescent Fungus",
+      img: "/genshin/Fluorescent Fungus.webp",
+      tags: ["local", "inazuma", 1],
+    },
+    {
+      name: "Naku Weed",
+      img: "/genshin/Naku Weed.webp",
+      tags: ["local", "inazuma", 1],
+    },
+    {
+      name: "Onikabuto",
+      img: "/genshin/Onikabuto.webp",
+      tags: ["local", "inazuma", 1],
+    },
+    {
+      name: "Sakura Bloom",
+      img: "/genshin/Sakura Bloom.webp",
+      tags: ["local", "inazuma", 1],
+    },
+    {
+      name: "Sango Pearl",
+      img: "/genshin/Sango Pearl.webp",
+      tags: ["local", "inazuma", 1],
+    },
+    {
+      name: "Sea Ganoderma",
+      img: "/genshin/Sea Ganoderma.webp",
+      tags: ["local", "inazuma", 1],
+    },
 
     // Local Specialties - Sumeru
-    { name: "Henna Berry", img: "/genshin/Henna Berry.webp", tags: ["local", "sumeru", 1] },
-    { name: "Kalpalata Lotus", img: "/genshin/Kalpalata Lotus.webp", tags: ["local", "sumeru", 1] },
-    { name: "Mourning Flower", img: "/genshin/Mourning Flower.webp", tags: ["local", "sumeru", 1] },
-    { name: "Nilotpala Lotus", img: "/genshin/Nilotpala Lotus.webp", tags: ["local", "sumeru", 1] },
-    { name: "Padisarah", img: "/genshin/Padisarah.webp", tags: ["local", "sumeru", 1] },
-    { name: "Rukkhashava Mushrooms", img: "/genshin/Rukkhashava Mushrooms.webp", tags: ["local", "sumeru", 1] },
-    { name: "Sand Grease Pupa", img: "/genshin/Sand Grease Pupa.webp", tags: ["local", "sumeru", 1] },
-    { name: "Scarab", img: "/genshin/Scarab.webp", tags: ["local", "sumeru", 1] },
-    { name: "Trishiraite", img: "/genshin/Trishiraite.webp", tags: ["local", "sumeru", 1] },
+    {
+      name: "Henna Berry",
+      img: "/genshin/Henna Berry.webp",
+      tags: ["local", "sumeru", 1],
+    },
+    {
+      name: "Kalpalata Lotus",
+      img: "/genshin/Kalpalata Lotus.webp",
+      tags: ["local", "sumeru", 1],
+    },
+    {
+      name: "Mourning Flower",
+      img: "/genshin/Mourning Flower.webp",
+      tags: ["local", "sumeru", 1],
+    },
+    {
+      name: "Nilotpala Lotus",
+      img: "/genshin/Nilotpala Lotus.webp",
+      tags: ["local", "sumeru", 1],
+    },
+    {
+      name: "Padisarah",
+      img: "/genshin/Padisarah.webp",
+      tags: ["local", "sumeru", 1],
+    },
+    {
+      name: "Rukkhashava Mushrooms",
+      img: "/genshin/Rukkhashava Mushrooms.webp",
+      tags: ["local", "sumeru", 1],
+    },
+    {
+      name: "Sand Grease Pupa",
+      img: "/genshin/Sand Grease Pupa.webp",
+      tags: ["local", "sumeru", 1],
+    },
+    {
+      name: "Scarab",
+      img: "/genshin/Scarab.webp",
+      tags: ["local", "sumeru", 1],
+    },
+    {
+      name: "Trishiraite",
+      img: "/genshin/Trishiraite.webp",
+      tags: ["local", "sumeru", 1],
+    },
 
     // Local Specialties - Fontaine
-    { name: "Beryl Conch", img: "/genshin/Beryl Conch.webp", tags: ["local", "fontaine", 1] },
-    { name: "Lakelight Lily", img: "/genshin/Lakelight Lily.webp", tags: ["local", "fontaine", 1] },
-    { name: "Lumidouce Bell", img: "/genshin/Lumidouce Bell.webp", tags: ["local", "fontaine", 1] },
-    { name: "Lumitoile", img: "/genshin/Lumitoile.webp", tags: ["local", "fontaine", 1] },
-    { name: "Rainbow Rose", img: "/genshin/Rainbow Rose.webp", tags: ["local", "fontaine", 1] },
-    { name: "Romaritime Flower", img: "/genshin/Romaritime Flower.webp", tags: ["local", "fontaine", 1] },
-    { name: "Spring of the First Dewdrop", img: "/genshin/Spring of the First Dewdrop.webp", tags: ["local", "fontaine", 1] },
-    { name: "Subdetection Unit", img: "/genshin/Subdetection Unit.webp", tags: ["local", "fontaine", 1] },
+    {
+      name: "Beryl Conch",
+      img: "/genshin/Beryl Conch.webp",
+      tags: ["local", "fontaine", 1],
+    },
+    {
+      name: "Lakelight Lily",
+      img: "/genshin/Lakelight Lily.webp",
+      tags: ["local", "fontaine", 1],
+    },
+    {
+      name: "Lumidouce Bell",
+      img: "/genshin/Lumidouce Bell.webp",
+      tags: ["local", "fontaine", 1],
+    },
+    {
+      name: "Lumitoile",
+      img: "/genshin/Lumitoile.webp",
+      tags: ["local", "fontaine", 1],
+    },
+    {
+      name: "Rainbow Rose",
+      img: "/genshin/Rainbow Rose.webp",
+      tags: ["local", "fontaine", 1],
+    },
+    {
+      name: "Romaritime Flower",
+      img: "/genshin/Romaritime Flower.webp",
+      tags: ["local", "fontaine", 1],
+    },
+    {
+      name: "Spring of the First Dewdrop",
+      img: "/genshin/Spring of the First Dewdrop.webp",
+      tags: ["local", "fontaine", 1],
+    },
+    {
+      name: "Subdetection Unit",
+      img: "/genshin/Subdetection Unit.webp",
+      tags: ["local", "fontaine", 1],
+    },
 
     // Local Specialties - Natlan
-    { name: "Brilliant Chrysanthemum", img: "/genshin/Brilliant Chrysanthemum.webp", tags: ["local", "natlan", 1] },
-    { name: "Dracolite", img: "/genshin/Dracolite.webp", tags: ["local", "natlan", 1] },
-    { name: "Glowing Hornshroom", img: "/genshin/Glowing Hornshroom.webp", tags: ["local", "natlan", 1] },
-    { name: "Quenepa Berry", img: "/genshin/Quenepa Berry.webp", tags: ["local", "natlan", 1] },
-    { name: "Saurian Claw Succulent", img: "/genshin/Saurian Claw Succulent.webp", tags: ["local", "natlan", 1] },
-    { name: "Skysplit Gembloom", img: "/genshin/Skysplit Gembloom.webp", tags: ["local", "natlan", 1] },
-    { name: "Sprayfeather Gill", img: "/genshin/Sprayfeather Gill.webp", tags: ["local", "natlan", 1] },
-    { name: "Withering Purpurbloom", img: "/genshin/Withering Purpurbloom.webp", tags: ["local", "natlan", 1] },
+    {
+      name: "Brilliant Chrysanthemum",
+      img: "/genshin/Brilliant Chrysanthemum.webp",
+      tags: ["local", "natlan", 1],
+    },
+    {
+      name: "Dracolite",
+      img: "/genshin/Dracolite.webp",
+      tags: ["local", "natlan", 1],
+    },
+    {
+      name: "Glowing Hornshroom",
+      img: "/genshin/Glowing Hornshroom.webp",
+      tags: ["local", "natlan", 1],
+    },
+    {
+      name: "Quenepa Berry",
+      img: "/genshin/Quenepa Berry.webp",
+      tags: ["local", "natlan", 1],
+    },
+    {
+      name: "Saurian Claw Succulent",
+      img: "/genshin/Saurian Claw Succulent.webp",
+      tags: ["local", "natlan", 1],
+    },
+    {
+      name: "Skysplit Gembloom",
+      img: "/genshin/Skysplit Gembloom.webp",
+      tags: ["local", "natlan", 1],
+    },
+    {
+      name: "Sprayfeather Gill",
+      img: "/genshin/Sprayfeather Gill.webp",
+      tags: ["local", "natlan", 1],
+    },
+    {
+      name: "Withering Purpurbloom",
+      img: "/genshin/Withering Purpurbloom.webp",
+      tags: ["local", "natlan", 1],
+    },
 
     // local Specialities - Nod Krai
-    { name: "Frostlamp Flower", img: "/genshin/Frostlamp Flower.webp", tags: ["local", "nod krai", 1] },
-    { name: "Moonfall Silver", img: "/genshin/Moonfall Silver.webp", tags: ["local", "nod krai", 1] },
-    { name: "Portable Bearing", img: "/genshin/Portable Bearing.webp", tags: ["local", "nod krai", 1] },
+    {
+      name: "Frostlamp Flower",
+      img: "/genshin/Frostlamp Flower.webp",
+      tags: ["local", "nod krai", 1],
+    },
+    {
+      name: "Moonfall Silver",
+      img: "/genshin/Moonfall Silver.webp",
+      tags: ["local", "nod krai", 1],
+    },
+    {
+      name: "Portable Bearing",
+      img: "/genshin/Portable Bearing.webp",
+      tags: ["local", "nod krai", 1],
+    },
 
     // Talent Books - Mondstadt
     {
@@ -1820,7 +2036,7 @@ export const ASCENSION_MATERIALS = {
       name: "Fonte­mer Uni­horn",
       img: "/genshin/Fonte­mer Uni­horn.webp",
       tags: ["overworld", "boss", 4],
-    }, 
+    },
     {
       name: "Tour­bil­lon De­vice",
       img: "/genshin/Tour­bil­lon De­vice.webp",
@@ -1893,42 +2109,193 @@ export const ASCENSION_MATERIALS = {
     },
 
     // Weekly Boss Materials
-    { name: "Ring of Boreas", img: "/genshin/Ring of Boreas.webp", tags: ["weekly", "boss", 5] },
-    { name: "Tail of Boreas", img: "/genshin/Tail of Boreas.webp", tags: ["weekly", "boss", 5] },
-    { name: "Spirit Locket of Boreas", img: "/genshin/Spirit Locket of Boreas.webp", tags: ["weekly", "boss", 5] },
-    { name: "Dvalin's Plume", img: "/genshin/Dvalin's Plume.webp", tags: ["weekly", "boss", 5] },
-    { name: "Dvalin's Claw", img: "/genshin/Dvalin's Claw.webp", tags: ["weekly", "boss", 5] },
-    { name: "Dvalin's Sigh", img: "/genshin/Dvalin's Sigh.webp", tags: ["weekly", "boss", 5] },
-    { name: "Tusk of Mo­no­ceros Caeli", img: "/genshin/Tusk of Mo­no­ceros Caeli.webp", tags: ["weekly", "boss", 5] },
-    { name: "Shard of a Foul Legacy", img: "/genshin/Shard of a Foul Legacy.webp", tags: ["weekly", "boss", 5] },
-    { name: "Shadow of the Warrior", img: "/genshin/Shadow of the Warrior.webp", tags: ["weekly", "boss", 5] },
-    { name: "Drag­on Lord's Crown", img: "/genshin/Drag­on Lord's Crown.webp", tags: ["weekly", "boss", 5] },
-    { name: "Blood­jade Branch", img: "/genshin/Blood­jade Branch.webp", tags: ["weekly", "boss", 5] },
-    { name: "Gil­ded Scale", img: "/genshin/Gil­ded Scale.webp", tags: ["weekly", "boss", 5] },
-    { name: "Molten Moment", img: "/genshin/Molten Moment.webp", tags: ["weekly", "boss", 5] },
-    { name: "Hell­fire But­ter­fly", img: "/genshin/Hell­fire But­ter­fly.webp", tags: ["weekly", "boss", 5] },
-    { name: "Ashen Heart", img: "/genshin/Ashen Heart.webp", tags: ["weekly", "boss", 5] },
-    { name: "Mudra of the Malefic General", img: "/genshin/Mudra of the Malefic General.webp", tags: ["weekly", "boss", 5] },
-    { name: "Tears of the Calami­tous God", img: "/genshin/Tears of the Calami­tous God.webp", tags: ["weekly", "boss", 5] },
-    { name: "The Meaning of Aeons", img: "/genshin/The Meaning of Aeons.webp", tags: ["weekly", "boss", 5] },
-    { name: "Puppet Strings", img: "/genshin/Puppet Strings.webp", tags: ["weekly", "boss", 5] },
-    { name: "Mirror of Mushin", img: "/genshin/Mirror of Mushin.webp", tags: ["weekly", "boss", 5] },
-    { name: "Daka's Bell", img: "/genshin/Daka's Bell.webp", tags: ["weekly", "boss", 5] },
-    { name: "World­span Fern", img: "/genshin/World­span Fern.webp", tags: ["weekly", "boss", 5] },
-    { name: "Primor­dial Green­bloom", img: "/genshin/Primor­dial Green­bloom.webp", tags: ["weekly", "boss", 5] },
-    { name: "Ever­amber", img: "/genshin/Ever­amber.webp", tags: ["weekly", "boss", 5] },
-    { name: "Light­less Silk String", img: "/genshin/Light­less Silk String.webp", tags: ["weekly", "boss", 5] },
-    { name: "Light­less Eye of the Mael­strom", img: "/genshin/Light­less Eye of the Mael­strom.webp", tags: ["weekly", "boss", 5] },
-    { name: "Light­less Mass", img: "/genshin/Light­less Mass.webp", tags: ["weekly", "boss", 5] },
-    { name: "Fading Candle", img: "/genshin/Fading Candle.webp", tags: ["weekly", "boss", 5] },
-    { name: "Silken Feather", img: "/genshin/Silken Feather.webp", tags: ["weekly", "boss", 5] },
-    { name: "De­nial and Judg­ment", img: "/genshin/De­nial and Judg­ment.webp", tags: ["weekly", "boss", 5] },
-    { name: "Eroded Horn", img: "/genshin/Eroded Horn.webp", tags: ["weekly", "boss", 5] },
-    { name: "Eroded Sunfire", img: "/genshin/Eroded Sunfire.webp", tags: ["weekly", "boss", 5] },
-    { name: "Eroded Scale-Feather", img: "/genshin/Eroded Scale-Feather.webp", tags: ["weekly", "boss", 5] },
-    { name: "Ascended Sample: Knight", img: "/genshin/Ascended Sample: Knight.webp", tags: ["weekly", "boss", 5] },
-    { name: "Ascended Sample: Rook", img: "/genshin/Ascended Sample: Rook.webp", tags: ["weekly", "boss", 5] },
-    { name: "Ascended Sample: Queen", img: "/genshin/Ascended Sample: Queen.webp", tags: ["weekly", "boss", 5] },
+    {
+      name: "Ring of Boreas",
+      img: "/genshin/Ring of Boreas.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Tail of Boreas",
+      img: "/genshin/Tail of Boreas.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Spirit Locket of Boreas",
+      img: "/genshin/Spirit Locket of Boreas.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Dvalin's Plume",
+      img: "/genshin/Dvalin's Plume.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Dvalin's Claw",
+      img: "/genshin/Dvalin's Claw.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Dvalin's Sigh",
+      img: "/genshin/Dvalin's Sigh.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Tusk of Mo­no­ceros Caeli",
+      img: "/genshin/Tusk of Mo­no­ceros Caeli.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Shard of a Foul Legacy",
+      img: "/genshin/Shard of a Foul Legacy.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Shadow of the Warrior",
+      img: "/genshin/Shadow of the Warrior.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Drag­on Lord's Crown",
+      img: "/genshin/Drag­on Lord's Crown.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Blood­jade Branch",
+      img: "/genshin/Blood­jade Branch.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Gil­ded Scale",
+      img: "/genshin/Gil­ded Scale.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Molten Moment",
+      img: "/genshin/Molten Moment.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Hell­fire But­ter­fly",
+      img: "/genshin/Hell­fire But­ter­fly.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Ashen Heart",
+      img: "/genshin/Ashen Heart.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Mudra of the Malefic General",
+      img: "/genshin/Mudra of the Malefic General.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Tears of the Calami­tous God",
+      img: "/genshin/Tears of the Calami­tous God.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "The Meaning of Aeons",
+      img: "/genshin/The Meaning of Aeons.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Puppet Strings",
+      img: "/genshin/Puppet Strings.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Mirror of Mushin",
+      img: "/genshin/Mirror of Mushin.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Daka's Bell",
+      img: "/genshin/Daka's Bell.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "World­span Fern",
+      img: "/genshin/World­span Fern.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Primor­dial Green­bloom",
+      img: "/genshin/Primor­dial Green­bloom.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Ever­amber",
+      img: "/genshin/Ever­amber.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Light­less Silk String",
+      img: "/genshin/Light­less Silk String.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Light­less Eye of the Mael­strom",
+      img: "/genshin/Light­less Eye of the Mael­strom.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Light­less Mass",
+      img: "/genshin/Light­less Mass.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Fading Candle",
+      img: "/genshin/Fading Candle.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Silken Feather",
+      img: "/genshin/Silken Feather.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "De­nial and Judg­ment",
+      img: "/genshin/De­nial and Judg­ment.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Eroded Horn",
+      img: "/genshin/Eroded Horn.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Eroded Sunfire",
+      img: "/genshin/Eroded Sunfire.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Eroded Scale-Feather",
+      img: "/genshin/Eroded Scale-Feather.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Ascended Sample: Knight",
+      img: "/genshin/Ascended Sample: Knight.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Ascended Sample: Rook",
+      img: "/genshin/Ascended Sample: Rook.webp",
+      tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "Ascended Sample: Queen",
+      img: "/genshin/Ascended Sample: Queen.webp",
+      tags: ["weekly", "boss", 5],
+    },
+
+    // other
+    {
+      name: "Crown of Insight",
+      img: "/genshin/Crown of Insight.webp",
+      tags: ["other", "crown"],
+    },
   ],
   hsr: [
     {

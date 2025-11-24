@@ -1,79 +1,33 @@
 // /data/character-stats.js
 
-// optional: update this to add more charas and their base stats
+// optional: update this to add more charas and their base stats at max level
 // only if this data gets used for future updates
 // otherwise don't worry about this file
 
 export const CHARACTER_STATS = {
-  // Genshin Example
-  Ayaka: {
-    game: "genshin",
-    baseHP: 12158,
-    baseATK: 349,
-    baseDEF: 782,
-    critRate: 0.05,
-    critDMG: 0.50,
-    // Add scaling later: talents, constellations
-    maxStats: {
-      level90: {
-        HP: 14041,
-        ATK: 684,
-        DEF: 868,
-        critRate: 19.2,
-        critDMG: 155.2,
+  genshin: {
+    "Amber": {
+      90: {
+        baseHP: 9461.18,
+        baseATK: 223.02,
+        baseDEF: 600.62,
+      },
+      95: {
+        baseHP: 9788.00,
+        baseATK: 251.46,
+        baseDEF: 621.37,
+      },
+      100: {
+        baseHP: 10115.61,
+        baseATK: 279.92,
+        baseDEF: 642.16,
       },
     },
   },
-  HuTao: {
-    game: "genshin",
-    baseHP: 12907,
-    baseATK: 572,
-    baseDEF: 683,
-    critRate: 0.05,
-    critDMG: 1.552,
-    maxStats: {
-      level90: {
-        HP: 14903,
-        ATK: 949,
-        DEF: 772,
-        critRate: 19.2,
-        critDMG: 155.2,
-        // HP% scaling → talent-based
-      },
-    },
+  hsr: {
+    // add hsr charas here
   },
-  // Honkai: Star Rail
-  Seele: {
-    game: "hsr",
-    baseSPD: 118,
-    baseATK: 120,
-    baseHP: 320,
-    baseDEF: 90,
-    maxStats: {
-      level80: {
-        SPD: 138,
-        ATK: 400,
-        HP: 1100,
-        DEF: 300,
-        critRate: 12.0,
-        critDMG: 192,
-      },
-    },
-  },
-  // Zenless Zone Zero
-  AnbyDemara: {
-    game: "zzz",
-    baseATK: 350,
-    baseHP: 800,
-    baseDEF: 200,
-    maxStats: {
-      level60: {
-        ATK: 1300,
-        HP: 2800,
-        DEF: 700,
-        critRate: 18.0,
-        critDMG: 144,
-      },
-    },
+  zzz: {
+    // add zzz characters here
   },
 };

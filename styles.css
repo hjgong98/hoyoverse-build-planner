@@ -111,3 +111,69 @@ nav button:hover {
   width: 90%;
   border: 2px solid #00ffff;
 }
+
+.char-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.char-box {
+  min-height: 100px;
+  padding: 12px 8px;
+  background: #2c3e50;
+  border: 2px solid #e67e22;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 13px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.char-box:hover {
+  transform: scale(1.05);
+  border-color: #f1c40f;
+  background: #34495e;
+}
+
+.char-box.add-new {
+  border-style: dashed;
+  border-color: #3498db;
+  color: #3498db;
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.char-box img {
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.modal-content {
+  max-height: 95vh;
+  max-width: 95vw;
+  margin: auto;
+}

@@ -13,6 +13,15 @@ import { GAME_LIMITS } from "../data/game-limits.js";
 import { ASCENSION_MATERIALS } from "../data/ascension-mats.js";
 import { ALL_WEAPONS } from "../data/all-weapons.js";
 
+const style = document.createElement("style");
+style.textContent = `
+  .modal-content {
+    max-width: 95vw !important;
+    width: 90vw !important;
+  }
+`;
+document.head.appendChild(style);
+
 let myCharacters = loadMyCharacters();
 
 // Map short keys to full game names
@@ -67,21 +76,44 @@ function renderCharacterList() {
   `;
 
   const list = document.getElementById("char-list");
+
   myCharacters.forEach((char) => {
+    const charData = ALL_CHARACTERS[char.game]?.[char.name];
+
+    // Use character icon if available, otherwise use placeholder
+    let charIcon = charData?.icon;
+
+    const fullName = char.name;
+    const fullGameName = getFullGameName(char.game);
+
     const box = document.createElement("div");
     box.className = "char-box";
-    box.textContent = char.name;
-    box.title = `${char.name} (${
-      getFullGameName(char.game)
-    }) → Lv.${char.currentLevel} → ${char.goalLevel}`;
+    box.title =
+      `${fullName} (${fullGameName}) → Lv.${char.currentLevel} → ${char.goalLevel}`;
     box.onclick = () => renderCharacterDetail(char);
+
+    box.innerHTML = `
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+        <img src="${charIcon}" alt="${fullName}" 
+            style="width: 48px; height: 48px; border-radius: 8px; object-fit: cover; border: 2px solid #e67e22;">
+        <span style="font-size: 12px; text-align: center; line-height: 1.2;">${fullName}</span>
+      </div>
+    `;
+
     list.appendChild(box);
   });
 
-  // Add "+" button
+  // Add "+" button (keep your existing code)
   const addBox = document.createElement("div");
   addBox.className = "char-box add-new";
-  addBox.textContent = "+";
+  addBox.innerHTML = `
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+      <div style="width: 48px; height: 48px; border-radius: 8px; border: 2px dashed #3498db; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #3498db;">
+        +
+      </div>
+      <span style="font-size: 12px; text-align: center;">Add Character</span>
+    </div>
+  `;
   addBox.onclick = () => window.openAddCharacterModal?.();
   list.appendChild(addBox);
 }

@@ -126,7 +126,7 @@ function renderMaterialItem(mat, count) {
          style="position: relative; display: inline-flex; flex-direction: column; align-items: center;
                 cursor: pointer; width: 60px; user-select: none;">
       <div style="position: relative; width: 48px; height: 48px; margin: 4px auto;">
-        <img src="/data/assets/${mat.img}" alt="${mat.name}"
+        <img src="/assets/${mat.img}" alt="${mat.name}"
              style="width: 100%; height: 100%; object-fit: contain; border-radius: 6px;" />
         ${
     count > 0
@@ -166,7 +166,7 @@ window.openEditModal = (game, matName) => {
                   border: 2px solid #00ffff; box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);">
         <div style="padding: 20px; text-align: center;">
           <h3 style="color: #00ffff; margin: 0 0 12px; font-size: 18px;">${matName}</h3>
-          <img src="/data/assets/${mat.img}" alt="${mat.name}"
+          <img src="/assets/${mat.img}" alt="${mat.name}"
                style="width: 72px; height: 72px; object-fit: contain; border: 1px solid #3498db; border-radius: 8px; margin: 0 auto 16px; display: block;" />
           
           <div style="color: #ddd; margin-bottom: 10px;">
