@@ -225,7 +225,7 @@ export const ALL_CHARACTERS = {
       type: "freedom",
       weekly: "Spirit Locket of Boreas",
       icon: "./assets/genshin/Sucrose Icon.webp",
-      picture: "./assets/genshin/Sucrose Card.webp",
+      picture: "./assets/genshin/Sucrose Card.png",
     },
     "Traveler (Anemo)": {
       weapon: "Sword",
