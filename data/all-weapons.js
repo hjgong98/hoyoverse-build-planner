@@ -75,7 +75,7 @@ export const ALL_WEAPONS = {
           description:
             "On hit, has 50% chance to deal 240~400% ATK DMG to a single enemy. Can only occur once every 15~11s.",
         },
-        image: "/assets/genshin/weapons/Dull Blade.webp",
+        image: "/assets/genshin/weapons/Fillet Blade.webp",
       },
       {
         name: "Harbinger of Dawn",
@@ -83,30 +83,45 @@ export const ALL_WEAPONS = {
         baseATK: 401,
         stat: { type: "CRIT DMG", value: 46.9 },
         passive: { type: "CRIT Rate", value: [14, 28], description: "none" },
+        image: "/assets/genshin/weapons/Harbinger of Dawn.webp",
+      },
+      {
+        name: "Traveler's Handy Sword",
+        rarity: 3,
+        baseATK: 401,
+        stat: { type: "DEF", value: 29.3 },
+        passive: {
+          type: "none",
+          value: 0,
+          description:
+            "Each Elemental Orb or Particle collected restores 1~2% HP.",
+        },
         image: "/assets/genshin/weapons/Dull Blade.webp",
       },
       {
-        name: "Cool Steel",
-        rarity: 3,
-        baseATK: 401,
-        stat: { type: "none", value: 0 },
-        passive: { type: "none", value: 0, description: "none" },
+        name: "Sword of Descension",
+        rarity: 4,
+        baseATK: 440,
+        stat: { type: "ATK", value: 35.2 },
+        passive: {
+          type: "none",
+          value: 0,
+          description:
+            "Hitting enemies with Normal or Charged Attacks grants a 50% chance to deal 200% ATK as DMG in a small AoE. This effect can only occur once every 10s. Additionally, if the Traveler equips the Sword of Descension, their ATK is increased by 66.",
+        },
         image: "/assets/genshin/weapons/Dull Blade.webp",
       },
       {
-        name: "Cool Steel",
-        rarity: 3,
-        baseATK: 401,
-        stat: { type: "none", value: 0 },
-        passive: { type: "none", value: 0, description: "none" },
-        image: "/assets/genshin/weapons/Dull Blade.webp",
-      },
-      {
-        name: "Cool Steel",
-        rarity: 3,
-        baseATK: 401,
-        stat: { type: "none", value: 0 },
-        passive: { type: "none", value: 0, description: "none" },
+        name: "	Amenoma Kageuchi",
+        rarity: 4,
+        baseATK: 454,
+        stat: { type: "ATK", value: 55.1 },
+        passive: {
+          type: "none",
+          value: 0,
+          description:
+            "After casting an Elemental Skill, gain 1 Succession Seed. This effect can be triggered once every 5s. The Succession Seed lasts for 30s. Up to 3 Succession Seeds may exist simultaneously. After using an Elemental Burst, all Succession Seeds are consumed and after 2s, the character regenerates 6~12 Energy for each seed consumed.",
+        },
         image: "/assets/genshin/weapons/Dull Blade.webp",
       },
       {

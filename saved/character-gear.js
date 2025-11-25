@@ -133,9 +133,7 @@ const ARTIFACT_SETS = {
     "Gladiator's Finale": {
       "2pc": { type: "stat", value: 18, stat: "atk" },
       "4pc": {
-        type: "stat",
-        value: 35,
-        stat: "normalDmg",
+        type: "description",
         description: "Increases Normal Attack DMG by 35%.",
       },
       images: {
@@ -150,9 +148,7 @@ const ARTIFACT_SETS = {
     "Wanderer's Troupe": {
       "2pc": { type: "stat", value: 80, stat: "elementalMastery" },
       "4pc": {
-        type: "stat",
-        value: 35,
-        stat: "chargedDmg",
+        type: "description",
         description: "Increases Charged Attack DMG by 35%.",
       },
       images: {
@@ -167,9 +163,7 @@ const ARTIFACT_SETS = {
     "Crimson Witch of Flames": {
       "2pc": { type: "stat", value: 15, stat: "pyroDmg" },
       "4pc": {
-        type: "mixed",
-        value: 40,
-        stat: "pyroReactionDmg",
+        type: "description",
         description:
           "Increases Overloaded, Burning, and Burgeon DMG by 40%. Increases Vaporize and Melt DMG by 15%.",
       },
@@ -182,30 +176,10 @@ const ARTIFACT_SETS = {
       },
       rarity: 5,
     },
-    "Retracing Bolide": {
-      "2pc": { type: "stat", value: 35, stat: "shieldStrength" },
-      "4pc": {
-        type: "description",
-        description:
-          "While protected by a shield, gain an additional 40% Normal and Charged Attack DMG.",
-        value: 40,
-        stat: "normalDmg",
-      },
-      images: {
-        flower: "/assets/genshin/artifacts/retracing_flower.webp",
-        plume: "/assets/genshin/artifacts/retracing_plume.webp",
-        sands: "/assets/genshin/artifacts/retracing_sands.webp",
-        goblet: "/assets/genshin/artifacts/retracing_goblet.webp",
-        circlet: "/assets/genshin/artifacts/retracing_circlet.webp",
-      },
-      rarity: 5,
-    },
     "Berserker": {
       "2pc": { type: "stat", value: 12, stat: "critRate" },
       "4pc": {
-        type: "stat",
-        value: 24,
-        stat: "critRate",
+        type: "description",
         description:
           "When HP is below 70%, CRIT Rate increases by an additional 24%.",
       },
@@ -223,12 +197,7 @@ const ARTIFACT_SETS = {
     //
     // "Set Name": {
     //   "2pc": { type: "stat", value: XX, stat: "statType" },
-    //   "4pc": {
-    //     type: "stat"/"description"/"mixed",
-    //     value: XX, // if applicable
-    //     stat: "statType", // if applicable
-    //     description: "Effect description" // if applicable
-    //   },
+    //   "4pc": { type: "description", description: "Effect description" },
     //   images: {
     //     flower: "path/to/flower.webp",
     //     plume: "path/to/plume.webp",
@@ -244,15 +213,15 @@ const ARTIFACT_SETS = {
 
 // Function to format stat values for display
 function formatStatValue(stat, value) {
-  if (stat === "HP") return value.toLocaleString();
-  if (stat === "ATK") return value.toLocaleString();
+  if (stat === "HP") return Math.round(value).toLocaleString();
+  if (stat === "ATK") return Math.round(value).toLocaleString();
   if (
     stat.includes("%") || stat === "CRIT Rate" || stat === "CRIT DMG" ||
     stat === "Healing Bonus" || stat === "Energy Recharge"
   ) {
     return value.toFixed(1) + "%";
   }
-  if (stat === "Elemental Mastery") return value.toLocaleString();
+  if (stat === "Elemental Mastery") return Math.round(value).toLocaleString();
   return value.toFixed(1);
 }
 
@@ -271,7 +240,6 @@ function getArtifactSetRarity(char, setName) {
   return "5star"; // Default to 5-star
 }
 
-// Function to get artifact set options with rarity indicator
 // Function to get artifact set options with proper selection
 function getArtifactSetOptions(
   game,
@@ -421,7 +389,7 @@ function renderCharacterGear(char) {
         flower: {
           mainStat: "HP",
           value: getArtifactMainStatValue("HP", "5star"),
-          rarity: "5star", // Individual rarity
+          rarity: "5star",
         },
         plume: {
           mainStat: "ATK",
@@ -449,15 +417,20 @@ function renderCharacterGear(char) {
         atk: 0,
         def: 0,
         elementalMastery: 0,
-        critRate: 0,
-        critDmg: 0,
+        critRate: 5, // Base crit rate
+        critDmg: 50, // Base crit dmg
         healingBonus: 0,
-        energyRecharge: 0,
+        energyRecharge: 100, // Base energy recharge
         elementalDmg: 0,
       },
     };
     saveMyCharacters();
   }
+
+  // Calculate current stats (character + weapon only)
+  const currentStats = calculateBaseStats(char, stats, charData);
+  // Calculate projected stats (including artifacts)
+  const projectedStats = calculateProjectedStats(char, stats, charData);
 
   content.innerHTML = `
     <div style="max-width: 1400px; margin: 0 auto; padding: 20px;">
@@ -490,9 +463,9 @@ function renderCharacterGear(char) {
       
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px;">
         
-        <!-- Left Column: Current Stats -->
+        <!-- Left Column: Current Stats (Character + Weapon only) -->
         <div style="background: #1c2b33; padding: 25px; border-radius: 16px; border: 2px solid #00ffff44;">
-          <h3 style="color: #00ffff; margin-bottom: 20px;">Current Stats</h3>
+          <h3 style="color: #00ffff; margin-bottom: 20px;">Base Stats (Character + Weapon)</h3>
           
           <div style="margin-bottom: 20px;">
             <strong>Weapon:</strong>
@@ -528,12 +501,7 @@ function renderCharacterGear(char) {
           </div>
           
           <div id="current-stats" style="display: grid; gap: 12px;">
-            ${
-    stats
-      ? renderCurrentStats(char, stats, charData)
-      : '<div style="color: #e74c3c; text-align: center;">Character stats not found for level ' +
-        gearLevel + "</div>"
-  }
+            ${renderStatsDisplay(currentStats, charData)}
           </div>
         </div>
         
@@ -664,68 +632,179 @@ function renderCharacterGear(char) {
         </div>
         
         <!-- Stats Comparison -->
-        <div id="stats-comparison" style="margin-top: 25px; background: #2c3e50; padding: 20px; border-radius: 12px; min-height: 100px;">
-          <div style="text-align: center; color: #888; font-style: italic;">
-            Additional artifact optimization features coming soon...
-          </div>
+        <div id="stats-comparison" style="margin-top: 25px; background: #2c3e50; padding: 20px; border-radius: 12px;">
+          <h4 style="color: #00ffff; margin-bottom: 15px;">Build Progress vs Goal</h4>
+          ${
+    renderStatsComparison(projectedStats, char.gear.goalStats, charData)
+  }
         </div>
       </div>
     </div>
   `;
 }
 
-function renderCurrentStats(char, stats, charData) {
-  const currentStats = calculateCurrentStats(char, stats, charData);
+// Calculate base stats (character + weapon only)
+function calculateBaseStats(char, stats, charData) {
+  if (!stats) return getBaseStats();
 
+  const baseStats = getBaseStats();
+  const weaponStats = calculateWeaponStats(char);
+
+  // HP: (character base hp * (100 + x)/100) + flat hp
+  const hpPercentBonus =
+    (weaponStats.additionalStat?.type === "HP"
+      ? weaponStats.additionalStat.value
+      : 0) +
+    (stats.additionalStat?.type === "HP" ? stats.additionalStat.value : 0);
+  baseStats.hp = stats.baseHP * (100 + hpPercentBonus) / 100;
+
+  // ATK: ((character base atk + weapon base atk) * (100 + x)/100) + flat atk
+  const atkPercentBonus =
+    (weaponStats.additionalStat?.type === "ATK"
+      ? weaponStats.additionalStat.value
+      : 0) +
+    (stats.additionalStat?.type === "ATK" ? stats.additionalStat.value : 0);
+  baseStats.atk = (stats.baseATK + weaponStats.atkFlat) *
+    (100 + atkPercentBonus) / 100;
+
+  // DEF: (character base def * (100 + x)/100) + flat def
+  const defPercentBonus =
+    (weaponStats.additionalStat?.type === "DEF"
+      ? weaponStats.additionalStat.value
+      : 0) +
+    (stats.additionalStat?.type === "DEF" ? stats.additionalStat.value : 0);
+  baseStats.def = stats.baseDEF * (100 + defPercentBonus) / 100;
+
+  // Elemental Mastery: base + additions
+  baseStats.elementalMastery =
+    (weaponStats.additionalStat?.type === "Elemental Mastery"
+      ? weaponStats.additionalStat.value
+      : 0) +
+    (stats.additionalStat?.type === "Elemental Mastery"
+      ? stats.additionalStat.value
+      : 0);
+
+  // CRIT Rate: 5% base + additions
+  baseStats.critRate = 5 +
+    (weaponStats.additionalStat?.type === "CRIT Rate"
+      ? weaponStats.additionalStat.value
+      : 0) +
+    (stats.additionalStat?.type === "CRIT Rate"
+      ? stats.additionalStat.value
+      : 0);
+
+  // CRIT DMG: 50% base + additions
+  baseStats.critDmg = 50 +
+    (weaponStats.additionalStat?.type === "CRIT DMG"
+      ? weaponStats.additionalStat.value
+      : 0) +
+    (stats.additionalStat?.type === "CRIT DMG"
+      ? stats.additionalStat.value
+      : 0);
+
+  // Energy Recharge: 100% base + additions
+  baseStats.energyRecharge = 100 +
+    (weaponStats.additionalStat?.type === "Energy Recharge"
+      ? weaponStats.additionalStat.value
+      : 0) +
+    (stats.additionalStat?.type === "Energy Recharge"
+      ? stats.additionalStat.value
+      : 0);
+
+  // Elemental DMG: additions only
+  baseStats.elementalDmg =
+    (weaponStats.additionalStat?.type?.includes("DMG%")
+      ? weaponStats.additionalStat.value
+      : 0) +
+    (stats.additionalStat?.type?.includes("DMG%")
+      ? stats.additionalStat.value
+      : 0);
+
+  return baseStats;
+}
+
+// Calculate projected stats (including artifacts)
+function calculateProjectedStats(char, stats, charData) {
+  const baseStats = calculateBaseStats(char, stats, charData);
+  const artifactStats = calculateArtifactMainStats(char);
+  const setEffects = calculateArtifactSetEffects(char);
+
+  // Apply artifact main stats and set effects
+  const projected = { ...baseStats };
+
+  // HP: add flat HP from flower and % HP from artifacts
+  projected.hp += artifactStats.hpFlat; // Flower
+  projected.hp += stats.baseHP * artifactStats.hpPercent / 100; // % HP from artifacts
+  projected.hp += stats.baseHP * (setEffects.stats.hp || 0) / 100; // % HP from set effects
+
+  // ATK: add flat ATK from plume and % ATK from artifacts
+  projected.atk += artifactStats.atkFlat; // Plume
+  projected.atk += (stats.baseATK) * artifactStats.atkPercent / 100; // % ATK from artifacts
+  projected.atk += (stats.baseATK) * (setEffects.stats.atk || 0) / 100; // % ATK from set effects
+
+  // DEF: add % DEF from artifacts
+  projected.def += stats.baseDEF * artifactStats.defPercent / 100; // % DEF from artifacts
+  projected.def += stats.baseDEF * (setEffects.stats.def || 0) / 100; // % DEF from set effects
+
+  // Other stats: direct additions
+  projected.elementalMastery += artifactStats.elementalMastery +
+    (setEffects.stats.elementalMastery || 0);
+  projected.critRate += artifactStats.critRate +
+    (setEffects.stats.critRate || 0);
+  projected.critDmg += artifactStats.critDmg + (setEffects.stats.critDmg || 0);
+  projected.energyRecharge += artifactStats.energyRecharge +
+    (setEffects.stats.energyRecharge || 0);
+  projected.healingBonus += artifactStats.healingBonus +
+    (setEffects.stats.healingBonus || 0);
+  projected.elementalDmg += artifactStats.elementalDmg +
+    (setEffects.stats.pyroDmg || 0) +
+    (setEffects.stats.hydroDmg || 0) + (setEffects.stats.electroDmg || 0) +
+    (setEffects.stats.cryoDmg || 0) + (setEffects.stats.anemoDmg || 0) +
+    (setEffects.stats.geoDmg || 0) + (setEffects.stats.dendroDmg || 0);
+
+  return projected;
+}
+
+function renderStatsDisplay(stats, charData) {
   const statsConfig = [
-    { key: "hp", label: "HP", base: Math.round(currentStats.hp), suffix: "" },
-    {
-      key: "atk",
-      label: "ATK",
-      base: Math.round(currentStats.atk),
-      suffix: "",
-    },
-    {
-      key: "def",
-      label: "DEF",
-      base: Math.round(currentStats.def),
-      suffix: "",
-    },
+    { key: "hp", label: "HP", base: Math.round(stats.hp), suffix: "" },
+    { key: "atk", label: "ATK", base: Math.round(stats.atk), suffix: "" },
+    { key: "def", label: "DEF", base: Math.round(stats.def), suffix: "" },
     {
       key: "elementalMastery",
       label: "Elemental Mastery",
-      base: Math.round(currentStats.elementalMastery),
+      base: Math.round(stats.elementalMastery),
       suffix: "",
     },
     {
       key: "critRate",
       label: "CRIT Rate",
-      base: currentStats.critRate.toFixed(1),
+      base: stats.critRate.toFixed(1),
       suffix: "%",
     },
     {
       key: "critDmg",
       label: "CRIT DMG",
-      base: currentStats.critDmg.toFixed(1),
+      base: stats.critDmg.toFixed(1),
       suffix: "%",
     },
     {
       key: "healingBonus",
       label: "Healing Bonus",
-      base: currentStats.healingBonus.toFixed(1),
+      base: stats.healingBonus.toFixed(1),
       suffix: "%",
-      condition: currentStats.healingBonus > 0,
+      condition: stats.healingBonus > 0,
     },
     {
       key: "energyRecharge",
       label: "Energy Recharge",
-      base: currentStats.energyRecharge.toFixed(1),
+      base: stats.energyRecharge.toFixed(1),
       suffix: "%",
     },
     {
       key: "elementalDmg",
       label: `${charData?.element || "Elemental"} DMG Bonus`,
-      base: currentStats.elementalDmg.toFixed(1),
+      base: stats.elementalDmg.toFixed(1),
       suffix: "%",
     },
   ];
@@ -745,36 +824,153 @@ function renderGoalStats(char) {
   const goalStats = char.gear.goalStats;
 
   const statsConfig = [
-    { key: "hp", label: "HP", suffix: "" },
-    { key: "atk", label: "ATK", suffix: "" },
-    { key: "def", label: "DEF", suffix: "" },
-    { key: "elementalMastery", label: "Elemental Mastery", suffix: "" },
-    { key: "critRate", label: "CRIT Rate", suffix: "%" },
-    { key: "critDmg", label: "CRIT DMG", suffix: "%" },
+    { key: "hp", label: "HP", suffix: "", baseValue: 0 },
+    { key: "atk", label: "ATK", suffix: "", baseValue: 0 },
+    { key: "def", label: "DEF", suffix: "", baseValue: 0 },
     {
-      key: "healingBonus",
-      label: "Healing Bonus",
-      suffix: "%",
-      condition: goalStats.healingBonus > 0,
+      key: "elementalMastery",
+      label: "Elemental Mastery",
+      suffix: "",
+      baseValue: 0,
     },
-    { key: "energyRecharge", label: "Energy Recharge", suffix: "%" },
-    { key: "elementalDmg", label: "Elemental DMG Bonus", suffix: "%" },
+    { key: "critRate", label: "CRIT Rate", suffix: "%", baseValue: 5 },
+    { key: "critDmg", label: "CRIT DMG", suffix: "%", baseValue: 50 },
+    { key: "healingBonus", label: "Healing Bonus", suffix: "%", baseValue: 0 },
+    {
+      key: "energyRecharge",
+      label: "Energy Recharge",
+      suffix: "%",
+      baseValue: 100,
+    },
+    {
+      key: "elementalDmg",
+      label: "Elemental DMG Bonus",
+      suffix: "%",
+      baseValue: 0,
+    },
   ];
 
   return statsConfig.map((stat) => {
-    if (stat.condition === false) return "";
+    const currentValue = goalStats[stat.key] !== undefined
+      ? goalStats[stat.key]
+      : stat.baseValue;
+
     return `
       <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: #2c3e50; border-radius: 6px;">
         <span>${stat.label}:</span>
         <input type="number" 
                id="goal-${stat.key}" 
-               value="${goalStats[stat.key] || 0}" 
+               value="${currentValue}" 
+               min="${stat.baseValue}"
                onchange="updateGoalStat('${char.id}', '${stat.key}')"
                style="width: 80px; padding: 4px; background: #1c2b33; border: 2px solid #00ffff; border-radius: 4px; color: white; text-align: center;">
         <span>${stat.suffix}</span>
       </div>
     `;
   }).join("");
+}
+
+function renderStatsComparison(projectedStats, goalStats, charData) {
+  let html = '<div style="display: grid; gap: 10px;">';
+
+  const statsConfig = [
+    { key: "hp", label: "HP", isPercent: false, baseValue: 0 },
+    { key: "atk", label: "ATK", isPercent: false, baseValue: 0 },
+    { key: "def", label: "DEF", isPercent: false, baseValue: 0 },
+    {
+      key: "elementalMastery",
+      label: "Elemental Mastery",
+      isPercent: false,
+      baseValue: 0,
+    },
+    { key: "critRate", label: "CRIT Rate", isPercent: true, baseValue: 5 },
+    { key: "critDmg", label: "CRIT DMG", isPercent: true, baseValue: 50 },
+    {
+      key: "healingBonus",
+      label: "Healing Bonus",
+      isPercent: true,
+      baseValue: 0,
+    },
+    {
+      key: "energyRecharge",
+      label: "Energy Recharge",
+      isPercent: true,
+      baseValue: 100,
+    },
+    {
+      key: "elementalDmg",
+      label: `${charData?.element || "Elemental"} DMG Bonus`,
+      isPercent: true,
+      baseValue: 0,
+    },
+  ];
+
+  let hasActiveGoals = false;
+
+  statsConfig.forEach((stat) => {
+    const currentGoal = goalStats[stat.key] !== undefined
+      ? goalStats[stat.key]
+      : stat.baseValue;
+
+    // Only show comparison if user has set a custom goal (greater than base value)
+    if (currentGoal <= stat.baseValue) return;
+
+    hasActiveGoals = true;
+    const projected = projectedStats[stat.key];
+    const difference = currentGoal - projected;
+    const isMet = difference <= 0;
+
+    let progressColor = isMet ? "#2ecc71" : "#e74c3c";
+    let progressText = isMet
+      ? "Goal Met"
+      : `${
+        stat.isPercent
+          ? difference.toFixed(1) + "%"
+          : Math.round(difference).toLocaleString()
+      } needed`;
+    const progressPercentage = Math.min(100, (projected / currentGoal) * 100);
+
+    html += `
+      <div style="display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 10px; align-items: center; padding: 8px; background: #34495e; border-radius: 6px;">
+        <div style="font-weight: bold;">${stat.label}:</div>
+        <div style="display: flex; align-items: center;">
+          <div style="flex: 1; background: #2c3e50; border-radius: 4px; height: 20px; overflow: hidden;">
+            <div style="height: 100%; background: ${progressColor}; width: ${progressPercentage}%; transition: width 0.3s;"></div>
+          </div>
+        </div>
+        <div style="text-align: right; font-size: 12px; color: ${progressColor};">
+          ${progressText}
+        </div>
+        <div style="grid-column: 1 / -1; font-size: 11px; color: #ccc;">
+          Current: ${
+      stat.isPercent
+        ? projected.toFixed(1) + "%"
+        : Math.round(projected).toLocaleString()
+    } | 
+          Goal: ${
+      stat.isPercent
+        ? currentGoal.toFixed(1) + "%"
+        : Math.round(currentGoal).toLocaleString()
+    }
+        </div>
+      </div>
+    `;
+  });
+
+  // Show message if no custom goals are set
+  if (!hasActiveGoals) {
+    html += `
+      <div style="text-align: center; padding: 20px; color: #888; font-style: italic;">
+        No custom goals set. Increase values above base levels in the right column to see progress tracking.
+        <div style="font-size: 10px; margin-top: 5px;">
+          Base values shown: CRIT Rate 5%, CRIT DMG 50%, Energy Recharge 100%
+        </div>
+      </div>
+    `;
+  }
+
+  html += "</div>";
+  return html;
 }
 
 // Function to display artifact set effects
@@ -849,19 +1045,26 @@ function renderArtifactSetEffects(char) {
     html += `</div>`;
   }
 
-  // Display stat effects
-  Object.keys(effects.stats).forEach((stat) => {
-    const value = effects.stats[stat];
-    const formattedStat = formatStatName(stat);
+  // Display always-active stat effects (from 2pc sets only)
+  const statKeys = Object.keys(effects.stats);
+  if (statKeys.length > 0) {
     html +=
-      `<div style="color: #00ffff; margin: 5px 0;">${formattedStat}: +${value}%</div>`;
-  });
+      `<div style="color: #00ffff; margin: 10px 0 5px 0; font-weight: bold;">Always Active:</div>`;
+    statKeys.forEach((stat) => {
+      const value = effects.stats[stat];
+      const formattedStat = formatStatName(stat);
+      html +=
+        `<div style="color: #00ffff; margin: 3px 0;">${formattedStat}: +${value}%</div>`;
+    });
+  }
 
-  // Display descriptive effects (only for 4-piece sets)
-  if (set1 && set2 && set1 === set2) {
+  // Display conditional effects (4pc descriptions)
+  if (effects.descriptions.length > 0) {
+    html +=
+      `<div style="color: #ffcc00; margin: 10px 0 5px 0; font-weight: bold;">Conditional Effects:</div>`;
     effects.descriptions.forEach((desc) => {
       html +=
-        `<div style="color: #88ff88; margin: 5px 0; font-style: italic; font-size: 12px;">${desc}</div>`;
+        `<div style="color: #88ff88; margin: 3px 0; font-style: italic; font-size: 11px;">${desc}</div>`;
     });
   }
 
@@ -889,140 +1092,8 @@ function formatStatName(stat) {
     geoDmg: "Geo DMG Bonus",
     dendroDmg: "Dendro DMG Bonus",
     pyroReactionDmg: "Pyro Reaction DMG",
-    // Add more mappings as needed
   };
   return statMap[stat] || stat;
-}
-
-function calculateCurrentStats(char, stats, charData) {
-  if (!stats) {
-    console.error("No stats found for character:", char.name);
-    return getBaseStats();
-  }
-
-  console.log("Calculating stats with:", {
-    baseHP: stats.baseHP,
-    baseATK: stats.baseATK,
-    baseDEF: stats.baseDEF,
-    additionalStat: stats.additionalStat,
-  });
-
-  const baseStats = getBaseStats();
-
-  // Get weapon stats
-  const weaponStats = calculateWeaponStats(char);
-
-  // Get artifact main stats
-  const artifactStats = calculateArtifactMainStats(char);
-
-  // Get artifact set effects
-  const setEffects = calculateArtifactSetEffects(char);
-
-  // Calculate HP: (base hp of character * (1 + percentage sum of artifacts)) + flat artifact
-  const hpPercentBonus = artifactStats.hpPercent + (setEffects.stats.hp || 0);
-  const hpFlatBonus = artifactStats.hpFlat;
-  baseStats.hp = (stats.baseHP * (1 + hpPercentBonus / 100)) + hpFlatBonus;
-
-  // Calculate ATK: ((BASE * (1 + percentage sum of artifacts)) + sum of flat artifact increases) + (BASE * percent weapon increase) + flat weapon increase
-  const atkPercentBonus = artifactStats.atkPercent +
-    (setEffects.stats.atk || 0);
-  const atkFlatBonus = artifactStats.atkFlat;
-  baseStats.atk = (stats.baseATK * (1 + atkPercentBonus / 100)) + atkFlatBonus +
-    (stats.baseATK * (weaponStats.atkPercent || 0) / 100) +
-    (weaponStats.atkFlat || 0);
-
-  // Calculate DEF: (base def * (1 + percentage sum of artifacts)) + flat def rolls
-  const defPercentBonus = artifactStats.defPercent +
-    (setEffects.stats.def || 0);
-  const defFlatBonus = artifactStats.defFlat;
-  baseStats.def = (stats.baseDEF * (1 + defPercentBonus / 100)) + defFlatBonus;
-
-  // Apply additional stats from character ascension
-  if (stats.additionalStat) {
-    const additional = stats.additionalStat;
-    switch (additional.type) {
-      case "ATK":
-        baseStats.atk += baseStats.atk * (additional.value / 100);
-        break;
-      case "HP":
-        baseStats.hp += baseStats.hp * (additional.value / 100);
-        break;
-      case "DEF":
-        baseStats.def += baseStats.def * (additional.value / 100);
-        break;
-      case "CRIT Rate":
-        baseStats.critRate += additional.value;
-        break;
-      case "CRIT DMG":
-        baseStats.critDmg += additional.value;
-        break;
-      case "Energy Recharge":
-        baseStats.energyRecharge += additional.value;
-        break;
-      case "Elemental Mastery":
-        baseStats.elementalMastery += additional.value;
-        break;
-      // Handle elemental DMG bonuses
-      default:
-        if (additional.type.includes("DMG Bonus")) {
-          baseStats.elementalDmg += additional.value;
-        }
-        break;
-    }
-  }
-
-  // Apply weapon additional stats
-  if (weaponStats.additionalStat) {
-    const weaponAdditional = weaponStats.additionalStat;
-    switch (weaponAdditional.type) {
-      case "ATK":
-        baseStats.atk += baseStats.atk * (weaponAdditional.value / 100);
-        break;
-      case "HP":
-        baseStats.hp += baseStats.hp * (weaponAdditional.value / 100);
-        break;
-      case "DEF":
-        baseStats.def += baseStats.def * (weaponAdditional.value / 100);
-        break;
-      case "CRIT Rate":
-        baseStats.critRate += weaponAdditional.value;
-        break;
-      case "CRIT DMG":
-        baseStats.critDmg += weaponAdditional.value;
-        break;
-      case "Energy Recharge":
-        baseStats.energyRecharge += weaponAdditional.value;
-        break;
-      case "Elemental Mastery":
-        baseStats.elementalMastery += weaponAdditional.value;
-        break;
-      // Handle elemental DMG bonuses
-      default:
-        if (weaponAdditional.type.includes("DMG Bonus")) {
-          baseStats.elementalDmg += weaponAdditional.value;
-        }
-        break;
-    }
-  }
-
-  // Apply artifact set effects to other stats
-  baseStats.elementalMastery += setEffects.stats.elementalMastery || 0;
-  baseStats.critRate += setEffects.stats.critRate || 0;
-  baseStats.critDmg += setEffects.stats.critDmg || 0;
-  baseStats.energyRecharge += setEffects.stats.energyRecharge || 0;
-  baseStats.healingBonus += setEffects.stats.healingBonus || 0;
-  baseStats.elementalDmg += setEffects.stats.elementalDmg || 0;
-  baseStats.elementalDmg += setEffects.stats.pyroDmg || 0;
-  baseStats.elementalDmg += setEffects.stats.hydroDmg || 0;
-  baseStats.elementalDmg += setEffects.stats.electroDmg || 0;
-  baseStats.elementalDmg += setEffects.stats.cryoDmg || 0;
-  baseStats.elementalDmg += setEffects.stats.anemoDmg || 0;
-  baseStats.elementalDmg += setEffects.stats.geoDmg || 0;
-  baseStats.elementalDmg += setEffects.stats.dendroDmg || 0;
-
-  console.log("Final calculated stats:", baseStats);
-
-  return baseStats;
 }
 
 function getBaseStats() {
@@ -1041,35 +1112,29 @@ function getBaseStats() {
 
 function calculateWeaponStats(char) {
   const weaponName = char.gear.weapon;
-  if (!weaponName) return { atkFlat: 0, atkPercent: 0, passiveStats: {} };
+  if (!weaponName) return { atkFlat: 0, atkPercent: 0, additionalStat: null };
 
   const charData = ALL_CHARACTERS[char.game]?.[char.name];
   const weaponType = charData?.weapon;
-
-  if (!weaponType) return { atkFlat: 0, atkPercent: 0, passiveStats: {} };
+  if (!weaponType) return { atkFlat: 0, atkPercent: 0, additionalStat: null };
 
   const weapons = ALL_WEAPONS[char.game]?.[weaponType] || [];
   const weapon = weapons.find((w) => w.name === weaponName);
-
-  if (!weapon) return { atkFlat: 0, atkPercent: 0, passiveStats: {} };
+  if (!weapon) return { atkFlat: 0, atkPercent: 0, additionalStat: null };
 
   const weaponStats = {
     atkFlat: weapon.baseATK || 0,
     atkPercent: 0,
     additionalStat: null,
-    passiveStats: {}, // Stats from passive effects
   };
 
-  // Handle main stat
+  // Handle main stat only
   if (weapon.stat && weapon.stat.type && weapon.stat.type !== "none") {
     weaponStats.additionalStat = {
       type: weapon.stat.type,
       value: weapon.stat.value,
     };
   }
-
-  // Handle passive effects (to be implemented with new weapon structure)
-  // This will be updated when weapons are converted to the new format
 
   return weaponStats;
 }
@@ -1140,71 +1205,43 @@ function calculateArtifactMainStats(char) {
 
 function calculateArtifactSetEffects(char) {
   const effects = {
-    stats: {}, // Stat increases
-    descriptions: [], // Descriptive effects
+    stats: {}, // Only 2pc stat increases
+    descriptions: [], // All 4pc effects are descriptive only
   };
 
   const gear = char.gear;
   const set1 = gear.artifactSet1;
   const set2 = gear.artifactSet2;
 
-  const processSetEffect = (setEffect, isFourPiece = false) => {
+  // Only process 2-piece effects (always active stats)
+  const processTwoPieceEffect = (setEffect) => {
     if (!setEffect) return;
 
-    switch (setEffect.type) {
-      case "stat":
-        if (setEffect.stat && setEffect.value) {
-          effects.stats[setEffect.stat] = (effects.stats[setEffect.stat] || 0) +
-            setEffect.value;
-        }
-        if (setEffect.description && isFourPiece) {
-          effects.descriptions.push(setEffect.description);
-        }
-        break;
-
-      case "description":
-        if (setEffect.description && isFourPiece) {
-          effects.descriptions.push(setEffect.description);
-        }
-        break;
-
-      case "mixed":
-        if (setEffect.stat && setEffect.value) {
-          effects.stats[setEffect.stat] = (effects.stats[setEffect.stat] || 0) +
-            setEffect.value;
-        }
-        if (setEffect.description && isFourPiece) {
-          effects.descriptions.push(setEffect.description);
-        }
-        break;
-
-      default:
-        // Legacy support for old format
-        Object.keys(setEffect).forEach((stat) => {
-          if (stat !== "type" && stat !== "description" && stat !== "stat") {
-            effects.stats[stat] = (effects.stats[stat] || 0) + setEffect[stat];
-          }
-        });
-        break;
+    // Only add stats from 2pc effects
+    if (setEffect.type === "stat" && setEffect.stat && setEffect.value) {
+      effects.stats[setEffect.stat] = (effects.stats[setEffect.stat] || 0) +
+        setEffect.value;
     }
   };
 
   // Process first 2-piece effect
   if (set1 && ARTIFACT_SETS[char.game]?.[set1]) {
     const set1Effect = ARTIFACT_SETS[char.game][set1]["2pc"];
-    processSetEffect(set1Effect, false);
+    processTwoPieceEffect(set1Effect);
   }
 
   // Process second 2-piece effect
   if (set2 && ARTIFACT_SETS[char.game]?.[set2]) {
     const set2Effect = ARTIFACT_SETS[char.game][set2]["2pc"];
-    processSetEffect(set2Effect, false);
+    processTwoPieceEffect(set2Effect);
   }
 
-  // Process 4-piece effect only if both sets are the same
+  // Add 4pc descriptions if both sets are the same
   if (set1 && set2 && set1 === set2) {
     const fourPiece = ARTIFACT_SETS[char.game][set1]["4pc"];
-    processSetEffect(fourPiece, true);
+    if (fourPiece && fourPiece.description) {
+      effects.descriptions.push(fourPiece.description);
+    }
   }
 
   return effects;
@@ -1364,7 +1401,17 @@ window.updateGoalStat = (charId, statKey) => {
   const input = document.getElementById(`goal-${statKey}`);
 
   if (input) {
-    char.gear.goalStats[statKey] = parseFloat(input.value) || 0;
+    const baseValues = {
+      critRate: 5,
+      critDmg: 50,
+      energyRecharge: 100,
+    };
+
+    const baseValue = baseValues[statKey] || 0;
+    const newValue = parseFloat(input.value) || baseValue;
+
+    // Ensure value doesn't go below base
+    char.gear.goalStats[statKey] = Math.max(newValue, baseValue);
     saveMyCharacters();
     renderCharacterGear(char);
   }
