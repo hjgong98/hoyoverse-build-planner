@@ -14,7 +14,7 @@ export const ALL_WEAPONS = {
         rarity: 1,
         baseATK: 185,
         stat: { type: "none", value: 0 },
-        passive: { type: "none", value: 0, description: "none" },
+        passive: { description: "none" },
         image: "/assets/genshin/weapons/Dull Blade.webp",
       },
       {
@@ -22,7 +22,7 @@ export const ALL_WEAPONS = {
         rarity: 2,
         baseATK: 243,
         stat: { type: "none", value: 0 },
-        passive: { type: "none", value: 0, description: "none" },
+        passive: { description: "none" },
         image: "/assets/genshin/weapons/Silver Sword.webp",
       },
       {
@@ -31,12 +31,10 @@ export const ALL_WEAPONS = {
         baseATK: 354,
         stat: { type: "Energy Recharge", value: 51.7 },
         passive: {
-          type: "none",
-          value: 0,
           description:
             "Using an Elemental Burst grants a 12~24% increase in ATK and Movement SPD for 15s.",
         },
-        image: "/assets/genshin/weapons/Cool Steel.webp",
+        image: "/assets/genshin/weapons/Skyrider Sword.webp",
       },
       {
         name: "Cool Steel",
@@ -44,8 +42,6 @@ export const ALL_WEAPONS = {
         baseATK: 401,
         stat: { type: "ATK", value: 35.2 },
         passive: {
-          type: "none",
-          value: 0,
           description:
             "Increases DMG against opponents affected by Hydro or Cryo by 12~24%.",
         },
@@ -57,8 +53,6 @@ export const ALL_WEAPONS = {
         baseATK: 401,
         stat: { type: "Elemental Mastery", value: 141 },
         passive: {
-          type: "none",
-          value: 0,
           description:
             "Upon causing an Overloaded, Superconduct, Electro-Charged, Quicken, Aggravate, Hyperbloom, Lunar-Charged, or Electro-infused Swirl reaction, ATK is increased by 20% - 30% for 12s.",
         },
@@ -70,8 +64,6 @@ export const ALL_WEAPONS = {
         baseATK: 401,
         stat: { type: "ATK", value: 35.2 },
         passive: {
-          type: "none",
-          value: 0,
           description:
             "On hit, has 50% chance to deal 240~400% ATK DMG to a single enemy. Can only occur once every 15~11s.",
         },
@@ -96,7 +88,7 @@ export const ALL_WEAPONS = {
           description:
             "Each Elemental Orb or Particle collected restores 1~2% HP.",
         },
-        image: "/assets/genshin/weapons/Dull Blade.webp",
+        image: "/assets/genshin/weapons/Traveler's Handy Sword.webp",
       },
       {
         name: "Sword of Descension",
@@ -109,10 +101,10 @@ export const ALL_WEAPONS = {
           description:
             "Hitting enemies with Normal or Charged Attacks grants a 50% chance to deal 200% ATK as DMG in a small AoE. This effect can only occur once every 10s. Additionally, if the Traveler equips the Sword of Descension, their ATK is increased by 66.",
         },
-        image: "/assets/genshin/weapons/Dull Blade.webp",
+        image: "/assets/genshin/weapons/Sword of Descension.webp",
       },
       {
-        name: "	Amenoma Kageuchi",
+        name: "Amenoma Kageuchi",
         rarity: 4,
         baseATK: 454,
         stat: { type: "ATK", value: 55.1 },
@@ -122,6 +114,146 @@ export const ALL_WEAPONS = {
           description:
             "After casting an Elemental Skill, gain 1 Succession Seed. This effect can be triggered once every 5s. The Succession Seed lasts for 30s. Up to 3 Succession Seeds may exist simultaneously. After using an Elemental Burst, all Succession Seeds are consumed and after 2s, the character regenerates 6~12 Energy for each seed consumed.",
         },
+        image: "/assets/genshin/weapons/Amenoma Kageuchi.webp",
+      },
+      {
+        name: "Cinnabar Spindle",
+        rarity: 4,
+        baseATK: 454,
+        stat: { type: "E ernergy recharge", value: 0 },
+        passive: {
+          description:
+            "Elemental Skill DMG is increased by 40~80% of DEF. The effect will be triggered no more than once every 1.5s and will be cleared 0.1s after the Elemental Skill deals DMG.",
+        },
+        image: "/assets/genshin/weapons/Cinnabar Spindle.webp",
+      },
+      {
+        name: "Favonius Sword",
+        rarity: 4,
+        baseATK: 454,
+        stat: { type: "Energy Recharge", value: 61.3 },
+        passive: {
+          description:
+            "CRIT hits have a 60~100% chance to generate a small amount of Elemental Particles, which will regenerate 6 Energy for the character. Can only occur once every 12~6s.",
+        },
+        image: "/assets/genshin/weapons/Favonius Sword.webp",
+      },
+      {
+        name: "Flute of Ezpitzal",
+        rarity: 4,
+        baseATK: 454,
+        stat: { type: "DEF", value: 69.0 },
+        passive: {
+          description:
+            "Using an Elemental Skill increases DEF by 16~32% for 15s.",
+        },
+        image: "/assets/genshin/weapons/Flute of Ezpitzal.webp",
+      },
+      {
+        name: "Sacrificial Sword",
+        rarity: 4,
+        baseATK: 401,
+        stat: { type: "Energy Recharge", value: 61.3 },
+        passive: {
+          description:
+            "After dealing damage to an opponent with an Elemental Skill, the skill has a 40~80% chance to end its own CD. Can only occur once every 30~16s.",
+        },
+        image: "/assets/genshin/weapons/Sacrificial Sword.webp",
+      },
+      {
+        name: "Serenity's Call",
+        rarity: 4,
+        baseATK: 454,
+        stat: { type: "Energy Recharge", value: 61.3 },
+        passive: {
+          description:
+            "Upon causing an Elemental Reaction, increases Max HP by 16~32% for 12s. Moonsign: Ascendant Gleam: Max HP from this effect is further increased by 16~32%. This effect can be triggered even if the equipping character is off-field.",
+        },
+        image: "/assets/genshin/weapons/Serenity's Call.webp",
+      },
+      {
+        name: "Festering Desire",
+        rarity: 4,
+        baseATK: 510,
+        stat: { type: "Energy Recharge", value: 45.9 },
+        passive: {
+          description:
+            "Increases Elemental Skill DMG by 16~32% and Elemental Skill CRIT Rate by 6~12%.",
+        },
+        image: "/assets/genshin/weapons/Festering Desire.webp",
+      },
+      {
+        name: "Fleuve Cendre Ferryman",
+        rarity: 4,
+        baseATK: 510,
+        stat: { type: "Energy Recharge", value: 45.9 },
+        passive: {
+          description:
+            "Increases Elemental Skill CRIT Rate by 8~16%. Additionally, increases Energy Recharge by 16~32% for 5s after using an Elemental Skill.",
+        },
+        image: "/assets/genshin/weapons/Fleuve Cendre Ferryman.webp",
+      },
+      {
+        name: "Iron Sting",
+        rarity: 4,
+        baseATK: 510,
+        stat: { type: "Elemental Mastery", value: 165 },
+        passive: {
+          description:
+            "Dealing Elemental DMG increases all DMG by 6~12% for 6s. Max 2 stacks. Can only occur once every 1s.",
+        },
+        image: "/assets/genshin/weapons/Iron Sting.webp",
+      },
+      {
+        name: "Kagotsurube Isshin",
+        rarity: 4,
+        baseATK: 510,
+        stat: { type: "ATK", value: 41.3 },
+        passive: {
+          description:
+            "When a Normal, Charged, or Plunging Attack hits an opponent, it will whip up a Hewing Gale, dealing AoE DMG equal to 180% of ATK and increasing ATK by 15% for 8s. This effect can be triggered once every 8s.",
+        },
+        image: "/assets/genshin/weapons/Kagotsurube Isshin.webp",
+      },
+      {
+        name: "Lion's Roar",
+        rarity: 4,
+        baseATK: 510,
+        stat: { type: "ATK", value: 41.3 },
+        passive: {
+          description:
+            "Increases DMG against enemies affected by Pyro or Electro by 20~36%.",
+        },
+        image: "/assets/genshin/weapons/Lion's Roar.webp",
+      },
+      {
+        name: "Royal Longsword",
+        rarity: 4,
+        baseATK: 510,
+        stat: { type: "ATK", value: 41.3 },
+        passive: {
+          description:
+            "Upon dealing damage to an opponent, increases CRIT Rate by 8~16%. Max 5 stacks. A CRIT hit removes all existing stacks.",
+        },
+        image: "/assets/genshin/weapons/Royal Longsword.webp",
+      },
+      {
+        name: "Sword of Narzissenkreuz",
+        rarity: 4,
+        baseATK: 510,
+        stat: { type: "ATK", value: 51.3 },
+        passive: {
+          description:
+            "When the equipping character does not have an Arkhe: When Normal Attacks, Charged Attacks, or Plunging Attacks strike, a Pneuma or Ousia energy blast will be unleashed, dealing 160~320% of ATK as DMG. This effect can be triggered once every 12s. The energy blast type is determined by the current type of the Sword of Narzissenkreuz.",
+        },
+        image: "/assets/genshin/weapons/Sword of Narzissenkreuz.webp",
+      },
+      {
+        name: "Cool Steel",
+        rarity: 3,
+        baseATK: 401,
+        stat: { type: "none", value: 0 },
+        passive: { description: "none" },
         image: "/assets/genshin/weapons/Dull Blade.webp",
       },
       {
@@ -129,7 +261,7 @@ export const ALL_WEAPONS = {
         rarity: 3,
         baseATK: 401,
         stat: { type: "none", value: 0 },
-        passive: { type: "none", value: 0, description: "none" },
+        passive: { description: "none" },
         image: "/assets/genshin/weapons/Dull Blade.webp",
       },
       {
@@ -137,7 +269,7 @@ export const ALL_WEAPONS = {
         rarity: 3,
         baseATK: 401,
         stat: { type: "none", value: 0 },
-        passive: { type: "none", value: 0, description: "none" },
+        passive: { description: "none" },
         image: "/assets/genshin/weapons/Dull Blade.webp",
       },
       {
@@ -145,7 +277,7 @@ export const ALL_WEAPONS = {
         rarity: 3,
         baseATK: 401,
         stat: { type: "none", value: 0 },
-        passive: { type: "none", value: 0, description: "none" },
+        passive: { description: "none" },
         image: "/assets/genshin/weapons/Dull Blade.webp",
       },
       {
@@ -153,111 +285,7 @@ export const ALL_WEAPONS = {
         rarity: 3,
         baseATK: 401,
         stat: { type: "none", value: 0 },
-        passive: { type: "none", value: 0, description: "none" },
-        image: "/assets/genshin/weapons/Dull Blade.webp",
-      },
-      {
-        name: "Cool Steel",
-        rarity: 3,
-        baseATK: 401,
-        stat: { type: "none", value: 0 },
-        passive: { type: "none", value: 0, description: "none" },
-        image: "/assets/genshin/weapons/Dull Blade.webp",
-      },
-      {
-        name: "Cool Steel",
-        rarity: 3,
-        baseATK: 401,
-        stat: { type: "none", value: 0 },
-        passive: { type: "none", value: 0, description: "none" },
-        image: "/assets/genshin/weapons/Dull Blade.webp",
-      },
-      {
-        name: "Cool Steel",
-        rarity: 3,
-        baseATK: 401,
-        stat: { type: "none", value: 0 },
-        passive: { type: "none", value: 0, description: "none" },
-        image: "/assets/genshin/weapons/Dull Blade.webp",
-      },
-      {
-        name: "Cool Steel",
-        rarity: 3,
-        baseATK: 401,
-        stat: { type: "none", value: 0 },
-        passive: { type: "none", value: 0, description: "none" },
-        image: "/assets/genshin/weapons/Dull Blade.webp",
-      },
-      {
-        name: "Cool Steel",
-        rarity: 3,
-        baseATK: 401,
-        stat: { type: "none", value: 0 },
-        passive: { type: "none", value: 0, description: "none" },
-        image: "/assets/genshin/weapons/Dull Blade.webp",
-      },
-      {
-        name: "Cool Steel",
-        rarity: 3,
-        baseATK: 401,
-        stat: { type: "none", value: 0 },
-        passive: { type: "none", value: 0, description: "none" },
-        image: "/assets/genshin/weapons/Dull Blade.webp",
-      },
-      {
-        name: "Cool Steel",
-        rarity: 3,
-        baseATK: 401,
-        stat: { type: "none", value: 0 },
-        passive: { type: "none", value: 0, description: "none" },
-        image: "/assets/genshin/weapons/Dull Blade.webp",
-      },
-      {
-        name: "Cool Steel",
-        rarity: 3,
-        baseATK: 401,
-        stat: { type: "none", value: 0 },
-        passive: { type: "none", value: 0, description: "none" },
-        image: "/assets/genshin/weapons/Dull Blade.webp",
-      },
-      {
-        name: "Cool Steel",
-        rarity: 3,
-        baseATK: 401,
-        stat: { type: "none", value: 0 },
-        passive: { type: "none", value: 0, description: "none" },
-        image: "/assets/genshin/weapons/Dull Blade.webp",
-      },
-      {
-        name: "Cool Steel",
-        rarity: 3,
-        baseATK: 401,
-        stat: { type: "none", value: 0 },
-        passive: { type: "none", value: 0, description: "none" },
-        image: "/assets/genshin/weapons/Dull Blade.webp",
-      },
-      {
-        name: "Cool Steel",
-        rarity: 3,
-        baseATK: 401,
-        stat: { type: "none", value: 0 },
-        passive: { type: "none", value: 0, description: "none" },
-        image: "/assets/genshin/weapons/Dull Blade.webp",
-      },
-      {
-        name: "Cool Steel",
-        rarity: 3,
-        baseATK: 401,
-        stat: { type: "none", value: 0 },
-        passive: { type: "none", value: 0, description: "none" },
-        image: "/assets/genshin/weapons/Dull Blade.webp",
-      },
-      {
-        name: "Cool Steel",
-        rarity: 3,
-        baseATK: 401,
-        stat: { type: "none", value: 0 },
-        passive: { type: "none", value: 0, description: "none" },
+        passive: { description: "none" },
         image: "/assets/genshin/weapons/Dull Blade.webp",
       },
     ],
@@ -266,7 +294,7 @@ export const ALL_WEAPONS = {
         name: "Wolf's Gravestone",
         rarity: 5,
         stat: { type: "none", value: 0 },
-        passive: { type: "none", value: 0, description: "none" },
+        passive: { description: "none" },
         image: "/assets/genshin/weapons/Dull Blade.webp",
       },
       { name: "The Unforged", rarity: 5, stat: "ATK" },

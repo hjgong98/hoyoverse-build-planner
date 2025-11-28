@@ -83,13 +83,13 @@ const ARTIFACT_MAIN_STATS = {
 
 // Artifact main stat values (separate for 5-star and 4-star)
 const ARTIFACT_MAIN_STAT_VALUES = {
-  "5star": {
+  5: {
     "HP": 4780,
     "ATK": 311,
     "HP%": 46.6,
     "ATK%": 46.6,
-    "DEF%": 58.3,
-    "Elemental Mastery": 187,
+    "DEF%": 46.6,
+    "Elemental Mastery": 186.5,
     "Energy Recharge": 51.8,
     "CRIT Rate": 31.1,
     "CRIT DMG": 62.2,
@@ -103,25 +103,25 @@ const ARTIFACT_MAIN_STAT_VALUES = {
     "Dendro DMG%": 46.6,
     "Physical DMG%": 58.3,
   },
-  "4star": {
+  4: {
     "HP": 3571,
     "ATK": 232,
-    "HP%": 35.2,
-    "ATK%": 35.2,
-    "DEF%": 44.1,
-    "Elemental Mastery": 139,
+    "HP%": 34.8,
+    "ATK%": 34.8,
+    "DEF%": 34.8,
+    "Elemental Mastery": 139.3,
     "Energy Recharge": 39.0,
-    "CRIT Rate": 23.4,
-    "CRIT DMG": 46.8,
-    "Healing Bonus": 26.9,
-    "Pyro DMG%": 35.2,
-    "Hydro DMG%": 35.2,
-    "Electro DMG%": 35.2,
-    "Cryo DMG%": 35.2,
-    "Anemo DMG%": 35.2,
-    "Geo DMG%": 35.2,
-    "Dendro DMG%": 35.2,
-    "Physical DMG%": 44.1,
+    "CRIT Rate": 23.3,
+    "CRIT DMG": 46.4,
+    "Healing Bonus": 26.8,
+    "Pyro DMG%": 34.8,
+    "Hydro DMG%": 34.8,
+    "Electro DMG%": 34.8,
+    "Cryo DMG%": 34.8,
+    "Anemo DMG%": 34.8,
+    "Geo DMG%": 34.8,
+    "Dendro DMG%": 34.8,
+    "Physical DMG%": 43.5,
   },
 };
 
@@ -130,84 +130,94 @@ const ARTIFACT_MAIN_STAT_VALUES = {
 // ====================================================================
 const ARTIFACT_SETS = {
   genshin: {
-    "Gladiator's Finale": {
-      "2pc": { type: "stat", value: 18, stat: "atk" },
+    "Instructor": {
+      "2pc": { stat: "Elemental Mastery", value: 80 },
       "4pc": {
         type: "description",
-        description: "Increases Normal Attack DMG by 35%.",
+        description:
+          "Upon triggering an Elemental Reaction, increases all party members' Elemental Mastery by 120 for 8s.",
       },
-      images: {
-        flower: "/assets/genshin/artifacts/gladiators_flower.webp",
-        plume: "/assets/genshin/artifacts/gladiators_plume.webp",
-        sands: "/assets/genshin/artifacts/gladiators_sands.webp",
-        goblet: "/assets/genshin/artifacts/gladiators_goblet.webp",
-        circlet: "/assets/genshin/artifacts/gladiators_circlet.webp",
+      flower: {
+        name: "Instructor's Brooch",
+        image: "/assets/genshin/artifacts/Instructor's Brooch.webp",
+      },
+      feather: {
+        name: "Instructor's Feather Accessory",
+        image: "/assets/genshin/artifacts/Instructor's Feather Accessory.webp",
+      },
+      sands: {
+        name: "Instructor's Pocket Watch",
+        image: "/assets/genshin/artifacts/Instructor's Pocket Watch.webp",
+      },
+      goblet: {
+        name: "Instructor's Tea Cup",
+        image: "/assets/genshin/artifacts/Instructor's Tea Cup.webp",
+      },
+      circlet: {
+        name: "Instructor's Cap",
+        image: "/assets/genshin/artifacts/Instructor's Cap.webp",
+      },
+      rarity: 4,
+    },
+    "Gladiator's Finale": {
+      "2pc": { stat: "ATK", value: 18 },
+      "4pc": {
+        type: "description",
+        description:
+          "If the wielder of this artifact set uses a Sword, Claymore or Polearm, increases their Normal Attack DMG by 35%.",
+      },
+      flower: {
+        name: "Gladiator's Nostalgia",
+        image: "/assets/genshin/artifacts/Gladiator's Nostalgia.webp",
+      },
+      feather: {
+        name: "Gladiator's Destiny",
+        image: "/assets/genshin/artifacts/Gladiator's Destiny.webp",
+      },
+      sands: {
+        name: "Gladiator's Longing",
+        image: "/assets/genshin/artifacts/Gladiator's Longing.webp",
+      },
+      goblet: {
+        name: "Gladiator's Intoxication",
+        image: "/assets/genshin/artifacts/Gladiator's Intoxication.webp",
+      },
+      circlet: {
+        name: "Gladiator's Triumphus",
+        image: "/assets/genshin/artifacts/Gladiator's Triumphus.webp",
       },
       rarity: 5,
     },
     "Wanderer's Troupe": {
-      "2pc": { type: "stat", value: 80, stat: "elementalMastery" },
-      "4pc": {
-        type: "description",
-        description: "Increases Charged Attack DMG by 35%.",
-      },
-      images: {
-        flower: "/assets/genshin/artifacts/wanderers_flower.webp",
-        plume: "/assets/genshin/artifacts/wanderers_plume.webp",
-        sands: "/assets/genshin/artifacts/wanderers_sands.webp",
-        goblet: "/assets/genshin/artifacts/wanderers_goblet.webp",
-        circlet: "/assets/genshin/artifacts/wanderers_circlet.webp",
-      },
-      rarity: 5,
-    },
-    "Crimson Witch of Flames": {
-      "2pc": { type: "stat", value: 15, stat: "pyroDmg" },
+      "2pc": { stat: "Elemental Mastery", value: 80 },
       "4pc": {
         type: "description",
         description:
-          "Increases Overloaded, Burning, and Burgeon DMG by 40%. Increases Vaporize and Melt DMG by 15%.",
+          "Increases Charged Attack DMG by 35% if the character uses a Catalyst or Bow.",
       },
-      images: {
-        flower: "/assets/genshin/artifacts/crimson_flower.webp",
-        plume: "/assets/genshin/artifacts/crimson_plume.webp",
-        sands: "/assets/genshin/artifacts/crimson_sands.webp",
-        goblet: "/assets/genshin/artifacts/crimson_goblet.webp",
-        circlet: "/assets/genshin/artifacts/crimson_circlet.webp",
+      flower: {
+        name: "Troupe's Dawnlight",
+        image: "/assets/genshin/artifacts/Troupe's Dawnlight.webp",
+      },
+      feather: {
+        name: "Bard's Arrow Feather",
+        image: "/assets/genshin/artifacts/Bard's Arrow Feather.webp",
+      },
+      sands: {
+        name: "Concert's Final Hour",
+        image: "/assets/genshin/artifacts/Concert's Final Hour.webp",
+      },
+      goblet: {
+        name: "Wanderer's String-Kettle",
+        image: "/assets/genshin/artifacts/Wanderer's String-Kettle.webp",
+      },
+      circlet: {
+        name: "Conductor's Top Hat",
+        image: "/assets/genshin/artifacts/Conductor's Top Hat.webp",
       },
       rarity: 5,
     },
-    "Berserker": {
-      "2pc": { type: "stat", value: 12, stat: "critRate" },
-      "4pc": {
-        type: "description",
-        description:
-          "When HP is below 70%, CRIT Rate increases by an additional 24%.",
-      },
-      images: {
-        flower: "/assets/genshin/artifacts/berserker_flower.webp",
-        plume: "/assets/genshin/artifacts/berserker_plume.webp",
-        sands: "/assets/genshin/artifacts/berserker_sands.webp",
-        goblet: "/assets/genshin/artifacts/berserker_goblet.webp",
-        circlet: "/assets/genshin/artifacts/berserker_circlet.webp",
-      },
-      rarity: 4,
-    },
-    // ====================================================================
-    // ADD MORE ARTIFACT SETS HERE FOLLOWING THE SAME FORMAT:
-    //
-    // "Set Name": {
-    //   "2pc": { type: "stat", value: XX, stat: "statType" },
-    //   "4pc": { type: "description", description: "Effect description" },
-    //   images: {
-    //     flower: "path/to/flower.webp",
-    //     plume: "path/to/plume.webp",
-    //     sands: "path/to/sands.webp",
-    //     goblet: "path/to/goblet.webp",
-    //     circlet: "path/to/circlet.webp"
-    //   },
-    //   rarity: 5 // or 4
-    // },
-    // ====================================================================
+    // Add more sets following the same format...
   },
 };
 
@@ -226,18 +236,17 @@ function formatStatValue(stat, value) {
 }
 
 // Function to get artifact main stat value based on rarity
-function getArtifactMainStatValue(mainStat, rarity = "5star") {
-  const rarityKey = rarity === 5 ? "5star" : "4star";
-  return ARTIFACT_MAIN_STAT_VALUES[rarityKey]?.[mainStat] || 0;
+function getArtifactMainStatValue(mainStat, rarity = 5) {
+  return ARTIFACT_MAIN_STAT_VALUES[rarity]?.[mainStat] || 0;
 }
 
 // Function to get artifact set rarity
 function getArtifactSetRarity(char, setName) {
   const artifactSet = ARTIFACT_SETS[char.game]?.[setName];
   if (artifactSet && artifactSet.rarity) {
-    return artifactSet.rarity === 5 ? "5star" : "4star";
+    return artifactSet.rarity;
   }
-  return "5star"; // Default to 5-star
+  return 5; // Default to 5-star
 }
 
 // Function to get artifact set options with proper selection
@@ -276,7 +285,7 @@ function isArtifactRarityLocked(char, slot) {
   // Check if this slot is part of a 4-star set
   if (set1 && ARTIFACT_SETS[char.game]?.[set1]) {
     const set1Rarity = getArtifactSetRarity(char, set1);
-    if (set1Rarity === "4star") {
+    if (set1Rarity === 4) {
       // First set: Flower and Plume are locked to 4-star
       if (slot === "flower" || slot === "plume") return true;
     }
@@ -284,7 +293,7 @@ function isArtifactRarityLocked(char, slot) {
 
   if (set2 && ARTIFACT_SETS[char.game]?.[set2]) {
     const set2Rarity = getArtifactSetRarity(char, set2);
-    if (set2Rarity === "4star") {
+    if (set2Rarity === 4) {
       if (set1 === set2) {
         // Same set: All except Sands are locked to 4-star
         if (slot !== "sands") return true;
@@ -305,33 +314,33 @@ function updateArtifactRarities(char) {
 
   // Default all to 5-star
   Object.keys(char.gear.artifacts).forEach((slot) => {
-    char.gear.artifacts[slot].rarity = "5star";
+    char.gear.artifacts[slot].rarity = 5;
   });
 
   // If we have 4-star sets, update the appropriate artifacts
   if (set1 && ARTIFACT_SETS[char.game]?.[set1]) {
     const set1Rarity = getArtifactSetRarity(char, set1);
-    if (set1Rarity === "4star") {
+    if (set1Rarity === 4) {
       // Set Flower and Plume to 4-star for this set (keep Sands as 5★)
-      char.gear.artifacts["flower"].rarity = "4star";
-      char.gear.artifacts["plume"].rarity = "4star";
+      char.gear.artifacts["flower"].rarity = 4;
+      char.gear.artifacts["plume"].rarity = 4;
     }
   }
 
   if (set2 && ARTIFACT_SETS[char.game]?.[set2]) {
     const set2Rarity = getArtifactSetRarity(char, set2);
-    if (set2Rarity === "4star") {
+    if (set2Rarity === 4) {
       if (set1 === set2) {
         // Same set - all artifacts except Sands become 4-star
-        char.gear.artifacts["flower"].rarity = "4star";
-        char.gear.artifacts["plume"].rarity = "4star";
-        char.gear.artifacts["goblet"].rarity = "4star";
-        char.gear.artifacts["circlet"].rarity = "4star";
+        char.gear.artifacts["flower"].rarity = 4;
+        char.gear.artifacts["plume"].rarity = 4;
+        char.gear.artifacts["goblet"].rarity = 4;
+        char.gear.artifacts["circlet"].rarity = 4;
         // Sands stays as 5★ for better Energy Recharge
       } else {
         // Different set - set Goblet and Circlet to 4-star (keep Sands as 5★)
-        char.gear.artifacts["goblet"].rarity = "4star";
-        char.gear.artifacts["circlet"].rarity = "4star";
+        char.gear.artifacts["goblet"].rarity = 4;
+        char.gear.artifacts["circlet"].rarity = 4;
       }
     }
   }
@@ -388,28 +397,28 @@ function renderCharacterGear(char) {
       artifacts: {
         flower: {
           mainStat: "HP",
-          value: getArtifactMainStatValue("HP", "5star"),
-          rarity: "5star",
+          value: getArtifactMainStatValue("HP", 5),
+          rarity: 5,
         },
         plume: {
           mainStat: "ATK",
-          value: getArtifactMainStatValue("ATK", "5star"),
-          rarity: "5star",
+          value: getArtifactMainStatValue("ATK", 5),
+          rarity: 5,
         },
         sands: {
           mainStat: "HP%",
-          value: getArtifactMainStatValue("HP%", "5star"),
-          rarity: "5star",
+          value: getArtifactMainStatValue("HP%", 5),
+          rarity: 5,
         },
         goblet: {
           mainStat: "HP%",
-          value: getArtifactMainStatValue("HP%", "5star"),
-          rarity: "5star",
+          value: getArtifactMainStatValue("HP%", 5),
+          rarity: 5,
         },
         circlet: {
           mainStat: "HP%",
-          value: getArtifactMainStatValue("HP%", "5star"),
-          rarity: "5star",
+          value: getArtifactMainStatValue("HP%", 5),
+          rarity: 5,
         },
       },
       goalStats: {
@@ -553,10 +562,10 @@ function renderCharacterGear(char) {
             </div>
           </div>
           
-          <!-- Artifact Set Effects Display -->
+          <!-- Artifact Set Effects Display - UPDATED TO TWO COLUMNS -->
           <div id="artifact-set-effects" style="background: #2c3e50; padding: 15px; border-radius: 8px; margin-top: 15px;">
-            <strong style="color: #00ffff;">Active Set Effects:</strong>
-            <div id="set-effects-content" style="margin-top: 10px;">
+            <strong style="color: #00ffff; margin-bottom: 15px; display: block;">Active Set Effects:</strong>
+            <div id="set-effects-content" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
               ${renderArtifactSetEffects(char)}
             </div>
           </div>
@@ -576,9 +585,9 @@ function renderCharacterGear(char) {
             <div style="background: #2c3e50; padding: 15px; border-radius: 12px; text-align: center; position: relative;">
               <!-- Rarity Badge -->
               <div style="position: absolute; top: 8px; right: 8px; background: ${
-        artifact.rarity === "5star" ? "#ffd700" : "#c0c0c0"
+        artifact.rarity === 5 ? "#ffd700" : "#c0c0c0"
       }; color: black; padding: 2px 6px; border-radius: 10px; font-size: 10px; font-weight: bold;">
-                ${artifact.rarity === "5star" ? "5★" : "4★"}
+                ${artifact.rarity === 5 ? "5★" : "4★"}
               </div>
               
               <div style="font-size: 24px; margin-bottom: 8px;">${
@@ -598,11 +607,11 @@ function renderCharacterGear(char) {
                   <div style="margin-bottom: 8px;">
                     <select onchange="updateArtifactRarity('${char.id}', '${slot}')" 
                             style="width: 100%; padding: 4px; background: #1c2b33; border: 1px solid #00ffff; border-radius: 4px; color: white; font-size: 10px;">
-                      <option value="5star" ${
-            artifact.rarity === "5star" ? "selected" : ""
+                      <option value="5" ${
+            artifact.rarity === 5 ? "selected" : ""
           }>5★</option>
-                      <option value="4star" ${
-            artifact.rarity === "4star" ? "selected" : ""
+                      <option value="4" ${
+            artifact.rarity === 4 ? "selected" : ""
           }>4★</option>
                     </select>
                   </div>
@@ -976,99 +985,159 @@ function renderStatsComparison(projectedStats, goalStats, charData) {
 // Function to display artifact set effects
 function renderArtifactSetEffects(char) {
   const effects = calculateArtifactSetEffects(char);
-  let html = "";
+  let leftColumn = "";
+  let rightColumn = "";
 
   const set1 = char.gear.artifactSet1;
   const set2 = char.gear.artifactSet2;
 
-  if (set1 || set2) {
-    html += `<div style="color: #ccc; margin-bottom: 10px; font-size: 12px;">`;
+  // Left Column: Artifact Set Names and Effects
+  leftColumn += `<div style="color: #ccc; font-size: 12px;">`;
 
+  if (set1 || set2) {
     if (set1 && set2) {
       if (set1 === set2) {
         const setRarity = getArtifactSetRarity(char, set1);
-        html +=
-          `<div style="color: #00ffff; font-weight: bold; margin-bottom: 5px;">4-Piece Set Active</div>`;
-        html += `<strong>${set1}</strong> (${
-          setRarity === "5star" ? "5★" : "4★"
-        })`;
-        if (setRarity === "4star") {
-          html +=
-            `<div style="font-size: 10px; color: #888; margin-top: 4px;">Flower, Plume, Goblet, Circlet: 4★ | Sands: 5★ (better stats)</div>`;
+        leftColumn +=
+          `<div style="color: #00ffff; font-weight: bold; margin-bottom: 8px;">4-Piece Set Active</div>`;
+        leftColumn +=
+          `<div style="margin-bottom: 10px;"><strong>${set1}</strong> (${
+            setRarity === 5 ? "5★" : "4★"
+          })</div>`;
+
+        // Show 2pc effect
+        const set1Effect = ARTIFACT_SETS[char.game]?.[set1]?.["2pc"];
+        if (set1Effect && set1Effect.type === "stat") {
+          const formattedStat = formatStatName(set1Effect.stat);
+          leftColumn +=
+            `<div style="color: #88ff88; margin: 5px 0; font-size: 11px;">2-Piece: ${formattedStat} +${set1Effect.value}%</div>`;
+        }
+
+        // Show 4pc effect
+        const set4pcEffect = ARTIFACT_SETS[char.game]?.[set1]?.["4pc"];
+        if (set4pcEffect && set4pcEffect.description) {
+          leftColumn +=
+            `<div style="color: #ffcc00; margin: 5px 0; font-size: 11px;">4-Piece Effect Active</div>`;
         }
       } else {
         const set1Rarity = getArtifactSetRarity(char, set1);
         const set2Rarity = getArtifactSetRarity(char, set2);
-        html +=
-          `<div style="color: #00ffff; font-weight: bold; margin-bottom: 5px;">2-Piece + 2-Piece Sets</div>`;
-        html += `<div><strong>Set 1:</strong> ${set1} (${
-          set1Rarity === "5star" ? "5★" : "4★"
-        })</div>`;
-        html += `<div><strong>Set 2:</strong> ${set2} (${
-          set2Rarity === "5star" ? "5★" : "4★"
-        })</div>`;
-        if (set1Rarity === "4star" || set2Rarity === "4star") {
-          let artifactInfo = "";
-          if (set1Rarity === "4star") artifactInfo += "Flower, Plume: 4★";
-          if (set2Rarity === "4star") {
-            if (artifactInfo) artifactInfo += " | ";
-            artifactInfo += "Goblet, Circlet: 4★";
-          }
-          artifactInfo += " | Sands: 5★ (better stats)";
-          html +=
-            `<div style="font-size: 10px; color: #888; margin-top: 4px;">${artifactInfo}</div>`;
+        leftColumn +=
+          `<div style="color: #00ffff; font-weight: bold; margin-bottom: 8px;">2-Piece + 2-Piece Sets</div>`;
+
+        // First set
+        leftColumn +=
+          `<div style="margin-bottom: 10px;"><strong>${set1}</strong> (${
+            set1Rarity === 5 ? "5★" : "4★"
+          })</div>`;
+        const set1Effect = ARTIFACT_SETS[char.game]?.[set1]?.["2pc"];
+        if (set1Effect && set1Effect.type === "stat") {
+          const formattedStat = formatStatName(set1Effect.stat);
+          leftColumn +=
+            `<div style="color: #88ff88; margin: 5px 0; font-size: 11px;">${formattedStat} +${set1Effect.value}%</div>`;
+        }
+
+        // Second set
+        leftColumn +=
+          `<div style="margin-top: 15px; margin-bottom: 10px;"><strong>${set2}</strong> (${
+            set2Rarity === 5 ? "5★" : "4★"
+          })</div>`;
+        const set2Effect = ARTIFACT_SETS[char.game]?.[set2]?.["2pc"];
+        if (set2Effect && set2Effect.type === "stat") {
+          const formattedStat = formatStatName(set2Effect.stat);
+          leftColumn +=
+            `<div style="color: #88ff88; margin: 5px 0; font-size: 11px;">${formattedStat} +${set2Effect.value}%</div>`;
         }
       }
     } else if (set1) {
       const setRarity = getArtifactSetRarity(char, set1);
-      html +=
-        `<div style="color: #00ffff; font-weight: bold; margin-bottom: 5px;">2-Piece Set Active</div>`;
-      html += `<strong>${set1}</strong> (${
-        setRarity === "5star" ? "5★" : "4★"
-      })`;
-      if (setRarity === "4star") {
-        html +=
-          `<div style="font-size: 10px; color: #888; margin-top: 4px;">Flower, Plume: 4★ | Others: 5★</div>`;
+      leftColumn +=
+        `<div style="color: #00ffff; font-weight: bold; margin-bottom: 8px;">2-Piece Set Active</div>`;
+      leftColumn +=
+        `<div style="margin-bottom: 10px;"><strong>${set1}</strong> (${
+          setRarity === 5 ? "5★" : "4★"
+        })</div>`;
+      const set1Effect = ARTIFACT_SETS[char.game]?.[set1]?.["2pc"];
+      if (set1Effect && set1Effect.type === "stat") {
+        const formattedStat = formatStatName(set1Effect.stat);
+        leftColumn +=
+          `<div style="color: #88ff88; margin: 5px 0; font-size: 11px;">${formattedStat} +${set1Effect.value}%</div>`;
       }
     } else if (set2) {
       const setRarity = getArtifactSetRarity(char, set2);
-      html +=
-        `<div style="color: #00ffff; font-weight: bold; margin-bottom: 5px;">2-Piece Set Active</div>`;
-      html += `<strong>${set2}</strong> (${
-        setRarity === "5star" ? "5★" : "4★"
-      })`;
-      if (setRarity === "4star") {
-        html +=
-          `<div style="font-size: 10px; color: #888; margin-top: 4px;">Goblet, Circlet: 4★ | Others: 5★</div>`;
+      leftColumn +=
+        `<div style="color: #00ffff; font-weight: bold; margin-bottom: 8px;">2-Piece Set Active</div>`;
+      leftColumn +=
+        `<div style="margin-bottom: 10px;"><strong>${set2}</strong> (${
+          setRarity === 5 ? "5★" : "4★"
+        })</div>`;
+      const set2Effect = ARTIFACT_SETS[char.game]?.[set2]?.["2pc"];
+      if (set2Effect && set2Effect.type === "stat") {
+        const formattedStat = formatStatName(set2Effect.stat);
+        leftColumn +=
+          `<div style="color: #88ff88; margin: 5px 0; font-size: 11px;">${formattedStat} +${set2Effect.value}%</div>`;
       }
     }
-    html += `</div>`;
+  } else {
+    leftColumn += '<div style="color: #888;">No set effects active</div>';
   }
 
-  // Display always-active stat effects (from 2pc sets only)
-  const statKeys = Object.keys(effects.stats);
-  if (statKeys.length > 0) {
-    html +=
-      `<div style="color: #00ffff; margin: 10px 0 5px 0; font-weight: bold;">Always Active:</div>`;
-    statKeys.forEach((stat) => {
-      const value = effects.stats[stat];
-      const formattedStat = formatStatName(stat);
-      html +=
-        `<div style="color: #00ffff; margin: 3px 0;">${formattedStat}: +${value}%</div>`;
-    });
+  leftColumn += `</div>`;
+
+  // Right Column: Weapon Information (replaces Set Descriptions)
+  rightColumn +=
+    `<div style="color: #ccc; font-size: 12px; max-height: 200px; overflow-y: auto;">`;
+
+  if (char.gear.weapon) {
+    rightColumn +=
+      `<div style="color: #00ffff; font-weight: bold; margin-bottom: 8px;">Weapon Equipped</div>`;
+
+    // Get weapon data
+    const charData = ALL_CHARACTERS[char.game]?.[char.name];
+    const weaponType = charData?.weapon;
+    const weapons = weaponType
+      ? ALL_WEAPONS[char.game]?.[weaponType] || []
+      : [];
+    const weapon = weapons.find((w) => w.name === char.gear.weapon);
+
+    if (weapon) {
+      // Weapon name and rarity
+      const rarityStars = "★".repeat(weapon.rarity);
+      rightColumn +=
+        `<div style="font-weight: bold; color: #ffcc00; margin-bottom: 5px;">${weapon.name} (${rarityStars})</div>`;
+
+      // Weapon stat
+      if (weapon.stat && weapon.stat.type && weapon.stat.type !== "none") {
+        const statValue = weapon.stat.value;
+        const statSuffix = weapon.stat.type.includes("%") ? "%" : "";
+        rightColumn +=
+          `<div style="margin: 3px 0; font-size: 11px;"><strong>Stat:</strong> ${weapon.stat.type} ${statValue}${statSuffix}</div>`;
+      }
+
+      // Weapon passive description
+      if (
+        weapon.passive && weapon.passive.description &&
+        weapon.passive.description !== "none"
+      ) {
+        rightColumn +=
+          `<div style="margin: 8px 0; font-size: 11px; line-height: 1.3;"><strong>Description:</strong> ${weapon.passive.description}</div>`;
+      } else {
+        rightColumn +=
+          `<div style="margin: 8px 0; font-size: 11px; color: #888;"><strong>Description:</strong> No passive effect</div>`;
+      }
+    } else {
+      rightColumn += `<div style="color: #888;">Weapon data not found</div>`;
+    }
+  } else {
+    rightColumn += `<div style="color: #888;">No weapon equipped</div>`;
   }
 
-  // Display conditional effects (4pc descriptions)
-  if (effects.descriptions.length > 0) {
-    html +=
-      `<div style="color: #ffcc00; margin: 10px 0 5px 0; font-weight: bold;">Conditional Effects:</div>`;
-    effects.descriptions.forEach((desc) => {
-      html +=
-        `<div style="color: #88ff88; margin: 3px 0; font-style: italic; font-size: 11px;">${desc}</div>`;
-    });
-  }
+  rightColumn += `</div>`;
 
-  return html || '<div style="color: #888;">No set effects active</div>';
+  return `
+    <div>${leftColumn}</div>
+    <div>${rightColumn}</div>
+  `;
 }
 
 // Helper function to format stat names for display
@@ -1360,7 +1429,7 @@ window.updateArtifactRarity = (charId, slot) => {
   );
 
   if (select && !isArtifactRarityLocked(char, slot)) {
-    const newRarity = select.value;
+    const newRarity = parseInt(select.value);
     char.gear.artifacts[slot].rarity = newRarity;
 
     // Update the artifact value based on new rarity

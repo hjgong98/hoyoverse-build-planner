@@ -1454,625 +1454,622 @@ export const ALL_CHARACTERS = {
     },
   },
   hsr: {
-    hsr: {
-      "Acheron": {
-        path: "Nihility",
-        type: "Lightning",
-        rarity: 5,
-        ascensionMaterials: {
-          boss_mats: ["Shape Shifter's Lightning Staff"],
-          trace_mats: [
-            "Obsidian of Dread",
-            "Obsidian of Desolation",
-            "Obsidian of Obsession",
-          ],
-          weekly_material: "Fiend's Razor",
-        },
-      },
-      "Argenti": {
-        path: "Erudition",
-        type: "Physical",
-        rarity: 5,
-        ascensionMaterials: {
-          boss_mats: ["Core of Ice"],
-          trace_mats: [
-            "Destroyer's Final Road",
-            "Destroyer's Final Path",
-            "Destroyer's Final Crown",
-          ],
-          weekly_material: "Regret of Infinite Ochema",
-        },
-      },
-      "Aventurine": {
-        path: "Preservation",
-        type: "Imaginary",
-        rarity: 5,
-        ascensionMaterials: {
-          boss_mats: ["Past Evils of the Borehole Planet"],
-          trace_mats: [
-            "Shield of the Guardian",
-            "Shield of the Bulwark",
-            "Shield of the Fortress",
-          ],
-          weekly_material: "Past Evils of the Borehole Planet",
-        },
-      },
-      "Black Swan": {
-        path: "Nihility",
-        type: "Wind",
-        rarity: 5,
-        ascensionMaterials: {
-          boss_mats: ["Extinguished Core"],
-          trace_mats: [
-            "Obsidian of Dread",
-            "Obsidian of Desolation",
-            "Obsidian of Obsession",
-          ],
-          weekly_material: "Regret of Infinite Ochema",
-        },
-      },
-      "Blade": {
-        path: "Destruction",
-        type: "Wind",
-        rarity: 5,
-        ascensionMaterials: {
-          boss_mats: ["Ascendant Debris"],
-          trace_mats: [
-            "Shattered Blade",
-            "Lifeless Blade",
-            "Worldbreaker Blade",
-          ],
-          weekly_material: "Regret of Infinite Ochema",
-        },
-      },
-      "Bronya": {
-        path: "Harmony",
-        type: "Wind",
-        rarity: 5,
-        ascensionMaterials: {
-          boss_mats: ["Core of Ice"],
-          trace_mats: [
-            "Key of Knowledge",
-            "Key of Wisdom",
-            "Key of Inspiration",
-          ],
-          weekly_material: "Guardian's Lament",
-        },
-      },
-      "Clara": {
-        path: "Destruction",
-        type: "Physical",
-        rarity: 5,
-        ascensionMaterials: {
-          boss_mats: ["Core of Ice"],
-          trace_mats: [
-            "Shattered Blade",
-            "Lifeless Blade",
-            "Worldbreaker Blade",
-          ],
-          weekly_material: "Guardian's Lament",
-        },
-      },
-      "Dan Heng • Imbibitor Lunae": {
-        path: "Destruction",
-        type: "Imaginary",
-        rarity: 5,
-        ascensionMaterials: {
-          boss_mats: ["Suppressing Edict"],
-          trace_mats: [
-            "Shattered Blade",
-            "Lifeless Blade",
-            "Worldbreaker Blade",
-          ],
-          weekly_material: "Regret of Infinite Ochema",
-        },
-      },
-      "Dr. Ratio": {
-        path: "Hunt",
-        type: "Imaginary",
-        rarity: 5,
-        ascensionMaterials: {
-          boss_mats: ["Past Evils of the Borehole Planet"],
-          trace_mats: [
-            "Arrow of the Starchaser",
-            "Arrow of the Demon Slayer",
-            "Arrow of the Beast Hunter",
-          ],
-          weekly_material: "Past Evils of the Borehole Planet",
-        },
-      },
-      "Fu Xuan": {
-        path: "Preservation",
-        type: "Quantum",
-        rarity: 5,
-        ascensionMaterials: {
-          boss_mats: ["Golden Crown of the Past Shadow"],
-          trace_mats: [
-            "Shield of the Guardian",
-            "Shield of the Bulwark",
-            "Shield of the Fortress",
-          ],
-          weekly_material: "Guardian's Lament",
-        },
-      },
-      "Gepard": {
-        path: "Preservation",
-        type: "Ice",
-        rarity: 5,
-        ascensionMaterials: {
-          boss_mats: ["Core of Ice"],
-          trace_mats: [
-            "Shield of the Guardian",
-            "Shield of the Bulwark",
-            "Shield of the Fortress",
-          ],
-          weekly_material: "Guardian's Lament",
-        },
-      },
-      "Himeko": {
-        path: "Erudition",
-        type: "Fire",
-        rarity: 5,
-        ascensionMaterials: {
-          boss_mats: ["Searing Steel Blade"],
-          trace_mats: [
-            "Destroyer's Final Road",
-            "Destroyer's Final Path",
-            "Destroyer's Final Crown",
-          ],
-          weekly_material: "Extinguished Core",
-        },
-      },
-      "Huohuo": {
-        path: "Abundance",
-        type: "Wind",
-        rarity: 5,
-        ascensionMaterials: {
-          boss_mats: ["Ascendant Debris"],
-          trace_mats: [
-            "Golden Crown of the Past Shadow",
-            "Golden Crown of the Past Shadow",
-            "Golden Crown of the Past Shadow",
-          ],
-          weekly_material: "Regret of Infinite Ochema",
-        },
-      },
-      "Jing Yuan": {
-        path: "Erudition",
-        type: "Lightning",
-        rarity: 5,
-        ascensionMaterials: {
-          boss_mats: ["Lightning Crown"],
-          trace_mats: [
-            "Destroyer's Final Road",
-            "Destroyer's Final Path",
-            "Destroyer's Final Crown",
-          ],
-          weekly_material: "Fiend's Razor",
-        },
-      },
-      "Jingliu": {
-        path: "Destruction",
-        type: "Ice",
-        rarity: 5,
-        ascensionMaterials: {
-          boss_mats: ["Core of Ice"],
-          trace_mats: [
-            "Shattered Blade",
-            "Lifeless Blade",
-            "Worldbreaker Blade",
-          ],
-          weekly_material: "Fiend's Razor",
-        },
-      },
-      "Kafka": {
-        path: "Nihility",
-        type: "Lightning",
-        rarity: 5,
-        ascensionMaterials: {
-          boss_mats: ["IPC Work Permit"],
-          trace_mats: [
-            "Obsidian of Dread",
-            "Obsidian of Desolation",
-            "Obsidian of Obsession",
-          ],
-          weekly_material: "Fiend's Razor",
-        },
-      },
-      "Luocha": {
-        path: "Abundance",
-        type: "Imaginary",
-        rarity: 5,
-        ascensionMaterials: {
-          boss_mats: ["Golden Crown of the Past Shadow"],
-          trace_mats: [
-            "Golden Crown of the Past Shadow",
-            "Golden Crown of the Past Shadow",
-            "Golden Crown of the Past Shadow",
-          ],
-          weekly_material: "Guardian's Lament",
-        },
-      },
-      "Ruan Mei": {
-        path: "Harmony",
-        type: "Ice",
-        rarity: 5,
-        ascensionMaterials: {
-          boss_mats: ["Past Evils of the Borehole Planet"],
-          trace_mats: [
-            "Key of Knowledge",
-            "Key of Wisdom",
-            "Key of Inspiration",
-          ],
-          weekly_material: "Past Evils of the Borehole Planet",
-        },
-      },
-      "Seele": {
-        path: "Hunt",
-        type: "Quantum",
-        rarity: 5,
-        ascensionMaterials: {
-          boss_mats: ["Shape Shifter's Lightning Staff"],
-          trace_mats: [
-            "Arrow of the Starchaser",
-            "Arrow of the Demon Slayer",
-            "Arrow of the Beast Hunter",
-          ],
-          weekly_material: "Guardian's Lament",
-        },
-      },
-      "Silver Wolf": {
-        path: "Nihility",
-        type: "Quantum",
-        rarity: 5,
-        ascensionMaterials: {
-          boss_mats: ["Key of Inspiration"],
-          trace_mats: [
-            "Obsidian of Dread",
-            "Obsidian of Desolation",
-            "Obsidian of Obsession",
-          ],
-          weekly_material: "Regret of Infinite Ochema",
-        },
-      },
-      "Sparkle": {
-        path: "Harmony",
-        type: "Quantum",
-        rarity: 5,
-        ascensionMaterials: {
-          boss_mats: ["Past Evils of the Borehole Planet"],
-          trace_mats: [
-            "Key of Knowledge",
-            "Key of Wisdom",
-            "Key of Inspiration",
-          ],
-          weekly_material: "Past Evils of the Borehole Planet",
-        },
-      },
-      "Topaz & Numby": {
-        path: "Hunt",
-        type: "Fire",
-        rarity: 5,
-        ascensionMaterials: {
-          boss_mats: ["Meteoric Alloy"],
-          trace_mats: [
-            "Arrow of the Starchaser",
-            "Arrow of the Demon Slayer",
-            "Arrow of the Beast Hunter",
-          ],
-          weekly_material: "Fiend's Razor",
-        },
-      },
-      "Welt": {
-        path: "Nihility",
-        type: "Imaginary",
-        rarity: 5,
-        ascensionMaterials: {
-          boss_mats: ["Key of Inspiration"],
-          trace_mats: [
-            "Obsidian of Dread",
-            "Obsidian of Desolation",
-            "Obsidian of Obsession",
-          ],
-          weekly_material: "Extinguished Core",
-        },
-      },
-      "Yanqing": {
-        path: "Hunt",
-        type: "Ice",
-        rarity: 5,
-        ascensionMaterials: {
-          boss_mats: ["Core of Ice"],
-          trace_mats: [
-            "Arrow of the Starchaser",
-            "Arrow of the Demon Slayer",
-            "Arrow of the Beast Hunter",
-          ],
-          weekly_material: "Guardian's Lament",
-        },
-      },
-      "Bailu": {
-        path: "Abundance",
-        type: "Lightning",
-        rarity: 5,
-        ascensionMaterials: {
-          boss_mats: ["Lightning Crown"],
-          trace_mats: [
-            "Golden Crown of the Past Shadow",
-            "Golden Crown of the Past Shadow",
-            "Golden Crown of the Past Shadow",
-          ],
-          weekly_material: "Guardian's Lament",
-        },
-      },
-      "Herta": {
-        path: "Erudition",
-        type: "Ice",
-        rarity: 4,
-        ascensionMaterials: {
-          boss_mats: ["Core of Ice"],
-          trace_mats: [
-            "Destroyer's Final Road",
-            "Destroyer's Final Path",
-            "Destroyer's Final Crown",
-          ],
-          weekly_material: "Guardian's Lament",
-        },
-      },
-      "March 7th": {
-        path: "Preservation",
-        type: "Ice",
-        rarity: 4,
-        ascensionMaterials: {
-          boss_mats: ["Core of Ice"],
-          trace_mats: [
-            "Shield of the Guardian",
-            "Shield of the Bulwark",
-            "Shield of the Fortress",
-          ],
-          weekly_material: "Guardian's Lament",
-        },
-      },
-      "Dan Heng": {
-        path: "Hunt",
-        type: "Wind",
-        rarity: 4,
-        ascensionMaterials: {
-          boss_mats: ["Core of Ice"],
-          trace_mats: [
-            "Arrow of the Starchaser",
-            "Arrow of the Demon Slayer",
-            "Arrow of the Beast Hunter",
-          ],
-          weekly_material: "Guardian's Lament",
-        },
-      },
-      "Asta": {
-        path: "Harmony",
-        type: "Fire",
-        rarity: 4,
-        ascensionMaterials: {
-          boss_mats: ["Searing Steel Blade"],
-          trace_mats: [
-            "Key of Knowledge",
-            "Key of Wisdom",
-            "Key of Inspiration",
-          ],
-          weekly_material: "Extinguished Core",
-        },
-      },
-      "Serval": {
-        path: "Erudition",
-        type: "Lightning",
-        rarity: 4,
-        ascensionMaterials: {
-          boss_mats: ["Lightning Crown"],
-          trace_mats: [
-            "Destroyer's Final Road",
-            "Destroyer's Final Path",
-            "Destroyer's Final Crown",
-          ],
-          weekly_material: "Fiend's Razor",
-        },
-      },
-      "Qingque": {
-        path: "Erudition",
-        type: "Quantum",
-        rarity: 4,
-        ascensionMaterials: {
-          boss_mats: ["Key of Inspiration"],
-          trace_mats: [
-            "Destroyer's Final Road",
-            "Destroyer's Final Path",
-            "Destroyer's Final Crown",
-          ],
-          weekly_material: "Regret of Infinite Ochema",
-        },
-      },
-      "Tingyun": {
-        path: "Harmony",
-        type: "Lightning",
-        rarity: 4,
-        ascensionMaterials: {
-          boss_mats: ["Lightning Crown"],
-          trace_mats: [
-            "Key of Knowledge",
-            "Key of Wisdom",
-            "Key of Inspiration",
-          ],
-          weekly_material: "Fiend's Razor",
-        },
-      },
-      "Sushang": {
-        path: "Hunt",
-        type: "Physical",
-        rarity: 4,
-        ascensionMaterials: {
-          boss_mats: ["Core of Ice"],
-          trace_mats: [
-            "Arrow of the Starchaser",
-            "Arrow of the Demon Slayer",
-            "Arrow of the Beast Hunter",
-          ],
-          weekly_material: "Guardian's Lament",
-        },
-      },
-      "Yukong": {
-        path: "Harmony",
-        type: "Imaginary",
-        rarity: 4,
-        ascensionMaterials: {
-          boss_mats: ["Key of Inspiration"],
-          trace_mats: [
-            "Key of Knowledge",
-            "Key of Wisdom",
-            "Key of Inspiration",
-          ],
-          weekly_material: "Regret of Infinite Ochema",
-        },
-      },
-      "Luka": {
-        path: "Nihility",
-        type: "Physical",
-        rarity: 4,
-        ascensionMaterials: {
-          boss_mats: ["Meteoric Alloy"],
-          trace_mats: [
-            "Obsidian of Dread",
-            "Obsidian of Desolation",
-            "Obsidian of Obsession",
-          ],
-          weekly_material: "Fiend's Razor",
-        },
-      },
-      "Lynx": {
-        path: "Abundance",
-        type: "Quantum",
-        rarity: 4,
-        ascensionMaterials: {
-          boss_mats: ["Key of Inspiration"],
-          trace_mats: [
-            "Golden Crown of the Past Shadow",
-            "Golden Crown of the Past Shadow",
-            "Golden Crown of the Past Shadow",
-          ],
-          weekly_material: "Regret of Infinite Ochema",
-        },
-      },
-      "Pela": {
-        path: "Nihility",
-        type: "Ice",
-        rarity: 4,
-        ascensionMaterials: {
-          boss_mats: ["Core of Ice"],
-          trace_mats: [
-            "Obsidian of Dread",
-            "Obsidian of Desolation",
-            "Obsidian of Obsession",
-          ],
-          weekly_material: "Guardian's Lament",
-        },
-      },
-      "Hook": {
-        path: "Destruction",
-        type: "Fire",
-        rarity: 4,
-        ascensionMaterials: {
-          boss_mats: ["Searing Steel Blade"],
-          trace_mats: [
-            "Shattered Blade",
-            "Lifeless Blade",
-            "Worldbreaker Blade",
-          ],
-          weekly_material: "Extinguished Core",
-        },
-      },
-      "Natasha": {
-        path: "Abundance",
-        type: "Physical",
-        rarity: 4,
-        ascensionMaterials: {
-          boss_mats: ["Meteoric Alloy"],
-          trace_mats: [
-            "Golden Crown of the Past Shadow",
-            "Golden Crown of the Past Shadow",
-            "Golden Crown of the Past Shadow",
-          ],
-          weekly_material: "Fiend's Razor",
-        },
-      },
-      "Arlan": {
-        path: "Destruction",
-        type: "Lightning",
-        rarity: 4,
-        ascensionMaterials: {
-          boss_mats: ["Lightning Crown"],
-          trace_mats: [
-            "Shattered Blade",
-            "Lifeless Blade",
-            "Worldbreaker Blade",
-          ],
-          weekly_material: "Fiend's Razor",
-        },
-      },
-      "Hanya": {
-        path: "Harmony",
-        type: "Physical",
-        rarity: 4,
-        ascensionMaterials: {
-          boss_mats: ["Past Evils of the Borehole Planet"],
-          trace_mats: [
-            "Key of Knowledge",
-            "Key of Wisdom",
-            "Key of Inspiration",
-          ],
-          weekly_material: "Past Evils of the Borehole Planet",
-        },
-      },
-      "Gallagher": {
-        path: "Abundance",
-        type: "Fire",
-        rarity: 4,
-        ascensionMaterials: {
-          boss_mats: ["Past Evils of the Borehole Planet"],
-          trace_mats: [
-            "Golden Crown of the Past Shadow",
-            "Golden Crown of the Past Shadow",
-            "Golden Crown of the Past Shadow",
-          ],
-          weekly_material: "Past Evils of the Borehole Planet",
-        },
-      },
-      "Misha": {
-        path: "Destruction",
-        type: "Ice",
-        rarity: 4,
-        ascensionMaterials: {
-          boss_mats: ["Past Evils of the Borehole Planet"],
-          trace_mats: [
-            "Shattered Blade",
-            "Lifeless Blade",
-            "Worldbreaker Blade",
-          ],
-          weekly_material: "Past Evils of the Borehole Planet",
-        },
-      },
-      "Xueyi": {
-        path: "Destruction",
-        type: "Quantum",
-        rarity: 4,
-        ascensionMaterials: {
-          boss_mats: ["Past Evils of the Borehole Planet"],
-          trace_mats: [
-            "Shattered Blade",
-            "Lifeless Blade",
-            "Worldbreaker Blade",
-          ],
-          weekly_material: "Past Evils of the Borehole Planet",
-        },
+    "Acheron": {
+      path: "Nihility",
+      type: "Lightning",
+      rarity: 5,
+      ascensionMaterials: {
+        boss_mats: ["Shape Shifter's Lightning Staff"],
+        trace_mats: [
+          "Obsidian of Dread",
+          "Obsidian of Desolation",
+          "Obsidian of Obsession",
+        ],
+        weekly_material: "Fiend's Razor",
       },
     },
-    // Add more HSR characters...
+    "Argenti": {
+      path: "Erudition",
+      type: "Physical",
+      rarity: 5,
+      ascensionMaterials: {
+        boss_mats: ["Core of Ice"],
+        trace_mats: [
+          "Destroyer's Final Road",
+          "Destroyer's Final Path",
+          "Destroyer's Final Crown",
+        ],
+        weekly_material: "Regret of Infinite Ochema",
+      },
+    },
+    "Aventurine": {
+      path: "Preservation",
+      type: "Imaginary",
+      rarity: 5,
+      ascensionMaterials: {
+        boss_mats: ["Past Evils of the Borehole Planet"],
+        trace_mats: [
+          "Shield of the Guardian",
+          "Shield of the Bulwark",
+          "Shield of the Fortress",
+        ],
+        weekly_material: "Past Evils of the Borehole Planet",
+      },
+    },
+    "Black Swan": {
+      path: "Nihility",
+      type: "Wind",
+      rarity: 5,
+      ascensionMaterials: {
+        boss_mats: ["Extinguished Core"],
+        trace_mats: [
+          "Obsidian of Dread",
+          "Obsidian of Desolation",
+          "Obsidian of Obsession",
+        ],
+        weekly_material: "Regret of Infinite Ochema",
+      },
+    },
+    "Blade": {
+      path: "Destruction",
+      type: "Wind",
+      rarity: 5,
+      ascensionMaterials: {
+        boss_mats: ["Ascendant Debris"],
+        trace_mats: [
+          "Shattered Blade",
+          "Lifeless Blade",
+          "Worldbreaker Blade",
+        ],
+        weekly_material: "Regret of Infinite Ochema",
+      },
+    },
+    "Bronya": {
+      path: "Harmony",
+      type: "Wind",
+      rarity: 5,
+      ascensionMaterials: {
+        boss_mats: ["Core of Ice"],
+        trace_mats: [
+          "Key of Knowledge",
+          "Key of Wisdom",
+          "Key of Inspiration",
+        ],
+        weekly_material: "Guardian's Lament",
+      },
+    },
+    "Clara": {
+      path: "Destruction",
+      type: "Physical",
+      rarity: 5,
+      ascensionMaterials: {
+        boss_mats: ["Core of Ice"],
+        trace_mats: [
+          "Shattered Blade",
+          "Lifeless Blade",
+          "Worldbreaker Blade",
+        ],
+        weekly_material: "Guardian's Lament",
+      },
+    },
+    "Dan Heng • Imbibitor Lunae": {
+      path: "Destruction",
+      type: "Imaginary",
+      rarity: 5,
+      ascensionMaterials: {
+        boss_mats: ["Suppressing Edict"],
+        trace_mats: [
+          "Shattered Blade",
+          "Lifeless Blade",
+          "Worldbreaker Blade",
+        ],
+        weekly_material: "Regret of Infinite Ochema",
+      },
+    },
+    "Dr. Ratio": {
+      path: "Hunt",
+      type: "Imaginary",
+      rarity: 5,
+      ascensionMaterials: {
+        boss_mats: ["Past Evils of the Borehole Planet"],
+        trace_mats: [
+          "Arrow of the Starchaser",
+          "Arrow of the Demon Slayer",
+          "Arrow of the Beast Hunter",
+        ],
+        weekly_material: "Past Evils of the Borehole Planet",
+      },
+    },
+    "Fu Xuan": {
+      path: "Preservation",
+      type: "Quantum",
+      rarity: 5,
+      ascensionMaterials: {
+        boss_mats: ["Golden Crown of the Past Shadow"],
+        trace_mats: [
+          "Shield of the Guardian",
+          "Shield of the Bulwark",
+          "Shield of the Fortress",
+        ],
+        weekly_material: "Guardian's Lament",
+      },
+    },
+    "Gepard": {
+      path: "Preservation",
+      type: "Ice",
+      rarity: 5,
+      ascensionMaterials: {
+        boss_mats: ["Core of Ice"],
+        trace_mats: [
+          "Shield of the Guardian",
+          "Shield of the Bulwark",
+          "Shield of the Fortress",
+        ],
+        weekly_material: "Guardian's Lament",
+      },
+    },
+    "Himeko": {
+      path: "Erudition",
+      type: "Fire",
+      rarity: 5,
+      ascensionMaterials: {
+        boss_mats: ["Searing Steel Blade"],
+        trace_mats: [
+          "Destroyer's Final Road",
+          "Destroyer's Final Path",
+          "Destroyer's Final Crown",
+        ],
+        weekly_material: "Extinguished Core",
+      },
+    },
+    "Huohuo": {
+      path: "Abundance",
+      type: "Wind",
+      rarity: 5,
+      ascensionMaterials: {
+        boss_mats: ["Ascendant Debris"],
+        trace_mats: [
+          "Golden Crown of the Past Shadow",
+          "Golden Crown of the Past Shadow",
+          "Golden Crown of the Past Shadow",
+        ],
+        weekly_material: "Regret of Infinite Ochema",
+      },
+    },
+    "Jing Yuan": {
+      path: "Erudition",
+      type: "Lightning",
+      rarity: 5,
+      ascensionMaterials: {
+        boss_mats: ["Lightning Crown"],
+        trace_mats: [
+          "Destroyer's Final Road",
+          "Destroyer's Final Path",
+          "Destroyer's Final Crown",
+        ],
+        weekly_material: "Fiend's Razor",
+      },
+    },
+    "Jingliu": {
+      path: "Destruction",
+      type: "Ice",
+      rarity: 5,
+      ascensionMaterials: {
+        boss_mats: ["Core of Ice"],
+        trace_mats: [
+          "Shattered Blade",
+          "Lifeless Blade",
+          "Worldbreaker Blade",
+        ],
+        weekly_material: "Fiend's Razor",
+      },
+    },
+    "Kafka": {
+      path: "Nihility",
+      type: "Lightning",
+      rarity: 5,
+      ascensionMaterials: {
+        boss_mats: ["IPC Work Permit"],
+        trace_mats: [
+          "Obsidian of Dread",
+          "Obsidian of Desolation",
+          "Obsidian of Obsession",
+        ],
+        weekly_material: "Fiend's Razor",
+      },
+    },
+    "Luocha": {
+      path: "Abundance",
+      type: "Imaginary",
+      rarity: 5,
+      ascensionMaterials: {
+        boss_mats: ["Golden Crown of the Past Shadow"],
+        trace_mats: [
+          "Golden Crown of the Past Shadow",
+          "Golden Crown of the Past Shadow",
+          "Golden Crown of the Past Shadow",
+        ],
+        weekly_material: "Guardian's Lament",
+      },
+    },
+    "Ruan Mei": {
+      path: "Harmony",
+      type: "Ice",
+      rarity: 5,
+      ascensionMaterials: {
+        boss_mats: ["Past Evils of the Borehole Planet"],
+        trace_mats: [
+          "Key of Knowledge",
+          "Key of Wisdom",
+          "Key of Inspiration",
+        ],
+        weekly_material: "Past Evils of the Borehole Planet",
+      },
+    },
+    "Seele": {
+      path: "Hunt",
+      type: "Quantum",
+      rarity: 5,
+      ascensionMaterials: {
+        boss_mats: ["Shape Shifter's Lightning Staff"],
+        trace_mats: [
+          "Arrow of the Starchaser",
+          "Arrow of the Demon Slayer",
+          "Arrow of the Beast Hunter",
+        ],
+        weekly_material: "Guardian's Lament",
+      },
+    },
+    "Silver Wolf": {
+      path: "Nihility",
+      type: "Quantum",
+      rarity: 5,
+      ascensionMaterials: {
+        boss_mats: ["Key of Inspiration"],
+        trace_mats: [
+          "Obsidian of Dread",
+          "Obsidian of Desolation",
+          "Obsidian of Obsession",
+        ],
+        weekly_material: "Regret of Infinite Ochema",
+      },
+    },
+    "Sparkle": {
+      path: "Harmony",
+      type: "Quantum",
+      rarity: 5,
+      ascensionMaterials: {
+        boss_mats: ["Past Evils of the Borehole Planet"],
+        trace_mats: [
+          "Key of Knowledge",
+          "Key of Wisdom",
+          "Key of Inspiration",
+        ],
+        weekly_material: "Past Evils of the Borehole Planet",
+      },
+    },
+    "Topaz & Numby": {
+      path: "Hunt",
+      type: "Fire",
+      rarity: 5,
+      ascensionMaterials: {
+        boss_mats: ["Meteoric Alloy"],
+        trace_mats: [
+          "Arrow of the Starchaser",
+          "Arrow of the Demon Slayer",
+          "Arrow of the Beast Hunter",
+        ],
+        weekly_material: "Fiend's Razor",
+      },
+    },
+    "Welt": {
+      path: "Nihility",
+      type: "Imaginary",
+      rarity: 5,
+      ascensionMaterials: {
+        boss_mats: ["Key of Inspiration"],
+        trace_mats: [
+          "Obsidian of Dread",
+          "Obsidian of Desolation",
+          "Obsidian of Obsession",
+        ],
+        weekly_material: "Extinguished Core",
+      },
+    },
+    "Yanqing": {
+      path: "Hunt",
+      type: "Ice",
+      rarity: 5,
+      ascensionMaterials: {
+        boss_mats: ["Core of Ice"],
+        trace_mats: [
+          "Arrow of the Starchaser",
+          "Arrow of the Demon Slayer",
+          "Arrow of the Beast Hunter",
+        ],
+        weekly_material: "Guardian's Lament",
+      },
+    },
+    "Bailu": {
+      path: "Abundance",
+      type: "Lightning",
+      rarity: 5,
+      ascensionMaterials: {
+        boss_mats: ["Lightning Crown"],
+        trace_mats: [
+          "Golden Crown of the Past Shadow",
+          "Golden Crown of the Past Shadow",
+          "Golden Crown of the Past Shadow",
+        ],
+        weekly_material: "Guardian's Lament",
+      },
+    },
+    "Herta": {
+      path: "Erudition",
+      type: "Ice",
+      rarity: 4,
+      ascensionMaterials: {
+        boss_mats: ["Core of Ice"],
+        trace_mats: [
+          "Destroyer's Final Road",
+          "Destroyer's Final Path",
+          "Destroyer's Final Crown",
+        ],
+        weekly_material: "Guardian's Lament",
+      },
+    },
+    "March 7th": {
+      path: "Preservation",
+      type: "Ice",
+      rarity: 4,
+      ascensionMaterials: {
+        boss_mats: ["Core of Ice"],
+        trace_mats: [
+          "Shield of the Guardian",
+          "Shield of the Bulwark",
+          "Shield of the Fortress",
+        ],
+        weekly_material: "Guardian's Lament",
+      },
+    },
+    "Dan Heng": {
+      path: "Hunt",
+      type: "Wind",
+      rarity: 4,
+      ascensionMaterials: {
+        boss_mats: ["Core of Ice"],
+        trace_mats: [
+          "Arrow of the Starchaser",
+          "Arrow of the Demon Slayer",
+          "Arrow of the Beast Hunter",
+        ],
+        weekly_material: "Guardian's Lament",
+      },
+    },
+    "Asta": {
+      path: "Harmony",
+      type: "Fire",
+      rarity: 4,
+      ascensionMaterials: {
+        boss_mats: ["Searing Steel Blade"],
+        trace_mats: [
+          "Key of Knowledge",
+          "Key of Wisdom",
+          "Key of Inspiration",
+        ],
+        weekly_material: "Extinguished Core",
+      },
+    },
+    "Serval": {
+      path: "Erudition",
+      type: "Lightning",
+      rarity: 4,
+      ascensionMaterials: {
+        boss_mats: ["Lightning Crown"],
+        trace_mats: [
+          "Destroyer's Final Road",
+          "Destroyer's Final Path",
+          "Destroyer's Final Crown",
+        ],
+        weekly_material: "Fiend's Razor",
+      },
+    },
+    "Qingque": {
+      path: "Erudition",
+      type: "Quantum",
+      rarity: 4,
+      ascensionMaterials: {
+        boss_mats: ["Key of Inspiration"],
+        trace_mats: [
+          "Destroyer's Final Road",
+          "Destroyer's Final Path",
+          "Destroyer's Final Crown",
+        ],
+        weekly_material: "Regret of Infinite Ochema",
+      },
+    },
+    "Tingyun": {
+      path: "Harmony",
+      type: "Lightning",
+      rarity: 4,
+      ascensionMaterials: {
+        boss_mats: ["Lightning Crown"],
+        trace_mats: [
+          "Key of Knowledge",
+          "Key of Wisdom",
+          "Key of Inspiration",
+        ],
+        weekly_material: "Fiend's Razor",
+      },
+    },
+    "Sushang": {
+      path: "Hunt",
+      type: "Physical",
+      rarity: 4,
+      ascensionMaterials: {
+        boss_mats: ["Core of Ice"],
+        trace_mats: [
+          "Arrow of the Starchaser",
+          "Arrow of the Demon Slayer",
+          "Arrow of the Beast Hunter",
+        ],
+        weekly_material: "Guardian's Lament",
+      },
+    },
+    "Yukong": {
+      path: "Harmony",
+      type: "Imaginary",
+      rarity: 4,
+      ascensionMaterials: {
+        boss_mats: ["Key of Inspiration"],
+        trace_mats: [
+          "Key of Knowledge",
+          "Key of Wisdom",
+          "Key of Inspiration",
+        ],
+        weekly_material: "Regret of Infinite Ochema",
+      },
+    },
+    "Luka": {
+      path: "Nihility",
+      type: "Physical",
+      rarity: 4,
+      ascensionMaterials: {
+        boss_mats: ["Meteoric Alloy"],
+        trace_mats: [
+          "Obsidian of Dread",
+          "Obsidian of Desolation",
+          "Obsidian of Obsession",
+        ],
+        weekly_material: "Fiend's Razor",
+      },
+    },
+    "Lynx": {
+      path: "Abundance",
+      type: "Quantum",
+      rarity: 4,
+      ascensionMaterials: {
+        boss_mats: ["Key of Inspiration"],
+        trace_mats: [
+          "Golden Crown of the Past Shadow",
+          "Golden Crown of the Past Shadow",
+          "Golden Crown of the Past Shadow",
+        ],
+        weekly_material: "Regret of Infinite Ochema",
+      },
+    },
+    "Pela": {
+      path: "Nihility",
+      type: "Ice",
+      rarity: 4,
+      ascensionMaterials: {
+        boss_mats: ["Core of Ice"],
+        trace_mats: [
+          "Obsidian of Dread",
+          "Obsidian of Desolation",
+          "Obsidian of Obsession",
+        ],
+        weekly_material: "Guardian's Lament",
+      },
+    },
+    "Hook": {
+      path: "Destruction",
+      type: "Fire",
+      rarity: 4,
+      ascensionMaterials: {
+        boss_mats: ["Searing Steel Blade"],
+        trace_mats: [
+          "Shattered Blade",
+          "Lifeless Blade",
+          "Worldbreaker Blade",
+        ],
+        weekly_material: "Extinguished Core",
+      },
+    },
+    "Natasha": {
+      path: "Abundance",
+      type: "Physical",
+      rarity: 4,
+      ascensionMaterials: {
+        boss_mats: ["Meteoric Alloy"],
+        trace_mats: [
+          "Golden Crown of the Past Shadow",
+          "Golden Crown of the Past Shadow",
+          "Golden Crown of the Past Shadow",
+        ],
+        weekly_material: "Fiend's Razor",
+      },
+    },
+    "Arlan": {
+      path: "Destruction",
+      type: "Lightning",
+      rarity: 4,
+      ascensionMaterials: {
+        boss_mats: ["Lightning Crown"],
+        trace_mats: [
+          "Shattered Blade",
+          "Lifeless Blade",
+          "Worldbreaker Blade",
+        ],
+        weekly_material: "Fiend's Razor",
+      },
+    },
+    "Hanya": {
+      path: "Harmony",
+      type: "Physical",
+      rarity: 4,
+      ascensionMaterials: {
+        boss_mats: ["Past Evils of the Borehole Planet"],
+        trace_mats: [
+          "Key of Knowledge",
+          "Key of Wisdom",
+          "Key of Inspiration",
+        ],
+        weekly_material: "Past Evils of the Borehole Planet",
+      },
+    },
+    "Gallagher": {
+      path: "Abundance",
+      type: "Fire",
+      rarity: 4,
+      ascensionMaterials: {
+        boss_mats: ["Past Evils of the Borehole Planet"],
+        trace_mats: [
+          "Golden Crown of the Past Shadow",
+          "Golden Crown of the Past Shadow",
+          "Golden Crown of the Past Shadow",
+        ],
+        weekly_material: "Past Evils of the Borehole Planet",
+      },
+    },
+    "Misha": {
+      path: "Destruction",
+      type: "Ice",
+      rarity: 4,
+      ascensionMaterials: {
+        boss_mats: ["Past Evils of the Borehole Planet"],
+        trace_mats: [
+          "Shattered Blade",
+          "Lifeless Blade",
+          "Worldbreaker Blade",
+        ],
+        weekly_material: "Past Evils of the Borehole Planet",
+      },
+    },
+    "Xueyi": {
+      path: "Destruction",
+      type: "Quantum",
+      rarity: 4,
+      ascensionMaterials: {
+        boss_mats: ["Past Evils of the Borehole Planet"],
+        trace_mats: [
+          "Shattered Blade",
+          "Lifeless Blade",
+          "Worldbreaker Blade",
+        ],
+        weekly_material: "Past Evils of the Borehole Planet",
+      },
+    },
   },
   zzz: {
     "Alexandrina Sebastiane": {
