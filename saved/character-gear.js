@@ -4,356 +4,2202 @@ import { CHARACTER_STATS } from "../data/character-stats.js";
 import { ALL_CHARACTERS } from "../data/all-characters.js";
 import { ALL_WEAPONS } from "../data/all-weapons.js";
 import { getCharacterById, saveMyCharacters } from "./my-characters.js";
+import { renderCharacterDetail } from "../components/character-details.js";
+import {
+  ARTIFACT_MAIN_STAT_VALUES,
+  ARTIFACT_MAIN_STATS,
+  GEAR_CONFIG,
+} from "../data/all-gear.js";
 
-// Replace the createNavigation function in character-gear.js
-function createNavigation(char) {
-  return `
-    <div style="margin-bottom: 20px;">
-      <button onclick="window.navigateToCharacterDetails('${char.id}')" 
-              style="padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; margin-right: 10px;">
-        ← Back to Character Details
-      </button>
-      <button onclick="window.navigateToCharacterList()" 
-              style="padding: 10px 20px; background: #95a5a6; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px;">
-        ← Back to Character List
-      </button>
-    </div>
-  `;
+// =================================================================
+// NEW SUBSTAT CALCULATOR WITH PROPER STAT FORMULAS
+// =================================================================
+
+class NewSubstatCalculator {
+  static SUBSTAT_ROLL_VALUES = {
+    5: {
+      "HP": { min: 209.13, max: 299.75 },
+      "ATK": { min: 13.62, max: 19.45 },
+      "DEF": { min: 16.20, max: 23.15 },
+      "HP%": { min: 4.08, max: 5.83 },
+      "ATK%": { min: 4.08, max: 5.83 },
+      "DEF%": { min: 5.10, max: 7.29 },
+      "Elemental Mastery": { min: 16.32, max: 23.31 },
+      "Energy Recharge": { min: 4.53, max: 6.48 },
+      "CRIT Rate": { min: 2.72, max: 3.89 },
+      "CRIT DMG": { min: 5.44, max: 7.77 },
+    },
+  };
+
+  static calculateSubstatRequirements(char, baseStats, goalStats) {
+    const currentStats = this.calculateCurrentStats(char, baseStats);
+    const statGaps = this.calculateStatGaps(currentStats, goalStats);
+
+    if (Object.keys(statGaps).length === 0) {
+      return { noGaps: true };
+    }
+
+    const requirements = this.calculateRollRequirements(
+      char,
+      baseStats,
+      statGaps,
+    );
+    return {
+      requirements: requirements,
+      statGaps: statGaps,
+      currentStats: currentStats,
+    };
+  }
+
+  static calculateCurrentStats(char, baseStats) {
+    const artifactStats = this.calculateArtifactMainStats(char);
+    const setEffects = this.calculateArtifactSetEffects(char);
+
+    const current = {
+      hp: this.calculateHP(
+        baseStats.baseHP,
+        artifactStats.hpPercent,
+        artifactStats.hpFlat,
+      ),
+      atk: this.calculateATK(
+        baseStats.baseATK,
+        baseStats.weaponATK,
+        artifactStats.atkPercent,
+        artifactStats.atkFlat,
+      ),
+      def: this.calculateDEF(
+        baseStats.baseDEF,
+        artifactStats.defPercent,
+        artifactStats.defFlat,
+      ),
+      elementalMastery: artifactStats.elementalMastery,
+      critRate: 5 + artifactStats.critRate,
+      critDmg: 50 + artifactStats.critDmg,
+      energyRecharge: 100 + artifactStats.energyRecharge,
+      elementalDmg: artifactStats.elementalDmg,
+    };
+
+    // Apply set effects
+    if (setEffects.stats.ATK) {
+      current.atk += baseStats.baseATK * (setEffects.stats.ATK / 100);
+    }
+    if (setEffects.stats.HP) {
+      current.hp += baseStats.baseHP * (setEffects.stats.HP / 100);
+    }
+    if (setEffects.stats.DEF) {
+      current.def += baseStats.baseDEF * (setEffects.stats.DEF / 100);
+    }
+    if (setEffects.stats["Elemental Mastery"]) {
+      current.elementalMastery += setEffects.stats["Elemental Mastery"];
+    }
+    if (setEffects.stats["Energy Recharge"]) {
+      current.energyRecharge += setEffects.stats["Energy Recharge"];
+    }
+
+    return current;
+  }
+
+  static calculateHP(baseHP, hpPercent, hpFlat) {
+    return (baseHP * (1 + hpPercent / 100)) + hpFlat;
+  }
+
+  static calculateATK(baseATK, weaponATK, atkPercent, atkFlat) {
+    const totalBaseATK = baseATK + weaponATK;
+    return (totalBaseATK * (1 + atkPercent / 100)) + atkFlat;
+  }
+
+  static calculateDEF(baseDEF, defPercent, defFlat) {
+    return (baseDEF * (1 + defPercent / 100)) + defFlat;
+  }
+
+  static calculateStatGaps(currentStats, goalStats) {
+    const gaps = {};
+
+    Object.keys(goalStats).forEach((statKey) => {
+      const goal = goalStats[statKey];
+      const current = currentStats[statKey];
+
+      if (goal > current) {
+        gaps[statKey] = goal - current;
+      }
+    });
+
+    return gaps;
+  }
+
+  static calculateRollRequirements(char, baseStats, statGaps) {
+    const requirements = {};
+
+    // Calculate requirements for each stat gap
+    Object.entries(statGaps).forEach(([statKey, gap]) => {
+      const substatTypes = this.getSubstatTypesForStat(statKey);
+
+      // For each possible substat type, calculate min and max rolls needed
+      const solutions = [];
+
+      substatTypes.forEach((substatType) => {
+        const rollValues = this.SUBSTAT_ROLL_VALUES[5][substatType];
+        if (rollValues) {
+          // Calculate rolls needed using min and max roll values
+          const minRolls = Math.ceil(gap / rollValues.max); // Best case: all max rolls
+          const maxRolls = Math.ceil(gap / rollValues.min); // Worst case: all min rolls
+
+          solutions.push({
+            substatType: substatType,
+            minRolls: minRolls, // Using max roll values
+            maxRolls: maxRolls, // Using min roll values
+            valuePerRoll: rollValues,
+            totalValue: {
+              min: minRolls * rollValues.min, // Worst total value
+              max: maxRolls * rollValues.max, // Best total value (but we use minRolls for max value)
+            },
+            actualMinValue: minRolls * rollValues.max, // Actual best case value
+            actualMaxValue: maxRolls * rollValues.min, // Actual worst case value
+          });
+        }
+      });
+
+      // For HP/ATK/DEF, calculate mixed solutions
+      if (statKey === "hp") {
+        const mixedSolution = this.calculateMixedHPSolution(
+          baseStats.baseHP,
+          gap,
+        );
+        solutions.push(mixedSolution);
+      } else if (statKey === "atk") {
+        const mixedSolution = this.calculateMixedATKSolution(
+          baseStats.baseATK + baseStats.weaponATK,
+          gap,
+        );
+        solutions.push(mixedSolution);
+      } else if (statKey === "def") {
+        const mixedSolution = this.calculateMixedDEFSolution(
+          baseStats.baseDEF,
+          gap,
+        );
+        solutions.push(mixedSolution);
+      }
+
+      requirements[statKey] = solutions;
+    });
+
+    // Now distribute rolls across artifacts with proper constraints
+    const distributedRequirements = this.distributeRollsWithConstraints(
+      char,
+      requirements,
+    );
+
+    return distributedRequirements;
+  }
+
+  static calculateMixedHPSolution(baseHP, gap) {
+    const hpPercentRoll = this.SUBSTAT_ROLL_VALUES[5]["HP%"];
+    const hpFlatRoll = this.SUBSTAT_ROLL_VALUES[5]["HP"];
+
+    // Calculate using max values (min rolls scenario)
+    const hpPercentValuePerRollMax = baseHP * hpPercentRoll.max / 100;
+    const hpFlatValuePerRollMax = hpFlatRoll.max;
+
+    // Try 70% HP% + 30% HP distribution for min rolls (best case)
+    const hpPercentGapMin = gap * 0.7;
+    const hpFlatGapMin = gap * 0.3;
+
+    const hpPercentRollsMin = Math.ceil(
+      hpPercentGapMin / hpPercentValuePerRollMax,
+    );
+    const hpFlatRollsMin = Math.ceil(hpFlatGapMin / hpFlatValuePerRollMax);
+    const totalRollsMin = hpPercentRollsMin + hpFlatRollsMin;
+
+    // Calculate using min values (max rolls scenario)
+    const hpPercentValuePerRollMin = baseHP * hpPercentRoll.min / 100;
+    const hpFlatValuePerRollMin = hpFlatRoll.min;
+
+    const hpPercentGapMax = gap * 0.7;
+    const hpFlatGapMax = gap * 0.3;
+
+    const hpPercentRollsMax = Math.ceil(
+      hpPercentGapMax / hpPercentValuePerRollMin,
+    );
+    const hpFlatRollsMax = Math.ceil(hpFlatGapMax / hpFlatValuePerRollMin);
+    const totalRollsMax = hpPercentRollsMax + hpFlatRollsMax;
+
+    return {
+      substatType: "HP% + HP",
+      minRolls: totalRollsMin, // Best case
+      maxRolls: totalRollsMax, // Worst case
+      valuePerRoll: { min: 0, max: 0 },
+      totalValue: {
+        min: (hpPercentRollsMin * (baseHP * hpPercentRoll.min / 100)) +
+          (hpFlatRollsMin * hpFlatRoll.min),
+        max: (hpPercentRollsMin * (baseHP * hpPercentRoll.max / 100)) +
+          (hpFlatRollsMin * hpFlatRoll.max),
+      },
+      breakdown: {
+        "HP%": { min: hpPercentRollsMin, max: hpPercentRollsMax },
+        "HP": { min: hpFlatRollsMin, max: hpFlatRollsMax },
+      },
+    };
+  }
+
+  static calculateMixedATKSolution(totalBaseATK, gap) {
+    const atkPercentRoll = this.SUBSTAT_ROLL_VALUES[5]["ATK%"];
+    const atkFlatRoll = this.SUBSTAT_ROLL_VALUES[5]["ATK"];
+
+    // Min rolls scenario (max values)
+    const atkPercentValuePerRollMax = totalBaseATK * atkPercentRoll.max / 100;
+    const atkFlatValuePerRollMax = atkFlatRoll.max;
+
+    const atkPercentGapMin = gap * 0.8;
+    const atkFlatGapMin = gap * 0.2;
+
+    const atkPercentRollsMin = Math.ceil(
+      atkPercentGapMin / atkPercentValuePerRollMax,
+    );
+    const atkFlatRollsMin = Math.ceil(atkFlatGapMin / atkFlatValuePerRollMax);
+    const totalRollsMin = atkPercentRollsMin + atkFlatRollsMin;
+
+    // Max rolls scenario (min values)
+    const atkPercentValuePerRollMin = totalBaseATK * atkPercentRoll.min / 100;
+    const atkFlatValuePerRollMin = atkFlatRoll.min;
+
+    const atkPercentGapMax = gap * 0.8;
+    const atkFlatGapMax = gap * 0.2;
+
+    const atkPercentRollsMax = Math.ceil(
+      atkPercentGapMax / atkPercentValuePerRollMin,
+    );
+    const atkFlatRollsMax = Math.ceil(atkFlatGapMax / atkFlatValuePerRollMin);
+    const totalRollsMax = atkPercentRollsMax + atkFlatRollsMax;
+
+    return {
+      substatType: "ATK% + ATK",
+      minRolls: totalRollsMin,
+      maxRolls: totalRollsMax,
+      valuePerRoll: { min: 0, max: 0 },
+      totalValue: {
+        min: (atkPercentRollsMin * (totalBaseATK * atkPercentRoll.min / 100)) +
+          (atkFlatRollsMin * atkFlatRoll.min),
+        max: (atkPercentRollsMin * (totalBaseATK * atkPercentRoll.max / 100)) +
+          (atkFlatRollsMin * atkFlatRoll.max),
+      },
+      breakdown: {
+        "ATK%": { min: atkPercentRollsMin, max: atkPercentRollsMax },
+        "ATK": { min: atkFlatRollsMin, max: atkFlatRollsMax },
+      },
+    };
+  }
+
+  static calculateMixedDEFSolution(baseDEF, gap) {
+    const defPercentRoll = this.SUBSTAT_ROLL_VALUES[5]["DEF%"];
+    const defFlatRoll = this.SUBSTAT_ROLL_VALUES[5]["DEF"];
+
+    // Min rolls scenario (max values)
+    const defPercentValuePerRollMax = baseDEF * defPercentRoll.max / 100;
+    const defFlatValuePerRollMax = defFlatRoll.max;
+
+    const defPercentGapMin = gap * 0.7;
+    const defFlatGapMin = gap * 0.3;
+
+    const defPercentRollsMin = Math.ceil(
+      defPercentGapMin / defPercentValuePerRollMax,
+    );
+    const defFlatRollsMin = Math.ceil(defFlatGapMin / defFlatValuePerRollMax);
+    const totalRollsMin = defPercentRollsMin + defFlatRollsMin;
+
+    // Max rolls scenario (min values)
+    const defPercentValuePerRollMin = baseDEF * defPercentRoll.min / 100;
+    const defFlatValuePerRollMin = defFlatRoll.min;
+
+    const defPercentGapMax = gap * 0.7;
+    const defFlatGapMax = gap * 0.3;
+
+    const defPercentRollsMax = Math.ceil(
+      defPercentGapMax / defPercentValuePerRollMin,
+    );
+    const defFlatRollsMax = Math.ceil(defFlatGapMax / defFlatValuePerRollMin);
+    const totalRollsMax = defPercentRollsMax + defFlatRollsMax;
+
+    return {
+      substatType: "DEF% + DEF",
+      minRolls: totalRollsMin,
+      maxRolls: totalRollsMax,
+      valuePerRoll: { min: 0, max: 0 },
+      totalValue: {
+        min: (defPercentRollsMin * (baseDEF * defPercentRoll.min / 100)) +
+          (defFlatRollsMin * defFlatRoll.min),
+        max: (defPercentRollsMin * (baseDEF * defPercentRoll.max / 100)) +
+          (defFlatRollsMin * defFlatRoll.max),
+      },
+      breakdown: {
+        "DEF%": { min: defPercentRollsMin, max: defPercentRollsMax },
+        "DEF": { min: defFlatRollsMin, max: defFlatRollsMax },
+      },
+    };
+  }
+
+  static distributeRollsWithConstraints(char, requirements) {
+    const distributed = {};
+    const artifactConstraints = this.getArtifactConstraints(char);
+    const availableRolls = this.calculateAvailableRolls(char);
+
+    Object.entries(requirements).forEach(([statKey, solutions]) => {
+      if (solutions && solutions.length > 0) {
+        // Find the best solution (usually the mixed one)
+        const bestSolution = solutions.find((s) =>
+          s.substatType.includes("+")
+        ) || solutions[0];
+
+        // Check if we can distribute these rolls given artifact constraints
+        const distribution = this.canDistributeRolls(
+          char,
+          statKey,
+          bestSolution,
+          artifactConstraints,
+        );
+
+        distributed[statKey] = {
+          solution: bestSolution,
+          distribution: distribution,
+          achievable: distribution.achievable,
+          minRolls: bestSolution.minRolls,
+          maxRolls: bestSolution.maxRolls,
+        };
+      }
+    });
+
+    return distributed;
+  }
+
+  static canDistributeRolls(char, statKey, solution, artifactConstraints) {
+    const substatTypes = this.getSubstatTypesForStat(statKey);
+    const slots = ["flower", "plume", "sands", "goblet", "circlet"];
+
+    let totalAvailableRolls = 0;
+    let achievableMin = true;
+    let achievableMax = true;
+
+    // Calculate how many rolls each artifact can contribute for these substat types
+    slots.forEach((slot) => {
+      const artifact = char.gear.artifacts[slot];
+      const availableSubstats = this.getAvailableSubstatsForSlot(
+        slot,
+        artifact.mainStat,
+      );
+
+      // Check if this artifact can roll any of the needed substat types
+      const canRollSubstat = substatTypes.some((substat) =>
+        availableSubstats.includes(substat)
+      );
+
+      if (canRollSubstat) {
+        // Each artifact can contribute up to 9 rolls (4 initial + 5 upgrades)
+        totalAvailableRolls += 9;
+      }
+    });
+
+    // Check achievability
+    if (solution.minRolls > totalAvailableRolls) {
+      achievableMin = false;
+    }
+    if (solution.maxRolls > totalAvailableRolls) {
+      achievableMax = false;
+    }
+
+    return {
+      totalAvailableRolls: totalAvailableRolls,
+      achievableMin: achievableMin,
+      achievableMax: achievableMax,
+      requiredMinRolls: solution.minRolls,
+      requiredMaxRolls: solution.maxRolls,
+    };
+  }
+
+  static getArtifactConstraints(char) {
+    const constraints = {};
+    const slots = ["flower", "plume", "sands", "goblet", "circlet"];
+
+    slots.forEach((slot) => {
+      const artifact = char.gear.artifacts[slot];
+      constraints[slot] = {
+        mainStat: artifact.mainStat,
+        availableSubstats: this.getAvailableSubstatsForSlot(
+          slot,
+          artifact.mainStat,
+        ),
+      };
+    });
+
+    return constraints;
+  }
+
+  static calculateAvailableRolls(char) {
+    let totalRolls = 0;
+    const slots = ["flower", "plume", "sands", "goblet", "circlet"];
+
+    slots.forEach((slot) => {
+      totalRolls += 9; // Max possible rolls per artifact (4 initial + 5 upgrades)
+    });
+
+    return totalRolls;
+  }
+
+  static getAvailableSubstatsForSlot(slot, mainStat) {
+    const allSubstats = [
+      "HP",
+      "ATK",
+      "DEF",
+      "HP%",
+      "ATK%",
+      "DEF%",
+      "Elemental Mastery",
+      "Energy Recharge",
+      "CRIT Rate",
+      "CRIT DMG",
+    ];
+
+    const conflictingSubstats = this.getConflictingSubstats(mainStat);
+    return allSubstats.filter((substat) =>
+      !conflictingSubstats.includes(substat)
+    );
+  }
+
+  static getConflictingSubstats(mainStat) {
+    const conflicts = {
+      "HP": ["HP"],
+      "ATK": ["ATK"],
+      "HP%": ["HP%"],
+      "ATK%": ["ATK%"],
+      "DEF%": ["DEF%"],
+      "Elemental Mastery": ["Elemental Mastery"],
+      "Energy Recharge": ["Energy Recharge"],
+      "CRIT Rate": ["CRIT Rate"],
+      "CRIT DMG": ["CRIT DMG"],
+      "Healing Bonus": ["Healing Bonus"],
+    };
+
+    if (mainStat.includes("DMG%")) {
+      return [];
+    }
+
+    return conflicts[mainStat] || [];
+  }
+
+  static getSubstatTypesForStat(statKey) {
+    const mapping = {
+      hp: ["HP%", "HP"],
+      atk: ["ATK%", "ATK"],
+      def: ["DEF%", "DEF"],
+      elementalMastery: ["Elemental Mastery"],
+      critRate: ["CRIT Rate"],
+      critDmg: ["CRIT DMG"],
+      energyRecharge: ["Energy Recharge"],
+      elementalDmg: [],
+    };
+
+    return mapping[statKey] || [];
+  }
+
+  static calculateArtifactMainStats(char) {
+    const artifacts = char.gear.artifacts;
+    const stats = {
+      hpFlat: 0,
+      hpPercent: 0,
+      atkFlat: 0,
+      atkPercent: 0,
+      defFlat: 0,
+      defPercent: 0,
+      elementalMastery: 0,
+      energyRecharge: 0,
+      critRate: 0,
+      critDmg: 0,
+      healingBonus: 0,
+      elementalDmg: 0,
+    };
+
+    Object.values(artifacts).forEach((artifact) => {
+      const value = artifact.value;
+      switch (artifact.mainStat) {
+        case "HP":
+          stats.hpFlat += value;
+          break;
+        case "ATK":
+          stats.atkFlat += value;
+          break;
+        case "HP%":
+          stats.hpPercent += value;
+          break;
+        case "ATK%":
+          stats.atkPercent += value;
+          break;
+        case "DEF%":
+          stats.defPercent += value;
+          break;
+        case "Elemental Mastery":
+          stats.elementalMastery += value;
+          break;
+        case "Energy Recharge":
+          stats.energyRecharge += value;
+          break;
+        case "CRIT Rate":
+          stats.critRate += value;
+          break;
+        case "CRIT DMG":
+          stats.critDmg += value;
+          break;
+        case "Healing Bonus":
+          stats.healingBonus += value;
+          break;
+        default:
+          if (artifact.mainStat.includes("DMG%")) {
+            stats.elementalDmg += value;
+          }
+          break;
+      }
+    });
+
+    return stats;
+  }
+
+  static calculateArtifactSetEffects(char) {
+    const effects = { stats: {}, descriptions: [] };
+    const gear = char.gear;
+    const gameConfig = GearUtils.getGearConfig(char.game);
+
+    const processSetEffect = (setName, isFirstSet = true) => {
+      const setData = gameConfig.artifactSets[setName];
+      if (!setData) return;
+
+      const set2pcEffect = setData["2pc"];
+      if (set2pcEffect) {
+        if (set2pcEffect.stat && set2pcEffect.value) {
+          effects.stats[set2pcEffect.stat] =
+            (effects.stats[set2pcEffect.stat] || 0) + set2pcEffect.value;
+        }
+        effects.descriptions.push({
+          type: "2pc",
+          setName: setName,
+          description: set2pcEffect.description || `2pc ${setName} effect`,
+        });
+      }
+
+      if (
+        gear.artifactSet1 && gear.artifactSet2 &&
+        gear.artifactSet1 === gear.artifactSet2 &&
+        gear.artifactSet1 === setName && isFirstSet
+      ) {
+        const set4pcEffect = setData["4pc"];
+        if (set4pcEffect && set4pcEffect.description) {
+          effects.descriptions.push({
+            type: "4pc",
+            setName: setName,
+            description: set4pcEffect.description,
+          });
+        }
+      }
+    };
+
+    if (gear.artifactSet1) processSetEffect(gear.artifactSet1, true);
+    if (gear.artifactSet2 && gear.artifactSet2 !== gear.artifactSet1) {
+      processSetEffect(gear.artifactSet2, false);
+    }
+
+    return effects;
+  }
+
+  static formatRequirementsForDisplay(requirements) {
+    if (requirements.noGaps) {
+      return { noGaps: true, message: "All goal stats have been achieved!" };
+    }
+
+    if (!requirements.requirements) {
+      return {
+        possible: false,
+        message: "No goal stats set or invalid calculation",
+      };
+    }
+
+    const reqs = requirements.requirements;
+    const displayData = {
+      possible: true,
+      substats: {},
+      totalRolls: { minUsed: 0, maxUsed: 0, available: 45 },
+    };
+
+    Object.entries(reqs).forEach(([statKey, data]) => {
+      const solution = data.solution;
+      const distribution = data.distribution;
+
+      displayData.substats[statKey] = {
+        neededRolls: {
+          min: solution.minRolls, // Best case: all max rolls
+          max: solution.maxRolls, // Worst case: all min rolls
+        },
+        achievable: {
+          min: distribution.achievableMin,
+          max: distribution.achievableMax,
+        },
+        totalValue: solution.totalValue,
+        originalStat: statKey,
+        solutionType: solution.substatType,
+        breakdown: solution.breakdown,
+        availableRolls: distribution.totalAvailableRolls,
+      };
+
+      displayData.totalRolls.minUsed += solution.minRolls;
+      displayData.totalRolls.maxUsed += solution.maxRolls;
+
+      if (!distribution.achievableMin || !distribution.achievableMax) {
+        displayData.possible = false;
+      }
+    });
+
+    if (!displayData.possible) {
+      displayData.message =
+        "Some goal stats require more substat rolls than available in artifacts that can roll them";
+    }
+
+    return displayData;
+  }
 }
 
-// Add these global navigation functions at the end of character-gear.js
-window.navigateToCharacterDetails = (charId) => {
-  const char = getCharacterById(charId);
-  if (char) {
-    // Close the current gear view and reopen character details modal
+// =================================================================
+// UTILITY FUNCTIONS (KEEP EXISTING)
+// =================================================================
+
+class GearUtils {
+  static getGearConfig(game) {
+    return GEAR_CONFIG[game] || GEAR_CONFIG.genshin;
+  }
+
+  static getArtifactMainStatValue(mainStat, rarity = 5) {
+    return ARTIFACT_MAIN_STAT_VALUES[rarity]?.[mainStat] || 0;
+  }
+
+  static formatStatValue(stat, value) {
+    if (stat === "HP") return Math.round(value).toLocaleString();
+    if (stat === "ATK") return Math.round(value).toLocaleString();
+    if (
+      stat.includes("%") || stat === "CRIT Rate" || stat === "CRIT DMG" ||
+      stat === "Healing Bonus" || stat === "Energy Recharge"
+    ) {
+      return value.toFixed(1) + "%";
+    }
+    if (stat === "Elemental Mastery") return Math.round(value).toLocaleString();
+    return value.toFixed(1);
+  }
+
+  static getArtifactIcon(slot) {
+    const icons = {
+      flower: "🌸",
+      plume: "🪶",
+      sands: "⏳",
+      goblet: "🍶",
+      circlet: "👑",
+    };
+    return icons[slot] || "📦";
+  }
+
+  static getWeaponImage(char) {
+    if (!char.gear?.weapon) return "";
+
+    const charData = ALL_CHARACTERS[char.game]?.[char.name];
+    const weaponType = charData?.weapon;
+    if (!weaponType) return "";
+
+    const weapons = ALL_WEAPONS[char.game]?.[weaponType] || [];
+    const weapon = weapons.find((w) => w.name === char.gear.weapon);
+
+    return weapon?.image ||
+      `/assets/${char.game}/weapons/${char.gear.weapon}.webp`;
+  }
+
+  static getWeaponRarityColor(char) {
+    if (!char.gear?.weapon) return "#95a5a6";
+
+    const charData = ALL_CHARACTERS[char.game]?.[char.name];
+    const weaponType = charData?.weapon;
+    if (!weaponType) return "#95a5a6";
+
+    const weapons = ALL_WEAPONS[char.game]?.[weaponType] || [];
+    const weapon = weapons.find((w) => w.name === char.gear.weapon);
+    if (!weapon) return "#95a5a6";
+
+    const rarity = weapon.rarity;
+    switch (rarity) {
+      case 5:
+        return "#ffd700";
+      case 4:
+        return "#c0c0c0";
+      case 3:
+        return "#cd7f32";
+      default:
+        return "#95a5a6";
+    }
+  }
+
+  static getWeaponRarityText(char) {
+    if (!char.gear?.weapon) return "";
+
+    const charData = ALL_CHARACTERS[char.game]?.[char.name];
+    const weaponType = charData?.weapon;
+    if (!weaponType) return "";
+
+    const weapons = ALL_WEAPONS[char.game]?.[weaponType] || [];
+    const weapon = weapons.find((w) => w.name === char.gear.weapon);
+
+    return weapon?.rarity ? `${weapon.rarity}★` : "";
+  }
+
+  static getDefaultArtifactSetForWeapon(weaponType) {
+    const meleeWeapons = ["Sword", "Claymore", "Polearm"];
+    const rangedWeapons = ["Catalyst", "Bow"];
+
+    if (meleeWeapons.includes(weaponType)) {
+      return "Gladiator's Finale";
+    } else if (rangedWeapons.includes(weaponType)) {
+      return "Wanderer's Troupe";
+    }
+    return "Gladiator's Finale";
+  }
+
+  static isFourStarSet(setName) {
+    const gameConfig = this.getGearConfig("genshin");
+    const setData = gameConfig.artifactSets[setName];
+    return setData && setData.rarity === 4;
+  }
+
+  static getArtifactImage(char, slot) {
+    const gear = char.gear;
+    if (!gear) return "";
+
+    const gameConfig = this.getGearConfig(char.game);
+
+    const set1 = gear.artifactSet1;
+    const set2 = gear.artifactSet2;
+
+    let targetSet = null;
+
+    if (!set1 && !set2) {
+      const charData = ALL_CHARACTERS[char.game]?.[char.name];
+      const weaponType = charData?.weapon;
+      targetSet = this.getDefaultArtifactSetForWeapon(weaponType);
+    } else if (set1 && !set2) {
+      if (this.isFourStarSet(set1)) {
+        if (slot === "flower" || slot === "plume") {
+          targetSet = set1;
+        } else {
+          const charData = ALL_CHARACTERS[char.game]?.[char.name];
+          const weaponType = charData?.weapon;
+          targetSet = this.getDefaultArtifactSetForWeapon(weaponType);
+        }
+      } else {
+        targetSet = set1;
+      }
+    } else if (set1 && set2) {
+      if (set1 === set2) {
+        if (this.isFourStarSet(set1)) {
+          if (
+            slot === "flower" || slot === "plume" || slot === "goblet" ||
+            slot === "circlet"
+          ) {
+            targetSet = set1;
+          } else {
+            const charData = ALL_CHARACTERS[char.game]?.[char.name];
+            const weaponType = charData?.weapon;
+            targetSet = this.getDefaultArtifactSetForWeapon(weaponType);
+          }
+        } else {
+          targetSet = set1;
+        }
+      } else {
+        if (this.isFourStarSet(set1) && this.isFourStarSet(set2)) {
+          if (slot === "flower" || slot === "plume") {
+            targetSet = set1;
+          } else if (slot === "goblet" || slot === "circlet") {
+            targetSet = set2;
+          } else {
+            const charData = ALL_CHARACTERS[char.game]?.[char.name];
+            const weaponType = charData?.weapon;
+            targetSet = this.getDefaultArtifactSetForWeapon(weaponType);
+          }
+        } else if (!this.isFourStarSet(set1) && this.isFourStarSet(set2)) {
+          if (slot === "flower" || slot === "plume") {
+            targetSet = set1;
+          } else if (slot === "goblet" || slot === "circlet") {
+            targetSet = set2;
+          } else {
+            const charData = ALL_CHARACTERS[char.game]?.[char.name];
+            const weaponType = charData?.weapon;
+            targetSet = this.getDefaultArtifactSetForWeapon(weaponType);
+          }
+        } else if (this.isFourStarSet(set1) && !this.isFourStarSet(set2)) {
+          if (slot === "flower" || slot === "plume") {
+            targetSet = set1;
+          } else {
+            targetSet = set2;
+          }
+        } else {
+          if (slot === "flower" || slot === "plume") {
+            targetSet = set1;
+          } else {
+            targetSet = set2;
+          }
+        }
+      }
+    }
+
+    const setData = gameConfig.artifactSets[targetSet];
+    if (setData && setData.pieces && setData.pieces[slot]) {
+      return setData.pieces[slot].image;
+    }
+
+    return "";
+  }
+
+  static formatSetEffectText(effect) {
+    if (effect.type === "stat") {
+      return `+${effect.value}% ${effect.stat}`;
+    }
+    return effect.description || "";
+  }
+}
+
+// =================================================================
+// STAT CALCULATOR (KEEP EXISTING)
+// =================================================================
+
+class StatCalculator {
+  static calculateBaseStats(char, stats, charData) {
+    if (!stats) return this.getBaseStats();
+
+    const baseStats = this.getBaseStats();
+    const weaponStats = this.calculateWeaponStats(char);
+
+    const charStatsData = CHARACTER_STATS[char.game]?.[char.name];
+    const charAscensionStat = charStatsData?.additionalStat;
+    const weaponAscensionStat = weaponStats.additionalStat;
+
+    const totalBaseHP = stats.baseHP;
+    const totalBaseATK = stats.baseATK + weaponStats.baseATK;
+    const totalBaseDEF = stats.baseDEF;
+
+    const hpPercentBonus =
+      this.getStatBonus(charAscensionStat, weaponAscensionStat, "HP") / 100;
+    baseStats.hp = totalBaseHP * (1 + hpPercentBonus);
+
+    const atkPercentBonus =
+      this.getStatBonus(charAscensionStat, weaponAscensionStat, "ATK") / 100;
+    baseStats.atk = totalBaseATK * (1 + atkPercentBonus);
+
+    const defPercentBonus =
+      this.getStatBonus(charAscensionStat, weaponAscensionStat, "DEF") / 100;
+    baseStats.def = totalBaseDEF * (1 + defPercentBonus);
+
+    baseStats.elementalMastery = this.getFlatStatBonus(
+      charAscensionStat,
+      weaponAscensionStat,
+      "Elemental Mastery",
+    );
+    baseStats.critRate = 5 +
+      this.getFlatStatBonus(
+        charAscensionStat,
+        weaponAscensionStat,
+        "CRIT Rate",
+      );
+    baseStats.critDmg = 50 +
+      this.getFlatStatBonus(charAscensionStat, weaponAscensionStat, "CRIT DMG");
+    baseStats.energyRecharge = 100 +
+      this.getFlatStatBonus(
+        charAscensionStat,
+        weaponAscensionStat,
+        "Energy Recharge",
+      );
+    baseStats.elementalDmg = this.getFlatStatBonus(
+      charAscensionStat,
+      weaponAscensionStat,
+      "DMG%",
+    );
+
+    if (charAscensionStat?.type?.includes("DMG Bonus")) {
+      baseStats.elementalDmg += charAscensionStat.value;
+    }
+
+    return baseStats;
+  }
+
+  static getBaseStats() {
+    return {
+      hp: 0,
+      atk: 0,
+      def: 0,
+      elementalMastery: 0,
+      critRate: 5,
+      critDmg: 50,
+      healingBonus: 0,
+      energyRecharge: 100,
+      elementalDmg: 0,
+    };
+  }
+
+  static getStatBonus(charStat, weaponStat, statType) {
+    let bonus = 0;
+    if (charStat?.type === statType) bonus += charStat.value;
+    if (weaponStat?.type === statType) bonus += weaponStat.value;
+    return bonus;
+  }
+
+  static getFlatStatBonus(charStat, weaponStat, statType) {
+    let bonus = 0;
+    if (charStat?.type === statType) bonus += charStat.value;
+    if (weaponStat?.type === statType) bonus += weaponStat.value;
+    return bonus;
+  }
+
+  static calculateWeaponStats(char) {
+    const weaponName =
+      char.gear?.weapon?.replace(/\s*\(\d+★\)\s*$/, "").trim() || "";
+    if (!weaponName) {
+      return { baseATK: 0, additionalStat: null };
+    }
+
+    const charData = ALL_CHARACTERS[char.game]?.[char.name];
+    const weaponType = charData?.weapon;
+    if (!weaponType) {
+      return { baseATK: 0, additionalStat: null };
+    }
+
+    const weapons = ALL_WEAPONS[char.game]?.[weaponType] || [];
+    const weapon = weapons.find((w) => w.name === weaponName);
+    if (!weapon) {
+      return { baseATK: 0, additionalStat: null };
+    }
+
+    return {
+      baseATK: weapon.baseATK || 0,
+      additionalStat: weapon.stat && weapon.stat.type !== "none"
+        ? {
+          type: weapon.stat.type,
+          value: weapon.stat.value,
+        }
+        : null,
+    };
+  }
+
+  static calculateProjectedStats(char, stats, charData) {
+    const baseStats = this.calculateBaseStats(char, stats, charData);
+    const artifactStats = this.calculateArtifactMainStats(char);
+    const setEffects = this.calculateArtifactSetEffects(char);
+
+    const projected = { ...baseStats };
+
+    const weaponStats = this.calculateWeaponStats(char);
+    const totalBaseHP = stats.baseHP;
+    const totalBaseATK = stats.baseATK + weaponStats.baseATK;
+    const totalBaseDEF = stats.baseDEF;
+
+    const totalHPPercent = artifactStats.hpPercent / 100;
+    projected.hp = (baseStats.hp * (1 + totalHPPercent)) + artifactStats.hpFlat;
+
+    const totalATKPercent = artifactStats.atkPercent / 100;
+    projected.atk = (totalBaseATK * (1 + totalATKPercent)) +
+      artifactStats.atkFlat;
+
+    const totalDEFPercent = artifactStats.defPercent / 100;
+    projected.def = (baseStats.def * (1 + totalDEFPercent)) +
+      artifactStats.defFlat;
+
+    projected.elementalMastery += artifactStats.elementalMastery;
+    projected.critRate += artifactStats.critRate;
+    projected.critDmg += artifactStats.critDmg;
+    projected.energyRecharge += artifactStats.energyRecharge;
+    projected.healingBonus += artifactStats.healingBonus;
+    projected.elementalDmg += artifactStats.elementalDmg;
+
+    if (setEffects.stats.ATK) {
+      projected.atk += totalBaseATK * (setEffects.stats.ATK / 100);
+    }
+    if (setEffects.stats["Elemental Mastery"]) {
+      projected.elementalMastery += setEffects.stats["Elemental Mastery"];
+    }
+    if (setEffects.stats["Energy Recharge"]) {
+      projected.energyRecharge += setEffects.stats["Energy Recharge"];
+    }
+    if (setEffects.stats.DEF) {
+      projected.def += totalBaseDEF * (setEffects.stats.DEF / 100);
+    }
+    if (setEffects.stats.HP) {
+      projected.hp += totalBaseHP * (setEffects.stats.HP / 100);
+    }
+
+    return projected;
+  }
+
+  static calculateArtifactMainStats(char) {
+    const artifacts = char.gear.artifacts;
+    const stats = {
+      hpFlat: 0,
+      hpPercent: 0,
+      atkFlat: 0,
+      atkPercent: 0,
+      defFlat: 0,
+      defPercent: 0,
+      elementalMastery: 0,
+      energyRecharge: 0,
+      critRate: 0,
+      critDmg: 0,
+      healingBonus: 0,
+      elementalDmg: 0,
+    };
+
+    Object.values(artifacts).forEach((artifact) => {
+      const value = artifact.value;
+      switch (artifact.mainStat) {
+        case "HP":
+          stats.hpFlat += value;
+          break;
+        case "ATK":
+          stats.atkFlat += value;
+          break;
+        case "HP%":
+          stats.hpPercent += value;
+          break;
+        case "ATK%":
+          stats.atkPercent += value;
+          break;
+        case "DEF%":
+          stats.defPercent += value;
+          break;
+        case "Elemental Mastery":
+          stats.elementalMastery += value;
+          break;
+        case "Energy Recharge":
+          stats.energyRecharge += value;
+          break;
+        case "CRIT Rate":
+          stats.critRate += value;
+          break;
+        case "CRIT DMG":
+          stats.critDmg += value;
+          break;
+        case "Healing Bonus":
+          stats.healingBonus += value;
+          break;
+        default:
+          if (artifact.mainStat.includes("DMG%")) {
+            stats.elementalDmg += value;
+          }
+          break;
+      }
+    });
+
+    return stats;
+  }
+
+  static calculateArtifactSetEffects(char) {
+    const effects = { stats: {}, descriptions: [] };
+    const gear = char.gear;
+    const gameConfig = GearUtils.getGearConfig(char.game);
+
+    const processSetEffect = (setName, isFirstSet = true) => {
+      const setData = gameConfig.artifactSets[setName];
+      if (!setData) return;
+
+      const set2pcEffect = setData["2pc"];
+      if (set2pcEffect) {
+        if (set2pcEffect.stat && set2pcEffect.value) {
+          effects.stats[set2pcEffect.stat] =
+            (effects.stats[set2pcEffect.stat] || 0) + set2pcEffect.value;
+        }
+        effects.descriptions.push({
+          type: "2pc",
+          setName: setName,
+          description: set2pcEffect.description || `2pc ${setName} effect`,
+        });
+      }
+
+      if (
+        gear.artifactSet1 && gear.artifactSet2 &&
+        gear.artifactSet1 === gear.artifactSet2 &&
+        gear.artifactSet1 === setName && isFirstSet
+      ) {
+        const set4pcEffect = setData["4pc"];
+        if (set4pcEffect && set4pcEffect.description) {
+          effects.descriptions.push({
+            type: "4pc",
+            setName: setName,
+            description: set4pcEffect.description,
+          });
+        }
+      }
+    };
+
+    if (gear.artifactSet1) processSetEffect(gear.artifactSet1, true);
+    if (gear.artifactSet2 && gear.artifactSet2 !== gear.artifactSet1) {
+      processSetEffect(gear.artifactSet2, false);
+    }
+
+    return effects;
+  }
+}
+
+// =================================================================
+// GEAR RENDERER (UPDATED WITH NEW CALCULATOR)
+// =================================================================
+
+class GearRenderer {
+  static render(char) {
     const content = document.getElementById("page-content");
-    if (content) {
-      content.innerHTML = ""; // Clear the gear view
+    if (!content) return;
+
+    const gameConfig = GearUtils.getGearConfig(char.game);
+    const charData = ALL_CHARACTERS[char.game]?.[char.name];
+    const stats = CHARACTER_STATS[char.game]?.[char.name]
+      ?.[char.gearLevel || 90];
+
+    this.initializeGearData(char);
+
+    const currentStats = StatCalculator.calculateBaseStats(
+      char,
+      stats,
+      charData,
+    );
+    const projectedStats = StatCalculator.calculateProjectedStats(
+      char,
+      stats,
+      charData,
+    );
+
+    // Get base stats for new calculator
+    const baseStats = {
+      baseHP: stats.baseHP,
+      baseATK: stats.baseATK,
+      baseDEF: stats.baseDEF,
+      weaponATK: StatCalculator.calculateWeaponStats(char).baseATK,
+    };
+
+    // Use new calculator for requirements
+    const requirements = NewSubstatCalculator.calculateSubstatRequirements(
+      char,
+      baseStats,
+      char.gear.goalStats,
+    );
+
+    content.innerHTML = this.createGearInterface(
+      char,
+      gameConfig,
+      currentStats,
+      projectedStats,
+      requirements,
+    );
+  }
+
+  static initializeGearData(char) {
+    if (!char.gear) {
+      const charData = ALL_CHARACTERS[char.game]?.[char.name];
+      const weaponType = charData?.weapon;
+      char.weaponType = weaponType;
+
+      const defaultSet = GearUtils.getDefaultArtifactSetForWeapon(weaponType);
+
+      char.gear = {
+        weapon: char.weaponName || "",
+        artifactSet1: defaultSet,
+        artifactSet2: defaultSet,
+        artifacts: this.createDefaultArtifacts(char, defaultSet),
+        goalStats: this.createDefaultGoalStats(),
+      };
+      saveMyCharacters();
     }
-    renderCharacterDetail(char); // This should reopen the character details modal
+
+    if (!char.gearLevel) {
+      char.gearLevel = 90;
+      saveMyCharacters();
+    }
   }
-};
 
-window.navigateToCharacterList = () => {
-  // Clear the current content and reinitialize the character list
-  const content = document.getElementById("page-content");
-  if (content) {
-    content.innerHTML = ""; // Clear the gear view
+  static createDefaultArtifacts(char, defaultSet) {
+    const slots = ["flower", "plume", "sands", "goblet", "circlet"];
+    const artifacts = {};
+
+    slots.forEach((slot) => {
+      artifacts[slot] = {
+        mainStat: ARTIFACT_MAIN_STATS[slot][0],
+        value: GearUtils.getArtifactMainStatValue(
+          ARTIFACT_MAIN_STATS[slot][0],
+          5,
+        ),
+        rarity: 5,
+        image: this.getArtifactImageForSlot(char, slot, defaultSet),
+      };
+    });
+
+    return artifacts;
   }
-  // Reinitialize the characters scene to show the list
-  if (window.initCharactersScene) {
-    window.initCharactersScene();
+
+  static getArtifactImageForSlot(char, slot, defaultSet) {
+    const gameConfig = GearUtils.getGearConfig(char.game);
+    const setData = gameConfig.artifactSets[defaultSet];
+    return setData?.pieces?.[slot]?.image || "";
   }
-};
 
-// Add gear level options function
-function getGearLevelOptions() {
-  return [90, 95, 100];
-}
+  static createDefaultGoalStats() {
+    return {
+      hp: 0,
+      atk: 0,
+      def: 0,
+      elementalMastery: 0,
+      critRate: 5,
+      critDmg: 50,
+      healingBonus: 0,
+      energyRecharge: 100,
+      elementalDmg: 0,
+    };
+  }
 
-// Artifact main stats options
-const ARTIFACT_MAIN_STATS = {
-  flower: ["HP"],
-  plume: ["ATK"],
-  sands: ["HP%", "ATK%", "DEF%", "Elemental Mastery", "Energy Recharge"],
-  goblet: [
-    "HP%",
-    "ATK%",
-    "DEF%",
-    "Elemental Mastery",
-    "Pyro DMG%",
-    "Hydro DMG%",
-    "Electro DMG%",
-    "Cryo DMG%",
-    "Anemo DMG%",
-    "Geo DMG%",
-    "Dendro DMG%",
-    "Physical DMG%",
-  ],
-  circlet: [
-    "HP%",
-    "ATK%",
-    "DEF%",
-    "Elemental Mastery",
-    "CRIT Rate",
-    "CRIT DMG",
-    "Healing Bonus",
-  ],
-};
-
-// Artifact main stat values (separate for 5-star and 4-star)
-const ARTIFACT_MAIN_STAT_VALUES = {
-  5: {
-    "HP": 4780,
-    "ATK": 311,
-    "HP%": 46.6,
-    "ATK%": 46.6,
-    "DEF%": 46.6,
-    "Elemental Mastery": 186.5,
-    "Energy Recharge": 51.8,
-    "CRIT Rate": 31.1,
-    "CRIT DMG": 62.2,
-    "Healing Bonus": 35.9,
-    "Pyro DMG%": 46.6,
-    "Hydro DMG%": 46.6,
-    "Electro DMG%": 46.6,
-    "Cryo DMG%": 46.6,
-    "Anemo DMG%": 46.6,
-    "Geo DMG%": 46.6,
-    "Dendro DMG%": 46.6,
-    "Physical DMG%": 58.3,
-  },
-  4: {
-    "HP": 3571,
-    "ATK": 232,
-    "HP%": 34.8,
-    "ATK%": 34.8,
-    "DEF%": 34.8,
-    "Elemental Mastery": 139.3,
-    "Energy Recharge": 39.0,
-    "CRIT Rate": 23.3,
-    "CRIT DMG": 46.4,
-    "Healing Bonus": 26.8,
-    "Pyro DMG%": 34.8,
-    "Hydro DMG%": 34.8,
-    "Electro DMG%": 34.8,
-    "Cryo DMG%": 34.8,
-    "Anemo DMG%": 34.8,
-    "Geo DMG%": 34.8,
-    "Dendro DMG%": 34.8,
-    "Physical DMG%": 43.5,
-  },
-};
-
-// ====================================================================
-// ARTIFACT SETS DATA - ADD MORE SETS HERE FOLLOWING THE SAME FORMAT
-// ====================================================================
-const ARTIFACT_SETS = {
-  genshin: {
-    "Instructor": {
-      "2pc": { stat: "Elemental Mastery", value: 80 },
-      "4pc": {
-        type: "description",
-        description:
-          "Upon triggering an Elemental Reaction, increases all party members' Elemental Mastery by 120 for 8s.",
-      },
-      flower: {
-        name: "Instructor's Brooch",
-        image: "/assets/genshin/artifacts/Instructor's Brooch.webp",
-      },
-      feather: {
-        name: "Instructor's Feather Accessory",
-        image: "/assets/genshin/artifacts/Instructor's Feather Accessory.webp",
-      },
-      sands: {
-        name: "Instructor's Pocket Watch",
-        image: "/assets/genshin/artifacts/Instructor's Pocket Watch.webp",
-      },
-      goblet: {
-        name: "Instructor's Tea Cup",
-        image: "/assets/genshin/artifacts/Instructor's Tea Cup.webp",
-      },
-      circlet: {
-        name: "Instructor's Cap",
-        image: "/assets/genshin/artifacts/Instructor's Cap.webp",
-      },
-      rarity: 4,
-    },
-    "Gladiator's Finale": {
-      "2pc": { stat: "ATK", value: 18 },
-      "4pc": {
-        type: "description",
-        description:
-          "If the wielder of this artifact set uses a Sword, Claymore or Polearm, increases their Normal Attack DMG by 35%.",
-      },
-      flower: {
-        name: "Gladiator's Nostalgia",
-        image: "/assets/genshin/artifacts/Gladiator's Nostalgia.webp",
-      },
-      feather: {
-        name: "Gladiator's Destiny",
-        image: "/assets/genshin/artifacts/Gladiator's Destiny.webp",
-      },
-      sands: {
-        name: "Gladiator's Longing",
-        image: "/assets/genshin/artifacts/Gladiator's Longing.webp",
-      },
-      goblet: {
-        name: "Gladiator's Intoxication",
-        image: "/assets/genshin/artifacts/Gladiator's Intoxication.webp",
-      },
-      circlet: {
-        name: "Gladiator's Triumphus",
-        image: "/assets/genshin/artifacts/Gladiator's Triumphus.webp",
-      },
-      rarity: 5,
-    },
-    "Wanderer's Troupe": {
-      "2pc": { stat: "Elemental Mastery", value: 80 },
-      "4pc": {
-        type: "description",
-        description:
-          "Increases Charged Attack DMG by 35% if the character uses a Catalyst or Bow.",
-      },
-      flower: {
-        name: "Troupe's Dawnlight",
-        image: "/assets/genshin/artifacts/Troupe's Dawnlight.webp",
-      },
-      feather: {
-        name: "Bard's Arrow Feather",
-        image: "/assets/genshin/artifacts/Bard's Arrow Feather.webp",
-      },
-      sands: {
-        name: "Concert's Final Hour",
-        image: "/assets/genshin/artifacts/Concert's Final Hour.webp",
-      },
-      goblet: {
-        name: "Wanderer's String-Kettle",
-        image: "/assets/genshin/artifacts/Wanderer's String-Kettle.webp",
-      },
-      circlet: {
-        name: "Conductor's Top Hat",
-        image: "/assets/genshin/artifacts/Conductor's Top Hat.webp",
-      },
-      rarity: 5,
-    },
-    // Add more sets following the same format...
-  },
-};
-
-// Function to format stat values for display
-function formatStatValue(stat, value) {
-  if (stat === "HP") return Math.round(value).toLocaleString();
-  if (stat === "ATK") return Math.round(value).toLocaleString();
-  if (
-    stat.includes("%") || stat === "CRIT Rate" || stat === "CRIT DMG" ||
-    stat === "Healing Bonus" || stat === "Energy Recharge"
+  static createGearInterface(
+    char,
+    gameConfig,
+    currentStats,
+    projectedStats,
+    requirements,
   ) {
-    return value.toFixed(1) + "%";
+    return `
+      <div style="max-width: 1400px; margin: 0 auto; padding: 20px;">
+        ${this.createNavigation(char)}
+        <h2 style="color: #00ffff; margin-bottom: 25px;">${char.name} - ${gameConfig.name} Optimizer</h2>
+        ${this.createLevelSelector(char)}
+        ${
+      this.createStatsComparison(char, currentStats, projectedStats, gameConfig)
+    }
+        ${
+      this.createArtifactsSection(
+        char,
+        gameConfig,
+        projectedStats,
+        requirements,
+      )
+    }
+      </div>
+    `;
   }
-  if (stat === "Elemental Mastery") return Math.round(value).toLocaleString();
-  return value.toFixed(1);
-}
 
-// Function to get artifact main stat value based on rarity
-function getArtifactMainStatValue(mainStat, rarity = 5) {
-  return ARTIFACT_MAIN_STAT_VALUES[rarity]?.[mainStat] || 0;
-}
-
-// Function to get artifact set rarity
-function getArtifactSetRarity(char, setName) {
-  const artifactSet = ARTIFACT_SETS[char.game]?.[setName];
-  if (artifactSet && artifactSet.rarity) {
-    return artifactSet.rarity;
+  static createNavigation(char) {
+    return `
+      <div style="margin-bottom: 20px;">
+        <button onclick="GearHandler.navigateToCharacterDetails('${char.id}')" 
+                style="padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; margin-right: 10px;">
+          ← Back to Character Details
+        </button>
+        <button onclick="GearHandler.navigateToCharacterList()" 
+                style="padding: 10px 20px; background: #95a5a6; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 14px;">
+          ← Back to Character List
+        </button>
+      </div>
+    `;
   }
-  return 5; // Default to 5-star
-}
 
-// Function to get artifact set options with proper selection
-function getArtifactSetOptions(
-  game,
-  currentSet1 = "",
-  currentSet2 = "",
-  setNumber = 0,
-) {
-  const sets = ARTIFACT_SETS[game] || {};
-  return Object.keys(sets).map((set) => {
-    const setData = sets[set];
-    const rarityStars = "★".repeat(setData.rarity);
+  static createLevelSelector(char) {
+    const gameConfig = GearUtils.getGearConfig(char.game);
+    return `
+      <div style="background: #1c2b33; padding: 15px; border-radius: 12px; border: 2px solid #00ffff44; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <strong style="color: #00ffff;">Gear Calculator Level:</strong>
+            <select id="gear-level-select" onchange="GearHandler.updateGearLevel('${char.id}')" 
+                    style="margin-left: 10px; padding: 8px 12px; background: #2c3e50; border: 2px solid #00ffff; border-radius: 6px; color: white; font-size: 16px; font-weight: bold;">
+              ${
+      gameConfig.levelOptions.map((level) =>
+        `<option value="${level}" ${
+          char.gearLevel === level ? "selected" : ""
+        }>${level}</option>`
+      ).join("")
+    }
+            </select>
+          </div>
+          <div style="color: #ccc; font-size: 14px;">
+            Note: This level is only for gear calculations
+          </div>
+        </div>
+      </div>
+    `;
+  }
 
-    // Only select if this set matches the current set for this specific dropdown
-    let isSelected = false;
-    if (setNumber === 1) {
-      isSelected = set === currentSet1;
-    } else if (setNumber === 2) {
-      isSelected = set === currentSet2;
+  static createStatsComparison(char, currentStats, projectedStats, gameConfig) {
+    return `
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px;">
+        ${this.createCurrentStats(char, gameConfig)}
+        ${this.createGoalStats(char)}
+      </div>
+    `;
+  }
+
+  static createCurrentStats(char, gameConfig) {
+    const charData = ALL_CHARACTERS[char.game]?.[char.name];
+    const stats = CHARACTER_STATS[char.game]?.[char.name]
+      ?.[char.gearLevel || 90];
+    const actualBaseStats = StatCalculator.calculateBaseStats(
+      char,
+      stats,
+      charData,
+    );
+
+    return `
+      <div style="background: #1c2b33; padding: 25px; border-radius: 16px; border: 2px solid #00ffff44;">
+        <h3 style="color: #00ffff; margin-bottom: 20px;">Base Stats (Character + Weapon)</h3>
+        ${this.createWeaponDisplay(char)}
+        <div id="current-stats" style="display: grid; gap: 12px;">
+          ${this.renderStatsDisplay(actualBaseStats)}
+        </div>
+      </div>
+    `;
+  }
+
+  static createWeaponDisplay(char) {
+    return `
+      <div style="margin-bottom: 20px;">
+        <strong>Weapon:</strong>
+        <div style="display: flex; align-items: center; gap: 12px; margin-top: 8px;">
+          ${
+      char.gear.weapon ? this.renderWeaponInfo(char) : this.renderNoWeapon()
+    }
+          <button onclick="GearHandler.openWeaponSelector('${char.id}')" 
+                  style="padding: 6px 12px; background: #9b59b6; color: white; border: none; border-radius: 6px; font-size: 12px; cursor: pointer;">
+            Change
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
+  static renderWeaponInfo(char) {
+    return `
+      <img src="${GearUtils.getWeaponImage(char)}" alt="${char.gear.weapon}" 
+          style="width: 40px; height: 40px; border-radius: 6px; object-fit: cover; border: 2px solid ${
+      GearUtils.getWeaponRarityColor(char)
+    };">
+      <div style="flex: 1;">
+        <div style="color: #00ffff; font-weight: bold; font-size: 14px;">${char.gear.weapon}</div>
+        <div style="color: #ccc; font-size: 11px;">${
+      GearUtils.getWeaponRarityText(char)
+    }</div>
+      </div>
+    `;
+  }
+
+  static renderNoWeapon() {
+    return `
+      <div style="width: 40px; height: 40px; border-radius: 6px; background: #2c3e50; display: flex; align-items: center; justify-content: center; border: 2px dashed #ccc;">
+        <span style="color: #ccc; font-size: 16px;">?</span>
+      </div>
+      <div style="color: #ccc; font-size: 14px;">No weapon selected</div>
+    `;
+  }
+
+  static renderStatsDisplay(stats) {
+    const statsConfig = [
+      { key: "hp", label: "HP", base: Math.round(stats.hp), suffix: "" },
+      { key: "atk", label: "ATK", base: Math.round(stats.atk), suffix: "" },
+      { key: "def", label: "DEF", base: Math.round(stats.def), suffix: "" },
+      {
+        key: "elementalMastery",
+        label: "Elemental Mastery",
+        base: Math.round(stats.elementalMastery),
+        suffix: "",
+      },
+      {
+        key: "critRate",
+        label: "CRIT Rate",
+        base: stats.critRate.toFixed(1),
+        suffix: "%",
+      },
+      {
+        key: "critDmg",
+        label: "CRIT DMG",
+        base: stats.critDmg.toFixed(1),
+        suffix: "%",
+      },
+      {
+        key: "energyRecharge",
+        label: "Energy Recharge",
+        base: stats.energyRecharge.toFixed(1),
+        suffix: "%",
+      },
+      {
+        key: "elementalDmg",
+        label: "Elemental DMG Bonus",
+        base: stats.elementalDmg.toFixed(1),
+        suffix: "%",
+      },
+    ];
+
+    return statsConfig.map((stat) => `
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: #2c3e50; border-radius: 6px;">
+        <span>${stat.label}:</span>
+        <span style="font-weight: bold; color: #00ffff;">${stat.base}${stat.suffix}</span>
+      </div>
+    `).join("");
+  }
+
+  static createGoalStats(char) {
+    const goalStats = char.gear.goalStats;
+    const statsConfig = [
+      { key: "hp", label: "HP", suffix: "", baseValue: 0 },
+      { key: "atk", label: "ATK", suffix: "", baseValue: 0 },
+      { key: "def", label: "DEF", suffix: "", baseValue: 0 },
+      {
+        key: "elementalMastery",
+        label: "Elemental Mastery",
+        suffix: "",
+        baseValue: 0,
+      },
+      { key: "critRate", label: "CRIT Rate", suffix: "%", baseValue: 5 },
+      { key: "critDmg", label: "CRIT DMG", suffix: "%", baseValue: 50 },
+      {
+        key: "energyRecharge",
+        label: "Energy Recharge",
+        suffix: "%",
+        baseValue: 100,
+      },
+      {
+        key: "elementalDmg",
+        label: "Elemental DMG Bonus",
+        suffix: "%",
+        baseValue: 0,
+      },
+    ];
+
+    return `
+      <div style="background: #1c2b33; padding: 25px; border-radius: 16px; border: 2px solid #00ffff44;">
+        <h3 style="color: #00ffff; margin-bottom: 20px;">Goal Stats</h3>
+        <div id="goal-stats" style="display: grid; gap: 12px;">
+          ${
+      statsConfig.map((stat) => {
+        const currentValue = goalStats[stat.key] !== undefined
+          ? goalStats[stat.key]
+          : stat.baseValue;
+        return `
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: #2c3e50; border-radius: 6px;">
+                <span>${stat.label}:</span>
+                <input type="number" 
+                       id="goal-${stat.key}" 
+                       value="${currentValue}" 
+                       min="${stat.baseValue}"
+                       onchange="GearHandler.updateGoalStat('${char.id}', '${stat.key}')"
+                       style="width: 80px; padding: 4px; background: #1c2b33; border: 2px solid #00ffff; border-radius: 4px; color: white; text-align: center;">
+                <span>${stat.suffix}</span>
+              </div>
+            `;
+      }).join("")
+    }
+        </div>
+      </div>
+    `;
+  }
+
+  static createArtifactsSection(
+    char,
+    gameConfig,
+    projectedStats,
+    requirements,
+  ) {
+    return `
+      <div style="background: #1c2b33; padding: 25px; border-radius: 16px; border: 2px solid #00ffff44;">
+        <h3 style="color: #00ffff; margin-bottom: 20px;">Artifacts Configuration</h3>
+        ${this.createArtifactSetSelection(char)}
+        ${this.createArtifactSlots(char)}
+        ${this.createStatsComparisonSection(char, projectedStats, requirements)}
+      </div>
+    `;
+  }
+
+  static createArtifactSetSelection(char) {
+    const gameConfig = GearUtils.getGearConfig(char.game);
+    const currentSet1 = char.gear.artifactSet1 || "";
+    const currentSet2 = char.gear.artifactSet2 || "";
+
+    const setOptions1 = Object.keys(gameConfig.artifactSets).map((set) =>
+      `<option value="${set}" ${
+        currentSet1 === set ? "selected" : ""
+      }>${set}</option>`
+    ).join("");
+
+    const setOptions2 = Object.keys(gameConfig.artifactSets).map((set) =>
+      `<option value="${set}" ${
+        currentSet2 === set ? "selected" : ""
+      }>${set}</option>`
+    ).join("");
+
+    return `
+      <div style="margin-bottom: 25px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+          <div>
+            <strong>First 2-Piece Set:</strong>
+            <select id="artifact-set-1" onchange="GearHandler.updateArtifactSet('${char.id}', 1)" 
+                    style="width: 100%; padding: 10px; background: #2c3e50; border: 2px solid #00ffff; border-radius: 8px; color: white; margin-top: 8px;">
+              <option value="">Choose set...</option>
+              ${setOptions1}
+            </select>
+          </div>
+          <div>
+            <strong>Second 2-Piece Set:</strong>
+            <select id="artifact-set-2" onchange="GearHandler.updateArtifactSet('${char.id}', 2)" 
+                    style="width: 100%; padding: 10px; background: #2c3e50; border: 2px solid #00ffff; border-radius: 8px; color: white; margin-top: 8px;">
+              <option value="">Choose set...</option>
+              ${setOptions2}
+            </select>
+          </div>
+        </div>
+        ${this.createSetEffectsDisplay(char)}
+      </div>
+    `;
+  }
+
+  static createSetEffectsDisplay(char) {
+    return `
+      <div id="artifact-set-effects" style="background: #2c3e50; padding: 15px; border-radius: 8px; margin-top: 15px;">
+        <strong style="color: #00ffff; margin-bottom: 15px; display: block;">Active Set Effects:</strong>
+        <div id="set-effects-content" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          ${this.renderArtifactSetEffects(char)}
+        </div>
+      </div>
+    `;
+  }
+
+  static renderArtifactSetEffects(char) {
+    const gameConfig = GearUtils.getGearConfig(char.game);
+    const set1 = char.gear.artifactSet1;
+    const set2 = char.gear.artifactSet2;
+
+    let leftColumn = "";
+    let rightColumn = "";
+
+    leftColumn += `<div style="color: #ccc; font-size: 12px;">`;
+
+    if (set1 && set2) {
+      if (set1 === set2) {
+        const setData = gameConfig.artifactSets[set1];
+        const set2pcEffect = setData?.["2pc"];
+        const set4pcEffect = setData?.["4pc"];
+
+        if (set2pcEffect) {
+          leftColumn +=
+            `<div style="color: #88ff88; margin: 8px 0; font-size: 11px; line-height: 1.3;">
+            <strong>2pc ${set1}:</strong><br>${set2pcEffect.description}
+          </div>`;
+        }
+
+        if (set4pcEffect) {
+          leftColumn +=
+            `<div style="color: #ffcc00; margin: 8px 0; font-size: 11px; line-height: 1.3;">
+            <strong>4pc ${set1}:</strong><br>${set4pcEffect.description}
+          </div>`;
+        }
+      } else {
+        const set1Data = gameConfig.artifactSets[set1];
+        const set2Data = gameConfig.artifactSets[set2];
+        const set1Effect = set1Data?.["2pc"];
+        const set2Effect = set2Data?.["2pc"];
+
+        if (set1Effect) {
+          leftColumn +=
+            `<div style="color: #88ff88; margin: 8px 0; font-size: 11px; line-height: 1.3;">
+            <strong>2pc ${set1}:</strong><br>${set1Effect.description}
+          </div>`;
+        }
+
+        if (set2Effect) {
+          leftColumn +=
+            `<div style="color: #88ff88; margin: 8px 0; font-size: 11px; line-height: 1.3;">
+            <strong>2pc ${set2}:</strong><br>${set2Effect.description}
+          </div>`;
+        }
+      }
+    } else if (set1) {
+      const set1Data = gameConfig.artifactSets[set1];
+      const set1Effect = set1Data?.["2pc"];
+      if (set1Effect) {
+        leftColumn +=
+          `<div style="color: #88ff88; margin: 8px 0; font-size: 11px; line-height: 1.3;">
+          <strong>2pc ${set1}:</strong><br>${set1Effect.description}
+        </div>`;
+      }
+    } else {
+      leftColumn +=
+        '<div style="color: #888; margin: 8px 0;">No set effects active</div>';
     }
 
-    return `<option value="${set}" ${
-      isSelected ? "selected" : ""
-    }>${set} (${rarityStars})</option>`;
-  }).join("");
-}
+    leftColumn += `</div>`;
 
-// Check if an artifact's rarity is locked by set effects
-function isArtifactRarityLocked(char, slot) {
-  const set1 = char.gear.artifactSet1;
-  const set2 = char.gear.artifactSet2;
+    rightColumn += `<div style="color: #ccc; font-size: 12px;">`;
+    rightColumn +=
+      `<div style="color: #00ffff; font-weight: bold; margin-bottom: 12px; font-size: 14px;">Weapon Equipped</div>`;
 
-  if (!set1 && !set2) return false; // No sets, not locked
+    if (char.gear.weapon) {
+      const charData = ALL_CHARACTERS[char.game]?.[char.name];
+      const weaponType = charData?.weapon;
+      const weapons = weaponType
+        ? ALL_WEAPONS[char.game]?.[weaponType] || []
+        : [];
+      const weapon = weapons.find((w) => w.name === char.gear.weapon);
 
-  // Check if this slot is part of a 4-star set
-  if (set1 && ARTIFACT_SETS[char.game]?.[set1]) {
-    const set1Rarity = getArtifactSetRarity(char, set1);
-    if (set1Rarity === 4) {
-      // First set: Flower and Plume are locked to 4-star
+      if (weapon) {
+        const rarityStars = "★".repeat(weapon.rarity);
+        rightColumn +=
+          `<div style="font-weight: bold; color: #ffcc00; margin-bottom: 8px;">${weapon.name} (${rarityStars})</div>`;
+
+        if (weapon.stat && weapon.stat.type && weapon.stat.type !== "none") {
+          const statValue = weapon.stat.value;
+          const statSuffix = weapon.stat.type.includes("%") ? "%" : "";
+          rightColumn +=
+            `<div style="margin: 5px 0; font-size: 11px;"><strong>Stat:</strong> ${weapon.stat.type} ${statValue}${statSuffix}</div>`;
+        }
+
+        if (
+          weapon.passive && weapon.passive.description &&
+          weapon.passive.description !== "none"
+        ) {
+          rightColumn +=
+            `<div style="margin: 10px 0; font-size: 11px; line-height: 1.3;"><strong>Description:</strong> ${weapon.passive.description}</div>`;
+        } else {
+          rightColumn +=
+            `<div style="margin: 10px 0; font-size: 11px; color: #888;"><strong>Description:</strong> No passive effect</div>`;
+        }
+      } else {
+        rightColumn += `<div style="color: #888;">Weapon data not found</div>`;
+      }
+    } else {
+      rightColumn += `<div style="color: #888;">No weapon equipped</div>`;
+    }
+
+    rightColumn += `</div>`;
+
+    return `
+        <div>${leftColumn}</div>
+        <div>${rightColumn}</div>
+    `;
+  }
+
+  static createArtifactSlots(char) {
+    const slots = ["flower", "plume", "sands", "goblet", "circlet"];
+
+    return `
+      <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin-bottom: 25px;">
+        ${slots.map((slot) => this.createArtifactSlot(char, slot)).join("")}
+      </div>
+    `;
+  }
+
+  static createArtifactSlot(char, slot) {
+    const artifact = char.gear.artifacts[slot];
+    const currentValue = artifact.value ||
+      GearUtils.getArtifactMainStatValue(artifact.mainStat, artifact.rarity);
+    const formattedValue = GearUtils.formatStatValue(
+      artifact.mainStat,
+      currentValue,
+    );
+    const artifactImage = GearUtils.getArtifactImage(char, slot);
+
+    const isLocked = this.isSlotRarityLocked(char, slot);
+
+    return `
+      <div style="background: #2c3e50; padding: 15px; border-radius: 12px; text-align: center; position: relative;">
+        <div style="position: absolute; top: 8px; right: 8px; background: ${
+      artifact.rarity === 5 ? "#ffd700" : "#c0c0c0"
+    }; color: black; padding: 2px 6px; border-radius: 10px; font-size: 10px; font-weight: bold;">
+          ${artifact.rarity === 5 ? "5★" : "4★"}
+        </div>
+        ${
+      artifactImage
+        ? `
+          <img src="${artifactImage}" alt="${slot}" style="width: 48px; height: 48px; border-radius: 8px; object-fit: cover; margin-bottom: 8px; border: 2px solid #00ffff;">
+        `
+        : `
+          <div style="font-size: 24px; margin-bottom: 8px;">${
+          GearUtils.getArtifactIcon(slot)
+        }</div>
+        `
+    }
+        <strong style="display: block; margin-bottom: 8px; color: #00ffff;">${
+      slot.charAt(0).toUpperCase() + slot.slice(1)
+    }</strong>
+        <div style="margin-bottom: 8px; font-size: 12px; color: #00ffff; font-weight: bold; min-height: 20px;">
+          ${formattedValue}
+        </div>
+        ${
+      !isLocked
+        ? `
+          <select onchange="GearHandler.updateArtifactRarity('${char.id}', '${slot}')" 
+                  style="width: 100%; padding: 4px; background: #1c2b33; border: 1px solid #00ffff; border-radius: 4px; color: white; font-size: 10px; margin-bottom: 8px;">
+            <option value="5" ${
+          artifact.rarity === 5 ? "selected" : ""
+        }>5★</option>
+            <option value="4" ${
+          artifact.rarity === 4 ? "selected" : ""
+        }>4★</option>
+          </select>
+        `
+        : `
+          <div style="font-size: 9px; color: #888; margin-bottom: 8px;">Locked by set</div>
+        `
+    }
+        <select onchange="GearHandler.updateArtifactMainStat('${char.id}', '${slot}')" 
+                style="width: 100%; padding: 8px; background: #1c2b33; border: 2px solid #00ffff; border-radius: 6px; color: white; font-size: 12px;">
+          ${
+      ARTIFACT_MAIN_STATS[slot].map((stat) =>
+        `<option value="${stat}" ${
+          char.gear.artifacts[slot].mainStat === stat ? "selected" : ""
+        }>${stat}</option>`
+      ).join("")
+    }
+        </select>
+      </div>
+    `;
+  }
+
+  static isSlotRarityLocked(char, slot) {
+    const set1 = char.gear.artifactSet1;
+    const set2 = char.gear.artifactSet2;
+
+    if (set1 && GearUtils.isFourStarSet(set1)) {
       if (slot === "flower" || slot === "plume") return true;
     }
-  }
 
-  if (set2 && ARTIFACT_SETS[char.game]?.[set2]) {
-    const set2Rarity = getArtifactSetRarity(char, set2);
-    if (set2Rarity === 4) {
+    if (set2 && GearUtils.isFourStarSet(set2)) {
       if (set1 === set2) {
-        // Same set: All except Sands are locked to 4-star
         if (slot !== "sands") return true;
       } else {
-        // Different set: Goblet and Circlet are locked to 4-star
         if (slot === "goblet" || slot === "circlet") return true;
       }
     }
+
+    return false;
   }
 
-  return false;
+  static createStatsComparisonSection(char, projectedStats, requirements) {
+    const goalStats = char.gear.goalStats;
+    const progress = this.calculateGoalProgress(projectedStats, goalStats);
+
+    const displayData = NewSubstatCalculator.formatRequirementsForDisplay(
+      requirements,
+    );
+
+    return `
+      <div id="stats-comparison" style="margin-top: 25px; background: #2c3e50; padding: 20px; border-radius: 12px;">
+        <h4 style="color: #00ffff; margin-bottom: 15px;">Build Progress vs Goal</h4>
+        ${this.renderStatsComparison(projectedStats, goalStats, progress)}
+        ${this.renderNewSubstatRequirements(displayData)}
+      </div>
+    `;
+  }
+
+  static calculateGoalProgress(projectedStats, goalStats) {
+    const progress = {};
+    const baseValues = {
+      hp: 0,
+      atk: 0,
+      def: 0,
+      elementalMastery: 0,
+      critRate: 5,
+      critDmg: 50,
+      energyRecharge: 100,
+      elementalDmg: 0,
+    };
+
+    Object.keys(goalStats).forEach((key) => {
+      const goal = goalStats[key];
+      const current = projectedStats[key];
+      const base = baseValues[key];
+
+      if (goal > base) {
+        progress[key] = Math.min(100, Math.round((current / goal) * 100));
+      } else {
+        progress[key] = 0;
+      }
+    });
+
+    return progress;
+  }
+
+  static renderStatsComparison(projectedStats, goalStats, progress) {
+    const statsConfig = [
+      {
+        key: "hp",
+        label: "HP",
+        format: (val) => Math.round(val).toLocaleString(),
+        suffix: "",
+        baseValue: 0,
+      },
+      {
+        key: "atk",
+        label: "ATK",
+        format: (val) => Math.round(val).toLocaleString(),
+        suffix: "",
+        baseValue: 0,
+      },
+      {
+        key: "def",
+        label: "DEF",
+        format: (val) => Math.round(val).toLocaleString(),
+        suffix: "",
+        baseValue: 0,
+      },
+      {
+        key: "elementalMastery",
+        label: "Elemental Mastery",
+        format: (val) => Math.round(val).toLocaleString(),
+        suffix: "",
+        baseValue: 0,
+      },
+      {
+        key: "critRate",
+        label: "CRIT Rate",
+        format: (val) => val.toFixed(1),
+        suffix: "%",
+        baseValue: 5,
+      },
+      {
+        key: "critDmg",
+        label: "CRIT DMG",
+        format: (val) => val.toFixed(1),
+        suffix: "%",
+        baseValue: 50,
+      },
+      {
+        key: "energyRecharge",
+        label: "Energy Recharge",
+        format: (val) => val.toFixed(1),
+        suffix: "%",
+        baseValue: 100,
+      },
+      {
+        key: "elementalDmg",
+        label: "Elemental DMG Bonus",
+        format: (val) => val.toFixed(1),
+        suffix: "%",
+        baseValue: 0,
+      },
+    ];
+
+    let hasGoals = false;
+    const comparisons = statsConfig.map((stat) => {
+      const current = projectedStats[stat.key];
+      const goal = goalStats[stat.key];
+      const currentProgress = progress[stat.key];
+
+      if (goal > stat.baseValue) {
+        hasGoals = true;
+        const progressColor = currentProgress >= 100
+          ? "#27ae60"
+          : currentProgress >= 75
+          ? "#f39c12"
+          : "#e74c3c";
+
+        return `
+          <div style="margin-bottom: 12px; padding: 10px; background: #1c2b33; border-radius: 6px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+              <span>${stat.label}:</span>
+              <span style="font-weight: bold; color: #00ffff;">
+                ${stat.format(current)}${stat.suffix} / ${
+          stat.format(goal)
+        }${stat.suffix}
+              </span>
+            </div>
+            <div style="width: 100%; height: 8px; background: #2c3e50; border-radius: 4px; overflow: hidden;">
+              <div style="width: ${currentProgress}%; height: 100%; background: ${progressColor}; transition: width 0.3s;"></div>
+            </div>
+            <div style="text-align: right; font-size: 11px; color: ${progressColor}; margin-top: 4px;">
+              ${currentProgress}% Complete
+            </div>
+          </div>
+        `;
+      }
+
+      return `
+        <div style="margin-bottom: 8px; padding: 8px; background: #1c2b33; border-radius: 6px;">
+          <div style="display: flex; justify-content: space-between;">
+            <span>${stat.label}:</span>
+            <span style="font-weight: bold; color: #00ffff;">${
+        stat.format(current)
+      }${stat.suffix}</span>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    if (!hasGoals) {
+      return `
+        <div style="text-align: center; padding: 20px; color: #888; font-style: italic;">
+          No custom goals set. Increase values above base levels to see progress tracking.
+        </div>
+        <div style="display: grid; gap: 8px;">
+          ${comparisons}
+        </div>
+      `;
+    }
+
+    return `
+      <div style="display: grid; gap: 8px;">
+        ${comparisons}
+      </div>
+    `;
+  }
+
+  static renderNewSubstatRequirements(displayData) {
+    if (displayData.noGaps) {
+      return `
+      <div style="margin-top: 25px; padding-top: 20px; border-top: 2px solid #27ae60;">
+        <h5 style="color: #27ae60; margin-bottom: 15px;">Goal Achieved! 🎉</h5>
+        <div style="color: #ccc; padding: 15px; background: #1c2b33; border-radius: 8px;">
+          ${displayData.message}
+        </div>
+      </div>
+    `;
+    }
+
+    if (!displayData.possible) {
+      return `
+      <div style="margin-top: 25px; padding-top: 20px; border-top: 2px solid #e74c3c;">
+        <h5 style="color: #e74c3c; margin-bottom: 15px;">Goal Unachievable</h5>
+        <div style="color: #ccc; padding: 15px; background: #1c2b33; border-radius: 8px;">
+          ${
+        displayData.message ||
+        "The current goal stats cannot be achieved with the current artifact configuration."
+      }
+        </div>
+      </div>
+    `;
+    }
+
+    if (Object.keys(displayData.substats).length === 0) {
+      return "";
+    }
+
+    return `
+    <div style="margin-top: 25px; padding-top: 20px; border-top: 2px solid #00ffff44;">
+      <h5 style="color: #00ffff; margin-bottom: 15px;">Substat Roll Analysis (New Calculation)</h5>
+      
+      <div style="background: #1c2b33; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <strong style="color: #00ffff;">Total Rolls Required:</strong>
+          <span style="color: #ccc;">
+            ${displayData.totalRolls.minUsed} - ${displayData.totalRolls.maxUsed} rolls 
+            (out of ${displayData.totalRolls.available} available)
+          </span>
+        </div>
+        <div style="font-size: 12px; color: #888; margin-top: 8px;">
+          Range: ${displayData.totalRolls.minUsed} rolls (all max rolls) to ${displayData.totalRolls.maxUsed} rolls (all min rolls)
+        </div>
+      </div>
+      
+      <div style="display: grid; gap: 12px;">
+        ${
+      Object.entries(displayData.substats).map(([statKey, data]) => {
+        const minAchievable = data.achievable.min;
+        const maxAchievable = data.achievable.max;
+        const minColor = minAchievable ? "#27ae60" : "#e74c3c";
+        const maxColor = maxAchievable ? "#27ae60" : "#e74c3c";
+
+        return `
+            <div style="background: #1c2b33; padding: 15px; border-radius: 8px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <strong style="color: #00ffff;">${statKey.toUpperCase()}</strong>
+                <span style="color: #ccc;">
+                  ${data.neededRolls.min} - ${data.neededRolls.max} rolls needed
+                </span>
+              </div>
+              
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12px; color: #ccc; margin-bottom: 8px;">
+                <div>Value Gain: ${data.totalValue.min.toFixed(0)} - ${
+          data.totalValue.max.toFixed(0)
+        }</div>
+                <div style="text-align: right;">
+                  Min: <span style="color: ${minColor}">${
+          minAchievable ? "✅" : "❌"
+        }</span> | 
+                  Max: <span style="color: ${maxColor}">${
+          maxAchievable ? "✅" : "❌"
+        }</span>
+                </div>
+              </div>
+              
+              <div style="font-size: 11px; color: #888; margin-top: 8px;">
+                <strong>Available in:</strong> ${data.availableRolls} rolls across compatible artifacts
+              </div>
+              
+              ${
+          data.breakdown
+            ? `
+                <div style="font-size: 11px; color: #888; margin-top: 8px;">
+                  <strong>Optimal Distribution:</strong> 
+                  ${
+              Object.entries(data.breakdown).map(([substat, rolls]) =>
+                `${rolls.min}-${rolls.max} ${substat} rolls`
+              ).join(" + ")
+            }
+                </div>
+              `
+            : ""
+        }
+            </div>
+          `;
+      }).join("")
+    }
+      </div>
+    </div>
+  `;
+  }
 }
 
-// Function to update artifact rarities based on set combinations
-function updateArtifactRarities(char) {
-  const set1 = char.gear.artifactSet1;
-  const set2 = char.gear.artifactSet2;
+// =================================================================
+// GEAR HANDLER (KEEP EXISTING)
+// =================================================================
 
-  // Default all to 5-star
-  Object.keys(char.gear.artifacts).forEach((slot) => {
-    char.gear.artifacts[slot].rarity = 5;
-  });
-
-  // If we have 4-star sets, update the appropriate artifacts
-  if (set1 && ARTIFACT_SETS[char.game]?.[set1]) {
-    const set1Rarity = getArtifactSetRarity(char, set1);
-    if (set1Rarity === 4) {
-      // Set Flower and Plume to 4-star for this set (keep Sands as 5★)
-      char.gear.artifacts["flower"].rarity = 4;
-      char.gear.artifacts["plume"].rarity = 4;
+class GearHandler {
+  static navigateToCharacterDetails(charId) {
+    const char = getCharacterById(charId);
+    if (char) {
+      const content = document.getElementById("page-content");
+      if (content) content.innerHTML = "";
+      renderCharacterDetail(char);
     }
   }
 
-  if (set2 && ARTIFACT_SETS[char.game]?.[set2]) {
-    const set2Rarity = getArtifactSetRarity(char, set2);
-    if (set2Rarity === 4) {
+  static navigateToCharacterList() {
+    const content = document.getElementById("page-content");
+    if (content) content.innerHTML = "";
+    if (window.initCharactersScene) {
+      window.initCharactersScene();
+    }
+  }
+
+  static updateGearLevel(charId) {
+    const char = getCharacterById(charId);
+    const select = document.getElementById("gear-level-select");
+    if (select) {
+      char.gearLevel = parseInt(select.value);
+      saveMyCharacters();
+      GearRenderer.render(char);
+    }
+  }
+
+  static updateGoalStat(charId, statKey) {
+    const char = getCharacterById(charId);
+    const input = document.getElementById(`goal-${statKey}`);
+    if (input) {
+      const baseValues = { critRate: 5, critDmg: 50, energyRecharge: 100 };
+      const baseValue = baseValues[statKey] || 0;
+      const newValue = parseFloat(input.value) || baseValue;
+      char.gear.goalStats[statKey] = Math.max(newValue, baseValue);
+      saveMyCharacters();
+      GearRenderer.render(char);
+    }
+  }
+
+  static openWeaponSelector(charId) {
+    const char = getCharacterById(charId);
+    console.log("Open weapon selector for:", charId);
+  }
+
+  static updateArtifactSet(charId, setNumber) {
+    const char = getCharacterById(charId);
+    const select = document.getElementById(`artifact-set-${setNumber}`);
+    if (select) {
+      const newSet = select.value;
+
+      if (setNumber === 1) {
+        char.gear.artifactSet1 = newSet;
+      } else {
+        char.gear.artifactSet2 = newSet;
+      }
+
+      this.updateArtifactRarities(char);
+      this.updateArtifactImages(char);
+
+      saveMyCharacters();
+      GearRenderer.render(char);
+    }
+  }
+
+  static updateArtifactRarities(char) {
+    const set1 = char.gear.artifactSet1;
+    const set2 = char.gear.artifactSet2;
+
+    Object.keys(char.gear.artifacts).forEach((slot) => {
+      char.gear.artifacts[slot].rarity = 5;
+    });
+
+    if (set1 && GearUtils.isFourStarSet(set1)) {
+      char.gear.artifacts["flower"].rarity = 4;
+      char.gear.artifacts["plume"].rarity = 4;
+    }
+
+    if (set2 && GearUtils.isFourStarSet(set2)) {
       if (set1 === set2) {
-        // Same set - all artifacts except Sands become 4-star
         char.gear.artifacts["flower"].rarity = 4;
         char.gear.artifacts["plume"].rarity = 4;
         char.gear.artifacts["goblet"].rarity = 4;
         char.gear.artifacts["circlet"].rarity = 4;
-        // Sands stays as 5★ for better Energy Recharge
       } else {
-        // Different set - set Goblet and Circlet to 4-star (keep Sands as 5★)
         char.gear.artifacts["goblet"].rarity = 4;
         char.gear.artifacts["circlet"].rarity = 4;
       }
     }
+
+    Object.keys(char.gear.artifacts).forEach((slot) => {
+      const artifact = char.gear.artifacts[slot];
+      artifact.value = GearUtils.getArtifactMainStatValue(
+        artifact.mainStat,
+        artifact.rarity,
+      );
+    });
   }
 
-  // Update artifact values based on their individual rarities
-  Object.keys(char.gear.artifacts).forEach((slot) => {
-    const artifact = char.gear.artifacts[slot];
-    artifact.value = getArtifactMainStatValue(
-      artifact.mainStat,
-      artifact.rarity,
+  static updateArtifactImages(char) {
+    const slots = ["flower", "plume", "sands", "goblet", "circlet"];
+    slots.forEach((slot) => {
+      char.gear.artifacts[slot].image = GearUtils.getArtifactImage(char, slot);
+    });
+  }
+
+  static updateArtifactRarity(charId, slot) {
+    const char = getCharacterById(charId);
+    const select = document.querySelector(
+      `select[onchange="GearHandler.updateArtifactRarity('${charId}', '${slot}')"]`,
     );
-  });
+    if (select && !GearRenderer.isSlotRarityLocked(char, slot)) {
+      const newRarity = parseInt(select.value);
+      char.gear.artifacts[slot].rarity = newRarity;
+      char.gear.artifacts[slot].value = GearUtils.getArtifactMainStatValue(
+        char.gear.artifacts[slot].mainStat,
+        newRarity,
+      );
+      saveMyCharacters();
+      GearRenderer.render(char);
+    }
+  }
+
+  static updateArtifactMainStat(charId, slot) {
+    const char = getCharacterById(charId);
+    const select = document.querySelector(
+      `select[onchange="GearHandler.updateArtifactMainStat('${charId}', '${slot}')"]`,
+    );
+    if (select) {
+      const newMainStat = select.value;
+      const currentRarity = char.gear.artifacts[slot].rarity;
+      char.gear.artifacts[slot].mainStat = newMainStat;
+      char.gear.artifacts[slot].value = GearUtils.getArtifactMainStatValue(
+        newMainStat,
+        currentRarity,
+      );
+      saveMyCharacters();
+      GearRenderer.render(char);
+    }
+  }
 }
+
+// =================================================================
+// INITIALIZATION AND GLOBAL EXPORTS
+// =================================================================
 
 export function initCharacterGearScene(characterId) {
   const char = getCharacterById(characterId);
@@ -361,1202 +2207,9 @@ export function initCharacterGearScene(characterId) {
     console.error("Character not found:", characterId);
     return;
   }
-
-  renderCharacterGear(char);
+  GearRenderer.render(char);
 }
 
-function renderCharacterGear(char) {
-  const content = document.getElementById("page-content");
-  if (!content) return;
-
-  const charData = ALL_CHARACTERS[char.game]?.[char.name];
-
-  // Initialize gear level if not exists (default to 90)
-  if (!char.gearLevel) {
-    char.gearLevel = 90;
-    saveMyCharacters();
-  }
-
-  // Use the selected gear level for calculations
-  const gearLevel = char.gearLevel;
-  const stats = CHARACTER_STATS[char.game]?.[char.name]?.[gearLevel];
-
-  console.log("Character stats for gear calculator:", {
-    name: char.name,
-    level: gearLevel,
-    stats: stats,
-    charData: charData,
-  });
-
-  // Initialize gear data if not exists
-  if (!char.gear) {
-    char.gear = {
-      weapon: char.weaponName || "",
-      artifactSet1: "",
-      artifactSet2: "",
-      artifacts: {
-        flower: {
-          mainStat: "HP",
-          value: getArtifactMainStatValue("HP", 5),
-          rarity: 5,
-        },
-        plume: {
-          mainStat: "ATK",
-          value: getArtifactMainStatValue("ATK", 5),
-          rarity: 5,
-        },
-        sands: {
-          mainStat: "HP%",
-          value: getArtifactMainStatValue("HP%", 5),
-          rarity: 5,
-        },
-        goblet: {
-          mainStat: "HP%",
-          value: getArtifactMainStatValue("HP%", 5),
-          rarity: 5,
-        },
-        circlet: {
-          mainStat: "HP%",
-          value: getArtifactMainStatValue("HP%", 5),
-          rarity: 5,
-        },
-      },
-      goalStats: {
-        hp: 0,
-        atk: 0,
-        def: 0,
-        elementalMastery: 0,
-        critRate: 5, // Base crit rate
-        critDmg: 50, // Base crit dmg
-        healingBonus: 0,
-        energyRecharge: 100, // Base energy recharge
-        elementalDmg: 0,
-      },
-    };
-    saveMyCharacters();
-  }
-
-  // Calculate current stats (character + weapon only)
-  const currentStats = calculateBaseStats(char, stats, charData);
-  // Calculate projected stats (including artifacts)
-  const projectedStats = calculateProjectedStats(char, stats, charData);
-
-  content.innerHTML = `
-    <div style="max-width: 1400px; margin: 0 auto; padding: 20px;">
-      ${createNavigation(char)}
-      <h2 style="color: #00ffff; margin-bottom: 25px;">${char.name} - ${
-    getGearType(char.game)
-  } Optimizer</h2>
-      
-      <!-- Character Level Selection -->
-      <div style="background: #1c2b33; padding: 15px; border-radius: 12px; border: 2px solid #00ffff44; margin-bottom: 20px;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <strong style="color: #00ffff;">Gear Calculator Level:</strong>
-            <select id="gear-level-select" onchange="updateGearLevel('${char.id}')" 
-                    style="margin-left: 10px; padding: 8px 12px; background: #2c3e50; border: 2px solid #00ffff; border-radius: 6px; color: white; font-size: 16px; font-weight: bold;">
-              ${
-    getGearLevelOptions().map((level) =>
-      `<option value="${level}" ${
-        char.gearLevel === level ? "selected" : ""
-      }>${level}</option>`
-    ).join("")
-  }
-            </select>
-          </div>
-          <div style="color: #ccc; font-size: 14px;">
-            Note: This level is only for gear calculations and won't affect your actual character level
-          </div>
-        </div>
-      </div>
-      
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-bottom: 25px;">
-        
-        <!-- Left Column: Current Stats (Character + Weapon only) -->
-        <div style="background: #1c2b33; padding: 25px; border-radius: 16px; border: 2px solid #00ffff44;">
-          <h3 style="color: #00ffff; margin-bottom: 20px;">Base Stats (Character + Weapon)</h3>
-          
-          <div style="margin-bottom: 20px;">
-            <strong>Weapon:</strong>
-            <div style="display: flex; align-items: center; gap: 12px; margin-top: 8px;">
-              ${
-    char.gear.weapon
-      ? `
-                <img src="${
-        getWeaponImageForGear(char)
-      }" alt="${char.gear.weapon}" 
-                    style="width: 40px; height: 40px; border-radius: 6px; object-fit: cover; border: 2px solid ${
-        getRarityColorForGear(char)
-      };">
-                <div style="flex: 1;">
-                  <div style="color: #00ffff; font-weight: bold; font-size: 14px;">${char.gear.weapon}</div>
-                  <div style="color: #ccc; font-size: 11px;">${
-        getWeaponRarityForGear(char)
-      }</div>
-                </div>
-              `
-      : `
-                <div style="width: 40px; height: 40px; border-radius: 6px; background: #2c3e50; display: flex; align-items: center; justify-content: center; border: 2px dashed #ccc;">
-                  <span style="color: #ccc; font-size: 16px;">?</span>
-                </div>
-                <div style="color: #ccc; font-size: 14px;">No weapon selected</div>
-              `
-  }
-              <button onclick="openWeaponSelector('${char.id}')" 
-                      style="padding: 6px 12px; background: #9b59b6; color: white; border: none; border-radius: 6px; font-size: 12px; cursor: pointer;">
-                Change
-              </button>
-            </div>
-          </div>
-          
-          <div id="current-stats" style="display: grid; gap: 12px;">
-            ${renderStatsDisplay(currentStats, charData)}
-          </div>
-        </div>
-        
-        <!-- Right Column: Goal Stats -->
-        <div style="background: #1c2b33; padding: 25px; border-radius: 16px; border: 2px solid #00ffff44;">
-          <h3 style="color: #00ffff; margin-bottom: 20px;">Goal Stats</h3>
-          <div id="goal-stats" style="display: grid; gap: 12px;">
-            ${renderGoalStats(char)}
-          </div>
-        </div>
-      </div>
-      
-      <!-- Bottom: Artifacts Configuration -->
-      <div style="background: #1c2b33; padding: 25px; border-radius: 16px; border: 2px solid #00ffff44;">
-        <h3 style="color: #00ffff; margin-bottom: 20px;">Artifacts Configuration</h3>
-        
-        <!-- Artifact Set Selection -->
-        <div style="margin-bottom: 25px;">
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
-            <div>
-              <strong>First 2-Piece Set:</strong>
-              <select id="artifact-set-1" onchange="updateArtifactSet('${char.id}', 1)" 
-                      style="width: 100%; padding: 10px; background: #2c3e50; border: 2px solid #00ffff; border-radius: 8px; color: white; margin-top: 8px;">
-                <option value="">Choose set...</option>
-                ${
-    getArtifactSetOptions(
-      char.game,
-      char.gear.artifactSet1,
-      char.gear.artifactSet2,
-      1,
-    )
-  }
-              </select>
-            </div>
-            <div>
-              <strong>Second 2-Piece Set:</strong>
-              <select id="artifact-set-2" onchange="updateArtifactSet('${char.id}', 2)" 
-                      style="width: 100%; padding: 10px; background: #2c3e50; border: 2px solid #00ffff; border-radius: 8px; color: white; margin-top: 8px;">
-                <option value="">Choose set...</option>
-                ${
-    getArtifactSetOptions(
-      char.game,
-      char.gear.artifactSet1,
-      char.gear.artifactSet2,
-      2,
-    )
-  }
-              </select>
-            </div>
-          </div>
-          
-          <!-- Artifact Set Effects Display - UPDATED TO TWO COLUMNS -->
-          <div id="artifact-set-effects" style="background: #2c3e50; padding: 15px; border-radius: 8px; margin-top: 15px;">
-            <strong style="color: #00ffff; margin-bottom: 15px; display: block;">Active Set Effects:</strong>
-            <div id="set-effects-content" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-              ${renderArtifactSetEffects(char)}
-            </div>
-          </div>
-        </div>
-        
-        <!-- Artifact Main Stats with Individual Rarity Controls -->
-        <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px;">
-          ${
-    ["flower", "plume", "sands", "goblet", "circlet"].map((slot, index) => {
-      const artifact = char.gear.artifacts[slot];
-      const currentValue = artifact.value ||
-        getArtifactMainStatValue(artifact.mainStat, artifact.rarity);
-      const formattedValue = formatStatValue(artifact.mainStat, currentValue);
-      const isLocked = isArtifactRarityLocked(char, slot);
-
-      return `
-            <div style="background: #2c3e50; padding: 15px; border-radius: 12px; text-align: center; position: relative;">
-              <!-- Rarity Badge -->
-              <div style="position: absolute; top: 8px; right: 8px; background: ${
-        artifact.rarity === 5 ? "#ffd700" : "#c0c0c0"
-      }; color: black; padding: 2px 6px; border-radius: 10px; font-size: 10px; font-weight: bold;">
-                ${artifact.rarity === 5 ? "5★" : "4★"}
-              </div>
-              
-              <div style="font-size: 24px; margin-bottom: 8px;">${
-        getArtifactIcon(slot)
-      }</div>
-              <strong style="display: block; margin-bottom: 8px; color: #00ffff;">${
-        slot.charAt(0).toUpperCase() + slot.slice(1)
-      }</strong>
-              <div style="margin-bottom: 8px; font-size: 12px; color: #00ffff; font-weight: bold; min-height: 20px;">
-                ${formattedValue}
-              </div>
-              
-              <!-- Rarity Toggle (only if not locked by set effects) -->
-              ${
-        !isLocked
-          ? `
-                  <div style="margin-bottom: 8px;">
-                    <select onchange="updateArtifactRarity('${char.id}', '${slot}')" 
-                            style="width: 100%; padding: 4px; background: #1c2b33; border: 1px solid #00ffff; border-radius: 4px; color: white; font-size: 10px;">
-                      <option value="5" ${
-            artifact.rarity === 5 ? "selected" : ""
-          }>5★</option>
-                      <option value="4" ${
-            artifact.rarity === 4 ? "selected" : ""
-          }>4★</option>
-                    </select>
-                  </div>
-                `
-          : `
-                  <div style="font-size: 9px; color: #888; margin-bottom: 8px;">
-                    Locked by set
-                  </div>
-                `
-      }
-              
-              <!-- Main Stat Selection -->
-              <select onchange="updateArtifactMainStat('${char.id}', '${slot}')" 
-                      style="width: 100%; padding: 8px; background: #1c2b33; border: 2px solid #00ffff; border-radius: 6px; color: white; font-size: 12px;">
-                ${
-        ARTIFACT_MAIN_STATS[slot].map((stat) =>
-          `<option value="${stat}" ${
-            char.gear.artifacts[slot].mainStat === stat ? "selected" : ""
-          }>${stat}</option>`
-        ).join("")
-      }
-              </select>
-            </div>
-            `;
-    }).join("")
-  }
-        </div>
-        
-        <!-- Stats Comparison -->
-        <div id="stats-comparison" style="margin-top: 25px; background: #2c3e50; padding: 20px; border-radius: 12px;">
-          <h4 style="color: #00ffff; margin-bottom: 15px;">Build Progress vs Goal</h4>
-          ${
-    renderStatsComparison(projectedStats, char.gear.goalStats, charData)
-  }
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-// Calculate base stats (character + weapon only)
-function calculateBaseStats(char, stats, charData) {
-  if (!stats) return getBaseStats();
-
-  const baseStats = getBaseStats();
-  const weaponStats = calculateWeaponStats(char);
-
-  // HP: (character base hp * (100 + x)/100) + flat hp
-  const hpPercentBonus =
-    (weaponStats.additionalStat?.type === "HP"
-      ? weaponStats.additionalStat.value
-      : 0) +
-    (stats.additionalStat?.type === "HP" ? stats.additionalStat.value : 0);
-  baseStats.hp = stats.baseHP * (100 + hpPercentBonus) / 100;
-
-  // ATK: ((character base atk + weapon base atk) * (100 + x)/100) + flat atk
-  const atkPercentBonus =
-    (weaponStats.additionalStat?.type === "ATK"
-      ? weaponStats.additionalStat.value
-      : 0) +
-    (stats.additionalStat?.type === "ATK" ? stats.additionalStat.value : 0);
-  baseStats.atk = (stats.baseATK + weaponStats.atkFlat) *
-    (100 + atkPercentBonus) / 100;
-
-  // DEF: (character base def * (100 + x)/100) + flat def
-  const defPercentBonus =
-    (weaponStats.additionalStat?.type === "DEF"
-      ? weaponStats.additionalStat.value
-      : 0) +
-    (stats.additionalStat?.type === "DEF" ? stats.additionalStat.value : 0);
-  baseStats.def = stats.baseDEF * (100 + defPercentBonus) / 100;
-
-  // Elemental Mastery: base + additions
-  baseStats.elementalMastery =
-    (weaponStats.additionalStat?.type === "Elemental Mastery"
-      ? weaponStats.additionalStat.value
-      : 0) +
-    (stats.additionalStat?.type === "Elemental Mastery"
-      ? stats.additionalStat.value
-      : 0);
-
-  // CRIT Rate: 5% base + additions
-  baseStats.critRate = 5 +
-    (weaponStats.additionalStat?.type === "CRIT Rate"
-      ? weaponStats.additionalStat.value
-      : 0) +
-    (stats.additionalStat?.type === "CRIT Rate"
-      ? stats.additionalStat.value
-      : 0);
-
-  // CRIT DMG: 50% base + additions
-  baseStats.critDmg = 50 +
-    (weaponStats.additionalStat?.type === "CRIT DMG"
-      ? weaponStats.additionalStat.value
-      : 0) +
-    (stats.additionalStat?.type === "CRIT DMG"
-      ? stats.additionalStat.value
-      : 0);
-
-  // Energy Recharge: 100% base + additions
-  baseStats.energyRecharge = 100 +
-    (weaponStats.additionalStat?.type === "Energy Recharge"
-      ? weaponStats.additionalStat.value
-      : 0) +
-    (stats.additionalStat?.type === "Energy Recharge"
-      ? stats.additionalStat.value
-      : 0);
-
-  // Elemental DMG: additions only
-  baseStats.elementalDmg =
-    (weaponStats.additionalStat?.type?.includes("DMG%")
-      ? weaponStats.additionalStat.value
-      : 0) +
-    (stats.additionalStat?.type?.includes("DMG%")
-      ? stats.additionalStat.value
-      : 0);
-
-  return baseStats;
-}
-
-// Calculate projected stats (including artifacts)
-function calculateProjectedStats(char, stats, charData) {
-  const baseStats = calculateBaseStats(char, stats, charData);
-  const artifactStats = calculateArtifactMainStats(char);
-  const setEffects = calculateArtifactSetEffects(char);
-
-  // Apply artifact main stats and set effects
-  const projected = { ...baseStats };
-
-  // HP: add flat HP from flower and % HP from artifacts
-  projected.hp += artifactStats.hpFlat; // Flower
-  projected.hp += stats.baseHP * artifactStats.hpPercent / 100; // % HP from artifacts
-  projected.hp += stats.baseHP * (setEffects.stats.hp || 0) / 100; // % HP from set effects
-
-  // ATK: add flat ATK from plume and % ATK from artifacts
-  projected.atk += artifactStats.atkFlat; // Plume
-  projected.atk += (stats.baseATK) * artifactStats.atkPercent / 100; // % ATK from artifacts
-  projected.atk += (stats.baseATK) * (setEffects.stats.atk || 0) / 100; // % ATK from set effects
-
-  // DEF: add % DEF from artifacts
-  projected.def += stats.baseDEF * artifactStats.defPercent / 100; // % DEF from artifacts
-  projected.def += stats.baseDEF * (setEffects.stats.def || 0) / 100; // % DEF from set effects
-
-  // Other stats: direct additions
-  projected.elementalMastery += artifactStats.elementalMastery +
-    (setEffects.stats.elementalMastery || 0);
-  projected.critRate += artifactStats.critRate +
-    (setEffects.stats.critRate || 0);
-  projected.critDmg += artifactStats.critDmg + (setEffects.stats.critDmg || 0);
-  projected.energyRecharge += artifactStats.energyRecharge +
-    (setEffects.stats.energyRecharge || 0);
-  projected.healingBonus += artifactStats.healingBonus +
-    (setEffects.stats.healingBonus || 0);
-  projected.elementalDmg += artifactStats.elementalDmg +
-    (setEffects.stats.pyroDmg || 0) +
-    (setEffects.stats.hydroDmg || 0) + (setEffects.stats.electroDmg || 0) +
-    (setEffects.stats.cryoDmg || 0) + (setEffects.stats.anemoDmg || 0) +
-    (setEffects.stats.geoDmg || 0) + (setEffects.stats.dendroDmg || 0);
-
-  return projected;
-}
-
-function renderStatsDisplay(stats, charData) {
-  const statsConfig = [
-    { key: "hp", label: "HP", base: Math.round(stats.hp), suffix: "" },
-    { key: "atk", label: "ATK", base: Math.round(stats.atk), suffix: "" },
-    { key: "def", label: "DEF", base: Math.round(stats.def), suffix: "" },
-    {
-      key: "elementalMastery",
-      label: "Elemental Mastery",
-      base: Math.round(stats.elementalMastery),
-      suffix: "",
-    },
-    {
-      key: "critRate",
-      label: "CRIT Rate",
-      base: stats.critRate.toFixed(1),
-      suffix: "%",
-    },
-    {
-      key: "critDmg",
-      label: "CRIT DMG",
-      base: stats.critDmg.toFixed(1),
-      suffix: "%",
-    },
-    {
-      key: "healingBonus",
-      label: "Healing Bonus",
-      base: stats.healingBonus.toFixed(1),
-      suffix: "%",
-      condition: stats.healingBonus > 0,
-    },
-    {
-      key: "energyRecharge",
-      label: "Energy Recharge",
-      base: stats.energyRecharge.toFixed(1),
-      suffix: "%",
-    },
-    {
-      key: "elementalDmg",
-      label: `${charData?.element || "Elemental"} DMG Bonus`,
-      base: stats.elementalDmg.toFixed(1),
-      suffix: "%",
-    },
-  ];
-
-  return statsConfig.map((stat) => {
-    if (stat.condition === false) return "";
-    return `
-      <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: #2c3e50; border-radius: 6px;">
-        <span>${stat.label}:</span>
-        <span style="font-weight: bold; color: #00ffff;">${stat.base}${stat.suffix}</span>
-      </div>
-    `;
-  }).join("");
-}
-
-function renderGoalStats(char) {
-  const goalStats = char.gear.goalStats;
-
-  const statsConfig = [
-    { key: "hp", label: "HP", suffix: "", baseValue: 0 },
-    { key: "atk", label: "ATK", suffix: "", baseValue: 0 },
-    { key: "def", label: "DEF", suffix: "", baseValue: 0 },
-    {
-      key: "elementalMastery",
-      label: "Elemental Mastery",
-      suffix: "",
-      baseValue: 0,
-    },
-    { key: "critRate", label: "CRIT Rate", suffix: "%", baseValue: 5 },
-    { key: "critDmg", label: "CRIT DMG", suffix: "%", baseValue: 50 },
-    { key: "healingBonus", label: "Healing Bonus", suffix: "%", baseValue: 0 },
-    {
-      key: "energyRecharge",
-      label: "Energy Recharge",
-      suffix: "%",
-      baseValue: 100,
-    },
-    {
-      key: "elementalDmg",
-      label: "Elemental DMG Bonus",
-      suffix: "%",
-      baseValue: 0,
-    },
-  ];
-
-  return statsConfig.map((stat) => {
-    const currentValue = goalStats[stat.key] !== undefined
-      ? goalStats[stat.key]
-      : stat.baseValue;
-
-    return `
-      <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: #2c3e50; border-radius: 6px;">
-        <span>${stat.label}:</span>
-        <input type="number" 
-               id="goal-${stat.key}" 
-               value="${currentValue}" 
-               min="${stat.baseValue}"
-               onchange="updateGoalStat('${char.id}', '${stat.key}')"
-               style="width: 80px; padding: 4px; background: #1c2b33; border: 2px solid #00ffff; border-radius: 4px; color: white; text-align: center;">
-        <span>${stat.suffix}</span>
-      </div>
-    `;
-  }).join("");
-}
-
-function renderStatsComparison(projectedStats, goalStats, charData) {
-  let html = '<div style="display: grid; gap: 10px;">';
-
-  const statsConfig = [
-    { key: "hp", label: "HP", isPercent: false, baseValue: 0 },
-    { key: "atk", label: "ATK", isPercent: false, baseValue: 0 },
-    { key: "def", label: "DEF", isPercent: false, baseValue: 0 },
-    {
-      key: "elementalMastery",
-      label: "Elemental Mastery",
-      isPercent: false,
-      baseValue: 0,
-    },
-    { key: "critRate", label: "CRIT Rate", isPercent: true, baseValue: 5 },
-    { key: "critDmg", label: "CRIT DMG", isPercent: true, baseValue: 50 },
-    {
-      key: "healingBonus",
-      label: "Healing Bonus",
-      isPercent: true,
-      baseValue: 0,
-    },
-    {
-      key: "energyRecharge",
-      label: "Energy Recharge",
-      isPercent: true,
-      baseValue: 100,
-    },
-    {
-      key: "elementalDmg",
-      label: `${charData?.element || "Elemental"} DMG Bonus`,
-      isPercent: true,
-      baseValue: 0,
-    },
-  ];
-
-  let hasActiveGoals = false;
-
-  statsConfig.forEach((stat) => {
-    const currentGoal = goalStats[stat.key] !== undefined
-      ? goalStats[stat.key]
-      : stat.baseValue;
-
-    // Only show comparison if user has set a custom goal (greater than base value)
-    if (currentGoal <= stat.baseValue) return;
-
-    hasActiveGoals = true;
-    const projected = projectedStats[stat.key];
-    const difference = currentGoal - projected;
-    const isMet = difference <= 0;
-
-    let progressColor = isMet ? "#2ecc71" : "#e74c3c";
-    let progressText = isMet
-      ? "Goal Met"
-      : `${
-        stat.isPercent
-          ? difference.toFixed(1) + "%"
-          : Math.round(difference).toLocaleString()
-      } needed`;
-    const progressPercentage = Math.min(100, (projected / currentGoal) * 100);
-
-    html += `
-      <div style="display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 10px; align-items: center; padding: 8px; background: #34495e; border-radius: 6px;">
-        <div style="font-weight: bold;">${stat.label}:</div>
-        <div style="display: flex; align-items: center;">
-          <div style="flex: 1; background: #2c3e50; border-radius: 4px; height: 20px; overflow: hidden;">
-            <div style="height: 100%; background: ${progressColor}; width: ${progressPercentage}%; transition: width 0.3s;"></div>
-          </div>
-        </div>
-        <div style="text-align: right; font-size: 12px; color: ${progressColor};">
-          ${progressText}
-        </div>
-        <div style="grid-column: 1 / -1; font-size: 11px; color: #ccc;">
-          Current: ${
-      stat.isPercent
-        ? projected.toFixed(1) + "%"
-        : Math.round(projected).toLocaleString()
-    } | 
-          Goal: ${
-      stat.isPercent
-        ? currentGoal.toFixed(1) + "%"
-        : Math.round(currentGoal).toLocaleString()
-    }
-        </div>
-      </div>
-    `;
-  });
-
-  // Show message if no custom goals are set
-  if (!hasActiveGoals) {
-    html += `
-      <div style="text-align: center; padding: 20px; color: #888; font-style: italic;">
-        No custom goals set. Increase values above base levels in the right column to see progress tracking.
-        <div style="font-size: 10px; margin-top: 5px;">
-          Base values shown: CRIT Rate 5%, CRIT DMG 50%, Energy Recharge 100%
-        </div>
-      </div>
-    `;
-  }
-
-  html += "</div>";
-  return html;
-}
-
-// Function to display artifact set effects
-function renderArtifactSetEffects(char) {
-  const effects = calculateArtifactSetEffects(char);
-  let leftColumn = "";
-  let rightColumn = "";
-
-  const set1 = char.gear.artifactSet1;
-  const set2 = char.gear.artifactSet2;
-
-  // Left Column: Artifact Set Names and Effects
-  leftColumn += `<div style="color: #ccc; font-size: 12px;">`;
-
-  if (set1 || set2) {
-    if (set1 && set2) {
-      if (set1 === set2) {
-        const setRarity = getArtifactSetRarity(char, set1);
-        leftColumn +=
-          `<div style="color: #00ffff; font-weight: bold; margin-bottom: 8px;">4-Piece Set Active</div>`;
-        leftColumn +=
-          `<div style="margin-bottom: 10px;"><strong>${set1}</strong> (${
-            setRarity === 5 ? "5★" : "4★"
-          })</div>`;
-
-        // Show 2pc effect
-        const set1Effect = ARTIFACT_SETS[char.game]?.[set1]?.["2pc"];
-        if (set1Effect && set1Effect.type === "stat") {
-          const formattedStat = formatStatName(set1Effect.stat);
-          leftColumn +=
-            `<div style="color: #88ff88; margin: 5px 0; font-size: 11px;">2-Piece: ${formattedStat} +${set1Effect.value}%</div>`;
-        }
-
-        // Show 4pc effect
-        const set4pcEffect = ARTIFACT_SETS[char.game]?.[set1]?.["4pc"];
-        if (set4pcEffect && set4pcEffect.description) {
-          leftColumn +=
-            `<div style="color: #ffcc00; margin: 5px 0; font-size: 11px;">4-Piece Effect Active</div>`;
-        }
-      } else {
-        const set1Rarity = getArtifactSetRarity(char, set1);
-        const set2Rarity = getArtifactSetRarity(char, set2);
-        leftColumn +=
-          `<div style="color: #00ffff; font-weight: bold; margin-bottom: 8px;">2-Piece + 2-Piece Sets</div>`;
-
-        // First set
-        leftColumn +=
-          `<div style="margin-bottom: 10px;"><strong>${set1}</strong> (${
-            set1Rarity === 5 ? "5★" : "4★"
-          })</div>`;
-        const set1Effect = ARTIFACT_SETS[char.game]?.[set1]?.["2pc"];
-        if (set1Effect && set1Effect.type === "stat") {
-          const formattedStat = formatStatName(set1Effect.stat);
-          leftColumn +=
-            `<div style="color: #88ff88; margin: 5px 0; font-size: 11px;">${formattedStat} +${set1Effect.value}%</div>`;
-        }
-
-        // Second set
-        leftColumn +=
-          `<div style="margin-top: 15px; margin-bottom: 10px;"><strong>${set2}</strong> (${
-            set2Rarity === 5 ? "5★" : "4★"
-          })</div>`;
-        const set2Effect = ARTIFACT_SETS[char.game]?.[set2]?.["2pc"];
-        if (set2Effect && set2Effect.type === "stat") {
-          const formattedStat = formatStatName(set2Effect.stat);
-          leftColumn +=
-            `<div style="color: #88ff88; margin: 5px 0; font-size: 11px;">${formattedStat} +${set2Effect.value}%</div>`;
-        }
-      }
-    } else if (set1) {
-      const setRarity = getArtifactSetRarity(char, set1);
-      leftColumn +=
-        `<div style="color: #00ffff; font-weight: bold; margin-bottom: 8px;">2-Piece Set Active</div>`;
-      leftColumn +=
-        `<div style="margin-bottom: 10px;"><strong>${set1}</strong> (${
-          setRarity === 5 ? "5★" : "4★"
-        })</div>`;
-      const set1Effect = ARTIFACT_SETS[char.game]?.[set1]?.["2pc"];
-      if (set1Effect && set1Effect.type === "stat") {
-        const formattedStat = formatStatName(set1Effect.stat);
-        leftColumn +=
-          `<div style="color: #88ff88; margin: 5px 0; font-size: 11px;">${formattedStat} +${set1Effect.value}%</div>`;
-      }
-    } else if (set2) {
-      const setRarity = getArtifactSetRarity(char, set2);
-      leftColumn +=
-        `<div style="color: #00ffff; font-weight: bold; margin-bottom: 8px;">2-Piece Set Active</div>`;
-      leftColumn +=
-        `<div style="margin-bottom: 10px;"><strong>${set2}</strong> (${
-          setRarity === 5 ? "5★" : "4★"
-        })</div>`;
-      const set2Effect = ARTIFACT_SETS[char.game]?.[set2]?.["2pc"];
-      if (set2Effect && set2Effect.type === "stat") {
-        const formattedStat = formatStatName(set2Effect.stat);
-        leftColumn +=
-          `<div style="color: #88ff88; margin: 5px 0; font-size: 11px;">${formattedStat} +${set2Effect.value}%</div>`;
-      }
-    }
-  } else {
-    leftColumn += '<div style="color: #888;">No set effects active</div>';
-  }
-
-  leftColumn += `</div>`;
-
-  // Right Column: Weapon Information (replaces Set Descriptions)
-  rightColumn +=
-    `<div style="color: #ccc; font-size: 12px; max-height: 200px; overflow-y: auto;">`;
-
-  if (char.gear.weapon) {
-    rightColumn +=
-      `<div style="color: #00ffff; font-weight: bold; margin-bottom: 8px;">Weapon Equipped</div>`;
-
-    // Get weapon data
-    const charData = ALL_CHARACTERS[char.game]?.[char.name];
-    const weaponType = charData?.weapon;
-    const weapons = weaponType
-      ? ALL_WEAPONS[char.game]?.[weaponType] || []
-      : [];
-    const weapon = weapons.find((w) => w.name === char.gear.weapon);
-
-    if (weapon) {
-      // Weapon name and rarity
-      const rarityStars = "★".repeat(weapon.rarity);
-      rightColumn +=
-        `<div style="font-weight: bold; color: #ffcc00; margin-bottom: 5px;">${weapon.name} (${rarityStars})</div>`;
-
-      // Weapon stat
-      if (weapon.stat && weapon.stat.type && weapon.stat.type !== "none") {
-        const statValue = weapon.stat.value;
-        const statSuffix = weapon.stat.type.includes("%") ? "%" : "";
-        rightColumn +=
-          `<div style="margin: 3px 0; font-size: 11px;"><strong>Stat:</strong> ${weapon.stat.type} ${statValue}${statSuffix}</div>`;
-      }
-
-      // Weapon passive description
-      if (
-        weapon.passive && weapon.passive.description &&
-        weapon.passive.description !== "none"
-      ) {
-        rightColumn +=
-          `<div style="margin: 8px 0; font-size: 11px; line-height: 1.3;"><strong>Description:</strong> ${weapon.passive.description}</div>`;
-      } else {
-        rightColumn +=
-          `<div style="margin: 8px 0; font-size: 11px; color: #888;"><strong>Description:</strong> No passive effect</div>`;
-      }
-    } else {
-      rightColumn += `<div style="color: #888;">Weapon data not found</div>`;
-    }
-  } else {
-    rightColumn += `<div style="color: #888;">No weapon equipped</div>`;
-  }
-
-  rightColumn += `</div>`;
-
-  return `
-    <div>${leftColumn}</div>
-    <div>${rightColumn}</div>
-  `;
-}
-
-// Helper function to format stat names for display
-function formatStatName(stat) {
-  const statMap = {
-    atk: "ATK",
-    hp: "HP",
-    def: "DEF",
-    elementalMastery: "Elemental Mastery",
-    critRate: "CRIT Rate",
-    critDmg: "CRIT DMG",
-    energyRecharge: "Energy Recharge",
-    shieldStrength: "Shield Strength",
-    normalDmg: "Normal Attack DMG",
-    chargedDmg: "Charged Attack DMG",
-    pyroDmg: "Pyro DMG Bonus",
-    hydroDmg: "Hydro DMG Bonus",
-    electroDmg: "Electro DMG Bonus",
-    cryoDmg: "Cryo DMG Bonus",
-    anemoDmg: "Anemo DMG Bonus",
-    geoDmg: "Geo DMG Bonus",
-    dendroDmg: "Dendro DMG Bonus",
-    pyroReactionDmg: "Pyro Reaction DMG",
-  };
-  return statMap[stat] || stat;
-}
-
-function getBaseStats() {
-  return {
-    hp: 0,
-    atk: 0,
-    def: 0,
-    elementalMastery: 0,
-    critRate: 5, // Base crit rate
-    critDmg: 50, // Base crit damage
-    healingBonus: 0,
-    energyRecharge: 100, // Base energy recharge
-    elementalDmg: 0,
-  };
-}
-
-function calculateWeaponStats(char) {
-  const weaponName = char.gear.weapon;
-  if (!weaponName) return { atkFlat: 0, atkPercent: 0, additionalStat: null };
-
-  const charData = ALL_CHARACTERS[char.game]?.[char.name];
-  const weaponType = charData?.weapon;
-  if (!weaponType) return { atkFlat: 0, atkPercent: 0, additionalStat: null };
-
-  const weapons = ALL_WEAPONS[char.game]?.[weaponType] || [];
-  const weapon = weapons.find((w) => w.name === weaponName);
-  if (!weapon) return { atkFlat: 0, atkPercent: 0, additionalStat: null };
-
-  const weaponStats = {
-    atkFlat: weapon.baseATK || 0,
-    atkPercent: 0,
-    additionalStat: null,
-  };
-
-  // Handle main stat only
-  if (weapon.stat && weapon.stat.type && weapon.stat.type !== "none") {
-    weaponStats.additionalStat = {
-      type: weapon.stat.type,
-      value: weapon.stat.value,
-    };
-  }
-
-  return weaponStats;
-}
-
-function calculateArtifactMainStats(char) {
-  const artifacts = char.gear.artifacts;
-  const stats = {
-    hpFlat: 0,
-    hpPercent: 0,
-    atkFlat: 0,
-    atkPercent: 0,
-    defFlat: 0,
-    defPercent: 0,
-    elementalMastery: 0,
-    energyRecharge: 0,
-    critRate: 0,
-    critDmg: 0,
-    healingBonus: 0,
-    elementalDmg: 0,
-  };
-
-  Object.values(artifacts).forEach((artifact) => {
-    const mainStat = artifact.mainStat;
-    const value = artifact.value;
-
-    switch (mainStat) {
-      case "HP":
-        stats.hpFlat += value;
-        break;
-      case "ATK":
-        stats.atkFlat += value;
-        break;
-      case "HP%":
-        stats.hpPercent += value;
-        break;
-      case "ATK%":
-        stats.atkPercent += value;
-        break;
-      case "DEF%":
-        stats.defPercent += value;
-        break;
-      case "Elemental Mastery":
-        stats.elementalMastery += value;
-        break;
-      case "Energy Recharge":
-        stats.energyRecharge += value;
-        break;
-      case "CRIT Rate":
-        stats.critRate += value;
-        break;
-      case "CRIT DMG":
-        stats.critDmg += value;
-        break;
-      case "Healing Bonus":
-        stats.healingBonus += value;
-        break;
-      default:
-        // Handle elemental DMG bonuses
-        if (mainStat.includes("DMG%")) {
-          stats.elementalDmg += value;
-        }
-        break;
-    }
-  });
-
-  return stats;
-}
-
-function calculateArtifactSetEffects(char) {
-  const effects = {
-    stats: {}, // Only 2pc stat increases
-    descriptions: [], // All 4pc effects are descriptive only
-  };
-
-  const gear = char.gear;
-  const set1 = gear.artifactSet1;
-  const set2 = gear.artifactSet2;
-
-  // Only process 2-piece effects (always active stats)
-  const processTwoPieceEffect = (setEffect) => {
-    if (!setEffect) return;
-
-    // Only add stats from 2pc effects
-    if (setEffect.type === "stat" && setEffect.stat && setEffect.value) {
-      effects.stats[setEffect.stat] = (effects.stats[setEffect.stat] || 0) +
-        setEffect.value;
-    }
-  };
-
-  // Process first 2-piece effect
-  if (set1 && ARTIFACT_SETS[char.game]?.[set1]) {
-    const set1Effect = ARTIFACT_SETS[char.game][set1]["2pc"];
-    processTwoPieceEffect(set1Effect);
-  }
-
-  // Process second 2-piece effect
-  if (set2 && ARTIFACT_SETS[char.game]?.[set2]) {
-    const set2Effect = ARTIFACT_SETS[char.game][set2]["2pc"];
-    processTwoPieceEffect(set2Effect);
-  }
-
-  // Add 4pc descriptions if both sets are the same
-  if (set1 && set2 && set1 === set2) {
-    const fourPiece = ARTIFACT_SETS[char.game][set1]["4pc"];
-    if (fourPiece && fourPiece.description) {
-      effects.descriptions.push(fourPiece.description);
-    }
-  }
-
-  return effects;
-}
-
-function getArtifactIcon(slot) {
-  const icons = {
-    flower: "🌸",
-    plume: "🪶",
-    sands: "⏳",
-    goblet: "🍶",
-    circlet: "👑",
-  };
-  return icons[slot] || "📦";
-}
-
-function getGearType(game) {
-  const gearTypes = {
-    genshin: "Artifacts",
-    hsr: "Relics",
-    zzz: "Discs",
-  };
-  return gearTypes[game] || "Gear";
-}
-
-// Global functions for event handlers
-window.openWeaponSelector = (charId) => {
-  const char = getCharacterById(charId);
-  const charData = ALL_CHARACTERS[char.game]?.[char.name];
-  const weaponType = charData?.weapon;
-
-  if (!weaponType) {
-    alert("No weapon type found for this character!");
-    return;
-  }
-
-  const allWeapons = ALL_WEAPONS[char.game]?.[weaponType] || [];
-
-  const weaponOptions = allWeapons.length > 0
-    ? allWeapons.map((weapon) => {
-      const weaponImage = weapon.image ||
-        `/assets/${char.game}/weapons/${weapon.name}.webp`;
-      return `
-        <option value="${weapon.name}" ${
-        char.gear.weapon === weapon.name ? "selected" : ""
-      }>
-          ${weapon.name} ${weapon.rarity ? `(${weapon.rarity}★)` : ""}
-        </option>
-      `;
-    }).join("")
-    : `<option value="">No weapons available</option>`;
-
-  window.openModal?.(`
-    <div style="text-align: left; color: white; max-width: 500px;">
-      <h3 style="color: #00ffff; margin-bottom: 20px;">Select Weapon</h3>
-      
-      <div style="margin-bottom: 25px;">
-        <strong style="font-size: 16px;">Weapon:</strong><br>
-        <select id="weapon-select" style="width: 100%; padding: 12px; background: #2c3e50; border: 2px solid #00ffff; border-radius: 8px; color: white; font-size: 16px; margin-top: 8px;">
-          ${weaponOptions}
-        </select>
-      </div>
-      
-      <div style="display: flex; gap: 15px; justify-content: center;">
-        <button onclick="saveWeaponSelection('${charId}')" 
-                style="padding: 15px 25px; background: #2ecc71; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px;">
-          💾 Save Weapon
-        </button>
-        <button onclick="window.closeModal?.()" 
-                style="padding: 15px 25px; background: #95a5a6; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px;">
-          Cancel
-        </button>
-      </div>
-    </div>
-  `);
-};
-
-window.saveWeaponSelection = (charId) => {
-  const char = getCharacterById(charId);
-  const weaponSelect = document.getElementById("weapon-select");
-
-  if (weaponSelect && weaponSelect.value) {
-    char.gear.weapon = weaponSelect.options[weaponSelect.selectedIndex]?.text ||
-      weaponSelect.value;
-    saveMyCharacters();
-    renderCharacterGear(char);
-    window.closeModal?.();
-  }
-};
-
-window.updateArtifactSet = (charId, setNumber) => {
-  const char = getCharacterById(charId);
-  const select = document.getElementById(`artifact-set-${setNumber}`);
-
-  if (select) {
-    const newSet = select.value;
-
-    if (setNumber === 1) {
-      char.gear.artifactSet1 = newSet;
-    } else {
-      char.gear.artifactSet2 = newSet;
-    }
-
-    // Update artifact rarities based on set combinations
-    updateArtifactRarities(char);
-
-    saveMyCharacters();
-    renderCharacterGear(char);
-  }
-};
-
-window.updateArtifactRarity = (charId, slot) => {
-  const char = getCharacterById(charId);
-  const select = document.querySelector(
-    `select[onchange="updateArtifactRarity('${charId}', '${slot}')"]`,
-  );
-
-  if (select && !isArtifactRarityLocked(char, slot)) {
-    const newRarity = parseInt(select.value);
-    char.gear.artifacts[slot].rarity = newRarity;
-
-    // Update the artifact value based on new rarity
-    const currentMainStat = char.gear.artifacts[slot].mainStat;
-    char.gear.artifacts[slot].value = getArtifactMainStatValue(
-      currentMainStat,
-      newRarity,
-    );
-
-    saveMyCharacters();
-    renderCharacterGear(char);
-  }
-};
-
-window.updateArtifactMainStat = (charId, slot) => {
-  const char = getCharacterById(charId);
-  const select = document.querySelector(
-    `select[onchange="updateArtifactMainStat('${charId}', '${slot}')"]`,
-  );
-
-  if (select) {
-    const newMainStat = select.value;
-    const currentRarity = char.gear.artifacts[slot].rarity;
-
-    char.gear.artifacts[slot].mainStat = newMainStat;
-    char.gear.artifacts[slot].value = getArtifactMainStatValue(
-      newMainStat,
-      currentRarity,
-    );
-
-    saveMyCharacters();
-    renderCharacterGear(char);
-  }
-};
-
-window.updateGoalStat = (charId, statKey) => {
-  const char = getCharacterById(charId);
-  const input = document.getElementById(`goal-${statKey}`);
-
-  if (input) {
-    const baseValues = {
-      critRate: 5,
-      critDmg: 50,
-      energyRecharge: 100,
-    };
-
-    const baseValue = baseValues[statKey] || 0;
-    const newValue = parseFloat(input.value) || baseValue;
-
-    // Ensure value doesn't go below base
-    char.gear.goalStats[statKey] = Math.max(newValue, baseValue);
-    saveMyCharacters();
-    renderCharacterGear(char);
-  }
-};
-
-// Add gear level update function
-window.updateGearLevel = (charId) => {
-  const char = getCharacterById(charId);
-  const select = document.getElementById("gear-level-select");
-
-  if (select) {
-    char.gearLevel = parseInt(select.value);
-    saveMyCharacters();
-    renderCharacterGear(char);
-  }
-};
-
-// Add these helper functions to character-gear.js
-function getWeaponImageForGear(char) {
-  if (!char.gear.weapon) return "";
-
-  const charData = ALL_CHARACTERS[char.game]?.[char.name];
-  const weaponType = charData?.weapon;
-
-  if (!weaponType) return "";
-
-  const weapons = ALL_WEAPONS[char.game]?.[weaponType] || [];
-  const weapon = weapons.find((w) => w.name === char.gear.weapon);
-
-  if (weapon && weapon.image) {
-    return weapon.image;
-  }
-
-  // Fallback image path
-  return `/assets/${char.game}/weapons/${char.gear.weapon}.webp`;
-}
-
-function getRarityColorForGear(char) {
-  if (!char.gear.weapon) return "#95a5a6";
-
-  const charData = ALL_CHARACTERS[char.game]?.[char.name];
-  const weaponType = charData?.weapon;
-
-  if (!weaponType) return "#95a5a6";
-
-  const weapons = ALL_WEAPONS[char.game]?.[weaponType] || [];
-  const weapon = weapons.find((w) => w.name === char.gear.weapon);
-
-  if (!weapon) return "#95a5a6";
-
-  const rarity = weapon.rarity || weapon.rarity;
-  switch (rarity) {
-    case 5:
-      return "#ffd700";
-    case 4:
-      return "#c0c0c0";
-    case 3:
-      return "#cd7f32";
-    default:
-      return "#95a5a6";
-  }
-}
-
-function getWeaponRarityForGear(char) {
-  if (!char.gear.weapon) return "";
-
-  const charData = ALL_CHARACTERS[char.game]?.[char.name];
-  const weaponType = charData?.weapon;
-
-  if (!weaponType) return "";
-
-  const weapons = ALL_WEAPONS[char.game]?.[weaponType] || [];
-  const weapon = weapons.find((w) => w.name === char.gear.weapon);
-
-  if (!weapon) return "";
-
-  const rarity = weapon.rarity || weapon.rarity;
-  return rarity ? `${rarity}★` : "";
-}
+// Export handlers to global scope
+window.GearHandler = GearHandler;
+window.NewSubstatCalculator = NewSubstatCalculator;

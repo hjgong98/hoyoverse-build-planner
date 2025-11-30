@@ -2,58 +2,69 @@
 import { initCharactersScene } from "./pages/characters.js";
 import { initDataScene } from "./pages/data.js";
 import { initInventoryScene } from "./pages/inventory.js";
-import { initCalendarScene } from "./pages/calendar.js"; // 🔁 Fixed typo: calender → calendar
+import { initCalendarScene } from "./pages/calendar.js";
 
-// Set up global modal
-const modal = document.getElementById("modal");
-const modalContent = document.getElementById("modal-content");
+class App {
+  constructor() {
+    this.modal = document.getElementById("modal");
+    this.modalContent = document.getElementById("modal-content");
+    this.scenes = {
+      characters: initCharactersScene,
+      data: initDataScene,
+      inventory: initInventoryScene,
+      calendar: initCalendarScene,
+    };
 
-window.openModal = (html) => {
-  modalContent.innerHTML = html;
-  modal.style.display = "flex";
-};
+    this.init();
+  }
 
-window.closeModal = () => {
-  modal.style.display = "none";
-};
+  init() {
+    this.setupModal();
+    this.setupNavigation();
+    this.navigateTo("characters");
 
-modal?.addEventListener("click", (e) => {
-  if (e.target === modal) window.closeModal();
-});
+    // Expose for debugging
+    window.navigateTo = this.navigateTo.bind(this);
+  }
 
-// Navigation: Load scene based on name
-function navigateTo(sceneName) {
-  const content = document.getElementById("page-content");
-  content.innerHTML = "<p>Loading...</p>";
+  setupModal() {
+    window.openModal = (html) => {
+      this.modalContent.innerHTML = html;
+      this.modal.style.display = "flex";
+    };
 
-  const scenes = {
-    characters: initCharactersScene,
-    data: initDataScene,
-    inventory: initInventoryScene,
-    calendar: initCalendarScene,
-  };
+    window.closeModal = () => {
+      this.modal.style.display = "none";
+    };
 
-  const initFn = scenes[sceneName];
-  if (initFn) {
-    initFn();
-  } else {
-    content.innerHTML = `<p>⚠️ Scene "${sceneName}" not found.</p>`;
+    this.modal?.addEventListener("click", (e) => {
+      if (e.target === this.modal) window.closeModal();
+    });
+  }
+
+  setupNavigation() {
+    document.querySelectorAll("[data-page]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const page = button.getAttribute("data-page");
+        this.navigateTo(page);
+      });
+    });
+  }
+
+  navigateTo(sceneName) {
+    const content = document.getElementById("page-content");
+    content.innerHTML = "<p>Loading...</p>";
+
+    const initFn = this.scenes[sceneName];
+    if (initFn) {
+      initFn();
+    } else {
+      content.innerHTML = `<p>⚠️ Scene "${sceneName}" not found.</p>`;
+    }
   }
 }
 
-// On Load
+// Initialize app when DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
-  // Set up navigation buttons
-  document.querySelectorAll("[data-page]").forEach((button) => {
-    button.addEventListener("click", () => {
-      const page = button.getAttribute("data-page");
-      navigateTo(page);
-    });
-  });
-
-  // Initialize the first page
-  navigateTo("characters");
-
-  // Expose navigate for debugging
-  window.navigateTo = navigateTo;
+  new App();
 });

@@ -18,7 +18,7 @@ export function calculateCharacterAscensionMaterials(
   // Define ALL ascension stages with their material requirements
   const ascensionStages = [
     {
-      level: "20/40",
+      level: 20, // Ascension 0->1
       mora: 20000,
       gemTier: 2,
       gemCount: 1,
@@ -27,7 +27,7 @@ export function calculateCharacterAscensionMaterials(
       commonCount: 3,
     },
     {
-      level: "40/50",
+      level: 40, // Ascension 1->2
       mora: 40000,
       gemTier: 3,
       gemCount: 3,
@@ -37,7 +37,7 @@ export function calculateCharacterAscensionMaterials(
       bossCount: 2,
     },
     {
-      level: "50/60",
+      level: 50, // Ascension 2->3
       mora: 60000,
       gemTier: 3,
       gemCount: 6,
@@ -47,7 +47,7 @@ export function calculateCharacterAscensionMaterials(
       bossCount: 4,
     },
     {
-      level: "60/70",
+      level: 60, // Ascension 3->4
       mora: 80000,
       gemTier: 4,
       gemCount: 3,
@@ -57,7 +57,7 @@ export function calculateCharacterAscensionMaterials(
       bossCount: 8,
     },
     {
-      level: "70/80",
+      level: 70, // Ascension 4->5
       mora: 100000,
       gemTier: 4,
       gemCount: 6,
@@ -67,7 +67,7 @@ export function calculateCharacterAscensionMaterials(
       bossCount: 12,
     },
     {
-      level: "80/90",
+      level: 80, // Ascension 5->6
       mora: 120000,
       gemTier: 5,
       gemCount: 6,
@@ -78,54 +78,55 @@ export function calculateCharacterAscensionMaterials(
     },
   ];
 
-  // Calculate which stages we need based on current and target level
-  const currentAscension = Math.floor((currentLevel - 1) / 10);
-  const targetAscension = Math.floor((targetLevel - 1) / 10);
+  // Determine which ascension stages we need based on current and target level
+  const neededStages = ascensionStages.filter((stage) => {
+    const stageMinLevel = stage.level - 10; // Stage applies to levels leading up to this
+    return currentLevel <= stageMinLevel && targetLevel > stageMinLevel;
+  });
 
   console.log(
     `Calculating materials from level ${currentLevel} to ${targetLevel}`,
   );
-  console.log(
-    `Current ascension: ${currentAscension}, Target ascension: ${targetAscension}`,
-  );
+  console.log(`Needed stages:`, neededStages);
 
-  // Aggregate materials for ALL stages from current to target
-  for (let i = currentAscension; i < targetAscension; i++) {
-    if (i < ascensionStages.length) {
-      const stage = ascensionStages[i];
-      console.log(`Adding stage ${i}:`, stage);
+  // Aggregate materials for needed stages
+  neededStages.forEach((stage) => {
+    requirements.mora += stage.mora;
 
-      requirements.mora += stage.mora;
+    // Add gem requirements
+    requirements.gems.push({
+      element: character.element.toLowerCase(),
+      tier: stage.gemTier,
+      count: stage.gemCount,
+    });
 
-      // Add gem requirements - create separate entries for each tier
-      requirements.gems.push({
-        element: character.element.toLowerCase(),
-        tier: stage.gemTier,
-        count: stage.gemCount,
-      });
-
-      // Add local specialty
+    // Add local specialty
+    if (character.local) {
       requirements.local.push({
         name: character.local,
         count: stage.localCount,
       });
+    }
 
-      // Add common materials - create separate entries for each tier
+    // Add common materials
+    if (character.common) {
       requirements.common.push({
         type: character.common,
         tier: stage.commonTier,
         count: stage.commonCount,
       });
-
-      // Add boss materials
-      if (stage.bossCount && character.overworld) {
-        requirements.boss.push({
-          name: character.overworld,
-          count: stage.bossCount,
-        });
-      }
     }
-  }
+
+    // Add boss materials
+    if (
+      stage.bossCount && character.overworld && character.overworld !== "none"
+    ) {
+      requirements.boss.push({
+        name: character.overworld,
+        count: stage.bossCount,
+      });
+    }
+  });
 
   console.log("Final requirements:", requirements);
   return requirements;
@@ -142,10 +143,15 @@ export function calculateTalentMaterials(
     common: [],
     books: [],
     weekly: [],
-    crown: 0, // Make sure crown is initialized
+    crown: 0,
   };
 
-  // Talent upgrade costs by level - FIXED to include all levels
+  // Return empty if no upgrade needed
+  if (currentLevel >= targetLevel) {
+    return requirements;
+  }
+
+  // Talent upgrade costs by target level
   const talentCosts = [
     {
       level: 2,
@@ -226,46 +232,52 @@ export function calculateTalentMaterials(
     },
   ];
 
+  // Get only the levels we need to upgrade
+  const neededLevels = talentCosts.filter((cost) =>
+    cost.level > currentLevel && cost.level <= targetLevel
+  );
+
   console.log(
     `Calculating talent ${talentType} from ${currentLevel} to ${targetLevel}`,
   );
+  console.log(`Needed levels:`, neededLevels);
 
-  // Calculate which talent levels we need to upgrade
-  for (let level = currentLevel + 1; level <= targetLevel; level++) {
-    const cost = talentCosts.find((c) => c.level === level);
-    if (cost) {
-      console.log(`Adding talent level ${level}:`, cost);
+  neededLevels.forEach((cost) => {
+    requirements.mora += cost.mora;
 
-      requirements.mora += cost.mora;
-
-      // Add common materials
+    // Add common materials
+    if (character.common) {
       requirements.common.push({
         type: character.common,
         tier: cost.commonTier,
         count: cost.commonCount,
       });
+    }
 
-      // Add talent books
+    // Add talent books
+    if (character.type && character.type !== "Adaptive") {
       requirements.books.push({
         type: character.type,
         tier: cost.bookTier,
         count: cost.bookCount,
       });
-
-      // Add weekly boss materials (if applicable)
-      if (cost.weeklyCount && character.weekly) {
-        requirements.weekly.push({
-          name: character.weekly,
-          count: cost.weeklyCount,
-        });
-      }
-
-      // Add crown (for level 10) - FIXED: properly handle crownCount
-      if (cost.crownCount && level === 10) {
-        requirements.crown += cost.crownCount;
-      }
     }
-  }
+
+    // Add weekly boss materials
+    if (
+      cost.weeklyCount && character.weekly && character.weekly !== "Adaptive"
+    ) {
+      requirements.weekly.push({
+        name: character.weekly,
+        count: cost.weeklyCount,
+      });
+    }
+
+    // Add crown
+    if (cost.crownCount) {
+      requirements.crown += cost.crownCount;
+    }
+  });
 
   console.log("Final talent requirements:", requirements);
   return requirements;
