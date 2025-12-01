@@ -36,7 +36,22 @@ function getGearType(game) {
   return gearTypes[game] || "Gear";
 }
 
-function getTalentName(game, index) {
+function getTalentName(game, characterName, index) {
+  // First check if character has custom talent names
+  const charData = ALL_CHARACTERS[game]?.[characterName];
+  if (charData?.talentnames) {
+    if (index === 0 && charData.talentnames.normal) {
+      return charData.talentnames.normal;
+    }
+    if (index === 1 && charData.talentnames.skill) {
+      return charData.talentnames.skill;
+    }
+    if (index === 2 && charData.talentnames.burst) {
+      return charData.talentnames.burst;
+    }
+  }
+
+  // Fallback to generic names
   const talentNames = {
     genshin: ["Normal Attack", "Elemental Skill", "Elemental Burst"],
     hsr: ["Basic Attack", "Skill", "Ultimate", "Talent"],
@@ -98,6 +113,52 @@ function calculateOverallProgress(char, limits) {
   }
 
   return Math.min(100, Math.round((completedWeight / totalWeight) * 100));
+}
+
+// =================================================================
+// WEAPON IMAGE FUNCTIONS
+// =================================================================
+
+function getWeaponData(char) {
+  if (!char.weaponName) return null;
+
+  const charData = ALL_CHARACTERS[char.game]?.[char.name];
+  const weaponType = charData?.weapon || charData?.path || charData?.role;
+
+  if (!weaponType || !ALL_WEAPONS[char.game]?.[weaponType]) return null;
+
+  const weapons = ALL_WEAPONS[char.game][weaponType];
+  return weapons.find((w) => w.name === char.weaponName) || null;
+}
+
+function getWeaponImage(char) {
+  const weaponData = getWeaponData(char);
+  if (weaponData && weaponData.image) {
+    return weaponData.image;
+  }
+  return `/assets/${char.game}/weapons/default.webp`; // fallback image
+}
+
+function getWeaponRarityColor(rarity) {
+  switch (rarity) {
+    case 5:
+      return "#ffd700"; // gold
+    case 4:
+      return "#c0c0c0"; // silver
+    case 3:
+      return "#cd7f32"; // bronze
+    case 2:
+      return "#95a5a6"; // gray
+    case 1:
+      return "#95a5a6"; // gray
+    default:
+      return "#95a5a6"; // default gray
+  }
+}
+
+function getWeaponRarityText(rarity) {
+  if (!rarity) return "";
+  return "★".repeat(rarity);
 }
 
 // =================================================================
@@ -203,11 +264,55 @@ function findTalentBookMaterial(character, tier) {
 }
 
 function findLocalMaterial(character) {
-  return findMaterialByTags(
-    character.game,
-    "local",
-    character.local,
+  const charData = ALL_CHARACTERS[character.game]?.[character.name];
+  if (!charData?.local) {
+    console.warn(`No local material found for character: ${character.name}`);
+    return {
+      name: "Unknown Local Specialty",
+      img: `/assets/genshin/mora.webp`,
+      tags: [],
+    };
+  }
+
+  const localName = charData.local;
+
+  // Search for material by name (not by tag)
+  const materials = ASCENSION_MATERIALS[character.game] || [];
+  const material = materials.find((mat) => {
+    // Check if it's a local material and name matches
+    return mat.tags && mat.tags[0] === "local" && mat.name === localName;
+  });
+
+  if (material) {
+    let imagePath = material.img;
+    if (!imagePath.startsWith("/assets/") && !imagePath.startsWith("http")) {
+      imagePath = `/assets${imagePath.startsWith("/") ? "" : "/"}${imagePath}`;
+    }
+    return { ...material, img: imagePath };
+  }
+
+  // If not found, try case-insensitive search
+  const materialCaseInsensitive = materials.find((mat) => {
+    return mat.tags && mat.tags[0] === "local" &&
+      mat.name.toLowerCase() === localName.toLowerCase();
+  });
+
+  if (materialCaseInsensitive) {
+    let imagePath = materialCaseInsensitive.img;
+    if (!imagePath.startsWith("/assets/") && !imagePath.startsWith("http")) {
+      imagePath = `/assets${imagePath.startsWith("/") ? "" : "/"}${imagePath}`;
+    }
+    return { ...materialCaseInsensitive, img: imagePath };
+  }
+
+  console.warn(
+    `Local material not found: ${localName} for character: ${character.name}`,
   );
+  return {
+    name: localName,
+    img: `/assets/genshin/mora.webp`,
+    tags: ["local"],
+  };
 }
 
 function findBossMaterial(character) {
@@ -662,7 +767,7 @@ window.setGoalpost = (charId) => {
         ${
     Array.isArray(char.talentsCurrent)
       ? char.talentsCurrent.map((current, i) => {
-        const talentName = getTalentName(char.game, i);
+        const talentName = getTalentName(char.game, char.name, i);
         return `
                   <div style="margin-top: 15px; display: flex; justify-content: space-between; align-items: center; background: #2c3e50; padding: 12px; border-radius: 8px;">
                     <label style="font-size: 14px; color: #ccc;">${talentName}:</label>
@@ -831,8 +936,83 @@ export function renderCharacterDetail(char) {
             <!-- Weapon Info -->
             <div style="background: #1c2b33; padding: 20px; border-radius: 12px; border: 2px solid #00ffff44;">
               <strong style="font-size: 16px;">${weaponLabel}:</strong>
-              <div style="margin-top: 12px; color: #ccc; font-size: 14px; margin-bottom: 15px;">
-                ${char.weaponName || "No weapon selected"}
+              <div style="margin-top: 12px; margin-bottom: 15px;">
+                ${
+    char.weaponName
+      ? `
+                  <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="position: relative;">
+                      <img 
+                        src="${getWeaponImage(char)}" 
+                        alt="${char.weaponName}"
+                        style="
+                          width: 56px;
+                          height: 56px;
+                          border-radius: 8px;
+                          border: 2px solid ${
+        getWeaponData(char)
+          ? getWeaponRarityColor(getWeaponData(char).rarity)
+          : "#95a5a6"
+      };
+                          object-fit: cover;
+                        "
+                        onerror="this.onerror=null; this.src='/assets/${char.game}/weapons/default.webp';"
+                      >
+                      ${
+        getWeaponData(char)?.rarity
+          ? `
+                        <div style="
+                          position: absolute;
+                          top: -8px;
+                          right: -8px;
+                          background: ${
+            getWeaponData(char).rarity === 5
+              ? "#ffd700"
+              : getWeaponData(char).rarity === 4
+              ? "#c0c0c0"
+              : getWeaponData(char).rarity === 3
+              ? "#cd7f32"
+              : "#95a5a6"
+          };
+                          color: black;
+                          border-radius: 50%;
+                          width: 20px;
+                          height: 20px;
+                          display: flex;
+                          align-items: center;
+                          justify-content: center;
+                          font-size: 10px;
+                          font-weight: bold;
+                          border: 2px solid #1c2b33;
+                        ">
+                          ${getWeaponRarityText(getWeaponData(char).rarity)}
+                        </div>
+                        `
+          : ""
+      }
+                    </div>
+                    <div>
+                      <div style="color: #00ffff; font-weight: bold; font-size: 14px;">${char.weaponName}</div>
+                      ${
+        getWeaponData(char)?.baseATK
+          ? `<div style="color: #ccc; font-size: 12px;">Base ATK: ${
+            getWeaponData(char).baseATK
+          }</div>`
+          : ""
+      }
+                      ${
+        getWeaponData(char)?.stat?.type &&
+          getWeaponData(char).stat.type !== "none"
+          ? `<div style="color: #ccc; font-size: 12px;">${
+            getWeaponData(char).stat.type
+          }: ${getWeaponData(char).stat.value}</div>`
+          : ""
+      }
+                    </div>
+                  </div>
+                  `
+      : '<div style="color: #ccc; font-size: 14px; text-align: center; padding: 10px;">No weapon selected</div>'
+  }
               </div>
               <button onclick="window.openWeaponSelector('${char.id}')" 
                       style="padding: 12px 16px; background: #9b59b6; color: white; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; width: 100%; font-weight: bold;">
@@ -891,7 +1071,7 @@ export function renderCharacterDetail(char) {
               ${
     Array.isArray(char.talentsCurrent)
       ? char.talentsCurrent.map((current, i) => {
-        const talentName = getTalentName(char.game, i);
+        const talentName = getTalentName(char.game, char.name, i);
         const newLevel = char.talentsNew?.[i] || current + 1;
 
         return `

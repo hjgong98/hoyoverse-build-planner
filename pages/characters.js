@@ -1,327 +1,299 @@
-// pages/characters.js
+// /pages/characters.js
 
-import {
-  addCharacter,
-  getCharacterById,
-  loadMyCharacters,
-} from "../saved/my-characters.js";
+// todo list:
+// - edit custom character so that it asks what kind of mats
+// - edit set build goal so that it lets me select a weapon from a list
+// - edit set build goal so that it shows talents names of a specific character
+// - add custom character weapon type
+
+import { addCharacter, loadMyCharacters } from "../saved/my-characters.js";
 import { renderCharacterDetail } from "../components/character-details.js";
 import { ALL_CHARACTERS } from "../data/all-characters.js";
 import { GAME_LIMITS } from "../data/game-limits.js";
 import { ASCENSION_MATERIALS } from "../data/ascension-mats.js";
 import { ALL_WEAPONS } from "../data/all-weapons.js";
 
-// =================================================================
-// CONSTANTS AND CONFIGURATION
-// =================================================================
+const style = document.createElement("style");
+style.textContent = `
+  .modal-content {
+    max-width: 95vw !important;
+    width: 90vw !important;
+  }
+`;
+document.head.appendChild(style);
 
-const GAME_CONFIG = {
-  genshin: {
-    name: "Genshin Impact",
-    weaponLabel: "Weapon",
-    talentNames: ["Normal Attack", "Elemental Skill", "Elemental Burst"],
-    materialTypes: [
-      "common",
-      "local",
-      "overworld",
-      "gem",
-      "talent books",
-      "weekly",
-    ],
-  },
-  hsr: {
-    name: "Honkai Star Rail",
-    weaponLabel: "Light Cone",
-    talentNames: ["Basic Attack", "Skill", "Ultimate", "Talent"],
-    materialTypes: ["trace", "ascension", "drops", "weekly"],
-  },
-  zzz: {
-    name: "Zenless Zone Zero",
-    weaponLabel: "Engine",
-    talentNames: [
-      "Basic Attack",
-      "Dodge",
-      "Assist",
-      "Special Attack",
-      "Chain Attack",
-    ],
-    materialTypes: ["core", "weekly"],
-  },
+let myCharacters = loadMyCharacters();
+
+// Map short keys to full game names
+function getFullGameName(gameKey) {
+  const names = {
+    genshin: "Genshin Impact",
+    hsr: "Honkai Star Rail",
+    zzz: "Zenless Zone Zero",
+  };
+  return names[gameKey] || gameKey;
+}
+
+// Remove character from list
+function removeCharacter(name, game) {
+  if (
+    !confirm(`Remove ${name} from your list? This will delete all progress.`)
+  ) {
+    return;
+  }
+
+  // Filter out the character to remove
+  const characters = loadMyCharacters();
+  const filtered = characters.filter((char) =>
+    !(char.name === name && char.game === game)
+  );
+  localStorage.setItem("myCharacters", JSON.stringify(filtered));
+
+  // Refresh the character list
+  myCharacters = filtered;
+  renderCharacterList();
+}
+
+// Initialize the Characters Page
+export function initCharactersScene() {
+  renderCharacterList();
+}
+
+// Triggered from + button
+window.openAddCharacterModal = () => {
+  window.openModal?.(`
+    <h3>Add Character</h3>
+    <p><strong>Select Game:</strong></p>
+    <select id="select-game">
+      <option value="genshin">Genshin Impact</option>
+      <option value="hsr">Honkai Star Rail</option>
+      <option value="zzz">Zenless Zone Zero</option>
+    </select>
+    <br><br>
+    <button onclick="window.handleGameSelection()">Next →</button>
+    <button onclick="window.closeModal?.()">Cancel</button>
+  `);
 };
 
-const TALENT_MAX_LEVELS = {
-  genshin: [10, 10, 10],
-  hsr: [6, 10, 10, 10],
-  zzz: [12, 12, 12, 12, 12],
-};
+// Render the character list
+function renderCharacterList() {
+  const content = document.getElementById("page-content");
+  if (!content) return;
 
-// =================================================================
-// CHARACTERS PAGE CLASS
-// =================================================================
-
-class CharactersPage {
-  constructor() {
-    this.myCharacters = loadMyCharacters();
-    this.init();
-  }
-
-  init() {
-    this.renderCharacterList();
-  }
-
-  renderCharacterList() {
-    const content = document.getElementById("page-content");
-    if (!content) return;
-
-    if (this.myCharacters.length === 0) {
-      content.innerHTML = this.renderEmptyState();
-      return;
-    }
-
-    content.innerHTML = this.renderCharacterGrid();
-    this.renderCharacterBoxes();
-  }
-
-  renderEmptyState() {
-    return `
+  if (myCharacters.length === 0) {
+    content.innerHTML = `
       <h2>Characters</h2>
       <div class="char-grid" id="char-list">
-        <div class="char-box add-new" onclick="CharacterModalHandler.openGameSelectionModal()">+</div>
+        <div class="char-box add-new" onclick="window.openAddCharacterModal?.()">+</div>
       </div>
     `;
+    return;
   }
 
-  renderCharacterGrid() {
-    return `
-      <h2>Characters in Progress</h2>
-      <div class="char-grid" id="char-list"></div>
-    `;
-  }
+  content.innerHTML = `
+    <h2>Characters in Progress</h2>
+    <div class="char-grid" id="char-list"></div>
+  `;
 
-  renderCharacterBoxes() {
-    const list = document.getElementById("char-list");
-    if (!list) return;
+  const list = document.getElementById("char-list");
 
-    this.myCharacters.forEach((char) => {
-      list.appendChild(this.createCharacterBox(char));
-    });
-
-    list.appendChild(this.createAddCharacterBox());
-  }
-
-  createCharacterBox(char) {
+  myCharacters.forEach((char) => {
     const charData = ALL_CHARACTERS[char.game]?.[char.name];
-    const charIcon = charData?.icon || char.imageUrl;
+
+    // Use character icon if available, otherwise use placeholder
+    let charIcon = charData?.icon;
+
     const fullName = char.name;
-    const fullGameName = this.getFullGameName(char.game);
+    const fullGameName = getFullGameName(char.game);
 
     const box = document.createElement("div");
     box.className = "char-box";
     box.title =
       `${fullName} (${fullGameName}) → Lv.${char.currentLevel} → ${char.goalLevel}`;
-    box.onclick = () => renderCharacterDetail(char);
 
-    box.innerHTML = `
+    // Wrap the character detail click in a separate div
+    const charDetailDiv = document.createElement("div");
+    charDetailDiv.style.cursor = "pointer";
+    charDetailDiv.style.width = "100%";
+    charDetailDiv.style.height = "100%";
+    charDetailDiv.onclick = () => renderCharacterDetail(char);
+
+    charDetailDiv.innerHTML = `
       <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
         <img src="${charIcon}" alt="${fullName}" 
-            style="width: 48px; height: 48px; border-radius: 8px; object-fit: cover; border: 2px solid #e67e22;"
-            onerror="this.src='/assets/fallback-character.jpg'; this.onerror=null;">
+            style="width: 48px; height: 48px; border-radius: 8px; object-fit: cover; border: 2px solid #e67e22;">
         <span style="font-size: 12px; text-align: center; line-height: 1.2;">${fullName}</span>
       </div>
     `;
 
-    return box;
-  }
-
-  createAddCharacterBox() {
-    const addBox = document.createElement("div");
-    addBox.className = "char-box add-new";
-    addBox.innerHTML = `
-      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
-        <div style="width: 48px; height: 48px; border-radius: 8px; border: 2px dashed #3498db; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #3498db;">
-          +
-        </div>
-        <span style="font-size: 12px; text-align: center;">Add Character</span>
-      </div>
-    `;
-    addBox.onclick = () => CharacterModalHandler.openGameSelectionModal();
-    return addBox;
-  }
-
-  getFullGameName(gameKey) {
-    return GAME_CONFIG[gameKey]?.name || gameKey;
-  }
-}
-
-// =================================================================
-// MODAL HANDLER CLASS
-// =================================================================
-
-class CharacterModalHandler {
-  static openGameSelectionModal() {
-    window.openModal?.(`
-      <h3>Add Character</h3>
-      <p><strong>Select Game:</strong></p>
-      <select id="select-game">
-        ${
-      Object.entries(GAME_CONFIG).map(([key, config]) =>
-        `<option value="${key}">${config.name}</option>`
-      ).join("")
-    }
-      </select>
-      <br><br>
-      <button onclick="CharacterModalHandler.handleGameSelection()">Next →</button>
-      <button onclick="window.closeModal?.()">Cancel</button>
-    `);
-  }
-
-  static handleGameSelection() {
-    const game = document.getElementById("select-game")?.value;
-    const gameConfig = GAME_CONFIG[game];
-    if (!gameConfig) return;
-
-    const charactersObj = ALL_CHARACTERS[game] || {};
-    const characterNames = Object.keys(charactersObj);
-
-    window.openModal?.(`
-      <h3>Select Character</h3>
-      <p>Game: <strong>${gameConfig.name}</strong></p>
-      <p><strong>Pick a character:</strong></p>
-      <select id="select-character">
-        ${
-      characterNames.map((name) => `<option value="${name}">${name}</option>`)
-        .join("")
-    }
-        <option value="custom">🔧 Custom Character</option>
-      </select>
-      <br><br>
-      <button onclick="CharacterModalHandler.handleCharacterSelection('${game}')">Next →</button>
-      <button onclick="window.closeModal?.()">Cancel</button>
-    `);
-  }
-
-  static handleCharacterSelection(game) {
-    const name = document.getElementById("select-character")?.value;
-    if (name === "custom") {
-      this.openCustomCharacterModal(game);
-    } else {
-      BuildGoalHandler.setGoalForCharacter(name, game, []);
-    }
-  }
-
-  static openCustomCharacterModal(game) {
-    const gameConfig = GAME_CONFIG[game];
-    if (!gameConfig) return;
-
-    const modalContent = CustomCharacterModalFactory.create(game, gameConfig);
-    window.openModal?.(modalContent);
-  }
-
-  static openMaterialSelector(game, materialType, targetId) {
-    const materials = ASCENSION_MATERIALS[game] || [];
-    const filteredMaterials = MaterialFilter.filterByType(
-      materials,
-      materialType,
-      game,
-    );
-
-    const options = filteredMaterials.length > 0
-      ? filteredMaterials.map((m) =>
-        `<option value="${m.name}">${m.name}</option>`
-      ).join("")
-      : `<option value="">No materials found</option>`;
-
-    window.openModal?.(`
-      <h3>Select ${materialType} Material</h3>
-      <select id="material-select" style="width: 100%; padding: 8px; margin-bottom: 15px;">
-        ${options}
-      </select>
-      <br>
-      <button onclick="CharacterModalHandler.selectMaterial('${targetId}')" 
-              style="padding: 8px 16px; background: #2ecc71; color: white; border: none; border-radius: 6px;">
-        Select
-      </button>
-      <button onclick="window.closeModal?.()" 
-              style="padding: 8px 16px; background: #95a5a6; color: white; border: none; border-radius: 6px; margin-left: 10px;">
-        Cancel
-      </button>
-    `);
-  }
-
-  static selectMaterial(targetId) {
-    const select = document.getElementById("material-select");
-    const materialName = select?.value;
-    if (materialName) {
-      window[targetId] = materialName;
-      const display = document.getElementById(`${targetId}-display`);
-      if (display) {
-        display.textContent = materialName;
-      }
-      window.closeModal?.();
-    }
-  }
-}
-
-// =================================================================
-// CUSTOM CHARACTER MODAL FACTORY
-// =================================================================
-
-class CustomCharacterModalFactory {
-  static create(game, gameConfig) {
-    const templates = {
-      genshin: this.createGenshinModal,
-      hsr: this.createHSRModal,
-      zzz: this.createZZZModal,
+    // Add delete button
+    const deleteBtn = document.createElement("button");
+    deleteBtn.innerHTML = "×";
+    deleteBtn.style.position = "absolute";
+    deleteBtn.style.top = "-5px";
+    deleteBtn.style.right = "-5px";
+    deleteBtn.style.background = "#e74c3c";
+    deleteBtn.style.color = "white";
+    deleteBtn.style.border = "none";
+    deleteBtn.style.borderRadius = "50%";
+    deleteBtn.style.width = "20px";
+    deleteBtn.style.height = "20px";
+    deleteBtn.style.fontSize = "12px";
+    deleteBtn.style.cursor = "pointer";
+    deleteBtn.style.display = "none";
+    deleteBtn.style.zIndex = "10";
+    deleteBtn.onclick = (e) => {
+      e.stopPropagation();
+      removeCharacter(char.name, char.game);
     };
 
-    const templateFn = templates[game] || this.createGenshinModal;
-    return templateFn(game, gameConfig);
-  }
+    box.style.position = "relative";
+    box.appendChild(charDetailDiv);
+    box.appendChild(deleteBtn);
 
-  static createGenshinModal(game, gameConfig) {
-    return `
-      <div style="max-height: 80vh; overflow-y: auto;">
-        <h3>Customize Character - ${gameConfig.name}</h3>
-        ${this.createBasicInfoFields()}
-        ${this.createGenshinAttributes()}
-        ${this.createGenshinMaterials()}
-        ${this.createActionButtons(game)}
+    // Show delete button on hover
+    box.addEventListener("mouseenter", () => {
+      deleteBtn.style.display = "block";
+    });
+
+    box.addEventListener("mouseleave", () => {
+      deleteBtn.style.display = "none";
+    });
+
+    list.appendChild(box);
+  });
+
+  // Add "+" button (keep your existing code)
+  const addBox = document.createElement("div");
+  addBox.className = "char-box add-new";
+  addBox.innerHTML = `
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+      <div style="width: 48px; height: 48px; border-radius: 8px; border: 2px dashed #3498db; display: flex; align-items: center; justify-content: center; font-size: 24px; color: #3498db;">
+        +
       </div>
-    `;
-  }
+      <span style="font-size: 12px; text-align: center;">Add Character</span>
+    </div>
+  `;
+  addBox.onclick = () => window.openAddCharacterModal?.();
+  list.appendChild(addBox);
+}
 
-  static createBasicInfoFields() {
-    return `
+// Step 2: After game selected → show character list + custom
+window.handleGameSelection = () => {
+  const game = document.getElementById("select-game")?.value;
+  const fullName = getFullGameName(game);
+
+  // Load current characters to check which ones are already added
+  const myCharacters = loadMyCharacters();
+  const existingCharacters = myCharacters
+    .filter((char) => char.game === game)
+    .map((char) => char.name);
+
+  const charactersObj = ALL_CHARACTERS[game] || {};
+  const allCharacters = Object.keys(charactersObj);
+
+  // Count how many are already added
+  const addedCount =
+    allCharacters.filter((name) => existingCharacters.includes(name)).length;
+
+  window.openModal?.(`
+    <h3>Select Character</h3>
+    <p>Game: <strong>${fullName}</strong></p>
+    <p style="font-size: 12px; color: ${
+    addedCount > 0 ? "#e74c3c" : "#27ae60"
+  };">
+      ${
+    addedCount === 0
+      ? "No characters added yet"
+      : `${addedCount} of ${allCharacters.length} characters already added`
+  }
+    </p>
+    <p><strong>Pick a character:</strong></p>
+    <select id="select-character" style="width: 100%; padding: 8px;">
+      <option value="">-- Select a character --</option>
+      ${
+    allCharacters.map((name) => {
+      const isAdded = existingCharacters.includes(name);
+      return `<option value="${name}" ${
+        isAdded ? 'disabled style="color: #95a5a6;"' : ""
+      }>
+                  ${name} ${isAdded ? "✓ (Already added)" : ""}
+                </option>`;
+    }).join("")
+  }
+      <option value="custom">🔧 Custom Character</option>
+    </select>
+    <br><br>
+    <button onclick="window.handleCharacterSelection('${game}')">Next →</button>
+    <button onclick="window.closeModal?.()">Cancel</button>
+  `);
+};
+
+// Step 3: Handle selected or custom
+window.handleCharacterSelection = (game) => {
+  const name = document.getElementById("select-character")?.value;
+  if (name === "custom") {
+    window.openCustomCharacterModal(game);
+  } else {
+    window.setGoalForCharacter(name, game, []);
+  }
+};
+
+// Custom Character Modal
+window.openCustomCharacterModal = (game) => {
+  const fullName = getFullGameName(game);
+
+  if (game === "genshin") {
+    renderGenshinCustomModal(fullName, game);
+  } else if (game === "hsr") {
+    renderHSRCustomModal(fullName, game);
+  } else if (game === "zzz") {
+    renderZZZCustomModal(fullName, game);
+  }
+};
+
+// Genshin Impact Custom Character
+function renderGenshinCustomModal(fullName, game) {
+  const regions = [
+    "Mondstadt",
+    "Liyue",
+    "Inazuma",
+    "Sumeru",
+    "Fontaine",
+    "Natlan",
+    "Snezhnaya",
+  ];
+  const weapons = ["Sword", "Claymore", "Polearm", "Catalyst", "Bow"];
+  const elements = [
+    "Pyro",
+    "Hydro",
+    "Electro",
+    "Cryo",
+    "Anemo",
+    "Geo",
+    "Dendro",
+  ];
+
+  window.openModal?.(`
+    <div style="max-height: 80vh; overflow-y: auto;">
+      <h3>Customize Character - ${fullName}</h3>
+      
       <div style="margin-bottom: 15px;">
         <strong>Character Name:</strong><br>
         <input type="text" id="custom-name" placeholder="Enter character name" style="width: 100%; padding: 8px;">
       </div>
-    `;
-  }
-
-  static createGenshinAttributes() {
-    return `
+      
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
         <div>
           <strong>Weapon:</strong><br>
           <select id="custom-weapon" style="width: 100%; padding: 8px;">
-            <option value="Sword">Sword</option>
-            <option value="Claymore">Claymore</option>
-            <option value="Polearm">Polearm</option>
-            <option value="Catalyst">Catalyst</option>
-            <option value="Bow">Bow</option>
+            ${weapons.map((w) => `<option value="${w}">${w}</option>`).join("")}
           </select>
         </div>
         <div>
           <strong>Region:</strong><br>
           <select id="custom-region" style="width: 100%; padding: 8px;">
-            <option value="Mondstadt">Mondstadt</option>
-            <option value="Liyue">Liyue</option>
-            <option value="Inazuma">Inazuma</option>
-            <option value="Sumeru">Sumeru</option>
-            <option value="Fontaine">Fontaine</option>
-            <option value="Natlan">Natlan</option>
-            <option value="Snezhnaya">Snezhnaya</option>
+            ${regions.map((r) => `<option value="${r}">${r}</option>`).join("")}
             <option value="unknown">Unknown</option>
           </select>
         </div>
@@ -331,13 +303,9 @@ class CustomCharacterModalFactory {
         <div>
           <strong>Element:</strong><br>
           <select id="custom-element" style="width: 100%; padding: 8px;">
-            <option value="Pyro">Pyro</option>
-            <option value="Hydro">Hydro</option>
-            <option value="Electro">Electro</option>
-            <option value="Cryo">Cryo</option>
-            <option value="Anemo">Anemo</option>
-            <option value="Geo">Geo</option>
-            <option value="Dendro">Dendro</option>
+            ${
+    elements.map((e) => `<option value="${e}">${e}</option>`).join("")
+  }
           </select>
         </div>
         <div>
@@ -348,257 +316,420 @@ class CustomCharacterModalFactory {
           </select>
         </div>
       </div>
-    `;
-  }
-
-  static createGenshinMaterials() {
-    const materialSections = [
-      { type: "common", label: "Common" },
-      { type: "local", label: "Local Specialty" },
-      { type: "overworld", label: "Boss Material" },
-      { type: "gem", label: "Elemental Gem" },
-      { type: "talent books", label: "Talent Book" },
-      { type: "weekly", label: "Weekly Material" },
-    ];
-
-    return `
+      
       <h4>Ascension Materials</h4>
       <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 15px;">
-        ${
-      materialSections.slice(0, 3).map((section) =>
-        this.createMaterialSection(section)
-      ).join("")
-    }
+        <div>
+          <strong>Common</strong><br>
+          <button onclick="window.openMaterialSelector('genshin', 'common', 'custom-common')" style="width: 100%; padding: 8px;">+ Add</button>
+          <div id="custom-common-display" style="font-size: 12px; color: #ccc; min-height: 20px;"></div>
+        </div>
+        <div>
+          <strong>Local Specialty</strong><br>
+          <button onclick="window.openMaterialSelector('genshin', 'local', 'custom-local')" style="width: 100%; padding: 8px;">+ Add</button>
+          <div id="custom-local-display" style="font-size: 12px; color: #ccc; min-height: 20px;"></div>
+        </div>
+        <div>
+          <strong>Boss Material</strong><br>
+          <button onclick="window.openMaterialSelector('genshin', 'overworld', 'custom-boss')" style="width: 100%; padding: 8px;">+ Add</button>
+          <div id="custom-boss-display" style="font-size: 12px; color: #ccc; min-height: 20px;"></div>
+        </div>
       </div>
       
       <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 20px;">
-        ${
-      materialSections.slice(3).map((section) =>
-        this.createMaterialSection(section)
-      ).join("")
-    }
+        <div>
+          <strong>Elemental Gem</strong><br>
+          <button onclick="window.openMaterialSelector('genshin', 'gem', 'custom-gem')" style="width: 100%; padding: 8px;">+ Add</button>
+          <div id="custom-gem-display" style="font-size: 12px; color: #ccc; min-height: 20px;"></div>
+        </div>
+        <div>
+          <strong>Talent Book</strong><br>
+          <button onclick="window.openMaterialSelector('genshin', 'talent books', 'custom-talent')" style="width: 100%; padding: 8px;">+ Add</button>
+          <div id="custom-talent-display" style="font-size: 12px; color: #ccc; min-height: 20px;"></div>
+        </div>
+        <div>
+          <strong>Weekly Material</strong><br>
+          <button onclick="window.openMaterialSelector('genshin', 'weekly', 'custom-weekly')" style="width: 100%; padding: 8px;">+ Add</button>
+          <div id="custom-weekly-display" style="font-size: 12px; color: #ccc; min-height: 20px;"></div>
+        </div>
       </div>
-    `;
-  }
-
-  static createMaterialSection({ type, label }) {
-    const targetId = `custom-${type.replace(" ", "-")}`;
-    return `
-      <div>
-        <strong>${label}</strong><br>
-        <button onclick="CharacterModalHandler.openMaterialSelector('genshin', '${type}', '${targetId}')" 
-                style="width: 100%; padding: 8px;">+ Add</button>
-        <div id="${targetId}-display" style="font-size: 12px; color: #ccc; min-height: 20px;"></div>
-      </div>
-    `;
-  }
-
-  static createActionButtons(game) {
-    return `
-      <button onclick="CharacterModalHandler.saveCustomCharacter('${game}')" 
-              style="padding: 10px 20px; background: #2ecc71; color: white; border: none; border-radius: 6px; font-weight: bold;">
+      
+      <button onclick="window.saveCustomCharacter('genshin')" style="padding: 10px 20px; background: #2ecc71; color: white; border: none; border-radius: 6px; font-weight: bold;">
         Set Build Goal →
       </button>
-      <button onclick="window.closeModal?.()" 
-              style="padding: 10px 20px; background: #95a5a6; color: white; border: none; border-radius: 6px; margin-left: 10px;">
+      <button onclick="window.closeModal?.()" style="padding: 10px 20px; background: #95a5a6; color: white; border: none; border-radius: 6px; margin-left: 10px;">
         Cancel
       </button>
-    `;
-  }
-
-  static createHSRModal(game, gameConfig) {
-    // Simplified HSR modal - similar pattern to Genshin
-    return `
-      <div style="max-height: 80vh; overflow-y: auto;">
-        <h3>Customize Character - ${gameConfig.name}</h3>
-        ${this.createBasicInfoFields()}
-        <!-- HSR specific fields would go here -->
-        ${this.createActionButtons(game)}
-      </div>
-    `;
-  }
-
-  static createZZZModal(game, gameConfig) {
-    // Simplified ZZZ modal - similar pattern to Genshin
-    return `
-      <div style="max-height: 80vh; overflow-y: auto;">
-        <h3>Customize Character - ${gameConfig.name}</h3>
-        ${this.createBasicInfoFields()}
-        <!-- ZZZ specific fields would go here -->
-        ${this.createActionButtons(game)}
-      </div>
-    `;
-  }
+    </div>
+  `);
 }
 
-// =================================================================
-// MATERIAL FILTER
-// =================================================================
+// HSR Custom Character
+function renderHSRCustomModal(fullName, game) {
+  const paths = [
+    "Destruction",
+    "Hunt",
+    "Erudition",
+    "Harmony",
+    "Nihility",
+    "Preservation",
+    "Abundance",
+  ];
+  const types = [
+    "Physical",
+    "Fire",
+    "Ice",
+    "Lightning",
+    "Wind",
+    "Quantum",
+    "Imaginary",
+  ];
 
-class MaterialFilter {
-  static filterByType(materials, materialType, game) {
-    const filters = {
-      genshin: this.filterGenshinMaterials,
-      hsr: this.filterHSRMaterials,
-      zzz: this.filterZZZMaterials,
-    };
+  window.openModal?.(`
+    <div style="max-height: 80vh; overflow-y: auto;">
+      <h3>Customize Character - ${fullName}</h3>
+      
+      <div style="margin-bottom: 15px;">
+        <strong>Character Name:</strong><br>
+        <input type="text" id="custom-name" placeholder="Enter character name" style="width: 100%; padding: 8px;">
+      </div>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+        <div>
+          <strong>Path:</strong><br>
+          <select id="custom-path" style="width: 100%; padding: 8px;">
+            ${paths.map((p) => `<option value="${p}">${p}</option>`).join("")}
+          </select>
+        </div>
+        <div>
+          <strong>Type:</strong><br>
+          <select id="custom-type" style="width: 100%; padding: 8px;">
+            ${types.map((t) => `<option value="${t}">${t}</option>`).join("")}
+          </select>
+        </div>
+      </div>
+      
+      <div style="margin-bottom: 15px;">
+        <strong>Rarity:</strong><br>
+        <select id="custom-rarity" style="width: 100%; padding: 8px;">
+          <option value="4">4★</option>
+          <option value="5">5★</option>
+        </select>
+      </div>
+      
+      <h4>Ascension Materials</h4>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+        <div>
+          <strong>Trace Materials</strong><br>
+          <button onclick="window.openMaterialSelector('hsr', 'trace', 'custom-trace')" style="width: 100%; padding: 8px;">+ Add</button>
+          <div id="custom-trace-display" style="font-size: 12px; color: #ccc; min-height: 20px;"></div>
+        </div>
+        <div>
+          <strong>Ascension Materials</strong><br>
+          <button onclick="window.openMaterialSelector('hsr', 'ascension', 'custom-ascension')" style="width: 100%; padding: 8px;">+ Add</button>
+          <div id="custom-ascension-display" style="font-size: 12px; color: #ccc; min-height: 20px;"></div>
+        </div>
+      </div>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+        <div>
+          <strong>Enemy Drops</strong><br>
+          <button onclick="window.openMaterialSelector('hsr', 'drops', 'custom-drops')" style="width: 100%; padding: 8px;">+ Add</button>
+          <div id="custom-drops-display" style="font-size: 12px; color: #ccc; min-height: 20px;"></div>
+        </div>
+        <div>
+          <strong>Weekly Materials</strong><br>
+          <button onclick="window.openMaterialSelector('hsr', 'weekly', 'custom-weekly')" style="width: 100%; padding: 8px;">+ Add</button>
+          <div id="custom-weekly-display" style="font-size: 12px; color: #ccc; min-height: 20px;"></div>
+        </div>
+      </div>
+      
+      <button onclick="window.saveCustomCharacter('hsr')" style="padding: 10px 20px; background: #2ecc71; color: white; border: none; border-radius: 6px; font-weight: bold;">
+        Set Build Goal →
+      </button>
+      <button onclick="window.closeModal?.()" style="padding: 10px 20px; background: #95a5a6; color: white; border: none; border-radius: 6px; margin-left: 10px;">
+        Cancel
+      </button>
+    </div>
+  `);
+}
 
-    const filterFn = filters[game] || this.filterGenshinMaterials;
-    return filterFn(materials, materialType);
-  }
+// ZZZ Custom Character
+function renderZZZCustomModal(fullName, game) {
+  const roles = ["Attack", "Stun", "Anomaly", "Support", "Defense", "Rupture"];
+  const types = ["Physical", "Fire", "Ice", "Electric", "Ether"];
 
-  static filterGenshinMaterials(materials, materialType) {
-    const region = document.getElementById("custom-region")?.value;
-    const element = document.getElementById("custom-element")?.value;
+  window.openModal?.(`
+    <div style="max-height: 80vh; overflow-y: auto;">
+      <h3>Customize Character - ${fullName}</h3>
+      
+      <div style="margin-bottom: 15px;">
+        <strong>Character Name:</strong><br>
+        <input type="text" id="custom-name" placeholder="Enter character name" style="width: 100%; padding: 8px;">
+      </div>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+        <div>
+          <strong>Role:</strong><br>
+          <select id="custom-role" style="width: 100%; padding: 8px;">
+            ${roles.map((r) => `<option value="${r}">${r}</option>`).join("")}
+          </select>
+        </div>
+        <div>
+          <strong>Type:</strong><br>
+          <select id="custom-type" style="width: 100%; padding: 8px;">
+            ${types.map((t) => `<option value="${t}">${t}</option>`).join("")}
+          </select>
+        </div>
+      </div>
+      
+      <h4>Ascension Materials</h4>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+        <div>
+          <strong>Core Skill Materials</strong><br>
+          <button onclick="window.openMaterialSelector('zzz', 'core', 'custom-core')" style="width: 100%; padding: 8px;">+ Add</button>
+          <div id="custom-core-display" style="font-size: 12px; color: #ccc; min-height: 20px;"></div>
+        </div>
+        <div>
+          <strong>Weekly Materials</strong><br>
+          <button onclick="window.openMaterialSelector('zzz', 'weekly', 'custom-weekly')" style="width: 100%; padding: 8px;">+ Add</button>
+          <div id="custom-weekly-display" style="font-size: 12px; color: #ccc; min-height: 20px;"></div>
+        </div>
+      </div>
+      
+      <button onclick="window.saveCustomCharacter('zzz')" style="padding: 10px 20px; background: #2ecc71; color: white; border: none; border-radius: 6px; font-weight: bold;">
+        Set Build Goal →
+      </button>
+      <button onclick="window.closeModal?.()" style="padding: 10px 20px; background: #95a5a6; color: white; border: none; border-radius: 6px; margin-left: 10px;">
+        Cancel
+      </button>
+    </div>
+  `);
+}
 
-    const filterMap = {
-      common: (m) => m.tags?.[0] === "common" && m.tags?.[2] === 1,
-      local: (m) =>
-        m.tags?.[0] === "local" && m.tags?.[1] === region?.toLowerCase(),
-      overworld: (m) => m.tags?.[0] === "overworld",
-      gem: (m) =>
+// Material Selector
+window.openMaterialSelector = (game, materialType, targetId) => {
+  const materials = ASCENSION_MATERIALS[game] || [];
+  let filteredMaterials = [];
+
+  // Filter materials based on type and game-specific logic
+  if (game === "genshin") {
+    if (materialType === "common") {
+      filteredMaterials = materials.filter((m) =>
+        m.tags?.[0] === "common" && m.tags?.[2] === 1
+      );
+    } else if (materialType === "local") {
+      const region = document.getElementById("custom-region")?.value;
+      filteredMaterials = materials.filter((m) =>
+        m.tags?.[0] === "local" && m.tags?.[1] === region?.toLowerCase()
+      );
+    } else if (materialType === "overworld") {
+      filteredMaterials = materials.filter((m) => m.tags?.[0] === "overworld");
+    } else if (materialType === "gem") {
+      const element = document.getElementById("custom-element")?.value;
+      filteredMaterials = materials.filter((m) =>
         m.tags?.[0] === "gem" && m.tags?.[1] === element?.toLowerCase() &&
-        m.tags?.[2] === 2,
-      "talent books": (m) =>
-        m.tags?.[0] === "talent books" && m.tags?.[2] === 1,
-      weekly: (m) => m.tags?.[0] === "weekly",
-    };
+        m.tags?.[2] === 2
+      );
+    } else if (materialType === "talent books") {
+      filteredMaterials = materials.filter((m) =>
+        m.tags?.[0] === "talent books" && m.tags?.[2] === 1
+      );
+    } else if (materialType === "weekly") {
+      filteredMaterials = materials.filter((m) => m.tags?.[0] === "weekly");
+    }
+  }
+  // Add similar logic for HSR and ZZZ...
 
-    return materials.filter(filterMap[materialType] || (() => false));
+  const options = filteredMaterials.length > 0
+    ? filteredMaterials.map((m) =>
+      `<option value="${m.name}">${m.name}</option>`
+    ).join("")
+    : `<option value="">No materials found</option>`;
+
+  window.openModal?.(`
+    <h3>Select ${materialType} Material</h3>
+    <select id="material-select" style="width: 100%; padding: 8px; margin-bottom: 15px;">
+      ${options}
+    </select>
+    <br>
+    <button onclick="window.selectMaterial('${targetId}')" style="padding: 8px 16px; background: #2ecc71; color: white; border: none; border-radius: 6px;">
+      Select
+    </button>
+    <button onclick="window.closeModal?.()" style="padding: 8px 16px; background: #95a5a6; color: white; border: none; border-radius: 6px; margin-left: 10px;">
+      Cancel
+    </button>
+  `);
+};
+
+window.selectMaterial = (targetId) => {
+  const select = document.getElementById("material-select");
+  const materialName = select?.value;
+  if (materialName) {
+    // Store the selected material
+    window[targetId] = materialName;
+    // Update display
+    const display = document.getElementById(`${targetId}-display`);
+    if (display) {
+      display.textContent = materialName;
+    }
+    window.closeModal?.();
+  }
+};
+
+// Save custom character and proceed to build goal
+window.saveCustomCharacter = (game) => {
+  const name = document.getElementById("custom-name")?.value.trim();
+  if (!name) {
+    alert("Please enter a character name!");
+    return;
   }
 
-  static filterHSRMaterials(materials, materialType) {
-    // HSR filtering logic would go here
-    return materials.filter((m) => m.tags?.[0] === materialType);
+  // Collect custom materials based on game
+  const customMats = [];
+
+  if (game === "genshin") {
+    const materials = [
+      window["custom-common"],
+      window["custom-local"],
+      window["custom-boss"],
+      window["custom-gem"],
+      window["custom-talent"],
+      window["custom-weekly"],
+    ].filter(Boolean);
+    customMats.push(...materials);
+  } else if (game === "hsr") {
+    const materials = [
+      window["custom-trace"],
+      window["custom-ascension"],
+      window["custom-drops"],
+      window["custom-weekly"],
+    ].filter(Boolean);
+    customMats.push(...materials);
+  } else if (game === "zzz") {
+    const materials = [
+      window["custom-core"],
+      window["custom-weekly"],
+    ].filter(Boolean);
+    customMats.push(...materials);
   }
 
-  static filterZZZMaterials(materials, materialType) {
-    // ZZZ filtering logic would go here
-    return materials.filter((m) => m.tags?.[0] === materialType);
-  }
-}
+  window.closeModal?.();
+  window.setGoalForCharacter(name, game, customMats);
+};
 
-// =================================================================
-// BUILD GOAL HANDLER
-// =================================================================
+// Set Build Goal (existing function - needs to be updated for each game's specific level ranges)
+window.setGoalForCharacter = (name, game, customMats = []) => {
+  const limits = GAME_LIMITS[game];
+  const fullName = getFullGameName(game);
 
-class BuildGoalHandler {
-  static setGoalForCharacter(name, game, customMats = []) {
-    const limits = GAME_LIMITS[game];
-    const gameConfig = GAME_CONFIG[game];
+  // Get character data for pre-defined characters
+  const charData = ALL_CHARACTERS[game]?.[name];
 
-    const charData = ALL_CHARACTERS[game]?.[name];
-    const weaponCategory = charData?.weapon ||
+  // Determine weapon category
+  let weaponCategory = null;
+  let allWeapons = [];
+
+  if (game === "genshin") {
+    weaponCategory = charData?.weapon ||
       document.getElementById("custom-weapon")?.value;
-    const allWeapons = weaponCategory
+    allWeapons = weaponCategory
       ? ALL_WEAPONS[game]?.[weaponCategory] || []
       : [];
 
-    const modalContent = this.createBuildGoalModal(
+    renderGenshinBuildGoal(
       name,
       game,
-      gameConfig,
+      fullName,
       limits,
       allWeapons,
       customMats,
     );
-    window.openModal?.(modalContent);
+  } else if (game === "hsr") {
+    weaponCategory = charData?.path ||
+      document.getElementById("custom-path")?.value;
+    allWeapons = weaponCategory
+      ? ALL_WEAPONS[game]?.[weaponCategory] || []
+      : [];
+
+    renderHSRBuildGoal(name, game, fullName, limits, allWeapons, customMats);
+  } else if (game === "zzz") {
+    weaponCategory = charData?.role ||
+      document.getElementById("custom-role")?.value;
+    allWeapons = weaponCategory
+      ? ALL_WEAPONS[game]?.[weaponCategory] || []
+      : [];
+
+    renderZZZBuildGoal(name, game, fullName, limits, allWeapons, customMats);
   }
+};
 
-  static createBuildGoalModal(
-    name,
-    game,
-    gameConfig,
-    limits,
-    weapons,
-    customMats,
-  ) {
-    const weaponOptions = weapons.length > 0
-      ? weapons.map((w) =>
-        `<option value="${w.name}">${w.name} ${
-          w.rarity ? `(${w.rarity}★)` : ""
-        }</option>`
-      ).join("")
-      : `<option value="">No weapons found</option>`;
+// Render Genshin Build Goal
+function renderGenshinBuildGoal(
+  name,
+  game,
+  fullName,
+  limits,
+  allWeapons,
+  customMats,
+) {
+  const weaponOptions = allWeapons.length > 0
+    ? allWeapons.map((w) =>
+      `<option value="${w.name}">${w.name} ${
+        w.rarity ? `(${w.rarity}★)` : ""
+      }</option>`
+    ).join("")
+    : `<option value="">No weapons found</option>`;
 
-    const levelOptions = this.generateLevelOptions(game);
-    const talentSection = this.createTalentSection(game, limits);
+  const levelOptions = [
+    "20/20",
+    "20/40",
+    "40/40",
+    "40/50",
+    "50/50",
+    "50/60",
+    "60/60",
+    "60/70",
+    "70/70",
+    "70/80",
+    "80/80",
+    "80/90",
+    "90/90",
+  ];
+  const weaponLevelOptions = [
+    "20/20",
+    "20/40",
+    "40/40",
+    "40/50",
+    "50/50",
+    "50/60",
+    "60/60",
+    "60/70",
+    "70/70",
+    "70/80",
+    "80/80",
+    "80/90",
+    "90/90",
+  ];
 
-    return `
-      <div style="max-height: 80vh; overflow-y: auto;">
-        <h3>Character Build Goal - ${name}</h3>
-        <p>Game: <strong>${gameConfig.name}</strong></p>
-        
-        ${
-      this.createLevelSelectors(levelOptions, limits.weaponLabel, weaponOptions)
-    }
-        ${talentSection}
-        
-        <button onclick="BuildGoalHandler.saveBuildGoal('${name}', '${game}', ${
-      JSON.stringify(customMats)
-    })" 
-                style="padding: 10px 20px; background: #2ecc71; color: white; border: none; border-radius: 6px; font-weight: bold;">
-          ✅ Save Build
-        </button>
-        <button onclick="window.closeModal?.()" 
-                style="padding: 10px 20px; background: #95a5a6; color: white; border: none; border-radius: 6px; margin-left: 10px;">
-          Cancel
-        </button>
-      </div>
-    `;
-  }
-
-  static generateLevelOptions(game) {
-    const levelMaps = {
-      genshin: [
-        "20/20",
-        "20/40",
-        "40/40",
-        "40/50",
-        "50/50",
-        "50/60",
-        "60/60",
-        "60/70",
-        "70/70",
-        "70/80",
-        "80/80",
-        "80/90",
-        "90/90",
-      ],
-      hsr: [
-        "20/20",
-        "20/40",
-        "40/40",
-        "40/50",
-        "50/50",
-        "50/60",
-        "60/60",
-        "60/70",
-        "70/70",
-        "70/80",
-        "80/80",
-      ],
-      zzz: ["20/20", "20/40", "40/40", "40/50", "50/50", "50/60", "60/60"],
-    };
-
-    return levelMaps[game] || levelMaps.genshin;
-  }
-
-  static createLevelSelectors(levelOptions, weaponLabel, weaponOptions) {
-    return `
+  window.openModal?.(`
+    <div style="max-height: 80vh; overflow-y: auto;">
+      <h3>Character Build Goal - ${name}</h3>
+      <p>Game: <strong>${fullName}</strong></p>
+      
       <div style="margin-bottom: 15px;">
         <strong>Character Level:</strong><br>
         <select id="char-level" style="width: 100%; padding: 8px;">
           ${
-      levelOptions.map((level) =>
-        `<option value="${level.split("/")[1]}">${level}</option>`
-      ).join("")
-    }
+    levelOptions.map((level) =>
+      `<option value="${level.split("/")[1]}">${level}</option>`
+    ).join("")
+  }
         </select>
       </div>
       
       <div style="margin-bottom: 15px;">
-        <strong>${weaponLabel}:</strong><br>
+        <strong>Weapon:</strong><br>
         <select id="weapon-name" style="width: 100%; padding: 8px;">
           <option value="">Choose weapon...</option>
           ${weaponOptions}
@@ -606,123 +737,147 @@ class BuildGoalHandler {
       </div>
       
       <div style="margin-bottom: 15px;">
-        <strong>${weaponLabel} Level:</strong><br>
+        <strong>Weapon Level:</strong><br>
         <select id="weapon-level" style="width: 100%; padding: 8px;">
           ${
-      levelOptions.map((level) =>
-        `<option value="${level.split("/")[1]}">${level}</option>`
-      ).join("")
-    }
+    weaponLevelOptions.map((level) =>
+      `<option value="${level.split("/")[1]}">${level}</option>`
+    ).join("")
+  }
         </select>
       </div>
-    `;
-  }
-
-  static createTalentSection(game, limits) {
-    const maxLevels = TALENT_MAX_LEVELS[game] ||
-      Array(limits.talentCount).fill(10);
-
-    return `
+      
       <div style="margin-bottom: 15px;">
         <strong>Talents:</strong>
         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
-          ${
-      maxLevels.map((maxLevel, i) => this.createTalentInput(i, maxLevel)).join(
-        "",
-      )
-    }
+          <div>
+            <label>Normal Attack:</label><br>
+            <select id="talent-0" style="width: 100%; padding: 5px;">
+              ${
+    Array.from({ length: 10 }, (_, i) =>
+      `<option value="${i + 1}">${i + 1}</option>`).join("")
+  }
+            </select>
+          </div>
+          <div>
+            <label>Skill:</label><br>
+            <select id="talent-1" style="width: 100%; padding: 5px;">
+              ${
+    Array.from({ length: 10 }, (_, i) =>
+      `<option value="${i + 1}">${i + 1}</option>`).join("")
+  }
+            </select>
+          </div>
+          <div>
+            <label>Ultimate:</label><br>
+            <select id="talent-2" style="width: 100%; padding: 5px;">
+              ${
+    Array.from({ length: 10 }, (_, i) =>
+      `<option value="${i + 1}">${i + 1}</option>`).join("")
+  }
+            </select>
+          </div>
         </div>
       </div>
-    `;
-  }
-
-  static createTalentInput(index, maxLevel) {
-    const talentNames = {
-      0: "Normal Attack",
-      1: "Skill",
-      2: "Ultimate",
-      3: "Talent",
-      4: "Chain Attack",
-    };
-
-    return `
-      <div>
-        <label>${talentNames[index] || `Talent ${index + 1}`}:</label><br>
-        <select id="talent-${index}" style="width: 100%; padding: 5px;">
-          ${
-      Array.from({ length: maxLevel }, (_, i) =>
-        `<option value="${i + 1}">${i + 1}</option>`).join("")
-    }
-        </select>
-      </div>
-    `;
-  }
-
-  static saveBuildGoal(name, game, customMats) {
-    const charLevel = document.getElementById("char-level")?.value || 1;
-    const weaponSelect = document.getElementById("weapon-name");
-    const weaponName = weaponSelect?.value
-      ? weaponSelect.options[weaponSelect.selectedIndex]?.text ||
-        weaponSelect.value
-      : "";
-    const weaponLevel = document.getElementById("weapon-level")?.value || 1;
-
-    const limits = GAME_LIMITS[game];
-    const talentValues = [];
-
-    for (let i = 0; i < limits.talentCount; i++) {
-      const val = document.getElementById(`talent-${i}`)?.value || 1;
-      talentValues.push(parseInt(val));
-    }
-
-    const newChar = {
-      name,
-      game,
-      currentLevel: 1,
-      goalLevel: parseInt(charLevel),
-      weaponName,
-      currentWeaponLevel: 1,
-      goalWeaponLevel: parseInt(weaponLevel),
-      talentsCurrent: Array(limits.talentCount).fill(1),
-      talentsGoal: talentValues,
-      materials: customMats.length > 0 ? customMats : null,
-    };
-
-    addCharacter(newChar);
-    window.closeModal?.();
-
-    // Refresh the character list
-    const page = new CharactersPage();
-    page.renderCharacterList();
-  }
+      
+      <button onclick="window.saveBuildGoal('${name}', '${game}', ${
+    JSON.stringify(customMats)
+  })" style="padding: 10px 20px; background: #2ecc71; color: white; border: none; border-radius: 6px; font-weight: bold;">
+        ✅ Save Build
+      </button>
+      <button onclick="window.closeModal?.()" style="padding: 10px 20px; background: #95a5a6; color: white; border: none; border-radius: 6px; margin-left: 10px;">
+        Cancel
+      </button>
+    </div>
+  `);
 }
 
-// =================================================================
-// GLOBAL FUNCTION EXPORTS (Minimal)
-// =================================================================
+// Honkai Star rail looks like
+// Customize Character
+// Name: ________
+// Path: {select a path}
+// Type: {Select a type}
+// Rarity: {4 or 5}
+// trace  ascension
+// [ + ]  [   +   ] <- same clickable buttons
+// enemy  weekly
+// [ + ]  [ +  ]
+// same logic - looks in ascension-mats.js in the hsr section, trace mats looks for tags[0] = "trace" and tags[1] = {chosen path}, ascension looks for tags[0] = "ascension" and tags[1] = {chosen type}, enemy looks for tags[0] = "drops", weekly looks for tags[0]="weekly"
 
-window.CharacterModalHandler = CharacterModalHandler;
-window.BuildGoalHandler = BuildGoalHandler;
-window.openAddCharacterModal = CharacterModalHandler.openGameSelectionModal;
-window.handleGameSelection = CharacterModalHandler.handleGameSelection;
-window.handleCharacterSelection =
-  CharacterModalHandler.handleCharacterSelection;
-window.openCustomCharacterModal =
-  CharacterModalHandler.openCustomCharacterModal;
-window.openMaterialSelector = CharacterModalHandler.openMaterialSelector;
-window.selectMaterial = CharacterModalHandler.selectMaterial;
-window.saveCustomCharacter = CharacterModalHandler.saveCustomCharacter;
-window.setGoalForCharacter = BuildGoalHandler.setGoalForCharacter;
-window.saveBuildGoal = BuildGoalHandler.saveBuildGoal;
+// Character Build Goal
+// character name:
+// character level: 1/20 - {chose from 20/20, 20/40. 40/40, 40/50, 50/50, 50/60, 60/60, 60/70, 70/70, 70/80, 80/80}
+// light cone: {select from character's path type in all-weapons.js}
+// light level: 1/20 - {chose from 20/20, 20/40. 40/40, 40/50, 50/50, 50/60, 60/60, 60/70, 70/70, 70/80, 80/80}
+// Basic Attack: 1 - {select 1 - 6}
+// Skill: 1 - {select from 1 - 10}
+// Ultimate: 1 - {select from 1 - 10}
+// Talent: 1 - {select from 1 - 10}
+// [] Bonus Abilities (all 3)  (mark to turn off)
+// [] minor traces [all] (mark to turn on)
 
-window.getFullGameName = (gameKey) => GAME_CONFIG[gameKey]?.name || gameKey;
+// Zenless Zone Zero looks like
+// Customize Character
+// Name: ___________
+// Role: {select a role}
+// type: {Select a type}
+// core skill   weekly
+// [    +   ]   [ +  ]
+// same logic, click buttons, open list of materials imported from ascension-mats.js in the zzz section, core skill looks for tags[0]= "core", weekly looks for tags[0] = "weekly"
 
-// =================================================================
-// INITIALIZATION
-// =================================================================
+// Character Build Goal
+// character name:
+// character level: 1/20 - {chose from 20/20, 20/40. 40/40, 40/50, 50/50, 50/60, 60/60}
+// engine: {select from character's role type in all-weapons.js}
+// enginelevel: 1/20 - {chose from 20/20, 20/40. 40/40, 40/50, 50/50, 50/60, 60/60}
+// Basic attack: 1 - {select 1 - 12}
+// Dodge: 1 - {select 1 - 12}
+// Assist: 1 - {select 1 - 12}
+// Special Attack: 1 - {select 1 - 12}
+// Chain Attack: 1 - {select 1 - 12}
 
-export function initCharactersScene() {
-  new CharactersPage();
-}
+// Step 5: Save the full build (existing function)
+window.saveBuildGoal = (name, game, customMats) => {
+  const charLevel = document.getElementById("char-level")?.value || 1;
+  const weaponSelect = document.getElementById("weapon-name");
+  const weaponName = weaponSelect?.value
+    ? weaponSelect.options[weaponSelect.selectedIndex]?.text ||
+      weaponSelect.value
+    : "";
+  const weaponLevel = document.getElementById("weapon-level")?.value || 1;
+  const talentValues = [];
+  const limits = GAME_LIMITS[game];
+
+  for (let i = 0; i < limits.talentCount; i++) {
+    const val = document.getElementById(`talent-${i}`)?.value || 1;
+    talentValues.push(parseInt(val));
+  }
+
+  // HSR Traces
+  const majorTraces = game === "hsr"
+    ? document.getElementById("major-traces")?.checked ?? true
+    : false;
+  const minorTraces = game === "hsr"
+    ? document.getElementById("minor-traces")?.checked ?? true
+    : false;
+
+  const newChar = {
+    name,
+    game,
+    currentLevel: 1,
+    goalLevel: parseInt(charLevel),
+    weaponName,
+    currentWeaponLevel: 1,
+    goalWeaponLevel: parseInt(weaponLevel),
+    talentsCurrent: Array(limits.talentCount).fill(1),
+    talentsGoal: talentValues,
+    materials: customMats.length > 0 ? customMats : null,
+    ...(game === "hsr" && { majorTraces, minorTraces }),
+  };
+
+  addCharacter(newChar);
+  window.closeModal?.();
+  renderCharacterList();
+};
 
 window.initCharactersScene = initCharactersScene;

@@ -26,17 +26,6 @@ export const ALL_WEAPONS = {
         image: "/assets/genshin/weapons/Silver Sword.webp",
       },
       {
-        name: "Skyrider Sword",
-        rarity: 3,
-        baseATK: 354,
-        stat: { type: "Energy Recharge", value: 51.7 },
-        passive: {
-          description:
-            "Using an Elemental Burst grants a 12~24% increase in ATK and Movement SPD for 15s.",
-        },
-        image: "/assets/genshin/weapons/Skyrider Sword.webp",
-      },
-      {
         name: "Cool Steel",
         rarity: 3,
         baseATK: 401,
@@ -78,6 +67,17 @@ export const ALL_WEAPONS = {
         image: "/assets/genshin/weapons/Harbinger of Dawn.webp",
       },
       {
+        name: "Skyrider Sword",
+        rarity: 3,
+        baseATK: 354,
+        stat: { type: "Energy Recharge", value: 51.7 },
+        passive: {
+          description:
+            "Using an Elemental Burst grants a 12~24% increase in ATK and Movement SPD for 15s.",
+        },
+        image: "/assets/genshin/weapons/Skyrider Sword.webp",
+      },
+      {
         name: "Traveler's Handy Sword",
         rarity: 3,
         baseATK: 401,
@@ -91,19 +91,6 @@ export const ALL_WEAPONS = {
         image: "/assets/genshin/weapons/Traveler's Handy Sword.webp",
       },
       {
-        name: "Sword of Descension",
-        rarity: 4,
-        baseATK: 440,
-        stat: { type: "ATK", value: 35.2 },
-        passive: {
-          type: "none",
-          value: 0,
-          description:
-            "Hitting enemies with Normal or Charged Attacks grants a 50% chance to deal 200% ATK as DMG in a small AoE. This effect can only occur once every 10s. Additionally, if the Traveler equips the Sword of Descension, their ATK is increased by 66.",
-        },
-        image: "/assets/genshin/weapons/Sword of Descension.webp",
-      },
-      {
         name: "Amenoma Kageuchi",
         rarity: 4,
         baseATK: 454,
@@ -115,6 +102,28 @@ export const ALL_WEAPONS = {
             "After casting an Elemental Skill, gain 1 Succession Seed. This effect can be triggered once every 5s. The Succession Seed lasts for 30s. Up to 3 Succession Seeds may exist simultaneously. After using an Elemental Burst, all Succession Seeds are consumed and after 2s, the character regenerates 6~12 Energy for each seed consumed.",
         },
         image: "/assets/genshin/weapons/Amenoma Kageuchi.webp",
+      },
+      {
+        name: "Blackcliff Longsword",
+        rarity: 4,
+        baseATK: 565,
+        stat: { type: "CRIT DMG", value: 36.8 },
+        passive: {
+          description:
+            "After defeating an opponent, ATK is increased by 12~24% for 30s. This effect has a maximum of 3 stacks, and the duration of each stack is independent of the others.",
+        },
+        image: "/assets/genshin/weapons/Blackcliff Longsword.webp",
+      },
+      {
+        name: "Calamity of Eshu",
+        rarity: 4,
+        baseATK: 565,
+        stat: { type: "ATK", value: 27.6 },
+        passive: {
+          description:
+            "While characters are protected by a Shield, DMG dealt by Normal and Charged Attacks is increased by 20~40%, and Normal and Charged Attack CRIT Rate is increased by 8~16%.",
+        },
+        image: "/assets/genshin/weapons/Calamity of Eshu.webp",
       },
       {
         name: "Cinnabar Spindle",
@@ -139,39 +148,6 @@ export const ALL_WEAPONS = {
         image: "/assets/genshin/weapons/Favonius Sword.webp",
       },
       {
-        name: "Flute of Ezpitzal",
-        rarity: 4,
-        baseATK: 454,
-        stat: { type: "DEF", value: 69.0 },
-        passive: {
-          description:
-            "Using an Elemental Skill increases DEF by 16~32% for 15s.",
-        },
-        image: "/assets/genshin/weapons/Flute of Ezpitzal.webp",
-      },
-      {
-        name: "Sacrificial Sword",
-        rarity: 4,
-        baseATK: 401,
-        stat: { type: "Energy Recharge", value: 61.3 },
-        passive: {
-          description:
-            "After dealing damage to an opponent with an Elemental Skill, the skill has a 40~80% chance to end its own CD. Can only occur once every 30~16s.",
-        },
-        image: "/assets/genshin/weapons/Sacrificial Sword.webp",
-      },
-      {
-        name: "Serenity's Call",
-        rarity: 4,
-        baseATK: 454,
-        stat: { type: "Energy Recharge", value: 61.3 },
-        passive: {
-          description:
-            "Upon causing an Elemental Reaction, increases Max HP by 16~32% for 12s. Moonsign: Ascendant Gleam: Max HP from this effect is further increased by 16~32%. This effect can be triggered even if the equipping character is off-field.",
-        },
-        image: "/assets/genshin/weapons/Serenity's Call.webp",
-      },
-      {
         name: "Festering Desire",
         rarity: 4,
         baseATK: 510,
@@ -183,6 +159,17 @@ export const ALL_WEAPONS = {
         image: "/assets/genshin/weapons/Festering Desire.webp",
       },
       {
+        name: "Finale of the Deep",
+        rarity: 4,
+        baseATK: 565,
+        stat: { type: "ATK", value: 27.6 },
+        passive: {
+          description:
+            "When using an Elemental Skill, ATK will be increased by 12~24% for 15s, and a Bond of Life worth 25% of Max HP will be granted. This effect can be triggered once every 10s. When the Bond of Life is cleared, a maximum of 150~300 ATK will be gained based on 2.4~4.8% of the total amount of the Life Bond cleared, lasting for 15s.",
+        },
+        image: "/assets/genshin/weapons/Finale of the Deep.webp",
+      },
+      {
         name: "Fleuve Cendre Ferryman",
         rarity: 4,
         baseATK: 510,
@@ -192,6 +179,17 @@ export const ALL_WEAPONS = {
             "Increases Elemental Skill CRIT Rate by 8~16%. Additionally, increases Energy Recharge by 16~32% for 5s after using an Elemental Skill.",
         },
         image: "/assets/genshin/weapons/Fleuve Cendre Ferryman.webp",
+      },
+      {
+        name: "Flute of Ezpitzal",
+        rarity: 4,
+        baseATK: 454,
+        stat: { type: "DEF", value: 69.0 },
+        passive: {
+          description:
+            "Using an Elemental Skill increases DEF by 16~32% for 15s.",
+        },
+        image: "/assets/genshin/weapons/Flute of Ezpitzal.webp",
       },
       {
         name: "Iron Sting",
@@ -227,6 +225,25 @@ export const ALL_WEAPONS = {
         image: "/assets/genshin/weapons/Lion's Roar.webp",
       },
       {
+        name: "Moonweaver's Dawn",
+        rarity: 4,
+        baseATK: 565,
+        stat: { type: "ATK", value: 27.6 },
+        passive: {
+          description:
+            "Increases Elemental Burst DMG by 20~40%. When the equipping character's Energy Capacity does not exceed 60/40, their Elemental Burst DMG is increased by an additional 16%/28~32%/56%.",
+        },
+        image: "/assets/genshin/weapons/Moonweaver's Dawn.webp",
+      },
+      {
+        name: "Cool Steel",
+        rarity: 3,
+        baseATK: 401,
+        stat: { type: "none", value: 0 },
+        passive: { description: "none" },
+        image: "/assets/genshin/weapons/Dull Blade.webp",
+      },
+      {
         name: "Royal Longsword",
         rarity: 4,
         baseATK: 510,
@@ -238,6 +255,57 @@ export const ALL_WEAPONS = {
         image: "/assets/genshin/weapons/Royal Longsword.webp",
       },
       {
+        name: "Sacrificial Sword",
+        rarity: 4,
+        baseATK: 401,
+        stat: { type: "Energy Recharge", value: 61.3 },
+        passive: {
+          description:
+            "After dealing damage to an opponent with an Elemental Skill, the skill has a 40~80% chance to end its own CD. Can only occur once every 30~16s.",
+        },
+        image: "/assets/genshin/weapons/Sacrificial Sword.webp",
+      },
+      {
+        name: "Cool Steel",
+        rarity: 3,
+        baseATK: 401,
+        stat: { type: "none", value: 0 },
+        passive: { description: "none" },
+        image: "/assets/genshin/weapons/Dull Blade.webp",
+      },
+      {
+        name: "Serenity's Call",
+        rarity: 4,
+        baseATK: 454,
+        stat: { type: "Energy Recharge", value: 61.3 },
+        passive: {
+          description:
+            "Upon causing an Elemental Reaction, increases Max HP by 16~32% for 12s. Moonsign: Ascendant Gleam: Max HP from this effect is further increased by 16~32%. This effect can be triggered even if the equipping character is off-field.",
+        },
+        image: "/assets/genshin/weapons/Serenity's Call.webp",
+      },
+      {
+        name: "Cool Steel",
+        rarity: 3,
+        baseATK: 401,
+        stat: { type: "none", value: 0 },
+        passive: { description: "none" },
+        image: "/assets/genshin/weapons/Dull Blade.webp",
+      },
+      {
+        name: "Sword of Descension",
+        rarity: 4,
+        baseATK: 440,
+        stat: { type: "ATK", value: 35.2 },
+        passive: {
+          type: "none",
+          value: 0,
+          description:
+            "Hitting enemies with Normal or Charged Attacks grants a 50% chance to deal 200% ATK as DMG in a small AoE. This effect can only occur once every 10s. Additionally, if the Traveler equips the Sword of Descension, their ATK is increased by 66.",
+        },
+        image: "/assets/genshin/weapons/Sword of Descension.webp",
+      },
+      {
         name: "Sword of Narzissenkreuz",
         rarity: 4,
         baseATK: 510,
@@ -247,14 +315,6 @@ export const ALL_WEAPONS = {
             "When the equipping character does not have an Arkhe: When Normal Attacks, Charged Attacks, or Plunging Attacks strike, a Pneuma or Ousia energy blast will be unleashed, dealing 160~320% of ATK as DMG. This effect can be triggered once every 12s. The energy blast type is determined by the current type of the Sword of Narzissenkreuz.",
         },
         image: "/assets/genshin/weapons/Sword of Narzissenkreuz.webp",
-      },
-      {
-        name: "Cool Steel",
-        rarity: 3,
-        baseATK: 401,
-        stat: { type: "none", value: 0 },
-        passive: { description: "none" },
-        image: "/assets/genshin/weapons/Dull Blade.webp",
       },
       {
         name: "Cool Steel",
@@ -312,13 +372,33 @@ export const ALL_WEAPONS = {
     Polearm: [
       { name: "Staff of Homa", rarity: 5, stat: "HP, CRIT DMG" },
       { name: "Engulfing Lightning", rarity: 5, stat: "Energy Recharge" },
-      { name: "Calamity Queller", rarity: 5, stat: "ATK" },
+      {
+        name: "Calamity Queller",
+        rarity: 5,
+        baseATK: 701,
+        stat: { type: "ATK", value: 16.5 },
+        passive: {
+          description:
+            "Gain 12% All Elemental DMG Bonus. Obtain Consummation for 20s after using an Elemental Skill, causing ATK to increase by 3.2% per second. This ATK increase has a maximum of 6 stacks. When the character equipped with this weapon is not on the field, Consummation's ATK increase is doubled.",
+        },
+        image: "/assets/genshin/weapons/Calamity Queller.webp",
+      },
       { name: "Primordial Jade Winged-Spear", rarity: 5, stat: "CRIT Rate" },
       { name: "Vortex Vanquisher", rarity: 5, stat: "ATK" },
       { name: "Skyward Spine", rarity: 5, stat: "Energy Recharge" },
       { name: "The Catch", rarity: 4, stat: "Energy Recharge" },
       { name: "Favonius Lance", rarity: 4, stat: "Energy Recharge" },
-      { name: "Deathmatch", rarity: 4, stat: "CRIT Rate" },
+      {
+        name: "Deathmatch",
+        rarity: 4,
+        baseATK: 701,
+        stat: { type: "Crit Rate", value: 36.8 },
+        passive: {
+          description:
+            "f there are at least 2 opponents nearby, ATK is increased by 16~32% and DEF is increased by 16~32%. If there are fewer than 2 opponents nearby, ATK is increased by 24~48%.",
+        },
+        image: "/assets/genshin/weapons/Deathmatch.webp",
+      },
       { name: "Dragon's Bane", rarity: 4, stat: "Elemental Mastery" },
       { name: "Lithic Spear", rarity: 4, stat: "ATK" },
       { name: "Missive Windspear", rarity: 4, stat: "ATK" },
@@ -349,7 +429,20 @@ export const ALL_WEAPONS = {
     Bow: [
       { name: "Amos' Bow", rarity: 5, stat: "ATK" },
       { name: "Skyward Harp", rarity: 5, stat: "CRIT Rate" },
-      { name: "Elegy for the End", rarity: 5, stat: "Energy Recharge" },
+      {
+        name: "Elegy for the End",
+        rarity: 5,
+        baseATK: 401,
+        stat: { type: "Energy Recharge", value: 55.1 },
+        passive: {
+          description: "Increases Elemental Mastery by 60~120." +
+            "When the Elemental Skills or Elemental Bursts of the character wielding this weapon hit opponents, that character gains a Sigil of Remembrance. This effect can be triggered once every 0.2s and can be triggered even if said character is not on the field." +
+            "When you possess 4 Sigils of Remembrance, all of them will be consumed and all nearby party members will obtain the 'Millennial Movement: Farewell Song' effect for 12s." +
+            "'Millennial Movement: Farewell Song' increases Elemental Mastery by 100~200 and increases ATK by 20~40%. Once this effect is triggered, you will not gain Sigils of Remembrance for 20s." +
+            "Of the many effects of the 'Millennial Movement,' buffs of the same type will not stack.",
+        },
+        image: "/assets/genshin/weapons/Elegy for the End.webp",
+      },
       { name: "Polar Star", rarity: 5, stat: "CRIT Rate" },
       { name: "Thundering Pulse", rarity: 5, stat: "CRIT DMG" },
       { name: "Aqua Simulacra", rarity: 5, stat: "CRIT DMG" },

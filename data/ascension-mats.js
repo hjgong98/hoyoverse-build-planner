@@ -363,7 +363,7 @@ export const ASCENSION_MATERIALS = {
     },
     {
       name: "Rift Core",
-      img: "/genshin/rift core.webp",
+      img: "/genshin/rift core.png",
       tags: ["elite", "breacher", 2],
     },
     {
@@ -1918,18 +1918,18 @@ export const ASCENSION_MATERIALS = {
       tags: ["overworld", "boss", 4],
     },
     {
-      name: "Hoar­frost Core",
-      img: "/genshin/Hoar­frost Core.webp",
+      name: "Hoarfrost Core",
+      img: "/genshin/Hoarfrost Core.webp",
       tags: ["overworld", "boss", 4],
     },
     {
-      name: "Ever­flame Seed",
-      img: "/genshin/Ever­flame Seed.webp",
+      name: "Everflame Seed",
+      img: "/genshin/Everflame Seed.webp",
       tags: ["overworld", "boss", 4],
     },
     {
-      name: "Cleans­ing Heart",
-      img: "/genshin/Cleans­ing Heart.webp",
+      name: "Cleansing Heart",
+      img: "/genshin/Cleansing Heart.webp",
       tags: ["overworld", "boss", 4],
     },
     {
@@ -1938,8 +1938,8 @@ export const ASCENSION_MATERIALS = {
       tags: ["overworld", "boss", 4],
     },
     {
-      name: "Crys­tal­line Bloom",
-      img: "/genshin/Crys­tal­line Bloom.webp",
+      name: "Crystalline Bloom",
+      img: "/genshin/Crystalline Bloom.webp",
       tags: ["overworld", "boss", 4],
     },
     {
@@ -1973,8 +1973,8 @@ export const ASCENSION_MATERIALS = {
       tags: ["overworld", "boss", 4],
     },
     {
-      name: "Dragon­heir's False Fin",
-      img: "/genshin/Dragon­heir's False Fin.webp",
+      name: "Dragonheir's False Fin",
+      img: "/genshin/Dragonheir's False Fin.webp",
       tags: ["overworld", "boss", 4],
     },
     {
@@ -2033,33 +2033,33 @@ export const ASCENSION_MATERIALS = {
       tags: ["overworld", "boss", 4],
     },
     {
-      name: "Fonte­mer Uni­horn",
-      img: "/genshin/Fonte­mer Uni­horn.webp",
+      name: "Fontemer Unihorn",
+      img: "/genshin/Fontemer Unihorn.webp",
       tags: ["overworld", "boss", 4],
     },
     {
-      name: "Tour­bil­lon De­vice",
-      img: "/genshin/Tour­bil­lon De­vice.webp",
+      name: "Tourbillion Device",
+      img: "/genshin/Tourbillion Device.webp",
       tags: ["overworld", "boss", 4],
     },
     {
-      name: "Wa­ter That Failed To Tran­scend",
-      img: "/genshin/Wa­ter That Failed To Tran­scend.webp",
+      name: "Water That Failed To Transcend",
+      img: "/genshin/Water That Failed To Transcend.webp",
       tags: ["overworld", "boss", 4],
     },
     {
-      name: "Cloud­seam Scale",
-      img: "/genshin/Cloud­seam Scale.webp",
+      name: "Cloudseam Scale",
+      img: "/genshin/Cloudseam Scale.webp",
       tags: ["overworld", "boss", 4],
     },
     {
-      name: "Frag­ment of a Golden Melody",
-      img: "/genshin/Frag­ment of a Golden Melody.webp",
+      name: "Fragment of a Golden Melody",
+      img: "/genshin/Fragment of a Golden Melody.webp",
       tags: ["overworld", "boss", 4],
     },
     {
-      name: "Over­ripe Flame­gra­nate",
-      img: "/genshin/Over­ripe Flame­gra­nate.webp",
+      name: "Overripe Flameganate",
+      img: "/genshin/Overripe Flameganate.webp",
       tags: ["overworld", "boss", 4],
     },
     {
@@ -2140,8 +2140,8 @@ export const ASCENSION_MATERIALS = {
       tags: ["weekly", "boss", 5],
     },
     {
-      name: "Tusk of Mo­no­ceros Caeli",
-      img: "/genshin/Tusk of Mo­no­ceros Caeli.webp",
+      name: "Tusk of Monoceros Caeli",
+      img: "/genshin/Tusk of Monoceros Caeli.webp",
       tags: ["weekly", "boss", 5],
     },
     {
@@ -2155,18 +2155,18 @@ export const ASCENSION_MATERIALS = {
       tags: ["weekly", "boss", 5],
     },
     {
-      name: "Drag­on Lord's Crown",
-      img: "/genshin/Drag­on Lord's Crown.webp",
+      name: "Dragon Lord's Crown",
+      img: "/genshin/Dragon Lord's Crown.webp",
       tags: ["weekly", "boss", 5],
     },
     {
-      name: "Blood­jade Branch",
-      img: "/genshin/Blood­jade Branch.webp",
+      name: "Bloodjade Branch",
+      img: "/genshin/Bloodjade Branch.webp",
       tags: ["weekly", "boss", 5],
     },
     {
-      name: "Gil­ded Scale",
-      img: "/genshin/Gil­ded Scale.webp",
+      name: "Gilded Scale",
+      img: "/genshin/Gilded Scale.webp",
       tags: ["weekly", "boss", 5],
     },
     {
@@ -2175,8 +2175,8 @@ export const ASCENSION_MATERIALS = {
       tags: ["weekly", "boss", 5],
     },
     {
-      name: "Hell­fire But­ter­fly",
-      img: "/genshin/Hell­fire But­ter­fly.webp",
+      name: "Hellfire Butterfly",
+      img: "/genshin/Hellfire Butterfly.webp",
       tags: ["weekly", "boss", 5],
     },
     {
@@ -2215,33 +2215,33 @@ export const ASCENSION_MATERIALS = {
       tags: ["weekly", "boss", 5],
     },
     {
-      name: "World­span Fern",
-      img: "/genshin/World­span Fern.webp",
+      name: "Worldspan Fern",
+      img: "/genshin/Worldspan Fern.webp",
       tags: ["weekly", "boss", 5],
     },
     {
-      name: "Primor­dial Green­bloom",
-      img: "/genshin/Primor­dial Green­bloom.webp",
+      name: "Primordial Greenbloom",
+      img: "/genshin/Primordial Greenbloom.webp",
       tags: ["weekly", "boss", 5],
     },
     {
-      name: "Ever­amber",
-      img: "/genshin/Ever­amber.webp",
+      name: "Everamber",
+      img: "/genshin/Everamber.webp",
       tags: ["weekly", "boss", 5],
     },
     {
-      name: "Light­less Silk String",
-      img: "/genshin/Light­less Silk String.webp",
+      name: "Lightless Silk String",
+      img: "/genshin/Lightless Silk String.webp",
       tags: ["weekly", "boss", 5],
     },
     {
-      name: "Light­less Eye of the Mael­strom",
-      img: "/genshin/Light­less Eye of the Mael­strom.webp",
+      name: "Lightless Eye of the Maelstrom",
+      img: "/genshin/Lightless Eye of the Maelstrom.webp",
       tags: ["weekly", "boss", 5],
     },
     {
-      name: "Light­less Mass",
-      img: "/genshin/Light­less Mass.webp",
+      name: "Lightless Mass",
+      img: "/genshin/Lightless Mass.webp",
       tags: ["weekly", "boss", 5],
     },
     {
@@ -2255,8 +2255,8 @@ export const ASCENSION_MATERIALS = {
       tags: ["weekly", "boss", 5],
     },
     {
-      name: "De­nial and Judg­ment",
-      img: "/genshin/De­nial and Judg­ment.webp",
+      name: "Denial and Judgement",
+      img: "/genshin/Denial and Judgement.webp",
       tags: ["weekly", "boss", 5],
     },
     {
@@ -2273,6 +2273,11 @@ export const ASCENSION_MATERIALS = {
       name: "Eroded Scale-Feather",
       img: "/genshin/Eroded Scale-Feather.webp",
       tags: ["weekly", "boss", 5],
+    },
+    {
+      name: "The Cornerstone of Stars and Flames",
+      img: "/genshin/The Cornerstone of Stars and Flames.webp",
+      tags: ["weekly", "traveler", 5],
     },
     {
       name: "Ascended Sample: Knight",
