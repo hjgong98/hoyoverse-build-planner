@@ -133,63 +133,66 @@ function getWeaponData(char) {
   if (!weaponType || !ALL_WEAPONS[char.game]?.[weaponType]) return null;
 
   const weapons = ALL_WEAPONS[char.game][weaponType];
-  
+
   // Clean the weapon name for better matching
   const cleanWeaponName = char.weaponName
     .toLowerCase()
     .replace(/[^a-zA-Z0-9 ]/g, "") // Remove special characters
     .replace(/\s+/g, " ") // Normalize spaces
     .trim();
-  
+
   // Try multiple matching strategies
   let weapon = weapons.find((w) => {
     if (!w.name) return false;
-    
+
     // Clean the weapon data name
     const cleanWName = w.name
       .toLowerCase()
       .replace(/[^a-zA-Z0-9 ]/g, "")
       .replace(/\s+/g, " ")
       .trim();
-    
+
     // Strategy 1: Exact match after cleaning
     if (cleanWName === cleanWeaponName) return true;
-    
+
     // Strategy 2: Contains match (for partial names)
-    if (cleanWName.includes(cleanWeaponName) || cleanWeaponName.includes(cleanWName)) {
+    if (
+      cleanWName.includes(cleanWeaponName) ||
+      cleanWeaponName.includes(cleanWName)
+    ) {
       return true;
     }
-    
+
     // Strategy 3: Case-insensitive exact match with original names
     if (w.name.toLowerCase() === char.weaponName.toLowerCase()) {
       return true;
     }
-    
+
     return false;
   });
-  
+
   // If still not found, try a fuzzy match
   if (!weapon) {
     weapon = weapons.find((w) => {
       if (!w.name) return false;
-      
+
       // Simple fuzzy match: check if at least 70% of characters match
       const targetName = char.weaponName.toLowerCase();
       const weaponName = w.name.toLowerCase();
-      
+
       let matchCount = 0;
       const minLength = Math.min(targetName.length, weaponName.length);
       const maxLength = Math.max(targetName.length, weaponName.length);
-      
+
       for (let i = 0; i < minLength; i++) {
         if (targetName[i] === weaponName[i]) matchCount++;
       }
-      
+
       const similarity = matchCount / maxLength;
       return similarity > 0.7; // 70% similarity
     });
   }
-  
+
   return weapon || null;
 }
 
@@ -197,28 +200,27 @@ function getWeaponImage(char) {
   const weaponData = getWeaponData(char);
   if (weaponData && weaponData.image) {
     let imagePath = weaponData.image;
-    
+
     // Apply base path to weapon images
     if (imagePath.startsWith("/") && !imagePath.startsWith(BASE_PATH)) {
       imagePath = BASE_PATH + imagePath;
     }
-    
+
     // If image path is relative, prepend base path
     if (imagePath.startsWith("./")) {
       imagePath = imagePath.substring(2);
     }
-    
+
     if (!imagePath.startsWith("/") && !imagePath.startsWith("http")) {
       imagePath = BASE_PATH + "/" + imagePath;
     }
-    
+
     return imagePath;
   }
-  
+
   // Fallback to mora.webp
   return `${BASE_PATH}/assets/genshin/mora.webp`;
 }
-
 
 function getWeaponRarityColor(rarity) {
   switch (rarity) {
