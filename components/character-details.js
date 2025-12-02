@@ -185,14 +185,21 @@ function findMaterialByName(materialName, game) {
   if (material) {
     let imagePath = material.img;
 
-    // FIXED: Use the same path logic as characters.js
-    if (imagePath.startsWith("./")) {
-      imagePath = imagePath.substring(2);
-    }
+    // Apply the same simplified path handling
+    if (imagePath) {
+      if (imagePath.startsWith("./")) {
+        imagePath = imagePath.substring(2);
+      }
 
-    // Ensure absolute path
-    if (!imagePath.startsWith("/") && !imagePath.startsWith("http")) {
-      imagePath = `/${imagePath}`;
+      if (!imagePath.startsWith("/")) {
+        imagePath = "/" + imagePath;
+      }
+
+      // Remove any duplicate path parts
+      imagePath = imagePath.replace(
+        /assets\/genshin\/assets\/genshin\//g,
+        "assets/genshin/",
+      );
     }
 
     return { ...material, img: imagePath };
@@ -200,15 +207,14 @@ function findMaterialByName(materialName, game) {
 
   console.warn(`Material not found: ${materialName} for game: ${game}`);
 
-  // Return a fallback material with the correct image path structure
   return {
     name: decodedName,
-    img: "/assets/fallback-character.jpg", // Use the same fallback as characters.js
+    img: "/assets/genshin/mora.webp",
     tags: [],
   };
 }
 
-// FIXED: Exact tag matching based on your structure
+// Exact tag matching based on your structure
 function findMaterialByTags(game, tag1, tag2 = null, tag3 = null) {
   const materials = ASCENSION_MATERIALS[game] || [];
 
@@ -230,15 +236,24 @@ function findMaterialByTags(game, tag1, tag2 = null, tag3 = null) {
   if (material) {
     let imagePath = material.img;
 
-    // Convert ./assets/genshin/... to /assets/genshin/... (for GitHub Pages)
-    // Remove the leading ./ if present
-    if (imagePath.startsWith("./")) {
-      imagePath = imagePath.substring(2);
-    }
+    // FIX: Simplify the path handling - just ensure it's an absolute path from root
+    if (imagePath) {
+      // Remove leading ./ if present
+      if (imagePath.startsWith("./")) {
+        imagePath = imagePath.substring(2);
+      }
 
-    // Ensure it starts with / for absolute path on GitHub Pages
-    if (!imagePath.startsWith("/") && !imagePath.startsWith("http")) {
-      imagePath = `/${imagePath}`;
+      // If path doesn't start with /, add it
+      if (!imagePath.startsWith("/")) {
+        imagePath = "/" + imagePath;
+      }
+
+      // Remove any duplicate "assets/genshin" parts
+      // This prevents double "assets/genshin/assets/genshin/"
+      imagePath = imagePath.replace(
+        /assets\/genshin\/assets\/genshin\//g,
+        "assets/genshin/",
+      );
     }
 
     return { ...material, img: imagePath };
@@ -295,31 +310,34 @@ function findLocalMaterial(character) {
 
   const localName = charData.local;
 
-  // Search for material by name (not by tag)
   const materials = ASCENSION_MATERIALS[character.game] || [];
   const material = materials.find((mat) => {
-    // Check if it's a local material and name matches
     return mat.tags && mat.tags[0] === "local" && mat.name === localName;
   });
 
   if (material) {
     let imagePath = material.img;
 
-    // Convert ./assets/genshin/... to /assets/genshin/... (for GitHub Pages)
-    // Remove the leading ./ if present
-    if (imagePath.startsWith("./")) {
-      imagePath = imagePath.substring(2);
-    }
+    // Apply the same simplified path handling
+    if (imagePath) {
+      if (imagePath.startsWith("./")) {
+        imagePath = imagePath.substring(2);
+      }
 
-    // Ensure it starts with / for absolute path on GitHub Pages
-    if (!imagePath.startsWith("/") && !imagePath.startsWith("http")) {
-      imagePath = `/${imagePath}`;
+      if (!imagePath.startsWith("/")) {
+        imagePath = "/" + imagePath;
+      }
+
+      imagePath = imagePath.replace(
+        /assets\/genshin\/assets\/genshin\//g,
+        "assets/genshin/",
+      );
     }
 
     return { ...material, img: imagePath };
   }
 
-  // If not found, try case-insensitive search
+  // Case-insensitive search
   const materialCaseInsensitive = materials.find((mat) => {
     return mat.tags && mat.tags[0] === "local" &&
       mat.name.toLowerCase() === localName.toLowerCase();
@@ -327,9 +345,22 @@ function findLocalMaterial(character) {
 
   if (materialCaseInsensitive) {
     let imagePath = materialCaseInsensitive.img;
-    if (!imagePath.startsWith("/assets/") && !imagePath.startsWith("http")) {
-      imagePath = `/assets${imagePath.startsWith("/") ? "" : "/"}${imagePath}`;
+
+    if (imagePath) {
+      if (imagePath.startsWith("./")) {
+        imagePath = imagePath.substring(2);
+      }
+
+      if (!imagePath.startsWith("/")) {
+        imagePath = "/" + imagePath;
+      }
+
+      imagePath = imagePath.replace(
+        /assets\/genshin\/assets\/genshin\//g,
+        "assets/genshin/",
+      );
     }
+
     return { ...materialCaseInsensitive, img: imagePath };
   }
 
