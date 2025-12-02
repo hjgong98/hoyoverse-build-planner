@@ -162,7 +162,7 @@ function getWeaponRarityText(rarity) {
 }
 
 // =================================================================
-// FIXED MATERIAL RENDERING FUNCTIONS - FIXED IMAGE PATHS ONLY
+// FIXED MATERIAL RENDERING FUNCTIONS - EXACT TAG STRUCTURE
 // =================================================================
 
 function normalizeMaterialName(name) {
@@ -185,30 +185,30 @@ function findMaterialByName(materialName, game) {
   if (material) {
     let imagePath = material.img;
 
-    // FIXED: Convert ascension mat image paths to work like character image paths
-    // Remove any leading ./ and ensure absolute path
-    if (imagePath) {
-      if (imagePath.startsWith("./")) {
-        imagePath = imagePath.substring(2);
-      }
-      // For GitHub Pages, make sure paths are absolute
-      if (!imagePath.startsWith("/") && !imagePath.startsWith("http")) {
-        imagePath = `/assets/${game}/${imagePath}`;
-      }
+    // FIXED: Use the same path logic as characters.js
+    if (imagePath.startsWith("./")) {
+      imagePath = imagePath.substring(2);
+    }
+
+    // Ensure absolute path
+    if (!imagePath.startsWith("/") && !imagePath.startsWith("http")) {
+      imagePath = `/${imagePath}`;
     }
 
     return { ...material, img: imagePath };
   }
 
   console.warn(`Material not found: ${materialName} for game: ${game}`);
+
+  // Return a fallback material with the correct image path structure
   return {
     name: decodedName,
-    img: "/assets/fallback-character.jpg",
+    img: "/assets/fallback-character.jpg", // Use the same fallback as characters.js
     tags: [],
   };
 }
 
-// FIXED: Exact tag matching based on your structure - WITH FIXED IMAGE PATHS
+// FIXED: Exact tag matching based on your structure
 function findMaterialByTags(game, tag1, tag2 = null, tag3 = null) {
   const materials = ASCENSION_MATERIALS[game] || [];
 
@@ -230,15 +230,15 @@ function findMaterialByTags(game, tag1, tag2 = null, tag3 = null) {
   if (material) {
     let imagePath = material.img;
 
-    // FIXED: Convert ascension mat image paths to work like character image paths
-    if (imagePath) {
-      if (imagePath.startsWith("./")) {
-        imagePath = imagePath.substring(2);
-      }
-      // For GitHub Pages, make sure paths are absolute
-      if (!imagePath.startsWith("/") && !imagePath.startsWith("http")) {
-        imagePath = `/assets/${game}/${imagePath}`;
-      }
+    // Convert ./assets/genshin/... to /assets/genshin/... (for GitHub Pages)
+    // Remove the leading ./ if present
+    if (imagePath.startsWith("./")) {
+      imagePath = imagePath.substring(2);
+    }
+
+    // Ensure it starts with / for absolute path on GitHub Pages
+    if (!imagePath.startsWith("/") && !imagePath.startsWith("http")) {
+      imagePath = `/${imagePath}`;
     }
 
     return { ...material, img: imagePath };
@@ -249,12 +249,12 @@ function findMaterialByTags(game, tag1, tag2 = null, tag3 = null) {
   );
   return {
     name: `${tag1}${tag2 ? ` ${tag2}` : ""}${tag3 ? ` ${tag3}` : ""}`,
-    img: "/assets/fallback-character.jpg",
+    img: `/assets/genshin/mora.webp`,
     tags: [tag1, tag2, tag3].filter((t) => t !== null),
   };
 }
 
-// SPECIFIC MATERIAL FINDERS USING EXACT TAG STRUCTURE - WITH FIXED IMAGE PATHS
+// SPECIFIC MATERIAL FINDERS USING EXACT TAG STRUCTURE
 function findGemMaterial(character, tier) {
   return findMaterialByTags(
     character.game,
@@ -288,7 +288,7 @@ function findLocalMaterial(character) {
     console.warn(`No local material found for character: ${character.name}`);
     return {
       name: "Unknown Local Specialty",
-      img: "/assets/fallback-character.jpg",
+      img: `/assets/genshin/mora.webp`,
       tags: [],
     };
   }
@@ -305,15 +305,15 @@ function findLocalMaterial(character) {
   if (material) {
     let imagePath = material.img;
 
-    // FIXED: Convert ascension mat image paths to work like character image paths
-    if (imagePath) {
-      if (imagePath.startsWith("./")) {
-        imagePath = imagePath.substring(2);
-      }
-      // For GitHub Pages, make sure paths are absolute
-      if (!imagePath.startsWith("/") && !imagePath.startsWith("http")) {
-        imagePath = `/assets/${character.game}/${imagePath}`;
-      }
+    // Convert ./assets/genshin/... to /assets/genshin/... (for GitHub Pages)
+    // Remove the leading ./ if present
+    if (imagePath.startsWith("./")) {
+      imagePath = imagePath.substring(2);
+    }
+
+    // Ensure it starts with / for absolute path on GitHub Pages
+    if (!imagePath.startsWith("/") && !imagePath.startsWith("http")) {
+      imagePath = `/${imagePath}`;
     }
 
     return { ...material, img: imagePath };
@@ -327,17 +327,9 @@ function findLocalMaterial(character) {
 
   if (materialCaseInsensitive) {
     let imagePath = materialCaseInsensitive.img;
-
-    // FIXED: Convert ascension mat image paths to work like character image paths
-    if (imagePath) {
-      if (imagePath.startsWith("./")) {
-        imagePath = imagePath.substring(2);
-      }
-      if (!imagePath.startsWith("/") && !imagePath.startsWith("http")) {
-        imagePath = `/assets/${character.game}/${imagePath}`;
-      }
+    if (!imagePath.startsWith("/assets/") && !imagePath.startsWith("http")) {
+      imagePath = `/assets${imagePath.startsWith("/") ? "" : "/"}${imagePath}`;
     }
-
     return { ...materialCaseInsensitive, img: imagePath };
   }
 
@@ -346,81 +338,25 @@ function findLocalMaterial(character) {
   );
   return {
     name: localName,
-    img: "/assets/fallback-character.jpg",
+    img: `/assets/genshin/mora.webp`,
     tags: ["local"],
   };
 }
 
 function findBossMaterial(character) {
-  const material = findMaterialByName(character.overworld, character.game);
-
-  // Ensure image path is fixed
-  if (material && material.img) {
-    let imagePath = material.img;
-    if (imagePath.startsWith("./")) {
-      imagePath = imagePath.substring(2);
-    }
-    if (!imagePath.startsWith("/") && !imagePath.startsWith("http")) {
-      imagePath = `/assets/${character.game}/${imagePath}`;
-    }
-    return { ...material, img: imagePath };
-  }
-
-  return material;
+  return findMaterialByName(character.overworld, character.game);
 }
 
 function findWeeklyMaterial(character) {
-  const material = findMaterialByName(character.weekly, character.game);
-
-  // Ensure image path is fixed
-  if (material && material.img) {
-    let imagePath = material.img;
-    if (imagePath.startsWith("./")) {
-      imagePath = imagePath.substring(2);
-    }
-    if (!imagePath.startsWith("/") && !imagePath.startsWith("http")) {
-      imagePath = `/assets/${character.game}/${imagePath}`;
-    }
-    return { ...material, img: imagePath };
-  }
-
-  return material;
+  return findMaterialByName(character.weekly, character.game);
 }
 
 function findCrownMaterial() {
-  const material = findMaterialByTags("genshin", "other", "crown");
-
-  // Ensure image path is fixed
-  if (material && material.img) {
-    let imagePath = material.img;
-    if (imagePath.startsWith("./")) {
-      imagePath = imagePath.substring(2);
-    }
-    if (!imagePath.startsWith("/") && !imagePath.startsWith("http")) {
-      imagePath = `/assets/genshin/${imagePath}`;
-    }
-    return { ...material, img: imagePath };
-  }
-
-  return material;
+  return findMaterialByTags("genshin", "other", "crown");
 }
 
 function findMoraMaterial() {
-  const material = findMaterialByTags("genshin", "currency");
-
-  // Ensure image path is fixed
-  if (material && material.img) {
-    let imagePath = material.img;
-    if (imagePath.startsWith("./")) {
-      imagePath = imagePath.substring(2);
-    }
-    if (!imagePath.startsWith("/") && !imagePath.startsWith("http")) {
-      imagePath = `/assets/genshin/${imagePath}`;
-    }
-    return { ...material, img: imagePath };
-  }
-
-  return material;
+  return findMaterialByTags("genshin", "currency");
 }
 
 function calculateFuelEstimate(char) {
@@ -658,7 +594,7 @@ function renderMaterialRequirements(char) {
               object-fit: cover;
               display: block;
             "
-            onerror="this.onerror=null; this.src='/assets/fallback-character.jpg';"
+            onerror="this.onerror=null; this.src='/assets/genshin/mora.webp';"
           >
           <div style="
             position: absolute;
@@ -820,7 +756,7 @@ window.setGoalpost = (charId) => {
   const char = getCharacterById(charId);
   const limits = GAME_LIMITS[char.game];
   const milestones = getMilestoneOptions(char.game);
-  const weaponLabel = GAME_LIMITS[char.game]?.weaponLabel || "Item";
+  const weaponLabel = GAME_LIMITS[char.game]?.weaponLabel || "Weapon";
 
   window.openModal?.(`
     <div style="text-align: left; color: white; max-width: 600px;">
