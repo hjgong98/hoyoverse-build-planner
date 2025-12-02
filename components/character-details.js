@@ -15,6 +15,11 @@ import {
 } from "./resin-calculations.js";
 
 // =================================================================
+// BASE PATH FOR GITHUB PAGES
+// =================================================================
+const BASE_PATH = "/hoyoverse-build-planner";
+
+// =================================================================
 // UTILITY FUNCTIONS
 // =================================================================
 
@@ -134,9 +139,14 @@ function getWeaponData(char) {
 function getWeaponImage(char) {
   const weaponData = getWeaponData(char);
   if (weaponData && weaponData.image) {
-    return weaponData.image;
+    let imagePath = weaponData.image;
+    // Apply base path to weapon images
+    if (imagePath.startsWith("/") && !imagePath.startsWith(BASE_PATH)) {
+      imagePath = BASE_PATH + imagePath;
+    }
+    return imagePath;
   }
-  return `/assets/${char.game}/weapons/default.webp`; // fallback image
+  return `${BASE_PATH}/assets/${char.game}/weapons/default.webp`; // fallback image
 }
 
 function getWeaponRarityColor(rarity) {
@@ -185,21 +195,22 @@ function findMaterialByName(materialName, game) {
   if (material) {
     let imagePath = material.img;
 
-    // Apply the same simplified path handling
+    // Apply base path
     if (imagePath) {
+      // Remove leading ./ if present
       if (imagePath.startsWith("./")) {
         imagePath = imagePath.substring(2);
       }
 
-      if (!imagePath.startsWith("/")) {
-        imagePath = "/" + imagePath;
+      // If path starts with / but not the base path, prepend base path
+      if (imagePath.startsWith("/") && !imagePath.startsWith(BASE_PATH)) {
+        imagePath = BASE_PATH + imagePath;
       }
 
-      // Remove any duplicate path parts
-      imagePath = imagePath.replace(
-        /assets\/genshin\/assets\/genshin\//g,
-        "assets/genshin/",
-      );
+      // If path doesn't start with /, add base path and /
+      if (!imagePath.startsWith("/") && !imagePath.startsWith("http")) {
+        imagePath = BASE_PATH + "/" + imagePath;
+      }
     }
 
     return { ...material, img: imagePath };
@@ -207,14 +218,15 @@ function findMaterialByName(materialName, game) {
 
   console.warn(`Material not found: ${materialName} for game: ${game}`);
 
+  // Return a fallback material with the correct image path structure
   return {
     name: decodedName,
-    img: "/assets/genshin/mora.webp",
+    img: `${BASE_PATH}/assets/genshin/mora.webp`, // Use base path for fallback
     tags: [],
   };
 }
 
-// Exact tag matching based on your structure
+// FIXED: Exact tag matching based on your structure
 function findMaterialByTags(game, tag1, tag2 = null, tag3 = null) {
   const materials = ASCENSION_MATERIALS[game] || [];
 
@@ -236,24 +248,22 @@ function findMaterialByTags(game, tag1, tag2 = null, tag3 = null) {
   if (material) {
     let imagePath = material.img;
 
-    // FIX: Simplify the path handling - just ensure it's an absolute path from root
+    // Apply base path
     if (imagePath) {
       // Remove leading ./ if present
       if (imagePath.startsWith("./")) {
         imagePath = imagePath.substring(2);
       }
 
-      // If path doesn't start with /, add it
-      if (!imagePath.startsWith("/")) {
-        imagePath = "/" + imagePath;
+      // If path starts with / but not the base path, prepend base path
+      if (imagePath.startsWith("/") && !imagePath.startsWith(BASE_PATH)) {
+        imagePath = BASE_PATH + imagePath;
       }
 
-      // Remove any duplicate "assets/genshin" parts
-      // This prevents double "assets/genshin/assets/genshin/"
-      imagePath = imagePath.replace(
-        /assets\/genshin\/assets\/genshin\//g,
-        "assets/genshin/",
-      );
+      // If path doesn't start with /, add base path and /
+      if (!imagePath.startsWith("/") && !imagePath.startsWith("http")) {
+        imagePath = BASE_PATH + "/" + imagePath;
+      }
     }
 
     return { ...material, img: imagePath };
@@ -264,7 +274,7 @@ function findMaterialByTags(game, tag1, tag2 = null, tag3 = null) {
   );
   return {
     name: `${tag1}${tag2 ? ` ${tag2}` : ""}${tag3 ? ` ${tag3}` : ""}`,
-    img: `/assets/genshin/mora.webp`,
+    img: `${BASE_PATH}/assets/genshin/mora.webp`,
     tags: [tag1, tag2, tag3].filter((t) => t !== null),
   };
 }
@@ -303,41 +313,42 @@ function findLocalMaterial(character) {
     console.warn(`No local material found for character: ${character.name}`);
     return {
       name: "Unknown Local Specialty",
-      img: `/assets/genshin/mora.webp`,
+      img: `${BASE_PATH}/assets/genshin/mora.webp`,
       tags: [],
     };
   }
 
   const localName = charData.local;
 
+  // Search for material by name (not by tag)
   const materials = ASCENSION_MATERIALS[character.game] || [];
   const material = materials.find((mat) => {
+    // Check if it's a local material and name matches
     return mat.tags && mat.tags[0] === "local" && mat.name === localName;
   });
 
   if (material) {
     let imagePath = material.img;
 
-    // Apply the same simplified path handling
+    // Apply base path
     if (imagePath) {
       if (imagePath.startsWith("./")) {
         imagePath = imagePath.substring(2);
       }
 
-      if (!imagePath.startsWith("/")) {
-        imagePath = "/" + imagePath;
+      if (imagePath.startsWith("/") && !imagePath.startsWith(BASE_PATH)) {
+        imagePath = BASE_PATH + imagePath;
       }
 
-      imagePath = imagePath.replace(
-        /assets\/genshin\/assets\/genshin\//g,
-        "assets/genshin/",
-      );
+      if (!imagePath.startsWith("/") && !imagePath.startsWith("http")) {
+        imagePath = BASE_PATH + "/" + imagePath;
+      }
     }
 
     return { ...material, img: imagePath };
   }
 
-  // Case-insensitive search
+  // If not found, try case-insensitive search
   const materialCaseInsensitive = materials.find((mat) => {
     return mat.tags && mat.tags[0] === "local" &&
       mat.name.toLowerCase() === localName.toLowerCase();
@@ -346,19 +357,19 @@ function findLocalMaterial(character) {
   if (materialCaseInsensitive) {
     let imagePath = materialCaseInsensitive.img;
 
+    // Apply base path
     if (imagePath) {
       if (imagePath.startsWith("./")) {
         imagePath = imagePath.substring(2);
       }
 
-      if (!imagePath.startsWith("/")) {
-        imagePath = "/" + imagePath;
+      if (imagePath.startsWith("/") && !imagePath.startsWith(BASE_PATH)) {
+        imagePath = BASE_PATH + imagePath;
       }
 
-      imagePath = imagePath.replace(
-        /assets\/genshin\/assets\/genshin\//g,
-        "assets/genshin/",
-      );
+      if (!imagePath.startsWith("/") && !imagePath.startsWith("http")) {
+        imagePath = BASE_PATH + "/" + imagePath;
+      }
     }
 
     return { ...materialCaseInsensitive, img: imagePath };
@@ -369,7 +380,7 @@ function findLocalMaterial(character) {
   );
   return {
     name: localName,
-    img: `/assets/genshin/mora.webp`,
+    img: `${BASE_PATH}/assets/genshin/mora.webp`,
     tags: ["local"],
   };
 }
@@ -625,7 +636,7 @@ function renderMaterialRequirements(char) {
               object-fit: cover;
               display: block;
             "
-            onerror="this.onerror=null; this.src='/assets/genshin/mora.webp';"
+            onerror="this.onerror=null; this.src='${BASE_PATH}/assets/genshin/mora.webp';"
           >
           <div style="
             position: absolute;
@@ -939,6 +950,14 @@ export function renderCharacterDetail(char) {
   const charData = ALL_CHARACTERS[char.game]?.[char.name];
   let currentPicture = char.imageUrl || charData?.picture;
 
+  // Apply base path to character image
+  if (
+    currentPicture && currentPicture.startsWith("/") &&
+    !currentPicture.startsWith(BASE_PATH)
+  ) {
+    currentPicture = BASE_PATH + currentPicture;
+  }
+
   const totalProgress = calculateOverallProgress(char, limits);
   const fuelEstimate = calculateFuelEstimate(char);
   const timeEstimate = calculateTimeEstimate(char);
@@ -979,7 +998,8 @@ export function renderCharacterDetail(char) {
             <div style="background: #1c2b33; padding: 25px; border-radius: 16px; text-align: center; margin-bottom: 20px; border: 2px solid #00ffff44;">
               <div id="character-image-container" style="width: 220px; height: 300px; margin: 0 auto; background: #2c3e50; border-radius: 12px; overflow: hidden; border: 2px solid #00ffff44;">
                 <img src="${currentPicture}" alt="${char.name}" 
-                     style="width: 100%; height: 100%; object-fit: cover;">
+                     style="width: 100%; height: 100%; object-fit: cover;"
+                     onerror="this.onerror=null; this.src='${BASE_PATH}/assets/fallback-character.jpg';">
               </div>
               <div style="margin-top: 15px;">
                 <input type="text" id="image-url-input" placeholder="Paste custom image URL" 
@@ -1015,7 +1035,7 @@ export function renderCharacterDetail(char) {
       };
                           object-fit: cover;
                         "
-                        onerror="this.onerror=null; this.src='/assets/${char.game}/weapons/default.webp';"
+                        onerror="this.onerror=null; this.src='${BASE_PATH}/assets/${char.game}/weapons/default.webp';"
                       >
                       ${
         getWeaponData(char)?.rarity
