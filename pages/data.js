@@ -35,7 +35,7 @@ export function initDataScene() {
       </div>
       
       <div style="background: #1c2b33; padding: 25px; border-radius: 12px; border: 2px solid #e74c3c44;">
-        <h3 style="color: #e74c3c; margin-bottom: 15px;">Danger Zone</h3>
+        <h3 style="color: #e74c3c; margin-bottom: 15px;">Clear Data</h3>
         <p style="color: #ccc; margin-bottom: 20px;">
           Permanently delete all character builds and inventory data. This action cannot be undone.
         </p>
