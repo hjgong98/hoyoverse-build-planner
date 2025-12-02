@@ -15,6 +15,12 @@ export const ALL_CHARACTERS = {
       common: "arrowhead",
       overworld: "Everflame Seed",
       type: "freedom",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Dvalin's Sigh",
       icon: "./assets/genshin/Amber Icon.webp",
       picture: "./assets/genshin/Amber Card.webp",
@@ -28,6 +34,12 @@ export const ALL_CHARACTERS = {
       common: "scroll",
       overworld: "Cleansing Heart",
       type: "freedom",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Ring of Boreas",
       icon: "./assets/genshin/Barbara Icon.webp",
       picture: "./assets/genshin/Barbara Card.webp",
@@ -41,6 +53,12 @@ export const ALL_CHARACTERS = {
       common: "insignia_hoarder",
       overworld: "Lightning Prism",
       type: "gold",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Dvalin's Sigh",
       icon: "./assets/genshin/Beidou Icon.webp",
       picture: "./assets/genshin/Beidou Card.webp",
@@ -54,6 +72,12 @@ export const ALL_CHARACTERS = {
       common: "insignia_hoarder",
       overworld: "Everflame Seed",
       type: "resistance",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Dvalin's Plume",
       icon: "./assets/genshin/Bennett Icon.webp",
       picture: "./assets/genshin/Bennett Card.webp",
@@ -67,6 +91,12 @@ export const ALL_CHARACTERS = {
       common: "mask",
       overworld: "Hoarfrost Core",
       type: "diligence",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Dvalin's Sigh",
       icon: "./assets/genshin/Chongyun Icon.webp",
       picture: "./assets/genshin/Chongyun Card.webp",
@@ -80,6 +110,12 @@ export const ALL_CHARACTERS = {
       common: "insignia_skirmisher",
       overworld: "Everflame Seed",
       type: "resistance",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Dvalin's Plume",
       icon: "./assets/genshin/Diluc Icon.webp",
       picture: "./assets/genshin/Diluc Card.webp",
@@ -93,6 +129,12 @@ export const ALL_CHARACTERS = {
       common: "arrowhead",
       overworld: "Lightning Prism",
       type: "ballad",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Spirit Locket of Boreas",
       icon: "./assets/genshin/Fischl Icon.webp",
       picture: "./assets/genshin/Fischl Card.webp",
@@ -106,6 +148,12 @@ export const ALL_CHARACTERS = {
       common: "mask",
       overworld: "Hurricane Seed",
       type: "resistance",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Dvalin's Plume",
       icon: "./assets/genshin/Jean Icon.webp",
       picture: "./assets/genshin/Jean Card.webp",
@@ -119,6 +167,12 @@ export const ALL_CHARACTERS = {
       common: "insignia_hoarder",
       overworld: "Hoarfrost Core",
       type: "ballad",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Spirit Locket of Boreas",
       icon: "./assets/genshin/Kaeya Icon.webp",
       picture: "./assets/genshin/Kaeya Card.webp",
@@ -132,6 +186,12 @@ export const ALL_CHARACTERS = {
       common: "nectar",
       overworld: "Lightning Prism",
       type: "prosperity",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Ring of Boreas",
       icon: "./assets/genshin/Keqing Icon.webp",
       picture: "./assets/genshin/Keqing Card.webp",
@@ -145,6 +205,12 @@ export const ALL_CHARACTERS = {
       common: "slime",
       overworld: "Lightning Prism",
       type: "ballad",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Dvalin's Claw",
       icon: "./assets/genshin/Lisa Icon.webp",
       picture: "./assets/genshin/Lisa Card.webp",
@@ -158,6 +224,12 @@ export const ALL_CHARACTERS = {
       common: "nectar",
       overworld: "Cleansing Heart",
       type: "resistance",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Ring of Boreas",
       icon: "./assets/genshin/Mona Icon.webp",
       picture: "./assets/genshin/Mona Card.webp",
@@ -171,6 +243,12 @@ export const ALL_CHARACTERS = {
       common: "insignia_skirmisher",
       overworld: "Basalt Pillar",
       type: "prosperity",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Spirit Locket of Boreas",
       icon: "./assets/genshin/Ningguang Icon.webp",
       picture: "./assets/genshin/Ningguang Card.webp",
@@ -184,6 +262,12 @@ export const ALL_CHARACTERS = {
       common: "mask",
       overworld: "Basalt Pillar",
       type: "resistance",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Dvalin's Claw",
       icon: "./assets/genshin/Noelle Icon.webp",
       picture: "./assets/genshin/Noelle Card.webp",
@@ -197,6 +281,12 @@ export const ALL_CHARACTERS = {
       common: "scroll",
       overworld: "Hoarfrost Core",
       type: "prosperity",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Tail of Boreas",
       icon: "./assets/genshin/Qiqi Icon.webp",
       picture: "./assets/genshin/Qiqi Card.webp",
@@ -210,6 +300,12 @@ export const ALL_CHARACTERS = {
       common: "mask",
       overworld: "Lightning Prism",
       type: "resistance",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Dvalin's Claw",
       icon: "./assets/genshin/Razor Icon.webp",
       picture: "./assets/genshin/Razor Card.webp",
@@ -228,6 +324,12 @@ export const ALL_CHARACTERS = {
         skill: "",
         burst: "",
       },
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Spirit Locket of Boreas",
       icon: "./assets/genshin/Sucrose Icon.webp",
       picture: "./assets/genshin/Sucrose Card.png",
@@ -241,6 +343,12 @@ export const ALL_CHARACTERS = {
       common: "scroll",
       overworld: "none",
       type: "Adaptive",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Dvalin's Sigh",
       icon: "./assets/genshin/Traveler Icon.webp",
       picture: "./assets/genshin/Traveler Card.webp",
@@ -254,6 +362,12 @@ export const ALL_CHARACTERS = {
       common: "scroll",
       overworld: "none",
       type: "Adaptive",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Dvalin's Sigh",
       icon: "./assets/genshin/Traveler Icon.webp",
       picture: "./assets/genshin/Traveler Card.webp",
@@ -267,6 +381,12 @@ export const ALL_CHARACTERS = {
       common: "handguard",
       overworld: "none",
       type: "Adaptive",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Drag­on Lord's Crown",
       icon: "./assets/genshin/Traveler Icon.webp",
       picture: "./assets/genshin/Traveler Card.webp",
@@ -280,6 +400,12 @@ export const ALL_CHARACTERS = {
       common: "fungus",
       overworld: "none",
       type: "Adaptive",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Mudra of the Malefic General",
       icon: "./assets/genshin/Traveler Icon.webp",
       picture: "./assets/genshin/Traveler Card.webp",
@@ -293,6 +419,12 @@ export const ALL_CHARACTERS = {
       common: "transoceanic",
       overworld: "none",
       type: "Adaptive",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "World­span Fern",
       icon: "./assets/genshin/Traveler Icon.webp",
       picture: "./assets/genshin/Traveler Card.webp",
@@ -306,7 +438,12 @@ export const ALL_CHARACTERS = {
       common: "whistle",
       overworld: "none",
       type: "Adaptive",
-      weekly: "The Cornerstone of Stars and Flames", // tags: ["weekly", "traveler"]
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
+      weekly: "The Cornerstone of Stars and Flames",
       icon: "./assets/genshin/Traveler Icon.webp",
       picture: "./assets/genshin/Traveler Card.webp",
     },
@@ -319,6 +456,12 @@ export const ALL_CHARACTERS = {
       common: "slime",
       overworld: "Hurricane Seed",
       type: "ballad",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Tail of Boreas",
       icon: "./assets/genshin/Venti Icon.webp",
       picture: "./assets/genshin/Venti Card.webp",
@@ -332,6 +475,12 @@ export const ALL_CHARACTERS = {
       common: "slime",
       overworld: "Everflame Seed",
       type: "diligence",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Dvalin's Claw",
       icon: "./assets/genshin/Xiangling Icon.webp",
       picture: "./assets/genshin/Xiangling Card.webp",
@@ -345,6 +494,12 @@ export const ALL_CHARACTERS = {
       common: "mask",
       overworld: "Cleansing Heart",
       type: "gold",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Tail of Boreas",
       icon: "./assets/genshin/Xingqiu Icon.webp",
       picture: "./assets/genshin/Xingqiu Card.webp",
@@ -358,6 +513,12 @@ export const ALL_CHARACTERS = {
       common: "scroll",
       overworld: "Everflame Seed",
       type: "freedom",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Ring of Boreas",
       icon: "./assets/genshin/Klee Icon.webp",
       picture: "./assets/genshin/Klee Card.webp",
@@ -371,6 +532,12 @@ export const ALL_CHARACTERS = {
       common: "arrowhead",
       overworld: "Hoarfrost Core",
       type: "freedom",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Shard of a Foul Legacy",
       icon: "./assets/genshin/Diona Icon.webp",
       picture: "./assets/genshin/Diona Card.webp",
@@ -384,6 +551,12 @@ export const ALL_CHARACTERS = {
       common: "insignia_skirmisher",
       overworld: "Cleansing Heart",
       type: "freedom",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Shard of a Foul Legacy",
       icon: "./assets/genshin/Tartaglia Icon.webp",
       picture: "./assets/genshin/Tartaglia Card.webp",
@@ -397,6 +570,12 @@ export const ALL_CHARACTERS = {
       common: "insignia_hoarder",
       overworld: "Everflame Seed",
       type: "gold",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Tusk of Monoceros Caeli",
       icon: "./assets/genshin/Xinyan Icon.webp",
       picture: "./assets/genshin/Xinyan Card.webp",
@@ -410,6 +589,12 @@ export const ALL_CHARACTERS = {
       common: "slime",
       overworld: "Basalt Pillar",
       type: "gold",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Tusk of Monoceros Caeli",
       icon: "./assets/genshin/Zhongli Icon.webp",
       picture: "./assets/genshin/Zhongli Card.webp",
@@ -423,6 +608,12 @@ export const ALL_CHARACTERS = {
       common: "scroll",
       overworld: "Basalt Pillar",
       type: "ballad",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Tusk of Monoceros Caeli",
       icon: "./assets/genshin/Albedo Icon.webp",
       picture: "./assets/genshin/Albedo Card.webp",
@@ -436,6 +627,12 @@ export const ALL_CHARACTERS = {
       common: "nectar",
       overworld: "Hoarfrost Core",
       type: "diligence",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Shadow of the Warrior",
       icon: "./assets/genshin/Ganyu Icon.webp",
       picture: "./assets/genshin/Ganyu Card.webp",
@@ -449,6 +646,12 @@ export const ALL_CHARACTERS = {
       common: "slime",
       overworld: "Juvenile Jade",
       type: "prosperity",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Shadow of the Warrior",
       icon: "./assets/genshin/Xiao Icon.webp",
       picture: "./assets/genshin/Xiao Card.webp",
@@ -462,6 +665,12 @@ export const ALL_CHARACTERS = {
       common: "nectar",
       overworld: "Juvenile Jade",
       type: "diligence",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Shard of a Foul Legacy",
       icon: "./assets/genshin/Hu Tao Icon.webp",
       picture: "./assets/genshin/Hu Tao Card.webp",
@@ -475,6 +684,12 @@ export const ALL_CHARACTERS = {
       common: "insignia_skirmisher",
       overworld: "Hoarfrost Core",
       type: "ballad",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Shadow of the Warrior",
       icon: "./assets/genshin/Rosaria Icon.webp",
       picture: "./assets/genshin/Rosaria Card.webp",
@@ -488,6 +703,12 @@ export const ALL_CHARACTERS = {
       common: "insignia_hoarder",
       overworld: "Juvenile Jade",
       type: "gold",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Bloodjade Branch",
       icon: "./assets/genshin/Yanfei Icon.webp",
       picture: "./assets/genshin/Yanfei Card.webp",
@@ -501,6 +722,12 @@ export const ALL_CHARACTERS = {
       common: "mask",
       overworld: "Crystalline Bloom",
       type: "resistance",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Dragon Lord's Crown",
       icon: "./assets/genshin/Eula Icon.webp",
       picture: "./assets/genshin/Eula Card.webp",
@@ -514,6 +741,12 @@ export const ALL_CHARACTERS = {
       common: "insignia_hoarder",
       overworld: "Marionette Core",
       type: "diligence",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Gilded Scale",
       icon: "./assets/genshin/Kaedehara Kazuha Icon.webp",
       picture: "./assets/genshin/Kaedehara Kazuha Card.webp",
@@ -527,6 +760,11 @@ export const ALL_CHARACTERS = {
       common: "handguard",
       overworld: "Perpetual Heart",
       type: "elegance",
+      talentnames: {
+        normal: "Kamisato Art: Kabuki",
+        skill: "Kamisato Art: Hyouka",
+        burst: "Kamisato Art: Soumetsu",
+      },
       weekly: "Bloodjade Branch",
       icon: "./assets/genshin/Kamisato Ayaka Icon.webp",
       picture: "./assets/genshin/Kamisato Ayaka Card.webp",
@@ -540,6 +778,11 @@ export const ALL_CHARACTERS = {
       common: "nectar",
       overworld: "Marionette Core",
       type: "light",
+      talentnames: {
+        normal: "Shuumatsuban Ninja Blade",
+        skill: "Yoohoo Art: Fuuin Dash",
+        burst: "Yoohoo Art: Mujina Flurry",
+      },
       weekly: "Gilded Scale",
       icon: "./assets/genshin/Sayu Icon.webp",
       picture: "./assets/genshin/Sayu Card.webp",
@@ -553,6 +796,11 @@ export const ALL_CHARACTERS = {
       common: "scroll",
       overworld: "Smoldering Pearl",
       type: "transience",
+      talentnames: {
+        normal: "Firework Flare-Up",
+        skill: "Niwabi Fire-Dance",
+        burst: "Ryuukin Saxifrage",
+      },
       weekly: "Dragon Lord's Crown",
       icon: "./assets/genshin/Yoimiya Icon.webp",
       picture: "./assets/genshin/Yoimiya Card.webp",
@@ -566,6 +814,11 @@ export const ALL_CHARACTERS = {
       common: "spectral",
       overworld: "Crystalline Bloom",
       type: "freedom",
+      talentnames: {
+        normal: "Rapid Fire",
+        skill: "Frozen Wilds",
+        burst: "Prophecies of Dawn",
+      },
       weekly: "Molten Moment",
       icon: "./assets/genshin/Aloy Icon.webp",
       picture: "./assets/genshin/Aloy Card.webp",
@@ -579,6 +832,11 @@ export const ALL_CHARACTERS = {
       common: "mask",
       overworld: "Storm Beads",
       type: "elegance",
+      talentnames: {
+        normal: "Tengu Bowmanship",
+        skill: "Tengu Stormcall",
+        burst: "Subjugation: Koukou Sendou",
+      },
       weekly: "Ashen Heart",
       icon: "./assets/genshin/Kujou Sara Icon.webp",
       picture: "./assets/genshin/Kujou Sara Card.webp",
@@ -592,6 +850,11 @@ export const ALL_CHARACTERS = {
       common: "handguard",
       overworld: "Storm Beads",
       type: "light",
+      talentnames: {
+        normal: "Origin",
+        skill: "Transcendence: Baleful Omen",
+        burst: "Secret Art: Musou Shinsetsu",
+      },
       weekly: "Molten Moment",
       icon: "./assets/genshin/Raiden Shogun Icon.webp",
       picture: "./assets/genshin/Raiden Shogun Card.webp",
@@ -605,6 +868,11 @@ export const ALL_CHARACTERS = {
       common: "spectral",
       overworld: "Dew of Repudiation",
       type: "transience",
+      talentnames: {
+        normal: "The Shape of Water",
+        skill: "Kurage's Oath",
+        burst: "Nereid's Ascension",
+      },
       weekly: "Hellfire Butterfly",
       icon: "./assets/genshin/Sangonomiya Kokomi Icon.webp",
       picture: "./assets/genshin/Sangonomiya Kokomi Card.webp",
@@ -618,6 +886,11 @@ export const ALL_CHARACTERS = {
       common: "insignia_hoarder",
       overworld: "Smoldering Pearl",
       type: "transience",
+      talentnames: {
+        normal: "Swiftshatter Spear",
+        skill: "Blazing Blessing",
+        burst: "Imbricated Armor",
+      },
       weekly: "Hellfire Butterfly",
       icon: "./assets/genshin/Thoma Icon.webp",
       picture: "./assets/genshin/Thoma Card.webp",
@@ -631,6 +904,11 @@ export const ALL_CHARACTERS = {
       common: "slime",
       overworld: "Riftborn Regalia",
       type: "elegance",
+      talentnames: {
+        normal: "Fight Club Legend",
+        skill: "	Masatsu Zetsugi: Akaushi Burst!",
+        burst: "	Royal Descent: Behold, Itto the Evil!",
+      },
       weekly: "Ashen Heart",
       icon: "./assets/genshin/Arataki Itto Icon.webp",
       picture: "./assets/genshin/Arataki Itto Card.webp",
@@ -644,6 +922,11 @@ export const ALL_CHARACTERS = {
       common: "spectral",
       overworld: "Perpetual Heart",
       type: "light",
+      talentnames: {
+        normal: "Ripping Fang Fletching",
+        skill: "Inuzaka All-Round Defense",
+        burst: "Juuga: Forward Unto Victory",
+      },
       weekly: "Molten Moment",
       icon: "./assets/genshin/Gorou Icon.webp",
       picture: "./assets/genshin/Gorou Card.webp",
@@ -660,6 +943,11 @@ export const ALL_CHARACTERS = {
       common: "nectar",
       overworld: "Dragonheir's False Fin",
       type: "prosperity",
+      talentnames: {
+        normal: "Dawnstar Piercer",
+        skill: "Spring Spirit Summoning",
+        burst: "Divine Maiden's Deliverance",
+      },
       weekly: "Hellfire Butterfly",
       icon: "./assets/genshin/Shenhe Icon.webp",
       picture: "./assets/genshin/Shenhe Card.webp",
@@ -673,6 +961,11 @@ export const ALL_CHARACTERS = {
       common: "insignia_skirmisher",
       overworld: "Riftborn Regalia",
       type: "diligence",
+      talentnames: {
+        normal: "Cloud-Grazing Strike",
+        skill: "Opening Flourish",
+        burst: "Cliffbreaker's Banner",
+      },
       weekly: "Ashen Heart",
       icon: "./assets/genshin/Yun Jin Icon.webp",
       picture: "./assets/genshin/Yun Jin Card.webp",
@@ -686,6 +979,11 @@ export const ALL_CHARACTERS = {
       common: "handguard",
       overworld: "Dragonheir's False Fin",
       type: "light",
+      talentnames: {
+        normal: "Spiritfox Sin-Eater",
+        skill: "Yakan Evocation: Sesshou Sakura",
+        burst: "Great Secret Art: Tenko Kenshin",
+      },
       weekly: "The Meaning of Aeons",
       icon: "./assets/genshin/Yae Miko Icon.webp",
       picture: "./assets/genshin/Yae Miko Card.webp",
@@ -699,22 +997,14 @@ export const ALL_CHARACTERS = {
       common: "handguard",
       overworld: "Dew of Repudiation",
       type: "elegance",
+      talentnames: {
+        normal: "Kamisato Art: Marobashi",
+        skill: "Kamisato Art: Kyouka",
+        burst: "Kamisato Art: Suiyuu",
+      },
       weekly: "Mudra of the Malefic General",
       icon: "./assets/genshin/Kamisato Ayato Icon.webp",
       picture: "./assets/genshin/Kamisato Ayato Card.webp",
-    },
-    "Yelan": {
-      weapon: "Bow",
-      element: "Hydro",
-      region: "Liyue",
-      rarity: 5,
-      local: "Starconch",
-      common: "insignia_skirmisher",
-      overworld: "Runic Fang",
-      type: "prosperity",
-      weekly: "Gilded Scale",
-      icon: "./assets/genshin/Yelan Icon.webp",
-      picture: "./assets/genshin/Yelan Card.webp",
     },
     "Kuki Shinobu": {
       weapon: "Sword",
@@ -725,9 +1015,32 @@ export const ALL_CHARACTERS = {
       common: "spectral",
       overworld: "Runic Fang",
       type: "elegance",
+      talentnames: {
+        normal: "Shinobu's Shadowsword",
+        skill: "Sanctifying Ring",
+        burst: "Gyoei Narukami Kariyama Rite",
+      },
       weekly: "Tears of the Calamitous God",
       icon: "./assets/genshin/Kuki Shinobu Icon.webp",
       picture: "./assets/genshin/Kuki Shinobu Card.webp",
+    },
+    "Yelan": {
+      weapon: "Bow",
+      element: "Hydro",
+      region: "Liyue",
+      rarity: 5,
+      local: "Starconch",
+      common: "insignia_skirmisher",
+      overworld: "Runic Fang",
+      type: "prosperity",
+      talentnames: {
+        normal: "Stealthy Bowshot",
+        skill: "Lingering Lifeline",
+        burst: "Depth-Clarion Dice",
+      },
+      weekly: "Gilded Scale",
+      icon: "./assets/genshin/Yelan Icon.webp",
+      picture: "./assets/genshin/Yelan Card.webp",
     },
     "Shikanoin Heizou": {
       weapon: "Catalyst",
@@ -738,6 +1051,11 @@ export const ALL_CHARACTERS = {
       common: "insignia_hoarder",
       overworld: "Runic Fang",
       type: "transience",
+      talentnames: {
+        normal: "Fudou Style Martial Arts",
+        skill: "Heartstopper Strike",
+        burst: "Windmuster Kick",
+      },
       weekly: "The Meaning of Aeons",
       icon: "./assets/genshin/Shikanoin Heizou Icon.webp",
       picture: "./assets/genshin/Shikanoin Heizou Card.webp",
@@ -751,22 +1069,14 @@ export const ALL_CHARACTERS = {
       common: "arrowhead",
       overworld: "Majestic Hooked Beak",
       type: "praxis",
+      talentnames: {
+        normal: "Supplicant's Bowmanship",
+        skill: "Floral Brush",
+        burst: "Trump-Card Kitty",
+      },
       weekly: "Tears of the Calamitous God",
       icon: "./assets/genshin/Collei Icon.webp",
       picture: "./assets/genshin/Collei Card.webp",
-    },
-    "Tighnari": {
-      weapon: "Bow",
-      element: "Dendro",
-      region: "Sumeru",
-      rarity: 5,
-      local: "Nilotpala Lotus",
-      common: "fungus",
-      overworld: "Majestic Hooked Beak",
-      type: "admonition",
-      weekly: "The Meaning of Aeons",
-      icon: "./assets/genshin/Tighnari Icon.webp",
-      picture: "./assets/genshin/Tighnari Card.webp",
     },
     "Dori": {
       weapon: "Claymore",
@@ -777,9 +1087,32 @@ export const ALL_CHARACTERS = {
       common: "eremites",
       overworld: "Thunderclap Fruitcore",
       type: "ingenuity",
+      talentnames: {
+        normal: "Marvelous Sword-Dance (Modified)",
+        skill: "Spirit-Warding Lamp: Troubleshooter Cannon",
+        burst: "Alcazarzaray's Exactitude",
+      },
       weekly: "Bloodjade Branch",
       icon: "./assets/genshin/Dori Icon.webp",
       picture: "./assets/genshin/Dori Card.webp",
+    },
+    "Tighnari": {
+      weapon: "Bow",
+      element: "Dendro",
+      region: "Sumeru",
+      rarity: 5,
+      local: "Nilotpala Lotus",
+      common: "fungus",
+      overworld: "Majestic Hooked Beak",
+      type: "admonition",
+      talentnames: {
+        normal: "Khanda Barrier-Buster",
+        skill: "Vijnana-Phala Mine",
+        burst: "Fashioner's Tanglevine Shaft",
+      },
+      weekly: "The Meaning of Aeons",
+      icon: "./assets/genshin/Tighnari Icon.webp",
+      picture: "./assets/genshin/Tighnari Card.webp",
     },
     "Candace": {
       weapon: "Polearm",
@@ -790,6 +1123,11 @@ export const ALL_CHARACTERS = {
       common: "eremites",
       overworld: "Light Guiding Tetrahedron",
       type: "admonition",
+      talentnames: {
+        normal: "Gleaming Spear - Guardian Stance",
+        skill: "Sacred Rite: Heron's Sanctum",
+        burst: "Sacred Rite: Wagtail's Tide",
+      },
       weekly: "Tears of the Calamitous God",
       icon: "./assets/genshin/Candace Icon.webp",
       picture: "./assets/genshin/Candace Card.webp",
@@ -803,6 +1141,11 @@ export const ALL_CHARACTERS = {
       common: "scroll",
       overworld: "Thunderclap Fruitcore",
       type: "admonition",
+      talentnames: {
+        normal: "Invoker's Spear",
+        skill: "Secret Rite: Chasmic Soulfarer",
+        burst: "Sacred Rite: Wolf's Swiftness",
+      },
       weekly: "Mudra of the Malefic General",
       icon: "./assets/genshin/Cyno Icon.webp",
       picture: "./assets/genshin/Cyno Card.webp",
@@ -816,22 +1159,14 @@ export const ALL_CHARACTERS = {
       common: "fungus",
       overworld: "Perpetual Caliber",
       type: "praxis",
+      talentnames: {
+        normal: "Dance of Samser",
+        skill: "Dance of Haftkarsvar",
+        burst: "Dance of Abzendegi: Distant Dreams, Listening Spring",
+      },
       weekly: "Tears of the Calamitous God",
       icon: "./assets/genshin/Nilou Icon.webp",
       picture: "./assets/genshin/Nilou Card.webp",
-    },
-    "Nahida": {
-      weapon: "Catalyst",
-      element: "Dendro",
-      region: "Sumeru",
-      rarity: 5,
-      local: "Kalpalata Lotus",
-      common: "fungus",
-      overworld: "Quelled Creeper",
-      type: "ingenuity",
-      weekly: "Puppet Strings",
-      icon: "./assets/genshin/Nahida Icon.webp",
-      picture: "./assets/genshin/Nahida Card.webp",
     },
     "Layla": {
       weapon: "Sword",
@@ -842,6 +1177,29 @@ export const ALL_CHARACTERS = {
       common: "scroll",
       overworld: "Perpetual Caliber",
       type: "ingenuity",
+      talentnames: {
+        normal: "Sword of the Radiant Path",
+        skill: "Nights of Formal Focus",
+        burst: "Dream of the Star-Stream Shaker",
+      },
+      "Nahida": {
+        weapon: "Catalyst",
+        element: "Dendro",
+        region: "Sumeru",
+        rarity: 5,
+        local: "Kalpalata Lotus",
+        common: "fungus",
+        overworld: "Quelled Creeper",
+        type: "ingenuity",
+        talentnames: {
+          normal: "Akara",
+          skill: "All Schemes to Know",
+          burst: "Illusory Heart",
+        },
+        weekly: "Puppet Strings",
+        icon: "./assets/genshin/Nahida Icon.webp",
+        picture: "./assets/genshin/Nahida Card.webp",
+      },
       weekly: "Mirror of Mushin",
       icon: "./assets/genshin/Layla Icon.webp",
       picture: "./assets/genshin/Layla Card.webp",
@@ -855,6 +1213,11 @@ export const ALL_CHARACTERS = {
       common: "eremites",
       overworld: "Light Guiding Tetrahedron",
       type: "admonition",
+      talentnames: {
+        normal: "Parthian Shot",
+        skill: "Wind Realm of Nasamjnin",
+        burst: "The Wind's Secret Ways",
+      },
       weekly: "Puppet Strings",
       icon: "./assets/genshin/Faruzan Icon.webp",
       picture: "./assets/genshin/Faruzan Card.webp",
@@ -868,6 +1231,11 @@ export const ALL_CHARACTERS = {
       common: "handguard",
       overworld: "Perpetual Caliber",
       type: "praxis",
+      talentnames: {
+        normal: "Yuuban Meigen",
+        skill: "Hanega: Song of the Wind",
+        burst: "Kyougen: Five Ceremonial Plays",
+      },
       weekly: "Daka's Bell",
       icon: "./assets/genshin/Wanderer Icon.webp",
       picture: "./assets/genshin/Wanderer Card.webp",
@@ -881,6 +1249,11 @@ export const ALL_CHARACTERS = {
       common: "eremites",
       overworld: "Pseudo-Stamens",
       type: "ingenuity",
+      talentnames: {
+        normal: "Abductive Reasoning",
+        skill: "Universality: An Elaboration on Form",
+        burst: "Particular Field: Fetters of Phenomena",
+      },
       weekly: "Mirror of Mushin",
       icon: "./assets/genshin/Alhaitham Icon.webp",
       picture: "./assets/genshin/Alhaitham Card.webp",
@@ -894,6 +1267,11 @@ export const ALL_CHARACTERS = {
       common: "slime",
       overworld: "Quelled Creeper",
       type: "diligence",
+      talentnames: {
+        normal: "Toss 'N' Turn Spear",
+        skill: "Raphanus Sky Cluster",
+        burst: "Moonjade Descent",
+      },
       weekly: "Daka's Bell",
       icon: "./assets/genshin/Yaoyao Icon.webp",
       picture: "./assets/genshin/Yaoyao Card.webp",
@@ -907,6 +1285,11 @@ export const ALL_CHARACTERS = {
       common: "eremites",
       overworld: "Light Guiding Tetrahedron",
       type: "praxis",
+      talentnames: {
+        normal: "Sandstorm Assault",
+        skill: "Molten Inferno",
+        burst: "Leonine Bite",
+      },
       weekly: "Puppet Strings",
       icon: "./assets/genshin/Dehya Icon.webp",
       picture: "./assets/genshin/Dehya Card.webp",
@@ -920,6 +1303,11 @@ export const ALL_CHARACTERS = {
       common: "insignia_skirmisher",
       overworld: "Pseudo-Stamens",
       type: "ballad",
+      talentnames: {
+        normal: "Spear of Favonius - Arrow's Passage",
+        skill: "Starfrost Swirl",
+        burst: "Skyfeather Song",
+      },
       weekly: "Mirror of Mushin",
       icon: "./assets/genshin/Mika Icon.webp",
       picture: "./assets/genshin/Mika Card.webp",
@@ -933,6 +1321,11 @@ export const ALL_CHARACTERS = {
       common: "fungus",
       overworld: "Evergloom Ring",
       type: "gold",
+      talentnames: {
+        normal: "The Classics of Acupuncture",
+        skill: "Universal Diagnosis",
+        burst: "Holistic Revivification",
+      },
       weekly: "Worldspan Fern",
       icon: "./assets/genshin/Baizhu Icon.webp",
       picture: "./assets/genshin/Baizhu Card.webp",
@@ -946,6 +1339,11 @@ export const ALL_CHARACTERS = {
       common: "fungus",
       overworld: "Quelled Creeper",
       type: "ingenuity",
+      talentnames: {
+        normal: "Schematic Setup",
+        skill: "Artistic Ingenuity",
+        burst: "Painted Dome",
+      },
       weekly: "Primordial Greenbloom",
       icon: "./assets/genshin/Kaveh Icon.webp",
       picture: "./assets/genshin/Kaveh Card.webp",
@@ -959,9 +1357,32 @@ export const ALL_CHARACTERS = {
       common: "spectral",
       overworld: "Evergloom Ring",
       type: "transience",
+      talentnames: {
+        normal: "Boxcutter",
+        skill: "Meow-teor Kick",
+        burst: "Secret Art: Surprise Dispatch",
+      },
       weekly: "Everamber",
       icon: "./assets/genshin/Kirara Icon.webp",
       picture: "./assets/genshin/Kirara Card.webp",
+    },
+    "Freminet": {
+      weapon: "Claymore",
+      element: "Cryo",
+      region: "Fontaine",
+      rarity: 4,
+      local: "Romaritime Flower",
+      common: "transoceanic",
+      overworld: "Artificed Spare Clockwork Component — Coppelius",
+      type: "justice",
+      talentnames: {
+        normal: "Flowing Eddies",
+        skill: "Pressurized Floe",
+        burst: "Shadowhunter's Ambush",
+      },
+      weekly: "Worldspan Fern",
+      icon: "./assets/genshin/Freminet Icon.webp",
+      picture: "./assets/genshin/Freminet Card.webp",
     },
     "Lynette": {
       weapon: "Sword",
@@ -970,8 +1391,13 @@ export const ALL_CHARACTERS = {
       rarity: 4,
       local: "Lumidouce Bell",
       common: "gear",
-      overworld: "Ar­ti­ficed Spare Clock­work Com­po­nent — Cop­pe­li­a",
+      overworld: "Artificed Spare Clockwork Component — Coppelia",
       type: "order",
+      talentnames: {
+        normal: "Rapid Ritesword",
+        skill: "Enigmatic Feint",
+        burst: "Magic Trick: Astonishing Shift",
+      },
       weekly: "Everamber",
       icon: "./assets/genshin/Lynette Icon.webp",
       picture: "./assets/genshin/Lynette Card.webp",
@@ -985,22 +1411,14 @@ export const ALL_CHARACTERS = {
       common: "insignia_skirmisher",
       overworld: "Emperor's Resolution",
       type: "equity",
+      talentnames: {
+        normal: "Card Force Translocation",
+        skill: "Bewildering Lights",
+        burst: "Wondrous Trick: Miracle Parade",
+      },
       weekly: "Primordial Greenbloom",
       icon: "./assets/genshin/Lyney Icon.webp",
       picture: "./assets/genshin/Lyney Card.webp",
-    },
-    "Freminet": {
-      weapon: "Claymore",
-      element: "Cryo",
-      region: "Fontaine",
-      rarity: 4,
-      local: "Romaritime Flower",
-      common: "transoceanic",
-      overworld: "Ar­ti­ficed Spare Clock­work Com­po­nent — Cop­pe­li­us",
-      type: "justice",
-      weekly: "Worldspan Fern",
-      icon: "./assets/genshin/Freminet Icon.webp",
-      picture: "./assets/genshin/Freminet Card.webp",
     },
     "Neuvillette": {
       weapon: "Catalyst",
@@ -1011,6 +1429,11 @@ export const ALL_CHARACTERS = {
       common: "transoceanic",
       overworld: "Fontemer Unihorn",
       type: "equity",
+      talentnames: {
+        normal: "As Water Seeks Equilibrium",
+        skill: "O Tears, I Shall Repay",
+        burst: "O Tides, I Have Returned",
+      },
       weekly: "Everamber",
       icon: "./assets/genshin/Neuvillette Icon.webp",
       picture: "./assets/genshin/Neuvillette Card.webp",
@@ -1024,7 +1447,12 @@ export const ALL_CHARACTERS = {
       common: "gear",
       overworld: "Tourbillon Device",
       type: "order",
-      weekly: "Primor­dial Green­bloom",
+      talentnames: {
+        normal: "Forceful Fists of Frost",
+        skill: "Icefang Rush",
+        burst: "Darkgold Wolfbite",
+      },
+      weekly: "Primordial Greenbloom",
       icon: "./assets/genshin/Wriothesley Icon.webp",
       picture: "./assets/genshin/Wriothesley Card.webp",
     },
@@ -1035,9 +1463,14 @@ export const ALL_CHARACTERS = {
       rarity: 4,
       local: "Beryl Conch",
       common: "gear",
-      overworld: "Tour­bil­lon De­vice",
+      overworld: "Tourbillion Device",
       type: "justice",
-      weekly: "Light­less Silk String",
+      talentnames: {
+        normal: "Cool-Color Capture",
+        skill: "Framing: Freezing Point Composition",
+        burst: "Still Photo: Comprehensive Confirmation",
+      },
+      weekly: "Lightless Silk String",
       icon: "./assets/genshin/Charlotte Icon.webp",
       picture: "./assets/genshin/Charlotte Card.webp",
     },
@@ -1050,22 +1483,14 @@ export const ALL_CHARACTERS = {
       common: "nectar",
       overworld: "Water That Failed To Transcend",
       type: "justice",
+      talentnames: {
+        normal: "Soloist's Solicitation",
+        skill: "Salon Solitaire",
+        burst: "Let the People Rejoice",
+      },
       weekly: "Lightless Mass",
       icon: "./assets/genshin/Furina Icon.webp",
       picture: "./assets/genshin/Furina Card.webp",
-    },
-    "Navia": {
-      weapon: "Claymore",
-      element: "Geo",
-      region: "Fontaine",
-      rarity: 5,
-      local: "Spring of the First Dewdrop",
-      common: "transoceanic",
-      overworld: "Ar­ti­ficed Spare Clock­work Com­po­nent — Cop­pe­li­us",
-      type: "equity",
-      weekly: "Light­less Silk String",
-      icon: "./assets/genshin/Navia Icon.webp",
-      picture: "./assets/genshin/Navia Card.webp",
     },
     "Chevreuse": {
       weapon: "Polearm",
@@ -1074,11 +1499,34 @@ export const ALL_CHARACTERS = {
       rarity: 4,
       local: "Lumidouce Bell",
       common: "gear",
-      overworld: "Fonte­mer Uni­horn",
+      overworld: "Fontemer Unihorn",
       type: "order",
+      talentnames: {
+        normal: "Line Bayonet Thrust EX",
+        skill: "Short-Range Rapid Interdiction Fire",
+        burst: "Ring of Bursting Grenades",
+      },
       weekly: "Light­less Eye of the Mael­strom",
       icon: "./assets/genshin/Chevreuse Icon.webp",
       picture: "./assets/genshin/Chevreuse Card.webp",
+    },
+    "Navia": {
+      weapon: "Claymore",
+      element: "Geo",
+      region: "Fontaine",
+      rarity: 5,
+      local: "Spring of the First Dewdrop",
+      common: "transoceanic",
+      overworld: "Artificed Spare Clockwork Component — Coppelius",
+      type: "equity",
+      talentnames: {
+        normal: "Blunt Refusal",
+        skill: "Ceremonial Crystalshot",
+        burst: "As the Sunlit Sky's Singing Salute",
+      },
+      weekly: "Lightless Silk String",
+      icon: "./assets/genshin/Navia Icon.webp",
+      picture: "./assets/genshin/Navia Card.webp",
     },
     "Gaming": {
       weapon: "Claymore",
@@ -1089,6 +1537,11 @@ export const ALL_CHARACTERS = {
       common: "insignia_skirmisher",
       overworld: "Emperor's Resolution",
       type: "prosperity",
+      talentnames: {
+        normal: "Stellar Rend",
+        skill: "Bestial Ascent",
+        burst: "Suanni's Gilded Dance",
+      },
       weekly: "Lightless Mass",
       icon: "./assets/genshin/Gaming Icon.webp",
       picture: "./assets/genshin/Gaming Card.webp",
@@ -1102,7 +1555,12 @@ export const ALL_CHARACTERS = {
       common: "scroll",
       overworld: "Cloudseam Scale",
       type: "gold",
-      weekly: "Light­less Eye of the Mael­strom",
+      talentnames: {
+        normal: "Word of Wind and Flower",
+        skill: "White Clouds at Dawn",
+        burst: "Stars Gather at Dusk",
+      },
+      weekly: "Lightless Eye of the Maelstrom",
       icon: "./assets/genshin/Xianyun Icon.webp",
       picture: "./assets/genshin/Xianyun Card.webp",
     },
@@ -1113,8 +1571,13 @@ export const ALL_CHARACTERS = {
       rarity: 5,
       local: "Dendrobium",
       common: "spectral",
-      overworld: "Ar­ti­ficed Spare Clock­work Com­po­nent — Cop­pe­li­a",
+      overworld: "Artificed Spare Clockwork Component — Coppelia",
       type: "light",
+      talentnames: {
+        normal: "Weaving Blade",
+        skill: "Fluttering Hasode",
+        burst: "Hiyoku: Twin Blades",
+      },
       weekly: "Lightless Silk String",
       icon: "./assets/genshin/Chiori Icon.webp",
       picture: "./assets/genshin/Chiori Card.webp",
@@ -1126,8 +1589,13 @@ export const ALL_CHARACTERS = {
       rarity: 5,
       local: "Rainbow Rose",
       common: "insignia_skirmisher",
-      overworld: "Frag­ment of a Golden Melody",
+      overworld: "Fragment of a Golden Melody",
       type: "order",
+      talentnames: {
+        normal: "Invitation to a Beheading",
+        skill: "All Is Ash",
+        burst: "Balemoon Rising",
+      },
       weekly: "Fading Candle",
       icon: "./assets/genshin/Arlecchino Icon.webp",
       picture: "./assets/genshin/Arlecchino Card.webp",
@@ -1141,6 +1609,11 @@ export const ALL_CHARACTERS = {
       common: "transoceanic",
       overworld: "Fontemer Unihorn",
       type: "justice",
+      talentnames: {
+        normal: "Oath of Hunting Shadows",
+        skill: "Hunter's Vigil",
+        burst: "Last Lightfall",
+      },
       weekly: "Everamber",
       icon: "./assets/genshin/Clorinde Icon.webp",
       picture: "./assets/genshin/Clorinde Card.webp",
@@ -1154,6 +1627,11 @@ export const ALL_CHARACTERS = {
       common: "eremites",
       overworld: "Cloudseam Scale",
       type: "praxis",
+      talentnames: {
+        normal: "Royal Reed Archery",
+        skill: "Ancient Rite: The Thundering Sands",
+        burst: "Secret Rite: Twilight Shadowpiercer",
+      },
       weekly: "Daka's Bell",
       icon: "./assets/genshin/Sethos Icon.webp",
       picture: "./assets/genshin/Sethos Card.webp",
@@ -1165,8 +1643,13 @@ export const ALL_CHARACTERS = {
       rarity: 5,
       local: "Romaritime Flower",
       common: "transoceanic",
-      overworld: "Wa­ter That Failed To Tran­scend",
+      overworld: "Water That Failed To Transcend",
       type: "equity",
+      talentnames: {
+        normal: "	Targeted Treatment",
+        skill: "Rebound Hydrotherapy",
+        burst: "Super Saturated Syringing",
+      },
       weekly: "Lightless Eye of the Maelstrom",
       icon: "./assets/genshin/Sigewinne Icon.webp",
       picture: "./assets/genshin/Sigewinne Card.webp",
@@ -1178,8 +1661,13 @@ export const ALL_CHARACTERS = {
       rarity: 5,
       local: "Lakelight Lily",
       common: "gear",
-      overworld: "Frag­ment of a Golden Melody",
+      overworld: "Fragment of a Golden Melody",
       type: "order",
+      talentnames: {
+        normal: "Shadow-Hunting Spear (Custom)",
+        skill: "Fragrance Extraction",
+        burst: "Aromatic Explication",
+      },
       weekly: "Silken Feather",
       icon: "./assets/genshin/Emilie Icon.webp",
       picture: "./assets/genshin/Emilie Card.webp",
@@ -1191,8 +1679,13 @@ export const ALL_CHARACTERS = {
       rarity: 4,
       local: "Quenepa Berry",
       common: "whistle",
-      overworld: "Over­ripe Flame­gra­nate",
+      overworld: "Overripe Flameganate",
       type: "conflict",
+      talentnames: {
+        normal: "Cragbiter",
+        skill: "Go, Go Turbo Twirly!",
+        burst: "Time to Get Serious!",
+      },
       weekly: "Fading Candle",
       icon: "./assets/genshin/Kachina Icon.webp",
       picture: "./assets/genshin/Kachina Card.webp",
@@ -1206,6 +1699,12 @@ export const ALL_CHARACTERS = {
       common: "whistle",
       overworld: "Mark of the Binding Blessing",
       type: "contention",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Lightless Mass",
       icon: "./assets/genshin/Mualani Icon.webp",
       picture: "./assets/genshin/Mualani Card.webp",
@@ -1219,6 +1718,12 @@ export const ALL_CHARACTERS = {
       common: "fang",
       overworld: "Over­ripe Flame­gra­nate",
       type: "kindling",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Denial and Judgement",
       icon: "./assets/genshin/Kinich Icon.webp",
       picture: "./assets/genshin/Kinich Card.webp",
@@ -1232,6 +1737,12 @@ export const ALL_CHARACTERS = {
       common: "whistle",
       overworld: "Gold-Inscribed Secret Source Core",
       type: "kindling",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Mirror of Mushin",
       icon: "./assets/genshin/Xilonen Icon.webp",
       picture: "./assets/genshin/Xilonen Card.webp",
@@ -1245,6 +1756,12 @@ export const ALL_CHARACTERS = {
       common: "fang",
       overworld: "Ensnaring Gaze",
       type: "conflict",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Silken Feather",
       icon: "./assets/genshin/Chasca Icon.webp",
       picture: "./assets/genshin/Chasca Card.webp",
@@ -1258,6 +1775,12 @@ export const ALL_CHARACTERS = {
       common: "fang",
       overworld: "Mark of the Binding Blessing",
       type: "kindling",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Lightless Silk String",
       icon: "./assets/genshin/Ororun Icon.webp",
       picture: "./assets/genshin/Ororun Card.webp",
@@ -1271,6 +1794,12 @@ export const ALL_CHARACTERS = {
       common: "fang",
       overworld: "Talisman of the Enigmatic Land",
       type: "kindling",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Denial and Judgement",
       icon: "./assets/genshin/Citlali Icon.webp",
       picture: "./assets/genshin/Citlali Card.webp",
@@ -1284,6 +1813,12 @@ export const ALL_CHARACTERS = {
       common: "whistle",
       overworld: "Gold-Inscribed Secret Source Core",
       type: "contention",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Eroded Horn",
       icon: "./assets/genshin/Mavuika Icon.webp",
       picture: "./assets/genshin/Mavuika Card.webp",
@@ -1297,6 +1832,12 @@ export const ALL_CHARACTERS = {
       common: "nectar",
       overworld: "Gold-Inscribed Secret Source Core",
       type: "diligence",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Eroded Sunfire",
       icon: "./assets/genshin/Lan Yan Icon.webp",
       picture: "./assets/genshin/Lan Yan Card.webp",
@@ -1310,6 +1851,12 @@ export const ALL_CHARACTERS = {
       common: "handguard",
       overworld: "Talisman of the Enigmatic Land",
       type: "transience",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Fading Candle",
       icon: "./assets/genshin/Yumemizuki Mizuki Icon.webp",
       picture: "./assets/genshin/Yumemizuki Mizuki Card.webp",
@@ -1323,6 +1870,12 @@ export const ALL_CHARACTERS = {
       common: "whistle",
       overworld: "Ensnaring Gaze",
       type: "contention",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Denial and Judgement",
       icon: "./assets/genshin/Iansan Icon.webp",
       picture: "./assets/genshin/Iansan Card.webp",
@@ -1336,6 +1889,12 @@ export const ALL_CHARACTERS = {
       common: "fang",
       overworld: "Sparkless Statue Core",
       type: "conflict",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Eroded Scale-Feather",
       icon: "./assets/genshin/Varesa Icon.webp",
       picture: "./assets/genshin/Varesa Card.webp",
@@ -1349,6 +1908,12 @@ export const ALL_CHARACTERS = {
       common: "gear",
       overworld: "Secret Source Airflow Accumulator",
       type: "justice",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Eroded Horn",
       icon: "./assets/genshin/Escoffier Icon.webp",
       picture: "./assets/genshin/Escoffier Card.webp",
@@ -1362,6 +1927,12 @@ export const ALL_CHARACTERS = {
       common: "fang",
       overworld: "Sparkless Statue Core",
       type: "conflict",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Ascended Sample: Rook",
       icon: "./assets/genshin/Ifa Icon.webp",
       picture: "./assets/genshin/Ifa Card.webp",
@@ -1375,6 +1946,12 @@ export const ALL_CHARACTERS = {
       common: "insignia_hoarder",
       overworld: "Secret Source Airflow Accumulator",
       type: "ballad",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Eroded Scale-Feather",
       icon: "./assets/genshin/Dahlia Icon.webp",
       picture: "./assets/genshin/Dahlia Card.webp",
@@ -1388,6 +1965,12 @@ export const ALL_CHARACTERS = {
       common: "gear",
       overworld: "Ensnaring Gaze",
       type: "contention",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Ascended Sample: Knight",
       icon: "./assets/genshin/Skirk Icon.webp",
       picture: "./assets/genshin/Skirk Card.webp",
@@ -1401,6 +1984,12 @@ export const ALL_CHARACTERS = {
       common: "whistle",
       overworld: "Secret Source Airflow Accumulator",
       type: "conflict",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Eroded Sunfire",
       icon: "./assets/genshin/Ineffa Icon.webp",
       picture: "./assets/genshin/Ineffa Card.webp",
@@ -1414,6 +2003,12 @@ export const ALL_CHARACTERS = {
       common: "warrant",
       overworld: "Lightbearing Scale-Feather",
       type: "moonlight",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Eroded Scale-Feather",
       icon: "./assets/genshin/Lauma Icon.webp",
       picture: "./assets/genshin/Lauma Card.webp",
@@ -1427,6 +2022,12 @@ export const ALL_CHARACTERS = {
       common: "drive shaft",
       overworld: "Precision Kuuvahki Stamping Die",
       type: "elysium",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Silken Feather",
       icon: "./assets/genshin/Aino Icon.webp",
       picture: "./assets/genshin/Aino Card.webp",
@@ -1440,6 +2041,12 @@ export const ALL_CHARACTERS = {
       common: "drive shaft",
       overworld: "Precision Kuuvahki Stamping Die",
       type: "vagrancy",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Ascended Sample: Queen",
       icon: "./assets/genshin/Flins Icon.webp",
       picture: "./assets/genshin/Flins Card.webp",
@@ -1453,9 +2060,35 @@ export const ALL_CHARACTERS = {
       common: "warrant",
       overworld: "Radiant Antler",
       type: "elysium",
+
+      talentnames: {
+        normal: "",
+        skill: "",
+        burst: "",
+      },
       weekly: "Ascended Sample: Rook",
       icon: "./assets/genshin/Nefer Icon.webp",
       picture: "./assets/genshin/Nefer Card.webp",
+    },
+    // In /data/all-characters.js
+    "Custom": { // default selections, will be changed per custom chara
+      weapon: "Sword",
+      element: "Pyro",
+      region: "Mondstat",
+      rarity: 5,
+      local: "Cecilia",
+      common: "slime",
+      overworld: "Everflame Seed",
+      type: "freedom",
+      talentnames: {
+        normal: "Normal Attack",
+        skill: "Elemental Skill",
+        burst: "Elemental Burst",
+      },
+      weekly: "Dvalin's Sigh",
+      icon: "/assets/profile pic.jpg",
+      picture: "/assets/genshin/stick figure.png",
+      isCustom: true,
     },
   },
   hsr: {
@@ -1470,6 +2103,12 @@ export const ALL_CHARACTERS = {
           "Obsidian of Desolation",
           "Obsidian of Obsession",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Fiend's Razor",
       },
     },
@@ -1484,6 +2123,12 @@ export const ALL_CHARACTERS = {
           "Destroyer's Final Path",
           "Destroyer's Final Crown",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Regret of Infinite Ochema",
       },
     },
@@ -1498,6 +2143,12 @@ export const ALL_CHARACTERS = {
           "Shield of the Bulwark",
           "Shield of the Fortress",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Past Evils of the Borehole Planet",
       },
     },
@@ -1512,6 +2163,12 @@ export const ALL_CHARACTERS = {
           "Obsidian of Desolation",
           "Obsidian of Obsession",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Regret of Infinite Ochema",
       },
     },
@@ -1526,6 +2183,12 @@ export const ALL_CHARACTERS = {
           "Lifeless Blade",
           "Worldbreaker Blade",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Regret of Infinite Ochema",
       },
     },
@@ -1540,6 +2203,12 @@ export const ALL_CHARACTERS = {
           "Key of Wisdom",
           "Key of Inspiration",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Guardian's Lament",
       },
     },
@@ -1554,6 +2223,12 @@ export const ALL_CHARACTERS = {
           "Lifeless Blade",
           "Worldbreaker Blade",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Guardian's Lament",
       },
     },
@@ -1568,6 +2243,12 @@ export const ALL_CHARACTERS = {
           "Lifeless Blade",
           "Worldbreaker Blade",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Regret of Infinite Ochema",
       },
     },
@@ -1582,6 +2263,12 @@ export const ALL_CHARACTERS = {
           "Arrow of the Demon Slayer",
           "Arrow of the Beast Hunter",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Past Evils of the Borehole Planet",
       },
     },
@@ -1596,6 +2283,12 @@ export const ALL_CHARACTERS = {
           "Shield of the Bulwark",
           "Shield of the Fortress",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Guardian's Lament",
       },
     },
@@ -1610,6 +2303,12 @@ export const ALL_CHARACTERS = {
           "Shield of the Bulwark",
           "Shield of the Fortress",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Guardian's Lament",
       },
     },
@@ -1624,6 +2323,12 @@ export const ALL_CHARACTERS = {
           "Destroyer's Final Path",
           "Destroyer's Final Crown",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Extinguished Core",
       },
     },
@@ -1638,6 +2343,12 @@ export const ALL_CHARACTERS = {
           "Golden Crown of the Past Shadow",
           "Golden Crown of the Past Shadow",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Regret of Infinite Ochema",
       },
     },
@@ -1652,6 +2363,12 @@ export const ALL_CHARACTERS = {
           "Destroyer's Final Path",
           "Destroyer's Final Crown",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Fiend's Razor",
       },
     },
@@ -1666,6 +2383,12 @@ export const ALL_CHARACTERS = {
           "Lifeless Blade",
           "Worldbreaker Blade",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Fiend's Razor",
       },
     },
@@ -1680,6 +2403,12 @@ export const ALL_CHARACTERS = {
           "Obsidian of Desolation",
           "Obsidian of Obsession",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Fiend's Razor",
       },
     },
@@ -1694,6 +2423,12 @@ export const ALL_CHARACTERS = {
           "Golden Crown of the Past Shadow",
           "Golden Crown of the Past Shadow",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Guardian's Lament",
       },
     },
@@ -1708,6 +2443,12 @@ export const ALL_CHARACTERS = {
           "Key of Wisdom",
           "Key of Inspiration",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Past Evils of the Borehole Planet",
       },
     },
@@ -1722,6 +2463,12 @@ export const ALL_CHARACTERS = {
           "Arrow of the Demon Slayer",
           "Arrow of the Beast Hunter",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Guardian's Lament",
       },
     },
@@ -1736,6 +2483,12 @@ export const ALL_CHARACTERS = {
           "Obsidian of Desolation",
           "Obsidian of Obsession",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Regret of Infinite Ochema",
       },
     },
@@ -1750,6 +2503,12 @@ export const ALL_CHARACTERS = {
           "Key of Wisdom",
           "Key of Inspiration",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Past Evils of the Borehole Planet",
       },
     },
@@ -1764,6 +2523,12 @@ export const ALL_CHARACTERS = {
           "Arrow of the Demon Slayer",
           "Arrow of the Beast Hunter",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Fiend's Razor",
       },
     },
@@ -1778,6 +2543,12 @@ export const ALL_CHARACTERS = {
           "Obsidian of Desolation",
           "Obsidian of Obsession",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Extinguished Core",
       },
     },
@@ -1792,6 +2563,12 @@ export const ALL_CHARACTERS = {
           "Arrow of the Demon Slayer",
           "Arrow of the Beast Hunter",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Guardian's Lament",
       },
     },
@@ -1806,6 +2583,12 @@ export const ALL_CHARACTERS = {
           "Golden Crown of the Past Shadow",
           "Golden Crown of the Past Shadow",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Guardian's Lament",
       },
     },
@@ -1820,6 +2603,12 @@ export const ALL_CHARACTERS = {
           "Destroyer's Final Path",
           "Destroyer's Final Crown",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Guardian's Lament",
       },
     },
@@ -1834,6 +2623,12 @@ export const ALL_CHARACTERS = {
           "Shield of the Bulwark",
           "Shield of the Fortress",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Guardian's Lament",
       },
     },
@@ -1848,6 +2643,12 @@ export const ALL_CHARACTERS = {
           "Arrow of the Demon Slayer",
           "Arrow of the Beast Hunter",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Guardian's Lament",
       },
     },
@@ -1862,6 +2663,12 @@ export const ALL_CHARACTERS = {
           "Key of Wisdom",
           "Key of Inspiration",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Extinguished Core",
       },
     },
@@ -1876,6 +2683,12 @@ export const ALL_CHARACTERS = {
           "Destroyer's Final Path",
           "Destroyer's Final Crown",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Fiend's Razor",
       },
     },
@@ -1890,6 +2703,12 @@ export const ALL_CHARACTERS = {
           "Destroyer's Final Path",
           "Destroyer's Final Crown",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Regret of Infinite Ochema",
       },
     },
@@ -1904,6 +2723,12 @@ export const ALL_CHARACTERS = {
           "Key of Wisdom",
           "Key of Inspiration",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Fiend's Razor",
       },
     },
@@ -1918,6 +2743,12 @@ export const ALL_CHARACTERS = {
           "Arrow of the Demon Slayer",
           "Arrow of the Beast Hunter",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Guardian's Lament",
       },
     },
@@ -1932,6 +2763,12 @@ export const ALL_CHARACTERS = {
           "Key of Wisdom",
           "Key of Inspiration",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Regret of Infinite Ochema",
       },
     },
@@ -1946,6 +2783,12 @@ export const ALL_CHARACTERS = {
           "Obsidian of Desolation",
           "Obsidian of Obsession",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Fiend's Razor",
       },
     },
@@ -1960,6 +2803,12 @@ export const ALL_CHARACTERS = {
           "Golden Crown of the Past Shadow",
           "Golden Crown of the Past Shadow",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Regret of Infinite Ochema",
       },
     },
@@ -1974,6 +2823,12 @@ export const ALL_CHARACTERS = {
           "Obsidian of Desolation",
           "Obsidian of Obsession",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Guardian's Lament",
       },
     },
@@ -1988,6 +2843,12 @@ export const ALL_CHARACTERS = {
           "Lifeless Blade",
           "Worldbreaker Blade",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Extinguished Core",
       },
     },
@@ -2002,6 +2863,12 @@ export const ALL_CHARACTERS = {
           "Golden Crown of the Past Shadow",
           "Golden Crown of the Past Shadow",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Fiend's Razor",
       },
     },
@@ -2016,6 +2883,12 @@ export const ALL_CHARACTERS = {
           "Lifeless Blade",
           "Worldbreaker Blade",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Fiend's Razor",
       },
     },
@@ -2030,6 +2903,12 @@ export const ALL_CHARACTERS = {
           "Key of Wisdom",
           "Key of Inspiration",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Past Evils of the Borehole Planet",
       },
     },
@@ -2044,6 +2923,12 @@ export const ALL_CHARACTERS = {
           "Golden Crown of the Past Shadow",
           "Golden Crown of the Past Shadow",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Past Evils of the Borehole Planet",
       },
     },
@@ -2058,6 +2943,12 @@ export const ALL_CHARACTERS = {
           "Lifeless Blade",
           "Worldbreaker Blade",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Past Evils of the Borehole Planet",
       },
     },
@@ -2072,6 +2963,12 @@ export const ALL_CHARACTERS = {
           "Lifeless Blade",
           "Worldbreaker Blade",
         ],
+
+        talentnames: {
+          normal: "",
+          skill: "",
+          burst: "",
+        },
         weekly_material: "Past Evils of the Borehole Planet",
       },
     },
