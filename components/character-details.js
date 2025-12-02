@@ -709,7 +709,7 @@ window.openWeaponSelector = (charId) => {
       `<option value="${weapon.name}" ${
         char.weaponName === weapon.name ? "selected" : ""
       }>
-          ${weapon.name} ${weapon.rarity ? `(${weapon.rarity}★)` : ""}
+          ${weapon.name}${weapon.rarity ? ` (${weapon.rarity}★)` : ""}
         </option>`
     ).join("")
     : `<option value="">No weapons available</option>`;
@@ -742,8 +742,13 @@ window.saveWeaponSelection = (charId) => {
   const weaponSelect = document.getElementById("weapon-select");
 
   if (weaponSelect && weaponSelect.value) {
-    char.weaponName = weaponSelect.options[weaponSelect.selectedIndex]?.text ||
-      weaponSelect.value;
+    // Get the option text (which includes the rarity)
+    const optionText = weaponSelect.options[weaponSelect.selectedIndex]?.text;
+
+    // Extract just the weapon name without the rarity
+    const weaponName = optionText.split("(")[0].trim();
+
+    char.weaponName = weaponName;
     saveMyCharacters();
     window.closeModal?.();
     setTimeout(() => renderCharacterDetail(char), 100);

@@ -11,6 +11,9 @@ import {
   GEAR_CONFIG,
 } from "../data/all-gear.js";
 
+// FOR GITHUB
+const BASE_PATH = "/hoyoverse-build-planner";
+
 // =================================================================
 // NEW SUBSTAT CALCULATOR
 // =================================================================
@@ -788,15 +791,47 @@ class GearUtils {
   static getWeaponImage(char) {
     if (!char.gear?.weapon) return "";
 
+    // Clean the weapon name - remove any (X★) suffix
+    const cleanWeaponName = char.gear.weapon.replace(/\s*\(\d+★\)\s*$/, "")
+      .trim();
+
     const charData = ALL_CHARACTERS[char.game]?.[char.name];
     const weaponType = charData?.weapon;
     if (!weaponType) return "";
 
     const weapons = ALL_WEAPONS[char.game]?.[weaponType] || [];
-    const weapon = weapons.find((w) => w.name === char.gear.weapon);
 
-    return weapon?.image ||
-      `/assets/${char.game}/weapons/${char.gear.weapon}.webp`;
+    // Try to find weapon by clean name first
+    let weapon = weapons.find((w) => w.name === cleanWeaponName);
+
+    // If not found, try to find by original name
+    if (!weapon) {
+      weapon = weapons.find((w) => w.name === char.gear.weapon);
+    }
+
+    if (weapon?.image) {
+      let imagePath = weapon.image;
+
+      // Remove leading ./ if present
+      if (imagePath.startsWith("./")) {
+        imagePath = imagePath.substring(2);
+      }
+
+      // If path starts with / but not the base path, prepend base path
+      if (imagePath.startsWith("/") && !imagePath.startsWith(BASE_PATH)) {
+        imagePath = BASE_PATH + imagePath;
+      }
+
+      // If path doesn't start with /, add base path and /
+      if (!imagePath.startsWith("/") && !imagePath.startsWith("http")) {
+        imagePath = BASE_PATH + "/" + imagePath;
+      }
+
+      return imagePath;
+    }
+
+    // Fallback - use the same logic as character-details.js
+    return `${BASE_PATH}/assets/${char.game}/weapons/default.webp`;
   }
 
   static getWeaponRarityColor(char) {

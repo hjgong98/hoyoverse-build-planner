@@ -4,8 +4,6 @@
 // - add all weapons
 // - add their additional subs and passives
 
-// /data/all-weapons.js
-
 export const ALL_WEAPONS = {
   genshin: {
     Sword: [
