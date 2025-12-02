@@ -184,9 +184,18 @@ function findMaterialByName(materialName, game) {
 
   if (material) {
     let imagePath = material.img;
-    if (!imagePath.startsWith("/assets/") && !imagePath.startsWith("http")) {
-      imagePath = `/assets${imagePath.startsWith("/") ? "" : "/"}${imagePath}`;
+
+    // Convert ./assets/genshin/... to /assets/genshin/... (for GitHub Pages)
+    // Remove the leading ./ if present
+    if (imagePath.startsWith("./")) {
+      imagePath = imagePath.substring(2);
     }
+
+    // Ensure it starts with / for absolute path on GitHub Pages
+    if (!imagePath.startsWith("/") && !imagePath.startsWith("http")) {
+      imagePath = `/${imagePath}`;
+    }
+
     return { ...material, img: imagePath };
   }
 
@@ -219,9 +228,18 @@ function findMaterialByTags(game, tag1, tag2 = null, tag3 = null) {
 
   if (material) {
     let imagePath = material.img;
-    if (!imagePath.startsWith("/assets/") && !imagePath.startsWith("http")) {
-      imagePath = `/assets${imagePath.startsWith("/") ? "" : "/"}${imagePath}`;
+
+    // Convert ./assets/genshin/... to /assets/genshin/... (for GitHub Pages)
+    // Remove the leading ./ if present
+    if (imagePath.startsWith("./")) {
+      imagePath = imagePath.substring(2);
     }
+
+    // Ensure it starts with / for absolute path on GitHub Pages
+    if (!imagePath.startsWith("/") && !imagePath.startsWith("http")) {
+      imagePath = `/${imagePath}`;
+    }
+
     return { ...material, img: imagePath };
   }
 
@@ -285,9 +303,18 @@ function findLocalMaterial(character) {
 
   if (material) {
     let imagePath = material.img;
-    if (!imagePath.startsWith("/assets/") && !imagePath.startsWith("http")) {
-      imagePath = `/assets${imagePath.startsWith("/") ? "" : "/"}${imagePath}`;
+
+    // Convert ./assets/genshin/... to /assets/genshin/... (for GitHub Pages)
+    // Remove the leading ./ if present
+    if (imagePath.startsWith("./")) {
+      imagePath = imagePath.substring(2);
     }
+
+    // Ensure it starts with / for absolute path on GitHub Pages
+    if (!imagePath.startsWith("/") && !imagePath.startsWith("http")) {
+      imagePath = `/${imagePath}`;
+    }
+
     return { ...material, img: imagePath };
   }
 

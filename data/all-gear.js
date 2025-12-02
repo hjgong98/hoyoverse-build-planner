@@ -19,24 +19,24 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Instructor's Brooch",
-            image: "/assets/genshin/artifacts/Instructor's Brooch.webp",
+            image: "./assets/genshin/artifacts/Instructor's Brooch.webp",
           },
           plume: {
             name: "Instructor's Feather Accessory",
             image:
-              "/assets/genshin/artifacts/Instructor's Feather Accessory.webp",
+              "./assets/genshin/artifacts/Instructor's Feather Accessory.webp",
           },
           sands: {
             name: "Instructor's Pocket Watch",
-            image: "/assets/genshin/artifacts/Instructor's Pocket Watch.webp",
+            image: "./assets/genshin/artifacts/Instructor's Pocket Watch.webp",
           },
           goblet: {
             name: "Instructor's Tea Cup",
-            image: "/assets/genshin/artifacts/Instructor's Tea Cup.webp",
+            image: "./assets/genshin/artifacts/Instructor's Tea Cup.webp",
           },
           circlet: {
             name: "Instructor's Cap",
-            image: "/assets/genshin/artifacts/Instructor's Cap.webp",
+            image: "./assets/genshin/artifacts/Instructor's Cap.webp",
           },
         },
       },
@@ -54,23 +54,23 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Exile's Flower",
-            image: "/assets/genshin/artifacts/Exile's Flower.webp",
+            image: "./assets/genshin/artifacts/Exile's Flower.webp",
           },
           plume: {
             name: "Exile's Feather",
-            image: "/assets/genshin/artifacts/Exile's Feather.webp",
+            image: "./assets/genshin/artifacts/Exile's Feather.webp",
           },
           sands: {
             name: "Exile's Pocket Watch",
-            image: "/assets/genshin/artifacts/Exile's Pocket Watch.webp",
+            image: "./assets/genshin/artifacts/Exile's Pocket Watch.webp",
           },
           goblet: {
             name: "Exile's Goblet",
-            image: "/assets/genshin/artifacts/Exile's Goblet.webp",
+            image: "./assets/genshin/artifacts/Exile's Goblet.webp",
           },
           circlet: {
             name: "Exile's Circlet",
-            image: "/assets/genshin/artifacts/Exile's Circlet.webp",
+            image: "./assets/genshin/artifacts/Exile's Circlet.webp",
           },
         },
       },
@@ -88,23 +88,23 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Gladiator's Nostalgia",
-            image: "/assets/genshin/artifacts/Gladiator's Nostalgia.webp",
+            image: "./assets/genshin/artifacts/Gladiator's Nostalgia.webp",
           },
           plume: {
             name: "Gladiator's Destiny",
-            image: "/assets/genshin/artifacts/Gladiator's Destiny.webp",
+            image: "./assets/genshin/artifacts/Gladiator's Destiny.webp",
           },
           sands: {
             name: "Gladiator's Longing",
-            image: "/assets/genshin/artifacts/Gladiator's Longing.webp",
+            image: "./assets/genshin/artifacts/Gladiator's Longing.webp",
           },
           goblet: {
             name: "Gladiator's Intoxication",
-            image: "/assets/genshin/artifacts/Gladiator's Intoxication.webp",
+            image: "./assets/genshin/artifacts/Gladiator's Intoxication.webp",
           },
           circlet: {
             name: "Gladiator's Triumphus",
-            image: "/assets/genshin/artifacts/Gladiator's Triumphus.webp",
+            image: "./assets/genshin/artifacts/Gladiator's Triumphus.webp",
           },
         },
       },
@@ -122,23 +122,23 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Troupe's Dawnlight",
-            image: "/assets/genshin/artifacts/Troupe's Dawnlight.webp",
+            image: "./assets/genshin/artifacts/Troupe's Dawnlight.webp",
           },
           plume: {
             name: "Bard's Arrow Feather",
-            image: "/assets/genshin/artifacts/Bard's Arrow Feather.webp",
+            image: "./assets/genshin/artifacts/Bard's Arrow Feather.webp",
           },
           sands: {
             name: "Concert's Final Hour",
-            image: "/assets/genshin/artifacts/Concert's Final Hour.webp",
+            image: "./assets/genshin/artifacts/Concert's Final Hour.webp",
           },
           goblet: {
             name: "Wanderer's String-Kettle",
-            image: "/assets/genshin/artifacts/Wanderer's String-Kettle.webp",
+            image: "./assets/genshin/artifacts/Wanderer's String-Kettle.webp",
           },
           circlet: {
             name: "Conductor's Top Hat",
-            image: "/assets/genshin/artifacts/Conductor's Top Hat.webp",
+            image: "./assets/genshin/artifacts/Conductor's Top Hat.webp",
           },
         },
       },
@@ -156,23 +156,23 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Royal Flora",
-            image: "/assets/genshin/artifacts/Royal Flora.webp",
+            image: "./assets/genshin/artifacts/Royal Flora.webp",
           },
           plume: {
             name: "Royal Plume",
-            image: "/assets/genshin/artifacts/Royal Plume.webp",
+            image: "./assets/genshin/artifacts/Royal Plume.webp",
           },
           sands: {
             name: "Royal Pocket Watch",
-            image: "/assets/genshin/artifacts/Royal Pocket Watch.webp",
+            image: "./assets/genshin/artifacts/Royal Pocket Watch.webp",
           },
           goblet: {
             name: "Royal Silver Urn",
-            image: "/assets/genshin/artifacts/Royal Silver Urn.webp",
+            image: "./assets/genshin/artifacts/Royal Silver Urn.webp",
           },
           circlet: {
             name: "Royal Masque",
-            image: "/assets/genshin/artifacts/Royal Masque.webp",
+            image: "./assets/genshin/artifacts/Royal Masque.webp",
           },
         },
       },
@@ -190,24 +190,25 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Bloodstained Flower of Iron",
-            image: "/assets/genshin/artifacts/Bloodstained Flower of Iron.webp",
+            image:
+              "./assets/genshin/artifacts/Bloodstained Flower of Iron.webp",
           },
           plume: {
             name: "Bloodstained Black Plume",
-            image: "/assets/genshin/artifacts/Bloodstained Black Plume.webp",
+            image: "./assets/genshin/artifacts/Bloodstained Black Plume.webp",
           },
           sands: {
             name: "Bloodstained Final Hour",
-            image: "/assets/genshin/artifacts/Bloodstained Final Hour.webp",
+            image: "./assets/genshin/artifacts/Bloodstained Final Hour.webp",
           },
           goblet: {
             name: "Bloodstained Chevalier's Goblet",
             image:
-              "/assets/genshin/artifacts/Bloodstained Chevalier's Goblet.webp",
+              "./assets/genshin/artifacts/Bloodstained Chevalier's Goblet.webp",
           },
           circlet: {
             name: "Bloodstained Iron Mask",
-            image: "/assets/genshin/artifacts/Bloodstained Iron Mask.webp",
+            image: "./assets/genshin/artifacts/Bloodstained Iron Mask.webp",
           },
         },
       },
@@ -225,24 +226,24 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Maiden's Distant Love",
-            image: "/assets/genshin/artifacts/Maiden's Distant Love.webp",
+            image: "./assets/genshin/artifacts/Maiden's Distant Love.webp",
           },
           plume: {
             name: "Maiden's Heart-Stricken Infatuation",
             image:
-              "/assets/genshin/artifacts/Maiden's Heart-Stricken Infatuation.webp",
+              "./assets/genshin/artifacts/Maiden's Heart-Stricken Infatuation.webp",
           },
           sands: {
             name: "Maiden's Passing Youth",
-            image: "/assets/genshin/artifacts/Maiden's Passing Youth.webp",
+            image: "./assets/genshin/artifacts/Maiden's Passing Youth.webp",
           },
           goblet: {
             name: "Maiden's Fleeting Leisure",
-            image: "/assets/genshin/artifacts/Maiden's Fleeting Leisure.webp",
+            image: "./assets/genshin/artifacts/Maiden's Fleeting Leisure.webp",
           },
           circlet: {
             name: "Maiden's Fading Beauty",
-            image: "/assets/genshin/artifacts/Maiden's Fading Beauty.webp",
+            image: "./assets/genshin/artifacts/Maiden's Fading Beauty.webp",
           },
         },
       },
@@ -261,26 +262,26 @@ export const GEAR_CONFIG = {
           flower: {
             name: "In Remembrance of Viridescent Fields",
             image:
-              "/assets/genshin/artifacts/In Remembrance of Viridescent Fields.webp",
+              "./assets/genshin/artifacts/In Remembrance of Viridescent Fields.webp",
           },
           plume: {
             name: "Viridescent Arrow Feather",
-            image: "/assets/genshin/artifacts/Viridescent Arrow Feather.webp",
+            image: "./assets/genshin/artifacts/Viridescent Arrow Feather.webp",
           },
           sands: {
             name: "Viridescent Venerer's Determination",
             image:
-              "/assets/genshin/artifacts/Viridescent Venerer's Determination.webp",
+              "./assets/genshin/artifacts/Viridescent Venerer's Determination.webp",
           },
           goblet: {
             name: "Viridescent Venerer's Vessel",
             image:
-              "/assets/genshin/artifacts/Viridescent Venerer's Vessel.webp",
+              "./assets/genshin/artifacts/Viridescent Venerer's Vessel.webp",
           },
           circlet: {
             name: "Viridescent Venerer's Diadem",
             image:
-              "/assets/genshin/artifacts/Viridescent Venerer's Diadem.webp",
+              "./assets/genshin/artifacts/Viridescent Venerer's Diadem.webp",
           },
         },
       },
@@ -298,23 +299,23 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Flower of Creviced Cliff",
-            image: "/assets/genshin/artifacts/Flower of Creviced Cliff.webp",
+            image: "./assets/genshin/artifacts/Flower of Creviced Cliff.webp",
           },
           plume: {
             name: "Feather of Jagged Peaks",
-            image: "/assets/genshin/artifacts/Feather of Jagged Peaks.webp",
+            image: "./assets/genshin/artifacts/Feather of Jagged Peaks.webp",
           },
           sands: {
             name: "Sundial of Enduring Jade",
-            image: "/assets/genshin/artifacts/Sundial of Enduring Jade.webp",
+            image: "./assets/genshin/artifacts/Sundial of Enduring Jade.webp",
           },
           goblet: {
             name: "Goblet of Chiseled Crag",
-            image: "/assets/genshin/artifacts/Goblet of Chiseled Crag.webp",
+            image: "./assets/genshin/artifacts/Goblet of Chiseled Crag.webp",
           },
           circlet: {
             name: "Mask of Solitude Basalt",
-            image: "/assets/genshin/artifacts/Mask of Solitude Basalt.webp",
+            image: "./assets/genshin/artifacts/Mask of Solitude Basalt.webp",
           },
         },
       },
@@ -332,23 +333,24 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Summer Night's Bloom",
-            image: "/assets/genshin/artifacts/Summer Night's Bloom.webp",
+            image: "./assets/genshin/artifacts/Summer Night's Bloom.webp",
           },
           plume: {
             name: "Summer Night's Finale",
-            image: "/assets/genshin/artifacts/Summer Night's Finale.webp",
+            image: "./assets/genshin/artifacts/Summer Night's Finale.webp",
           },
           sands: {
             name: "Summer Night's Moment",
-            image: "/assets/genshin/artifacts/Summer Night's Moment.webp",
+            image: "./assets/genshin/artifacts/Summer Night's Moment.webp",
           },
           goblet: {
             name: "Summer Night's Waterballoon",
-            image: "/assets/genshin/artifacts/Summer Night's Waterballoon.webp",
+            image:
+              "./assets/genshin/artifacts/Summer Night's Waterballoon.webp",
           },
           circlet: {
             name: "Summer Night's Mask",
-            image: "/assets/genshin/artifacts/Summer Night's Mask.webp",
+            image: "./assets/genshin/artifacts/Summer Night's Mask.webp",
           },
         },
       },
@@ -366,23 +368,23 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Thundersoother's Heart",
-            image: "/assets/genshin/artifacts/Thundersoother's Heart.webp",
+            image: "./assets/genshin/artifacts/Thundersoother's Heart.webp",
           },
           plume: {
             name: "Thundersoother's Plume",
-            image: "/assets/genshin/artifacts/Thundersoother's Plume.webp",
+            image: "./assets/genshin/artifacts/Thundersoother's Plume.webp",
           },
           sands: {
             name: "Hour of Soothing Thunder",
-            image: "/assets/genshin/artifacts/Hour of Soothing Thunder.webp",
+            image: "./assets/genshin/artifacts/Hour of Soothing Thunder.webp",
           },
           goblet: {
             name: "Thundersoother's Goblet",
-            image: "/assets/genshin/artifacts/Thundersoother's Goblet.webp",
+            image: "./assets/genshin/artifacts/Thundersoother's Goblet.webp",
           },
           circlet: {
             name: "Thundersoother's Diadem",
-            image: "/assets/genshin/artifacts/Thundersoother's Diadem.webp",
+            image: "./assets/genshin/artifacts/Thundersoother's Diadem.webp",
           },
         },
       },
@@ -399,23 +401,23 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Thunderbird's Mercy",
-            image: "/assets/genshin/artifacts/Thunderbird's Mercy.webp",
+            image: "./assets/genshin/artifacts/Thunderbird's Mercy.webp",
           },
           plume: {
             name: "Survivor of Catastrophe",
-            image: "/assets/genshin/artifacts/Survivor of Catastrophe.webp",
+            image: "./assets/genshin/artifacts/Survivor of Catastrophe.webp",
           },
           sands: {
             name: "Hourglass of Thunder",
-            image: "/assets/genshin/artifacts/Hourglass of Thunder.webp",
+            image: "./assets/genshin/artifacts/Hourglass of Thunder.webp",
           },
           goblet: {
             name: "Omen of Thunderstorm",
-            image: "/assets/genshin/artifacts/Omen of Thunderstorm.webp",
+            image: "./assets/genshin/artifacts/Omen of Thunderstorm.webp",
           },
           circlet: {
             name: "Thunder Summoner's Crown",
-            image: "/assets/genshin/artifacts/Thunder Summoner's Crown.webp",
+            image: "./assets/genshin/artifacts/Thunder Summoner's Crown.webp",
           },
         },
       },
@@ -433,23 +435,23 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Lavawalker's Resolution",
-            image: "/assets/genshin/artifacts/Lavawalker's Resolution.webp",
+            image: "./assets/genshin/artifacts/Lavawalker's Resolution.webp",
           },
           plume: {
             name: "Lavawalker's Salvation",
-            image: "/assets/genshin/artifacts/Lavawalker's Salvation.webp",
+            image: "./assets/genshin/artifacts/Lavawalker's Salvation.webp",
           },
           sands: {
             name: "Lavawalker's Torment",
-            image: "/assets/genshin/artifacts/Lavawalker's Torment.webp",
+            image: "./assets/genshin/artifacts/Lavawalker's Torment.webp",
           },
           goblet: {
             name: "Lavawalker's Epiphany",
-            image: "/assets/genshin/artifacts/Lavawalker's Epiphany.webp",
+            image: "./assets/genshin/artifacts/Lavawalker's Epiphany.webp",
           },
           circlet: {
             name: "Lavawalker's Wisdom",
-            image: "/assets/genshin/artifacts/Lavawalker's Wisdom.webp",
+            image: "./assets/genshin/artifacts/Lavawalker's Wisdom.webp",
           },
         },
       },
@@ -467,23 +469,23 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Witch's Flower of Blaze",
-            image: "/assets/genshin/artifacts/Witch's Flower of Blaze.webp",
+            image: "./assets/genshin/artifacts/Witch's Flower of Blaze.webp",
           },
           plume: {
             name: "Witch's Ever-Burning Plume",
-            image: "/assets/genshin/artifacts/Witch's Ever-Burning Plume.webp",
+            image: "./assets/genshin/artifacts/Witch's Ever-Burning Plume.webp",
           },
           sands: {
             name: "Witch's End Time",
-            image: "/assets/genshin/artifacts/Witch's End Time.webp",
+            image: "./assets/genshin/artifacts/Witch's End Time.webp",
           },
           goblet: {
             name: "Witch's Heart Flames",
-            image: "/assets/genshin/artifacts/Witch's Heart Flames.webp",
+            image: "./assets/genshin/artifacts/Witch's Heart Flames.webp",
           },
           circlet: {
             name: "Witch's Scorching Hat",
-            image: "/assets/genshin/artifacts/Witch's Scorching Hat.webp",
+            image: "./assets/genshin/artifacts/Witch's Scorching Hat.webp",
           },
         },
       },
@@ -501,23 +503,23 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Snowswept Memory",
-            image: "/assets/genshin/artifacts/Snowswept Memory.webp",
+            image: "./assets/genshin/artifacts/Snowswept Memory.webp",
           },
           plume: {
             name: "Icebreaker's Resolve",
-            image: "/assets/genshin/artifacts/Icebreaker's Resolve.png",
+            image: "./assets/genshin/artifacts/Icebreaker's Resolve.png",
           },
           sands: {
             name: "Frozen Homeland's Demise",
-            image: "/assets/genshin/artifacts/Frozen Homeland's Demise.webp",
+            image: "./assets/genshin/artifacts/Frozen Homeland's Demise.webp",
           },
           goblet: {
             name: "Frost-Weaved Dignity",
-            image: "/assets/genshin/artifacts/Frost-Weaved Dignity.png",
+            image: "./assets/genshin/artifacts/Frost-Weaved Dignity.png",
           },
           circlet: {
             name: "Broken Rime's Echo",
-            image: "/assets/genshin/artifacts/Broken Rime's Echo.webp",
+            image: "./assets/genshin/artifacts/Broken Rime's Echo.webp",
           },
         },
       },
@@ -535,23 +537,23 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Gilded Corsage",
-            image: "/assets/genshin/artifacts/Gilded Corsage.webp",
+            image: "./assets/genshin/artifacts/Gilded Corsage.webp",
           },
           plume: {
             name: "Gust of Nostalgia",
-            image: "/assets/genshin/artifacts/Gust of Nostalgia.webp",
+            image: "./assets/genshin/artifacts/Gust of Nostalgia.webp",
           },
           sands: {
             name: "Copper Compass",
-            image: "/assets/genshin/artifacts/Copper Compass.webp",
+            image: "./assets/genshin/artifacts/Copper Compass.webp",
           },
           goblet: {
             name: "Goblet of Thundering Deep",
-            image: "/assets/genshin/artifacts/Goblet of Thundering Deep.webp",
+            image: "./assets/genshin/artifacts/Goblet of Thundering Deep.webp",
           },
           circlet: {
             name: "Wine-Stained Tricorne",
-            image: "/assets/genshin/artifacts/Wine-Stained Tricorne.webp",
+            image: "./assets/genshin/artifacts/Wine-Stained Tricorne.webp",
           },
         },
       },
@@ -569,23 +571,23 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Flower of Accolades",
-            image: "/assets/genshin/artifacts/Flower of Accolades.webp",
+            image: "./assets/genshin/artifacts/Flower of Accolades.webp",
           },
           plume: {
             name: "Ceremonial War-Plume",
-            image: "/assets/genshin/artifacts/Ceremonial War-Plume.webp",
+            image: "./assets/genshin/artifacts/Ceremonial War-Plume.webp",
           },
           sands: {
             name: "Orichalceous Time-Dial",
-            image: "/assets/genshin/artifacts/Orichalceous Time-Dial.webp",
+            image: "./assets/genshin/artifacts/Orichalceous Time-Dial.webp",
           },
           goblet: {
             name: "Noble's Pledging Vessel",
-            image: "/assets/genshin/artifacts/Noble's Pledging Vessel.webp",
+            image: "./assets/genshin/artifacts/Noble's Pledging Vessel.webp",
           },
           circlet: {
             name: "General's Ancient Helm",
-            image: "/assets/genshin/artifacts/General's Ancient Helm.webp",
+            image: "./assets/genshin/artifacts/General's Ancient Helm.webp",
           },
         },
       },
@@ -603,23 +605,23 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Stainless Bloom",
-            image: "/assets/genshin/artifacts/Stainless Bloom.webp",
+            image: "./assets/genshin/artifacts/Stainless Bloom.webp",
           },
           plume: {
             name: "Wise Doctor's Pinion",
-            image: "/assets/genshin/artifacts/Wise Doctor's Pinion.webp",
+            image: "./assets/genshin/artifacts/Wise Doctor's Pinion.webp",
           },
           sands: {
             name: "Moment of Cessation",
-            image: "/assets/genshin/artifacts/Moment of Cessation.webp",
+            image: "./assets/genshin/artifacts/Moment of Cessation.webp",
           },
           goblet: {
             name: "Surpassing Cup",
-            image: "/assets/genshin/artifacts/Surpassing Cup.webp",
+            image: "./assets/genshin/artifacts/Surpassing Cup.webp",
           },
           circlet: {
             name: "Mocking Mask",
-            image: "/assets/genshin/artifacts/Mocking Mask.webp",
+            image: "./assets/genshin/artifacts/Mocking Mask.webp",
           },
         },
       },
@@ -637,23 +639,23 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Entangling Bloom",
-            image: "/assets/genshin/artifacts/Entangling Bloom.webp",
+            image: "./assets/genshin/artifacts/Entangling Bloom.webp",
           },
           plume: {
             name: "Shaft of Remembrance",
-            image: "/assets/genshin/artifacts/Shaft of Remembrance.webp",
+            image: "./assets/genshin/artifacts/Shaft of Remembrance.webp",
           },
           sands: {
             name: "Morning Dew's Moment",
-            image: "/assets/genshin/artifacts/Morning Dew's Moment.webp",
+            image: "./assets/genshin/artifacts/Morning Dew's Moment.webp",
           },
           goblet: {
             name: "Hopeful Heart",
-            image: "/assets/genshin/artifacts/Hopeful HeartHopeful Heart.webp",
+            image: "./assets/genshin/artifacts/Hopeful HeartHopeful Heart.webp",
           },
           circlet: {
             name: "Capricious Visage",
-            image: "/assets/genshin/artifacts/Capricious Visage.webp",
+            image: "./assets/genshin/artifacts/Capricious Visage.webp",
           },
         },
       },
@@ -671,23 +673,23 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Magnificent Tsuba",
-            image: "/assets/genshin/artifacts/Magnificent Tsuba.webp",
+            image: "./assets/genshin/artifacts/Magnificent Tsuba.webp",
           },
           plume: {
             name: "Sundered Feather",
-            image: "/assets/genshin/artifacts/Sundered Feather.webp",
+            image: "./assets/genshin/artifacts/Sundered Feather.webp",
           },
           sands: {
             name: "Storm Cage",
-            image: "/assets/genshin/artifacts/Storm Cage.webp",
+            image: "./assets/genshin/artifacts/Storm Cage.webp",
           },
           goblet: {
             name: "Scarlet Vessel",
-            image: "/assets/genshin/artifacts/Scarlet Vessel.webp",
+            image: "./assets/genshin/artifacts/Scarlet Vessel.webp",
           },
           circlet: {
             name: "Ornate Kabuto",
-            image: "/assets/genshin/artifacts/Ornate Kabuto.webp",
+            image: "./assets/genshin/artifacts/Ornate Kabuto.webp",
           },
         },
       },
@@ -709,23 +711,23 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Bloom Times",
-            image: "/assets/genshin/artifacts/Bloom Times.webp",
+            image: "./assets/genshin/artifacts/Bloom Times.webp",
           },
           plume: {
             name: "Plume of Luxury",
-            image: "/assets/genshin/artifacts/Plume of Luxury.webp",
+            image: "./assets/genshin/artifacts/Plume of Luxury.webp",
           },
           sands: {
             name: "Song of Life",
-            image: "/assets/genshin/artifacts/Song of Life.webp",
+            image: "./assets/genshin/artifacts/Song of Life.webp",
           },
           goblet: {
             name: "Calabash of Awakening",
-            image: "/assets/genshin/artifacts/Calabash of Awakening.webp",
+            image: "./assets/genshin/artifacts/Calabash of Awakening.webp",
           },
           circlet: {
             name: "Skeletal Hat",
-            image: "/assets/genshin/artifacts/Skeletal Hat.webp",
+            image: "./assets/genshin/artifacts/Skeletal Hat.webp",
           },
         },
       },
@@ -749,23 +751,23 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Sea-Dyed Blossom",
-            image: "/assets/genshin/artifacts/Sea-Dyed Blossom.webp",
+            image: "./assets/genshin/artifacts/Sea-Dyed Blossom.webp",
           },
           plume: {
             name: "Deep Palace's Plume",
-            image: "/assets/genshin/artifacts/Deep Palace's Plume.webp",
+            image: "./assets/genshin/artifacts/Deep Palace's Plume.webp",
           },
           sands: {
             name: "Cowry of Parting",
-            image: "/assets/genshin/artifacts/Cowry of Parting.webp",
+            image: "./assets/genshin/artifacts/Cowry of Parting.webp",
           },
           goblet: {
             name: "Pearl Cage",
-            image: "/assets/genshin/artifacts/Pearl Cage.webp",
+            image: "./assets/genshin/artifacts/Pearl Cage.webp",
           },
           circlet: {
             name: "Crown of Watatsumi",
-            image: "/assets/genshin/artifacts/Crown of Watatsumi.webp",
+            image: "./assets/genshin/artifacts/Crown of Watatsumi.webp",
           },
         },
       },
@@ -783,23 +785,23 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Flowering Life",
-            image: "/assets/genshin/artifacts/Flowering Life.webp",
+            image: "./assets/genshin/artifacts/Flowering Life.webp",
           },
           plume: {
             name: "Feather of Nascent Light",
-            image: "/assets/genshin/artifacts/Feather of Nascent Light.webp",
+            image: "./assets/genshin/artifacts/Feather of Nascent Light.webp",
           },
           sands: {
             name: "Solar Relic",
-            image: "/assets/genshin/artifacts/Solar Relic.webp",
+            image: "./assets/genshin/artifacts/Solar Relic.webp",
           },
           goblet: {
             name: "Moment of the Pact",
-            image: "/assets/genshin/artifacts/Moment of the Pact.webp",
+            image: "./assets/genshin/artifacts/Moment of the Pact.webp",
           },
           circlet: {
             name: "Thundering Poise",
-            image: "/assets/genshin/artifacts/Thundering Poise.webp",
+            image: "./assets/genshin/artifacts/Thundering Poise.webp",
           },
         },
       },
@@ -820,23 +822,23 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Soulscent Bloom",
-            image: "/assets/genshin/artifacts/Soulscent Bloom.webp",
+            image: "./assets/genshin/artifacts/Soulscent Bloom.webp",
           },
           plume: {
             name: "Jade Leaf",
-            image: "/assets/genshin/artifacts/Jade Leaf.webp",
+            image: "./assets/genshin/artifacts/Jade Leaf.webp",
           },
           sands: {
             name: "Symbol of Felicitation",
-            image: "/assets/genshin/artifacts/Symbol of Felicitation.webp",
+            image: "./assets/genshin/artifacts/Symbol of Felicitation.webp",
           },
           goblet: {
             name: "Chalice of the Font",
-            image: "/assets/genshin/artifacts/Chalice of the Font.webp",
+            image: "./assets/genshin/artifacts/Chalice of the Font.webp",
           },
           circlet: {
             name: "Flowing Rings",
-            image: "/assets/genshin/artifacts/Flowing Rings.webp",
+            image: "./assets/genshin/artifacts/Flowing Rings.webp",
           },
         },
       },
@@ -854,23 +856,23 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Labyrinth Wayfarer",
-            image: "/assets/genshin/artifacts/Labyrinth Wayfarer.webp",
+            image: "./assets/genshin/artifacts/Labyrinth Wayfarer.webp",
           },
           plume: {
             name: "Scholar of Vines",
-            image: "/assets/genshin/artifacts/Scholar of Vines.webp",
+            image: "./assets/genshin/artifacts/Scholar of Vines.webp",
           },
           sands: {
             name: "A Time of Insight",
-            image: "/assets/genshin/artifacts/A Time of Insight.webp",
+            image: "./assets/genshin/artifacts/A Time of Insight.webp",
           },
           goblet: {
             name: "Lamp of the Lost",
-            image: "/assets/genshin/artifacts/Lamp of the Lost.webp",
+            image: "./assets/genshin/artifacts/Lamp of the Lost.webp",
           },
           circlet: {
             name: "Laurel Coronet",
-            image: "/assets/genshin/artifacts/Laurel Coronet.webp",
+            image: "./assets/genshin/artifacts/Laurel Coronet.webp",
           },
         },
       },
@@ -888,23 +890,23 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Dreaming Steelbloom",
-            image: "/assets/genshin/artifacts/Dreaming Steelbloom.webp",
+            image: "./assets/genshin/artifacts/Dreaming Steelbloom.webp",
           },
           plume: {
             name: "Feather of Judgment",
-            image: "/assets/genshin/artifacts/Feather of Judgment.webp",
+            image: "./assets/genshin/artifacts/Feather of Judgment.webp",
           },
           sands: {
             name: "The Sunken Years",
-            image: "/assets/genshin/artifacts/The Sunken Years.webp",
+            image: "./assets/genshin/artifacts/The Sunken Years.webp",
           },
           goblet: {
             name: "Honeyed Final Feast",
-            image: "/assets/genshin/artifacts/Honeyed Final Feast.webp",
+            image: "./assets/genshin/artifacts/Honeyed Final Feast.webp",
           },
           circlet: {
             name: "Shadow of the Sand King",
-            image: "/assets/genshin/artifacts/Shadow of the Sand King.webp",
+            image: "./assets/genshin/artifacts/Shadow of the Sand King.webp",
           },
         },
       },
@@ -923,25 +925,25 @@ export const GEAR_CONFIG = {
           flower: {
             name: "The First Days of the City of Kings",
             image:
-              "/assets/genshin/artifacts/The First Days of the City of Kings.webp",
+              "./assets/genshin/artifacts/The First Days of the City of Kings.webp",
           },
           plume: {
             name: "End of the Golden Realm",
-            image: "/assets/genshin/artifacts/End of the Golden Realm.webp",
+            image: "./assets/genshin/artifacts/End of the Golden Realm.webp",
           },
           sands: {
             name: "Timepiece of the Lost Path",
-            image: "/assets/genshin/artifacts/Timepiece of the Lost Path.webp",
+            image: "./assets/genshin/artifacts/Timepiece of the Lost Path.webp",
           },
           goblet: {
             name: "Defender of the Enchanting Dream",
             image:
-              "/assets/genshin/artifacts/Defender of the Enchanting Dream.webp",
+              "./assets/genshin/artifacts/Defender of the Enchanting Dream.webp",
           },
           circlet: {
             name: "Legacy of the Desert High-Born",
             image:
-              "/assets/genshin/artifacts/Legacy of the Desert High-Born.webp",
+              "./assets/genshin/artifacts/Legacy of the Desert High-Born.webp",
           },
         },
       },
@@ -959,24 +961,24 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Ay-Khanoum's Myriad",
-            image: "/assets/genshin/artifacts/Ay-Khanoum's Myriad.webp",
+            image: "./assets/genshin/artifacts/Ay-Khanoum's Myriad.webp",
           },
           plume: {
             name: "Wilting Feast",
-            image: "/assets/genshin/artifacts/Wilting Feast.webp",
+            image: "./assets/genshin/artifacts/Wilting Feast.webp",
           },
           sands: {
             name: "A Moment Congealed",
-            image: "/assets/genshin/artifacts/A Moment Congealed.webp",
+            image: "./assets/genshin/artifacts/A Moment Congealed.webp",
           },
           goblet: {
             name: "Secret-Keeper's Magic Bottle",
             image:
-              "/assets/genshin/artifacts/Secret-Keeper's Magic Bottle.webp",
+              "./assets/genshin/artifacts/Secret-Keeper's Magic Bottle.webp",
           },
           circlet: {
             name: "Amethyst Crown",
-            image: "/assets/genshin/artifacts/Amethyst Crown.webp",
+            image: "./assets/genshin/artifacts/Amethyst Crown.webp",
           },
         },
       },
@@ -994,23 +996,23 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Odyssean Flower",
-            image: "/assets/genshin/artifacts/Odyssean Flower.webp",
+            image: "./assets/genshin/artifacts/Odyssean Flower.webp",
           },
           plume: {
             name: "Wicked Mage's Plumule",
-            image: "/assets/genshin/artifacts/Wicked Mage's Plumule.webp",
+            image: "./assets/genshin/artifacts/Wicked Mage's Plumule.webp",
           },
           sands: {
             name: "Nymph's Constancy",
-            image: "/assets/genshin/artifacts/Nymph's Constancy.webp",
+            image: "./assets/genshin/artifacts/Nymph's Constancy.webp",
           },
           goblet: {
             name: "Heroes' Tea Party",
-            image: "/assets/genshin/artifacts/Heroes' Tea Party.webp",
+            image: "./assets/genshin/artifacts/Heroes' Tea Party.webp",
           },
           circlet: {
             name: "Fell Dragon's Monocle",
-            image: "/assets/genshin/artifacts/Fell Dragon's Monocle.webp",
+            image: "./assets/genshin/artifacts/Fell Dragon's Monocle.webp",
           },
         },
       },
@@ -1028,24 +1030,25 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Stamen of Khvarena's Origin",
-            image: "/assets/genshin/artifacts/Stamen of Khvarena's Origin.webp",
+            image:
+              "./assets/genshin/artifacts/Stamen of Khvarena's Origin.webp",
           },
           plume: {
             name: "Vibrant Pinion",
-            image: "/assets/genshin/artifacts/Vibrant Pinion.webp",
+            image: "./assets/genshin/artifacts/Vibrant Pinion.webp",
           },
           sands: {
             name: "Ancient Abscission",
-            image: "/assets/genshin/artifacts/Ancient Abscission.webp",
+            image: "./assets/genshin/artifacts/Ancient Abscission.webp",
           },
           goblet: {
             name: "Feast of Boundless Joy",
-            image: "/assets/genshin/artifacts/Feast of Boundless Joy.webp",
+            image: "./assets/genshin/artifacts/Feast of Boundless Joy.webp",
           },
           circlet: {
             name: "Heart of Khvarena's Brilliance",
             image:
-              "/assets/genshin/artifacts/Heart of Khvarena's Brilliance.webp",
+              "./assets/genshin/artifacts/Heart of Khvarena's Brilliance.webp",
           },
         },
       },
@@ -1063,23 +1066,23 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Hunter's Brooch",
-            image: "/assets/genshin/artifacts/Hunter's Brooch.webp",
+            image: "./assets/genshin/artifacts/Hunter's Brooch.webp",
           },
           plume: {
             name: "Masterpiece's Overture",
-            image: "/assets/genshin/artifacts/Masterpiece's Overture.webp",
+            image: "./assets/genshin/artifacts/Masterpiece's Overture.webp",
           },
           sands: {
             name: "Moment of Judgment",
-            image: "/assets/genshin/artifacts/Moment of Judgment.webp",
+            image: "./assets/genshin/artifacts/Moment of Judgment.webp",
           },
           goblet: {
             name: "Forgotten Vessel",
-            image: "/assets/genshin/artifacts/Forgotten Vessel.webp",
+            image: "./assets/genshin/artifacts/Forgotten Vessel.webp",
           },
           circlet: {
             name: "Veteran's Visage",
-            image: "/assets/genshin/artifacts/Veteran's Visage.webp",
+            image: "./assets/genshin/artifacts/Veteran's Visage.webp",
           },
         },
       },
@@ -1097,23 +1100,23 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Golden Song's Variation",
-            image: "/assets/genshin/artifacts/Golden Song's Variation.webp",
+            image: "./assets/genshin/artifacts/Golden Song's Variation.webp",
           },
           plume: {
             name: "Golden Bird's Shedding",
-            image: "/assets/genshin/artifacts/Golden Bird's Shedding.webp",
+            image: "./assets/genshin/artifacts/Golden Bird's Shedding.webp",
           },
           sands: {
             name: "Golden Era's Prelude",
-            image: "/assets/genshin/artifacts/Golden Era's Prelude.webp",
+            image: "./assets/genshin/artifacts/Golden Era's Prelude.webp",
           },
           goblet: {
             name: "Golden Night's Bustle",
-            image: "/assets/genshin/artifacts/Golden Night's Bustle.webp",
+            image: "./assets/genshin/artifacts/Golden Night's Bustle.webp",
           },
           circlet: {
             name: "Golden Troupe's Reward",
-            image: "/assets/genshin/artifacts/Golden Troupe's Reward.webp",
+            image: "./assets/genshin/artifacts/Golden Troupe's Reward.webp",
           },
         },
       },
@@ -1131,24 +1134,26 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Forgotten Oath of Days Past",
-            image: "/assets/genshin/artifacts/Forgotten Oath of Days Past.webp",
+            image:
+              "./assets/genshin/artifacts/Forgotten Oath of Days Past.webp",
           },
           plume: {
             name: "Recollection of Days Past",
-            image: "/assets/genshin/artifacts/Recollection of Days Past.webp",
+            image: "./assets/genshin/artifacts/Recollection of Days Past.webp",
           },
           sands: {
             name: "Echoing Sound From Days Past",
             image:
-              "/assets/genshin/artifacts/Echoing Sound From Days Past.webp",
+              "./assets/genshin/artifacts/Echoing Sound From Days Past.webp",
           },
           goblet: {
             name: "Promised Dream of Days Past",
-            image: "/assets/genshin/artifacts/Promised Dream of Days Past.webp",
+            image:
+              "./assets/genshin/artifacts/Promised Dream of Days Past.webp",
           },
           circlet: {
             name: "Poetry of Days Past",
-            image: "/assets/genshin/artifacts/Poetry of Days Past.webp",
+            image: "./assets/genshin/artifacts/Poetry of Days Past.webp",
           },
         },
       },
@@ -1166,23 +1171,23 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Selfless Floral Accessory",
-            image: "/assets/genshin/artifacts/Selfless Floral Accessory.webp",
+            image: "./assets/genshin/artifacts/Selfless Floral Accessory.webp",
           },
           plume: {
             name: "Honest Quill",
-            image: "/assets/genshin/artifacts/Honest Quill.webp",
+            image: "./assets/genshin/artifacts/Honest Quill.webp",
           },
           sands: {
             name: "Faithful Hourglass",
-            image: "/assets/genshin/artifacts/Faithful Hourglass.webp",
+            image: "./assets/genshin/artifacts/Faithful Hourglass.webp",
           },
           goblet: {
             name: "Magnanimous Ink Bottle",
-            image: "/assets/genshin/artifacts/Magnanimous Ink Bottle.webp",
+            image: "./assets/genshin/artifacts/Magnanimous Ink Bottle.webp",
           },
           circlet: {
             name: "Compassionate Ladies' Hat",
-            image: "/assets/genshin/artifacts/Compassionate Ladies' Hat.webp",
+            image: "./assets/genshin/artifacts/Compassionate Ladies' Hat.webp",
           },
         },
       },
@@ -1200,26 +1205,27 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Harmonious Symphony Prelude",
-            image: "/assets/genshin/artifacts/Harmonious Symphony Prelude.webp",
+            image:
+              "./assets/genshin/artifacts/Harmonious Symphony Prelude.webp",
           },
           plume: {
             name: "Ancient Sea's Nocturnal Musing",
             image:
-              "/assets/genshin/artifacts/Ancient Sea's Nocturnal Musing.webp",
+              "./assets/genshin/artifacts/Ancient Sea's Nocturnal Musing.webp",
           },
           sands: {
             name: "The Grand Jape of the Turning of Fate",
             image:
-              "/assets/genshin/artifacts/The Grand Jape of the Turning of Fate.webp",
+              "./assets/genshin/artifacts/The Grand Jape of the Turning of Fate.webp",
           },
           goblet: {
             name: "Ichor Shower Rhapsody",
-            image: "/assets/genshin/artifacts/Ichor Shower Rhapsody.webp",
+            image: "./assets/genshin/artifacts/Ichor Shower Rhapsody.webp",
           },
           circlet: {
             name: "Whimsical Dance of the Withered",
             image:
-              "/assets/genshin/artifacts/Whimsical Dance of the Withered.webp",
+              "./assets/genshin/artifacts/Whimsical Dance of the Withered.webp",
           },
         },
       },
@@ -1236,24 +1242,24 @@ export const GEAR_CONFIG = {
         rarity: 5,
         flower: {
           name: "Dark Fruit of Bright Flowers",
-          image: "/assets/genshin/artifacts/Dark Fruit of Bright Flowers.webp",
+          image: "./assets/genshin/artifacts/Dark Fruit of Bright Flowers.webp",
         },
         plume: {
           name: "Faded Emerald Tail",
-          image: "/assets/genshin/artifacts/Faded Emerald Tail.webp",
+          image: "./assets/genshin/artifacts/Faded Emerald Tail.webp",
         },
         sands: {
           name: "Moment of Attainment",
-          image: "/assets/genshin/artifacts/Moment of Attainment.webp",
+          image: "./assets/genshin/artifacts/Moment of Attainment.webp",
         },
         goblet: {
           name: "The Wine-Flask Over Which the Plan Was Hatched",
           image:
-            "/assets/genshin/artifacts/The Wine-Flask Over Which the Plan Was Hatched.webp",
+            "./assets/genshin/artifacts/The Wine-Flask Over Which the Plan Was Hatched.webp",
         },
         circlet: {
           name: "Crownless Crown",
-          image: "/assets/genshin/artifacts/Crownless Crown.webp",
+          image: "./assets/genshin/artifacts/Crownless Crown.webp",
         },
       },
       "Scroll of the Hero of Cinder City": {
@@ -1271,25 +1277,25 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Beast Tamer's Talisman",
-            image: "/assets/genshin/artifacts/Beast Tamer's Talisman.webp",
+            image: "./assets/genshin/artifacts/Beast Tamer's Talisman.webp",
           },
           plume: {
             name: "Mountain Ranger's Marker",
-            image: "/assets/genshin/artifacts/Mountain Ranger's Marker.webp",
+            image: "./assets/genshin/artifacts/Mountain Ranger's Marker.webp",
           },
           sands: {
             name: "Mystic's Gold Dial",
-            image: "/assets/genshin/artifacts/Mystic's Gold Dial.webp",
+            image: "./assets/genshin/artifacts/Mystic's Gold Dial.webp",
           },
           goblet: {
             name: "Wandering Scholar's Claw Cup",
             image:
-              "/assets/genshin/artifacts/Wandering Scholar's Claw Cup.webp",
+              "./assets/genshin/artifacts/Wandering Scholar's Claw Cup.webp",
           },
           circlet: {
             name: "Demon-Warrior's Feather Mask",
             image:
-              "/assets/genshin/artifacts/Demon-Warrior's Feather Mask.webp",
+              "./assets/genshin/artifacts/Demon-Warrior's Feather Mask.webp",
           },
         },
       },
@@ -1308,24 +1314,24 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Reckoning of the Xenogenic",
-            image: "/assets/genshin/artifacts/Reckoning of the Xenogenic.webp",
+            image: "./assets/genshin/artifacts/Reckoning of the Xenogenic.webp",
           },
           plume: {
             name: "Root of the Spirit-Marrow",
-            image: "/assets/genshin/artifacts/Root of the Spirit-Marrow.webp",
+            image: "./assets/genshin/artifacts/Root of the Spirit-Marrow.webp",
           },
           sands: {
             name: "Myths of the Night Realm",
-            image: "/assets/genshin/artifacts/Myths of the Night Realm.webp",
+            image: "./assets/genshin/artifacts/Myths of the Night Realm.webp",
           },
           goblet: {
             name: "Pre-Banquet of the Contenders",
             image:
-              "/assets/genshin/artifacts/Pre-Banquet of the Contenders.webp",
+              "./assets/genshin/artifacts/Pre-Banquet of the Contenders.webp",
           },
           circlet: {
             name: "Crown of the Saints",
-            image: "/assets/genshin/artifacts/Crown of the Saints.webp",
+            image: "./assets/genshin/artifacts/Crown of the Saints.webp",
           },
         },
       },
@@ -1343,24 +1349,24 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Gallery's Echoing Song",
-            image: "/assets/genshin/artifacts/Gallery's Echoing Song.webp",
+            image: "./assets/genshin/artifacts/Gallery's Echoing Song.webp",
           },
           plume: {
             name: "Gallery's Distant Pact",
-            image: "/assets/genshin/artifacts/Gallery's Distant Pact.webp",
+            image: "./assets/genshin/artifacts/Gallery's Distant Pact.webp",
           },
           sands: {
             name: "Gallery's Moment of Oblivion",
             image:
-              "/assets/genshin/artifacts/Gallery's Moment of Oblivion.webp",
+              "./assets/genshin/artifacts/Gallery's Moment of Oblivion.webp",
           },
           goblet: {
             name: "Gallery's Bestowed Banquet",
-            image: "/assets/genshin/artifacts/Gallery's Bestowed Banquet.webp",
+            image: "./assets/genshin/artifacts/Gallery's Bestowed Banquet.webp",
           },
           circlet: {
             name: "Gallery's Lost Crown",
-            image: "/assets/genshin/artifacts/Gallery's Lost Crown.webp",
+            image: "./assets/genshin/artifacts/Gallery's Lost Crown.webp",
           },
         },
       },
@@ -1378,23 +1384,24 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Lightkeeper's Pledge",
-            image: "/assets/genshin/artifacts/Lightkeeper's Pledge.webp",
+            image: "./assets/genshin/artifacts/Lightkeeper's Pledge.webp",
           },
           plume: {
             name: "Nightingale's Tail Feather",
-            image: "/assets/genshin/artifacts/Nightingale's Tail Feather.webp",
+            image: "./assets/genshin/artifacts/Nightingale's Tail Feather.webp",
           },
           sands: {
             name: "Undying One's Mourning Bell",
-            image: "/assets/genshin/artifacts/Undying One's Mourning Bell.webp",
+            image:
+              "./assets/genshin/artifacts/Undying One's Mourning Bell.webp",
           },
           goblet: {
             name: "A Horn Unwinded",
-            image: "/assets/genshin/artifacts/A Horn Unwinded.webp",
+            image: "./assets/genshin/artifacts/A Horn Unwinded.webp",
           },
           circlet: {
             name: "Dyed Tassel",
-            image: "/assets/genshin/artifacts/Dyed Tassel.webp",
+            image: "./assets/genshin/artifacts/Dyed Tassel.webp",
           },
         },
       },
@@ -1412,23 +1419,23 @@ export const GEAR_CONFIG = {
         pieces: {
           flower: {
             name: "Bloom of the Mind's Desire",
-            image: "/assets/genshin/artifacts/Bloom of the Mind's Desire.webp",
+            image: "./assets/genshin/artifacts/Bloom of the Mind's Desire.webp",
           },
           plume: {
             name: "Feather of Indelible Sin",
-            image: "/assets/genshin/artifacts/Feather of Indelible Sin.webp",
+            image: "./assets/genshin/artifacts/Feather of Indelible Sin.webp",
           },
           sands: {
             name: "Revelation's Toll",
-            image: "/assets/genshin/artifacts/Revelation's Toll.webp",
+            image: "./assets/genshin/artifacts/Revelation's Toll.webp",
           },
           goblet: {
             name: "Vessel of Plenty",
-            image: "/assets/genshin/artifacts/Vessel of Plenty.webp",
+            image: "./assets/genshin/artifacts/Vessel of Plenty.webp",
           },
           circlet: {
             name: "Crown of the Befallen",
-            image: "/assets/genshin/artifacts/Crown of the Befallen.webp",
+            image: "./assets/genshin/artifacts/Crown of the Befallen.webp",
           },
         },
       },
@@ -1447,24 +1454,24 @@ export const GEAR_CONFIG = {
           flower: {
             name: "Crystal Tear of the Wanderer",
             image:
-              "/assets/genshin/artifacts/Crystal Tear of the Wanderer.webp",
+              "./assets/genshin/artifacts/Crystal Tear of the Wanderer.webp",
           },
           plume: {
             name: "Pristine Plume of the Blessed",
             image:
-              "/assets/genshin/artifacts/Pristine Plume of the Blessed.webp",
+              "./assets/genshin/artifacts/Pristine Plume of the Blessed.webp",
           },
           sands: {
             name: "Frost Devotee's Delirium",
-            image: "/assets/genshin/artifacts/Frost Devotee's Delirium.webp",
+            image: "./assets/genshin/artifacts/Frost Devotee's Delirium.webp",
           },
           goblet: {
             name: "Joyous Glory of the Pure",
-            image: "/assets/genshin/artifacts/Joyous Glory of the Pure.webp",
+            image: "./assets/genshin/artifacts/Joyous Glory of the Pure.webp",
           },
           circlet: {
             name: "Holy Crown of the Believer",
-            image: "/assets/genshin/artifacts/Holy Crown of the Believer.webp",
+            image: "./assets/genshin/artifacts/Holy Crown of the Believer.webp",
           },
         },
       },
