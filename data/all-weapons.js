@@ -305,8 +305,6 @@ export const ALL_WEAPONS = {
         baseATK: 440,
         stat: { type: "ATK", value: 35.2 },
         passive: {
-          type: "none",
-          value: 0,
           description:
             "Hitting enemies with Normal or Charged Attacks grants a 50% chance to deal 200% ATK as DMG in a small AoE. This effect can only occur once every 10s. Additionally, if the Traveler equips the Sword of Descension, their ATK is increased by 66.",
         },
@@ -316,7 +314,7 @@ export const ALL_WEAPONS = {
         name: "Sword of Narzissenkreuz",
         rarity: 4,
         baseATK: 510,
-        stat: { type: "ATK", value: 51.3 },
+        stat: { type: "ATK", value: 41.3 },
         passive: {
           description:
             "When the equipping character does not have an Arkhe: When Normal Attacks, Charged Attacks, or Plunging Attacks strike, a Pneuma or Ousia energy blast will be unleashed, dealing 160~320% of ATK as DMG. This effect can be triggered once every 12s. The energy blast type is determined by the current type of the Sword of Narzissenkreuz.",
@@ -324,36 +322,253 @@ export const ALL_WEAPONS = {
         image: "/assets/genshin/weapons/Sword of Narzissenkreuz.webp",
       },
       {
-        name: "Cool Steel",
-        rarity: 3,
-        baseATK: 401,
-        stat: { type: "none", value: 0 },
-        passive: { description: "none" },
+        name: "The Alley Flash",
+        rarity: 4,
+        baseATK: 620,
+        stat: { type: "Elemental Mastery", value: 55 },
+        passive: {
+          description:
+            "Increases DMG dealt by the character equipping this weapon by 12~24%. Taking DMG disables this effect for 5s.",
+        },
+        image: "/assets/genshin/weapons/The Alley Flash.webp",
+      },
+      {
+        name: "The Black Sword",
+        rarity: 4,
+        baseATK: 510,
+        stat: { type: "CRIT Rate", value: 27.6 },
+        passive: {
+          description:
+            "ncreases DMG dealt by Normal and Charged Attacks by 20~40%." +
+            "Additionally, regenerates 60~100% of ATK as HP when Normal and Charged Attacks score a CRIT Hit. This effect can occur once every 5s.",
+        },
+        image: "/assets/genshin/weapons/The Black Sword.webp",
+      },
+      {
+        name: "The Dockhand's Assistant",
+        rarity: 4,
+        baseATK: 510,
+        stat: { type: "HP ", value: 41.3 },
+        passive: {
+          description:
+            "When the wielder is healed or heals others, they will gain a Stoic's Symbol that lasts 30s, up to a maximum of 3 Symbols. When using their Elemental Skill or Burst, all Symbols will be consumed and the Roused effect will be granted for 10s. For each Symbol consumed, gain 40~80 Elemental Mastery, and 2s after the effect occurs, 2~4 Energy per Symbol consumed will be restored for said character. The Roused effect can be triggered once every 15s, and Symbols can be gained even when the character is not on the field.",
+        },
+        image: "/assets/genshin/weapons/The Dockhand's Assistant.webp",
+      },
+      {
+        name: "The Flute",
+        rarity: 4,
+        baseATK: 510,
+        stat: { type: "ATK ", value: 41.3 },
+        passive: {
+          description:
+            "Normal or Charged Attacks grant a Harmonic on hits. Gaining 5 Harmonics triggers the power of music and deals 100~200% ATK DMG to surrounding enemies. Harmonics last up to 30s, and a maximum of 1 can be gained every 0.5s.",
+        },
+        image: "/assets/genshin/weapons/The Flute.webp",
+      },
+      {
+        name: "Toukabou Shigure",
+        rarity: 4,
+        baseATK: 510,
+        stat: { type: "Elemental Mastery", value: 165 },
+        passive: {
+          description:
+            "After an attack hits opponents, it will inflict an instance of Cursed Parasol upon one of them for 10s. This effect can be triggered once every 15s. If this opponent is defeated during Cursed Parasol's duration, Cursed Parasol's CD will be refreshed immediately. The character wielding this weapon will deal 16~32% more DMG to the opponent affected by Cursed Parasol.",
+        },
+        image: "/assets/genshin/weapons/Toukabou Shigure.webp",
+      },
+      {
+        name: "Wolf-Fang",
+        rarity: 4,
+        baseATK: 510,
+        stat: { type: "CRIT Rate", value: 27.6 },
+        passive: {
+          description:
+            "DMG dealt by Elemental Skill and Elemental Burst is increased by 16~32%. When an Elemental Skill hits an opponent, its CRIT Rate will be increased by 2~4%. When an Elemental Burst hits an opponent, its CRIT Rate will be increased by 2~4%. Both of these effects last 10s separately, have 4 max stacks, and can be triggered once every 0.1s.",
+        },
+        image: "/assets/genshin/weapons/Wolf-Fang.webp",
+      },
+      {
+        name: "Xiphos' Moonlight",
+        rarity: 4,
+        baseATK: 510,
+        stat: { type: "Elemental Mastery", value: 165 },
+        passive: {
+          description:
+            "The following effect will trigger every 10s: The equipping character will gain 0.036~0.072% Energy Recharge for each point of Elemental Mastery they possess for 12s, with nearby party members gaining 30% of this buff for the same duration. Multiple instances of this weapon can allow this buff to stack. This effect will still trigger even if the character is not on the field.",
+        },
         image: "/assets/genshin/weapons/Dull Blade.webp",
       },
       {
-        name: "Cool Steel",
-        rarity: 3,
-        baseATK: 401,
-        stat: { type: "none", value: 0 },
-        passive: { description: "none" },
-        image: "/assets/genshin/weapons/Dull Blade.webp",
+        name: "Absolution",
+        rarity: 5,
+        baseATK: 674,
+        stat: { type: "CRIT DMG", value: 44.1 },
+        passive: {
+          description:
+            "CRIT DMG increased by 20~40%. Increasing the value of a Bond of Life increases the DMG the equipping character deals by 16~32% for 6s. Max 3 stacks.",
+        },
+        image: "/assets/genshin/weapons/Absolution.webp",
       },
       {
-        name: "Cool Steel",
-        rarity: 3,
-        baseATK: 401,
-        stat: { type: "none", value: 0 },
-        passive: { description: "none" },
-        image: "/assets/genshin/weapons/Dull Blade.webp",
+        name: "Aquila Favonia",
+        rarity: 5,
+        baseATK: 674,
+        stat: { type: "Physical DMG Bonus", value: 41.3 },
+        passive: {
+          description:
+            "ATK is increased by 20~40%. Triggers on taking DMG: the soul of the Falcon of the West awakens, holding the banner of the resistance aloft, regenerating HP equal to 100~160% of ATK and dealing 200~320% of ATK as DMG to surrounding opponents. This effect can only occur once every 15s.",
+        },
+        image: "/assets/genshin/weapons/Aquila Favonia.webp",
       },
       {
-        name: "Cool Steel",
-        rarity: 3,
-        baseATK: 401,
-        stat: { type: "none", value: 0 },
-        passive: { description: "none" },
-        image: "/assets/genshin/weapons/Dull Blade.webp",
+        name: "Athame Artis",
+        rarity: 5,
+        baseATK: 608,
+        stat: { type: "CRIT Rate", value: 33.1 },
+        passive: {
+          description:
+            "CRIT DMG from Elemental Bursts is increased by 16~?%. When an Elemental Burst hits an opponent, gain the Blade of the Daylight Hours effect: ATK is increased by 20~?%. Nearby active party members other than the equipping character have their ATK increased by 16~?% for 3s." +
+            "Additionally, when the party possesses Hexerei: Secret Rite effects, the effects of Blade of the Daylight Hours are increased by an additional 75%. This effect can be triggered even if the equipping character is off-field.",
+        },
+        image: "/assets/genshin/weapons/Athame Artis.webp",
+      },
+      {
+        name: "Azurelight",
+        rarity: 5,
+        baseATK: 674,
+        stat: { type: "CRIT Rate", value: 22.1 },
+        passive: {
+          description:
+            "Within 12s after an Elemental Skill is used, ATK is increased by 24~48%. During this time, when the equipping character has 0 Energy, ATK will be further increased by 24~48%, and CRIT DMG will be increased by 40~80%.",
+        },
+        image: "/assets/genshin/weapons/Azurelight.webp",
+      },
+      {
+        name: "Freedom-Sworn",
+        rarity: 5,
+        baseATK: 608,
+        stat: { type: "Elemental Mastery", value: 198 },
+        passive: {
+          description:
+            "A part of the 'Millennial Movement' that wanders amidst the winds." +
+            "Increases DMG by 10~20%." +
+            "When the character wielding this weapon triggers Elemental Reactions, they gain a Sigil of Rebellion. This effect can be triggered once every 0.5s and can be triggered even if said character is not on the field." +
+            "When you possess 2 Sigils of Rebellion, all of them will be consumed and all nearby party members will obtain 'Millennial Movement: Song of Resistance' for 12s." +
+            "'Millennial Movement: Song of Resistance' increases Normal, Charged, and Plunging Attack DMG by 16~32% and increases ATK by 20~40%. Once this effect is triggered, you will not gain Sigils of Rebellion for 20s." +
+            "Of the many effects of the 'Millennial Movement,' buffs of the same type will not stack.",
+        },
+        image: "/assets/genshin/weapons/Freedom-Sworn.webp",
+      },
+      {
+        name: "Haran Geppaku Futsu",
+        rarity: 5,
+        baseATK: 608,
+        stat: { type: "CRIT Rate", value: 33.1 },
+        passive: {
+          description:
+            "Obtain 12~24% All Elemental DMG Bonus. When other nearby party members use Elemental Skills, the character equipping this weapon will gain 1 Wavespike stack. Max 2 stacks. This effect can be triggered once every 0.3s. When the character equipping this weapon uses an Elemental Skill, all stacks of Wavespike will be consumed to gain Rippling Upheaval: each stack of Wavespike consumed will increase Normal Attack DMG by 20~40% for 8s.",
+        },
+        image: "/assets/genshin/weapons/Haran Geppaku Futsu.webp",
+      },
+      {
+        name: "Key of Khaj-Nisut",
+        rarity: 5,
+        baseATK: 542,
+        stat: { type: "HP", value: 66.2 },
+        passive: {
+          description:
+            "HP increased by 20~40%. When an Elemental Skill hits opponents, you gain the Grand Hymn effect for 20s. This effect increases the equipping character's Elemental Mastery by 0.12~0.24% of their Max HP. This effect can trigger once every 0.3s. Max 3 stacks. When this effect gains 3 stacks, or when the third stack's duration is refreshed, the Elemental Mastery of all nearby party members will be increased by 0.2~0.4% of the equipping character's max HP for 20s.",
+        },
+        image: "/assets/genshin/weapons/Key of Khaj-Nisut.webp",
+      },
+      {
+        name: "Light of Foliar Incision",
+        rarity: 5,
+        baseATK: 542,
+        stat: { type: "CRIT DMG", value: 88.2 },
+        passive: {
+          description:
+            "CRIT Rate is increased by 4~8%. After Normal Attacks deal Elemental DMG, the Foliar Incision effect will be obtained, increasing DMG dealt by Normal Attacks and Elemental Skills by 120~240% of Elemental Mastery. This effect will disappear after 28 DMG instances or 12s. You can obtain Foliar Incision once every 12s.",
+        },
+        image: "/assets/genshin/weapons/Light of Foliar Incision.webp",
+      },
+      {
+        name: "Mistsplitter Reforged",
+        rarity: 5,
+        baseATK: 674,
+        stat: { type: "CRIT DMG", value: 44.1 },
+        passive: {
+          description:
+            "Gain a 12~24% Elemental DMG Bonus for all elements and receive the might of the Mistsplitter's Emblem. At stack levels 1/2/3, Mistsplitter's Emblem provides a 8/16/28~16/32/56% Elemental DMG Bonus for the character's Elemental Type. The character will obtain 1 stack of Mistsplitter's Emblem in each of the following scenarios: Normal Attack deals Elemental DMG (stack lasts 5s), casting Elemental Burst (stack lasts 10s); Energy is less than 100% (stack disappears when Energy is full). Each stack's duration is calculated independently.",
+        },
+        image: "/assets/genshin/weapons/Mistsplitter Reforged.webp",
+      },
+      {
+        name: "Peak Patrol Song",
+        rarity: 5,
+        baseATK: 542,
+        stat: { type: "DEF", value: 82.7 },
+        passive: {
+          description:
+            "Gain 'Ode to Flowers' after Normal or Plunging Attacks hit an opponent: DEF increases by 8~16% and gain a 10~20% All Elemental DMG Bonus for 6s. Max 2 stacks. Can trigger once per 0.1s. When this effect reaches 2 stacks or the 2nd stack's duration is refreshed, increase all nearby party members' All Elemental DMG Bonus by 8~16% for every 1,000 DEF the equipping character has, up to a maximum of 25.6~51.2%, for 15s.",
+        },
+        image: "/assets/genshin/weapons/Peak Patrol Song.webp",
+      },
+      {
+        name: "Primordial Jade Cutter",
+        rarity: 5,
+        baseATK: 542,
+        stat: { type: "CRIT Rate", value: 44.1 },
+        passive: {
+          description:
+            "HP increased by 20~40%. Additionally, provides an ATK Bonus based on 1.2~2.4% of the wielder's Max HP.",
+        },
+        image: "/assets/genshin/weapons/Primordial Jade Cutter.webp",
+      },
+      {
+        name: "Skyward Blade",
+        rarity: 5,
+        baseATK: 608,
+        stat: { type: "Energy Recharge", value: 55.1 },
+        passive: {
+          description:
+            "CRIT Rate increased by 4~8%. Gains Skypiercing Might upon using an Elemental Burst: Increases Movement SPD by 10%, increases ATK SPD by 10%, and Normal and Charged hits deal additional DMG equal to 20~40% of ATK. Skypiercing Might lasts for 12s.",
+        },
+        image: "/assets/genshin/weapons/Skyward Blade.webp",
+      },
+      {
+        name: "Splendor of Tranquil Waters",
+        rarity: 5,
+        baseATK: 542,
+        stat: { type: "CRIT DMG", value: 88.2 },
+        passive: {
+          description:
+            "When the equipping character's current HP increases or decreases, Elemental Skill DMG dealt will be increased by 8~16% for 6s. Max 3 stacks. This effect can be triggered once every 0.2s. When other party members' current HP increases or decreases, the equipping character's Max HP will be increased by 14~28% for 6s. Max 2 stacks. This effect can be triggered once every 0.2s. The aforementioned effects can be triggered even if the wielder is off-field.",
+        },
+        image: "/assets/genshin/weapons/Splendor of Tranquil Waters.webp",
+      },
+      {
+        name: "Summit Shaper",
+        rarity: 5,
+        baseATK: 608,
+        stat: { type: "ATK", value: 49.6 },
+        passive: {
+          description:
+            "Increases Shield Strength by 20~40%. Scoring hits on opponents increases ATK by 4~8% for 8s. Max 5 stacks. Can only occur once every 0.3s. While protected by a shield, this ATK increase effect is increased by 100%.",
+        },
+        image: "/assets/genshin/weapons/Summit Shaper.webp",
+      },
+      {
+        name: "Uraku Misugiri",
+        rarity: 5,
+        baseATK: 542,
+        stat: { type: "CRIT DMG", value: 88.2 },
+        passive: {
+          description:
+            "Normal Attack DMG is increased by 16~32% and Elemental Skill DMG is increased by 24~48%. After a nearby active character deals Geo DMG, the aforementioned effects increase by 100% for 15s. Additionally, the wielder's DEF is increased by 20~40%.",
+        },
+        image: "/assets/genshin/weapons/Uraku Misugiri.webp",
       },
     ],
     Claymore: [
