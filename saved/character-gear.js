@@ -11,9 +11,6 @@ import {
   GEAR_CONFIG,
 } from "../data/all-gear.js";
 
-// FOR GITHUB
-const BASE_PATH = "/hoyoverse-build-planner";
-
 // =================================================================
 // NEW SUBSTAT CALCULATOR
 // =================================================================
@@ -324,7 +321,7 @@ class NewSubstatCalculator {
       rolls.totalMax = rolls.base + rolls.extraMax;
     });
 
-    // Calculate TOTAL available rolls across ALL needed types (for summary only)
+    // NEW: Calculate TOTAL available rolls across ALL needed types (for summary only)
     const totalAvailable = {
       min: 0,
       max: 0,
@@ -391,6 +388,7 @@ class NewSubstatCalculator {
             worstCaseRolls: worstCaseRollsNeeded,
             rollValues: rollValues,
             gapValue: gap,
+            isSimple: true,
           };
         }
       }
@@ -410,51 +408,294 @@ class NewSubstatCalculator {
         const percentRollValues = this.SUBSTAT_ROLL_VALUES[5][percentType];
         const flatRollValues = this.SUBSTAT_ROLL_VALUES[5][flatType];
 
-        // Calculate value per roll for percentage substats
-        const percentValuePerRoll = {
-          min: baseValue * percentRollValues.min / 100,
-          max: baseValue * percentRollValues.max / 100,
-        };
+        // FIX: Check if the types are actually in neededSubstatTypes
+        const percentAvailable = neededSubstatTypes.includes(percentType)
+          ? availableRolls[percentType]
+          : null;
+        const flatAvailable = neededSubstatTypes.includes(flatType)
+          ? availableRolls[flatType]
+          : null;
 
-        // Check if percent type is available
-        if (neededSubstatTypes.includes(percentType)) {
-          const bestCasePercentRollsNeeded = Math.ceil(
-            gap / percentValuePerRoll.max,
+        // FIX: Only calculate combined if we have BOTH types available and needed
+        // If only one type is available, handle it separately
+        if (
+          (percentAvailable && flatAvailable) &&
+          (percentAvailable.totalMax > 0 && flatAvailable.totalMax > 0)
+        ) {
+          // Both types available, use combined calculation
+          const combined = this.calculateCombinedRollRequirements(
+            gap,
+            baseValue,
+            percentRollValues,
+            flatRollValues,
+            percentAvailable,
+            flatAvailable,
           );
-          const worstCasePercentRollsNeeded = Math.ceil(
-            gap / percentValuePerRoll.min,
-          );
 
-          requirements[percentType] = {
-            statKey: statKey,
-            gap: gap,
-            bestCaseRolls: bestCasePercentRollsNeeded,
-            worstCaseRolls: worstCasePercentRollsNeeded,
-            rollValues: percentRollValues,
-            valuePerRoll: percentValuePerRoll,
-            baseValue: baseValue,
-            gapValue: gap,
-          };
-        }
+          if (percentAvailable) {
+            requirements[percentType] = {
+              statKey: statKey,
+              gap: gap,
+              bestCaseRolls: combined.percent.bestCase,
+              worstCaseRolls: combined.percent.worstCase,
+              rollValues: percentRollValues,
+              valuePerRoll: combined.percent.valuePerRoll,
+              baseValue: baseValue,
+              gapValue: gap,
+              isCombined: true,
+              combinedBestCase: combined.bestCase.totalRolls,
+              combinedWorstCase: combined.worstCase.totalRolls,
+            };
+          }
 
-        // Check if flat type is available
-        if (neededSubstatTypes.includes(flatType)) {
-          const bestCaseFlatRollsNeeded = Math.ceil(gap / flatRollValues.max);
-          const worstCaseFlatRollsNeeded = Math.ceil(gap / flatRollValues.min);
+          if (flatAvailable) {
+            requirements[flatType] = {
+              statKey: statKey,
+              gap: gap,
+              bestCaseRolls: combined.flat.bestCase,
+              worstCaseRolls: combined.flat.worstCase,
+              rollValues: flatRollValues,
+              gapValue: gap,
+              isCombined: true,
+              combinedBestCase: combined.bestCase.totalRolls,
+              combinedWorstCase: combined.worstCase.totalRolls,
+            };
+          }
+        } else {
+          // FIX: Handle cases where only one type is available
+          if (percentAvailable && percentAvailable.totalMax > 0) {
+            // Only percent available
+            const percentValuePerRoll = baseValue * percentRollValues.max / 100;
+            const bestCaseRollsNeeded = Math.ceil(gap / percentValuePerRoll);
+            const worstCaseRollsNeeded = Math.ceil(
+              gap / (baseValue * percentRollValues.min / 100),
+            );
 
-          requirements[flatType] = {
-            statKey: statKey,
-            gap: gap,
-            bestCaseRolls: bestCaseFlatRollsNeeded,
-            worstCaseRolls: worstCaseFlatRollsNeeded,
-            rollValues: flatRollValues,
-            gapValue: gap,
-          };
+            requirements[percentType] = {
+              statKey: statKey,
+              gap: gap,
+              bestCaseRolls: bestCaseRollsNeeded,
+              worstCaseRolls: worstCaseRollsNeeded,
+              rollValues: percentRollValues,
+              valuePerRoll: {
+                min: baseValue * percentRollValues.min / 100,
+                max: percentValuePerRoll,
+              },
+              baseValue: baseValue,
+              gapValue: gap,
+              isSimple: true,
+            };
+          }
+
+          if (flatAvailable && flatAvailable.totalMax > 0) {
+            // Only flat available
+            const bestCaseRollsNeeded = Math.ceil(gap / flatRollValues.max);
+            const worstCaseRollsNeeded = Math.ceil(gap / flatRollValues.min);
+
+            requirements[flatType] = {
+              statKey: statKey,
+              gap: gap,
+              bestCaseRolls: bestCaseRollsNeeded,
+              worstCaseRolls: worstCaseRollsNeeded,
+              rollValues: flatRollValues,
+              gapValue: gap,
+              isSimple: true,
+            };
+          }
         }
       }
     });
 
     return requirements;
+  }
+
+  static calculateCombinedRollRequirements(
+    gap,
+    baseValue,
+    percentRollValues,
+    flatRollValues,
+    percentAvailable,
+    flatAvailable,
+  ) {
+    // Calculate value per roll for percentage substats
+    const percentValuePerRoll = {
+      min: baseValue * percentRollValues.min / 100,
+      max: baseValue * percentRollValues.max / 100,
+    };
+
+    // NEW: Handle cases where only flat or only percent is available
+    const hasPercent = percentAvailable?.totalMax > 0;
+    const hasFlat = flatAvailable?.totalMax > 0;
+
+    if (!hasPercent && !hasFlat) {
+      return {
+        percent: {
+          bestCase: 0,
+          worstCase: 0,
+          valuePerRoll: percentValuePerRoll,
+        },
+        flat: { bestCase: 0, worstCase: 0 },
+        bestCase: { totalRolls: Infinity, percentRolls: 0, flatRolls: 0 },
+        worstCase: { totalRolls: Infinity, percentRolls: 0, flatRolls: 0 },
+      };
+    }
+
+    // Calculate rolls needed if using only percentage substats
+    const percentOnly = {
+      bestCase: hasPercent
+        ? Math.max(1, Math.ceil(gap / percentValuePerRoll.max))
+        : Infinity,
+      worstCase: hasPercent
+        ? Math.max(1, Math.ceil(gap / percentValuePerRoll.min))
+        : Infinity,
+    };
+
+    // Calculate rolls needed if using only flat substats
+    const flatOnly = {
+      bestCase: hasFlat
+        ? Math.max(1, Math.ceil(gap / flatRollValues.max))
+        : Infinity,
+      worstCase: hasFlat
+        ? Math.max(1, Math.ceil(gap / flatRollValues.min))
+        : Infinity,
+    };
+
+    // If only one type is available, return that
+    if (!hasPercent && hasFlat) {
+      return {
+        percent: {
+          bestCase: 0,
+          worstCase: 0,
+          valuePerRoll: percentValuePerRoll,
+        },
+        flat: {
+          bestCase: flatOnly.bestCase,
+          worstCase: flatOnly.worstCase,
+        },
+        bestCase: {
+          totalRolls: flatOnly.bestCase,
+          percentRolls: 0,
+          flatRolls: flatOnly.bestCase,
+        },
+        worstCase: {
+          totalRolls: flatOnly.worstCase,
+          percentRolls: 0,
+          flatRolls: flatOnly.worstCase,
+        },
+      };
+    }
+
+    if (hasPercent && !hasFlat) {
+      return {
+        percent: {
+          bestCase: percentOnly.bestCase,
+          worstCase: percentOnly.worstCase,
+          valuePerRoll: percentValuePerRoll,
+        },
+        flat: { bestCase: 0, worstCase: 0 },
+        bestCase: {
+          totalRolls: percentOnly.bestCase,
+          percentRolls: percentOnly.bestCase,
+          flatRolls: 0,
+        },
+        worstCase: {
+          totalRolls: percentOnly.worstCase,
+          percentRolls: percentOnly.worstCase,
+          flatRolls: 0,
+        },
+      };
+    }
+
+    // Both types are available, calculate optimal combination
+    const maxPercentRolls = percentAvailable.totalMax;
+    const maxFlatRolls = flatAvailable.totalMax;
+
+    let bestCaseCombination = {
+      totalRolls: Infinity,
+      percentRolls: 0,
+      flatRolls: 0,
+    };
+    let worstCaseCombination = {
+      totalRolls: Infinity,
+      percentRolls: 0,
+      flatRolls: 0,
+    };
+
+    // Try all possible combinations for best case (max roll values)
+    for (let p = 0; p <= maxPercentRolls; p++) {
+      for (let f = 0; f <= maxFlatRolls; f++) {
+        if (p === 0 && f === 0) continue;
+
+        // Best case: using max roll values
+        const maxValue = p * percentValuePerRoll.max + f * flatRollValues.max;
+        if (maxValue >= gap) {
+          const totalRolls = p + f;
+          if (totalRolls < bestCaseCombination.totalRolls) {
+            bestCaseCombination = { totalRolls, percentRolls: p, flatRolls: f };
+          }
+        }
+
+        // Worst case: using min roll values
+        const minValue = p * percentValuePerRoll.min + f * flatRollValues.min;
+        if (minValue >= gap) {
+          const totalRolls = p + f;
+          if (totalRolls < worstCaseCombination.totalRolls) {
+            worstCaseCombination = {
+              totalRolls,
+              percentRolls: p,
+              flatRolls: f,
+            };
+          }
+        }
+      }
+    }
+
+    // If no combination found (shouldn't happen with the Math.max(1, ...) above), fall back to single type
+    if (bestCaseCombination.totalRolls === Infinity) {
+      if (flatOnly.bestCase <= percentOnly.bestCase) {
+        bestCaseCombination = {
+          totalRolls: flatOnly.bestCase,
+          percentRolls: 0,
+          flatRolls: flatOnly.bestCase,
+        };
+      } else {
+        bestCaseCombination = {
+          totalRolls: percentOnly.bestCase,
+          percentRolls: percentOnly.bestCase,
+          flatRolls: 0,
+        };
+      }
+    }
+
+    if (worstCaseCombination.totalRolls === Infinity) {
+      if (flatOnly.worstCase <= percentOnly.worstCase) {
+        worstCaseCombination = {
+          totalRolls: flatOnly.worstCase,
+          percentRolls: 0,
+          flatRolls: flatOnly.worstCase,
+        };
+      } else {
+        worstCaseCombination = {
+          totalRolls: percentOnly.worstCase,
+          percentRolls: percentOnly.worstCase,
+          flatRolls: 0,
+        };
+      }
+    }
+
+    return {
+      percent: {
+        bestCase: bestCaseCombination.percentRolls,
+        worstCase: worstCaseCombination.percentRolls,
+        valuePerRoll: percentValuePerRoll,
+      },
+      flat: {
+        bestCase: bestCaseCombination.flatRolls,
+        worstCase: worstCaseCombination.flatRolls,
+      },
+      bestCase: bestCaseCombination,
+      worstCase: worstCaseCombination,
+    };
   }
 
   static getPercentTypeForStat(statKey) {
@@ -791,47 +1032,15 @@ class GearUtils {
   static getWeaponImage(char) {
     if (!char.gear?.weapon) return "";
 
-    // Clean the weapon name - remove any (X★) suffix
-    const cleanWeaponName = char.gear.weapon.replace(/\s*\(\d+★\)\s*$/, "")
-      .trim();
-
     const charData = ALL_CHARACTERS[char.game]?.[char.name];
     const weaponType = charData?.weapon;
     if (!weaponType) return "";
 
     const weapons = ALL_WEAPONS[char.game]?.[weaponType] || [];
+    const weapon = weapons.find((w) => w.name === char.gear.weapon);
 
-    // Try to find weapon by clean name first
-    let weapon = weapons.find((w) => w.name === cleanWeaponName);
-
-    // If not found, try to find by original name
-    if (!weapon) {
-      weapon = weapons.find((w) => w.name === char.gear.weapon);
-    }
-
-    if (weapon?.image) {
-      let imagePath = weapon.image;
-
-      // Remove leading ./ if present
-      if (imagePath.startsWith("./")) {
-        imagePath = imagePath.substring(2);
-      }
-
-      // If path starts with / but not the base path, prepend base path
-      if (imagePath.startsWith("/") && !imagePath.startsWith(BASE_PATH)) {
-        imagePath = BASE_PATH + imagePath;
-      }
-
-      // If path doesn't start with /, add base path and /
-      if (!imagePath.startsWith("/") && !imagePath.startsWith("http")) {
-        imagePath = BASE_PATH + "/" + imagePath;
-      }
-
-      return imagePath;
-    }
-
-    // Fallback - use the same logic as character-details.js
-    return `${BASE_PATH}/assets/${char.game}/weapons/default.webp`;
+    return weapon?.image ||
+      `/assets/${char.game}/weapons/${char.gear.weapon}.webp`;
   }
 
   static getWeaponRarityColor(char) {
@@ -986,7 +1195,7 @@ class GearUtils {
 }
 
 // =================================================================
-// STAT CALCULATOR
+// STAT CALCULATOR (UPDATED)
 // =================================================================
 
 class StatCalculator {
@@ -1049,7 +1258,7 @@ class StatCalculator {
       }
     }
 
-    // Apply the formulas
+    // Apply the formulas you specified
     baseStats.hp = this.calculateHP(totalBaseHP, hpPercent, 0);
     baseStats.atk = this.calculateATK(
       stats.baseATK,
@@ -1112,6 +1321,10 @@ class StatCalculator {
     if (charAscensionStat?.type?.includes("DMG Bonus")) {
       return charAscensionStat.type.replace(" DMG Bonus", "");
     }
+
+    // Fallback: try to determine from character name or other data
+    const charData = ALL_CHARACTERS[char.game]?.[char.name];
+    return charData?.element || "Elemental";
   }
 
   static getBaseStats() {
@@ -1345,7 +1558,7 @@ class StatCalculator {
 }
 
 // =================================================================
-// GEAR RENDERER
+// GEAR RENDERER (UPDATED WITH NEW CALCULATOR)
 // =================================================================
 
 class GearRenderer {
@@ -2148,13 +2361,13 @@ class GearRenderer {
   static renderNewSubstatRequirements(displayData) {
     if (displayData.noGaps) {
       return `
-      <div style="margin-top: 25px; padding-top: 20px; border-top: 2px solid #27ae60;">
-        <h5 style="color: #27ae60; margin-bottom: 15px;">Goal Achieved! 🎉</h5>
-        <div style="color: #ccc; padding: 15px; background: #1c2b33; border-radius: 8px;">
-          ${displayData.message}
+        <div style="margin-top: 25px; padding-top: 20px; border-top: 2px solid #27ae60;">
+          <h5 style="color: #27ae60; margin-bottom: 15px;">Goal Achieved! 🎉</h5>
+          <div style="color: #ccc; padding: 15px; background: #1c2b33; border-radius: 8px;">
+            ${displayData.message}
+          </div>
         </div>
-      </div>
-    `;
+      `;
     }
 
     if (Object.keys(displayData.substats).length === 0) {
@@ -2195,60 +2408,171 @@ class GearRenderer {
       }
     };
 
+    // Calculate overall feasibility
+    let totalFeasible = true;
+    const feasibilityByType = {};
+
+    Object.entries(displayData.substats).forEach(([substatType, data]) => {
+      const minAvailable = data.availableRolls.min;
+      const maxAvailable = data.availableRolls.max;
+      const minNeeded = data.neededRolls.worst; // Worst case = min rolls = more rolls needed
+      const maxNeeded = data.neededRolls.best; // Best case = max rolls = fewer rolls needed
+
+      // Check feasibility
+      let feasible = false;
+      let message = "";
+
+      if (maxNeeded <= maxAvailable) {
+        // Best case scenario is possible (using max rolls)
+        feasible = true;
+        if (maxNeeded <= minAvailable) {
+          message = `Feasible with max rolls`;
+        } else {
+          message = `Possible with max rolls`;
+        }
+      } else if (minNeeded <= maxAvailable) {
+        // Only worst case scenario might be possible
+        feasible = true;
+        message = `Challenging - needs min rolls`;
+      } else {
+        // Not enough rolls available even in worst case
+        feasible = false;
+        totalFeasible = false;
+        message = `Not enough available rolls`;
+      }
+
+      feasibilityByType[substatType] = { feasible, message };
+    });
+
     return `
-    <div style="margin-top: 25px; padding-top: 20px; border-top: 2px solid #00ffff44;">
-      <h5 style="color: #00ffff; margin-bottom: 15px;">Substat Roll Analysis</h5>
-      
-      <div style="background: #1c2b33; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <strong style="color: #00ffff;">Total Rolls Required:</strong>
-          <span style="color: #ccc;">
-            ${displayData.totalRolls.bestCase} - ${displayData.totalRolls.worstCase} rolls 
-            (out of ${displayData.totalRolls.minAvailable} to ${displayData.totalRolls.maxAvailable} available)
-          </span>
+      <div style="margin-top: 25px; padding-top: 20px; border-top: 2px solid #00ffff44;">
+        <h5 style="color: #00ffff; margin-bottom: 15px;">Substat Roll Analysis</h5>
+        
+        <div style="background: ${
+      totalFeasible ? "#1c2b33" : "#4a1c1c"
+    }; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid ${
+      totalFeasible ? "#27ae60" : "#e74c3c"
+    };">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <strong style="color: ${
+      totalFeasible ? "#27ae60" : "#e74c3c"
+    };">Overall Feasibility:</strong>
+            <span style="color: ${
+      totalFeasible ? "#27ae60" : "#e74c3c"
+    }; font-weight: bold;">
+              ${totalFeasible ? "✓ Feasible" : "✗ Not Feasible"}
+            </span>
+          </div>
+          
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <strong style="color: #00ffff;">Total Rolls Required:</strong>
+            <span style="color: #ccc;">
+              ${displayData.totalRolls.bestCase} - ${displayData.totalRolls.worstCase} rolls 
+              (out of ${displayData.totalRolls.minAvailable} to ${displayData.totalRolls.maxAvailable} available)
+            </span>
+          </div>
+          
+          <div style="font-size: 12px; color: #888;">
+            <strong>Range Analysis:</strong> 
+            ${displayData.totalRolls.bestCase} rolls (all max rolls) to ${displayData.totalRolls.worstCase} rolls (all min rolls)
+          </div>
+          
+          ${
+      !totalFeasible
+        ? `
+              <div style="font-size: 12px; color: #e74c3c; margin-top: 8px; padding: 8px; background: rgba(231, 76, 60, 0.1); border-radius: 4px;">
+                ⚠️ Not all goal stats can be achieved with current artifact configuration
+              </div>
+            `
+        : ""
+    }
         </div>
-        <div style="font-size: 12px; color: #888; margin-top: 8px;">
-          Range: ${displayData.totalRolls.bestCase} rolls (all max rolls) to ${displayData.totalRolls.worstCase} rolls (all min rolls)
-        </div>
-      </div>
-      
-      <div style="display: grid; gap: 12px;">
-        ${
+        
+        <div style="display: grid; gap: 12px;">
+          ${
       Object.entries(displayData.substats).map(([substatType, data]) => {
         const formattedSubstatType = formatSubstatType(substatType);
         const displayValue = formatValueDisplay(substatType, data.gapValue);
+        const feasibility = feasibilityByType[substatType];
+
+        // Color coding based on feasibility
+        let statusColor = "#27ae60"; // Green - feasible
+        if (feasibility.message.includes("Challenging")) {
+          statusColor = "#f39c12"; // Orange
+        }
+        if (feasibility.message.includes("Not enough")) statusColor = "#e74c3c"; // Red
 
         return `
-            <div style="background: #1c2b33; padding: 15px; border-radius: 8px;">
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                <strong style="color: #00ffff;">${formattedSubstatType}</strong>
-                <span style="color: #ccc;">
-                  ${data.neededRolls.best} - ${data.neededRolls.worst} rolls needed
-                </span>
-              </div>
-              
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12px; color: #ccc; margin-bottom: 8px;">
-                <div>Missing Value: ${displayValue}</div>
-                <div style="text-align: right;">
-                  Range: ${data.neededRolls.best} (max rolls) to ${data.neededRolls.worst} (min rolls)
+                <div style="background: ${
+          feasibility.feasible ? "#1c2b33" : "#2a1c1c"
+        }; padding: 15px; border-radius: 8px; border: 1px solid ${statusColor}44;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <div>
+                      <strong style="color: #00ffff;">${formattedSubstatType}</strong>
+                      <span style="margin-left: 8px; font-size: 11px; padding: 2px 6px; border-radius: 10px; background: ${statusColor}22; color: ${statusColor};">
+                        ${feasibility.message}
+                      </span>
+                    </div>
+                    <span style="color: #ccc;">
+                      ${data.availableRolls.min} - ${data.neededRolls.worst} rolls needed
+                    </span>
+                  </div>
+                  
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12px; color: #ccc; margin-bottom: 8px;">
+                    <div>Missing Value: ${displayValue}</div>
+                    <div style="text-align: right;">
+                      Range: ${data.availableRolls.min} (max rolls) to ${data.neededRolls.worst} (min rolls)
+                    </div>
+                  </div>
+                  
+                  <div style="display: flex; justify-content: space-between; font-size: 11px; color: #888; margin-top: 8px;">
+                    <div>
+                      <strong>Available Rolls:</strong> ${data.availableRolls.min} - ${data.availableRolls.max} ${formattedSubstatType} substat rolls
+                    </div>
+                    <div style="color: ${statusColor};">
+                      ${
+          this.getRollsComparisonText(
+            data.neededRolls.best,
+            data.neededRolls.worst,
+            data.availableRolls.min,
+            data.availableRolls.max,
+          )
+        }
+                    </div>
+                  </div>
                 </div>
-              </div>
-              
-              <div style="font-size: 11px; color: #888; margin-top: 8px;">
-                <strong>Available Rolls:</strong> ${data.availableRolls.min} - ${data.availableRolls.max} ${formattedSubstatType} substat rolls
-              </div>
-            </div>
-          `;
+              `;
       }).join("")
     }
+        </div>
       </div>
-    </div>
-  `;
+    `;
+  }
+
+  static getRollsComparisonText(
+    bestNeeded,
+    worstNeeded,
+    minAvailable,
+    maxAvailable,
+  ) {
+    if (bestNeeded <= minAvailable) {
+      // Even with worst possible roll quality, we have enough rolls
+      return "✓ Comfortably achievable";
+    } else if (bestNeeded <= maxAvailable) {
+      // Possible with good roll quality
+      return "✓ Achievable with max rolls";
+    } else if (worstNeeded <= maxAvailable) {
+      // Only possible with minimum rolls
+      return "⚠️ Needs min rolls";
+    } else {
+      // Not enough rolls available
+      return "✗ Not enough rolls";
+    }
   }
 }
 
 // =================================================================
-// GEAR HANDLER
+// GEAR HANDLER (KEEP EXISTING)
 // =================================================================
 
 class GearHandler {

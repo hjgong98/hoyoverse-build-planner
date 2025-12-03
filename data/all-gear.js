@@ -651,7 +651,7 @@ export const GEAR_CONFIG = {
           },
           goblet: {
             name: "Hopeful Heart",
-            image: "./assets/genshin/artifacts/Hopeful HeartHopeful Heart.webp",
+            image: "./assets/genshin/artifacts/Hopeful Heart.webp",
           },
           circlet: {
             name: "Capricious Visage",

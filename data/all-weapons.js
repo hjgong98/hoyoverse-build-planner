@@ -234,12 +234,15 @@ export const ALL_WEAPONS = {
         image: "/assets/genshin/weapons/Moonweaver's Dawn.webp",
       },
       {
-        name: "Cool Steel",
-        rarity: 3,
-        baseATK: 401,
-        stat: { type: "none", value: 0 },
-        passive: { description: "none" },
-        image: "/assets/genshin/weapons/Dull Blade.webp",
+        name: "Prototype Rancour",
+        rarity: 4,
+        baseATK: 565,
+        stat: { type: "Physical DMG Bonus", value: 34.5 },
+        passive: {
+          description:
+            "On hit, Normal or Charged Attacks increase ATK and DEF by 4~8% for 6s. Max 4 stacks. This effect can only occur once every 0.3s.",
+        },
+        image: "/assets/genshin/weapons/Prototype Rancour.webp",
       },
       {
         name: "Royal Longsword",
@@ -255,7 +258,7 @@ export const ALL_WEAPONS = {
       {
         name: "Sacrificial Sword",
         rarity: 4,
-        baseATK: 401,
+        baseATK: 454,
         stat: { type: "Energy Recharge", value: 61.3 },
         passive: {
           description:
@@ -264,12 +267,15 @@ export const ALL_WEAPONS = {
         image: "/assets/genshin/weapons/Sacrificial Sword.webp",
       },
       {
-        name: "Cool Steel",
-        rarity: 3,
-        baseATK: 401,
-        stat: { type: "none", value: 0 },
-        passive: { description: "none" },
-        image: "/assets/genshin/weapons/Dull Blade.webp",
+        name: "Sapwood Blade",
+        rarity: 4,
+        baseATK: 565,
+        stat: { type: "Energy Recharge", value: 30.6 },
+        passive: {
+          description:
+            "After triggering Burning, Quicken, Aggravate, Spread, Bloom, Lunar-Bloom, Hyperbloom, or Burgeon, a Leaf of Consciousness will be created around the character for a maximum of 10s. When picked up, the Leaf will grant the character 60~120 Elemental Mastery for 12s. Only 1 Leaf can be generated this way every 20s. This effect can still be triggered if the character is not on the field. The Leaf of Consciousness' effect cannot stack.",
+        },
+        image: "/assets/genshin/weapons/Sapwood Blade.webp",
       },
       {
         name: "Serenity's Call",
@@ -283,12 +289,15 @@ export const ALL_WEAPONS = {
         image: "/assets/genshin/weapons/Serenity's Call.webp",
       },
       {
-        name: "Cool Steel",
-        rarity: 3,
-        baseATK: 401,
-        stat: { type: "none", value: 0 },
-        passive: { description: "none" },
-        image: "/assets/genshin/weapons/Dull Blade.webp",
+        name: "	Sturdy Bone",
+        rarity: 4,
+        baseATK: 565,
+        stat: { type: "ATK", value: 27.6 },
+        passive: {
+          description:
+            "Sprint or Alternate Sprint Stamina Consumption decreased by 15%. Additionally, after using Sprint or Alternate Sprint, Normal Attack DMG is increased by 16~32% of ATK. This effect expires after triggering 18 times or 7s.",
+        },
+        image: "/assets/genshin/weapons/	Sturdy Bone.webp",
       },
       {
         name: "Sword of Descension",
