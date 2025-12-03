@@ -1030,28 +1030,54 @@ class GearUtils {
   }
 
   static getWeaponImage(char) {
-    if (!char.gear?.weapon) return "";
+    if (!char.gear?.weapon && !char.weaponName) return "";
 
+    const weaponName = char.gear?.weapon || char.weaponName;
     const charData = ALL_CHARACTERS[char.game]?.[char.name];
     const weaponType = charData?.weapon;
     if (!weaponType) return "";
 
     const weapons = ALL_WEAPONS[char.game]?.[weaponType] || [];
-    const weapon = weapons.find((w) => w.name === char.gear.weapon);
 
-    return weapon?.image ||
-      `/assets/${char.game}/weapons/${char.gear.weapon}.webp`;
+    // Clean the weapon name for matching
+    const cleanWeaponName = weaponName
+      .replace(/\s*\(\d+★\)\s*$/, "")
+      .replace(/\s*\d+★\s*$/, "")
+      .trim();
+
+    // Find weapon without star symbols
+    const weapon = weapons.find((w) => {
+      if (!w.name) return false;
+      // Compare cleaned names
+      const cleanWName = w.name.trim();
+      return cleanWName === cleanWeaponName || w.name === weaponName;
+    });
+
+    return weapon?.image || "";
   }
 
   static getWeaponRarityColor(char) {
-    if (!char.gear?.weapon) return "#95a5a6";
+    if (!char.gear?.weapon && !char.weaponName) return "#95a5a6";
 
+    const weaponName = char.gear?.weapon || char.weaponName;
     const charData = ALL_CHARACTERS[char.game]?.[char.name];
     const weaponType = charData?.weapon;
     if (!weaponType) return "#95a5a6";
 
     const weapons = ALL_WEAPONS[char.game]?.[weaponType] || [];
-    const weapon = weapons.find((w) => w.name === char.gear.weapon);
+
+    // Clean the weapon name for matching
+    const cleanWeaponName = weaponName
+      .replace(/\s*\(\d+★\)\s*$/, "")
+      .replace(/\s*\d+★\s*$/, "")
+      .trim();
+
+    const weapon = weapons.find((w) => {
+      if (!w.name) return false;
+      const cleanWName = w.name.trim();
+      return cleanWName === cleanWeaponName || w.name === weaponName;
+    });
+
     if (!weapon) return "#95a5a6";
 
     const rarity = weapon.rarity;
@@ -1068,14 +1094,26 @@ class GearUtils {
   }
 
   static getWeaponRarityText(char) {
-    if (!char.gear?.weapon) return "";
+    if (!char.gear?.weapon && !char.weaponName) return "";
 
+    const weaponName = char.gear?.weapon || char.weaponName;
     const charData = ALL_CHARACTERS[char.game]?.[char.name];
     const weaponType = charData?.weapon;
     if (!weaponType) return "";
 
     const weapons = ALL_WEAPONS[char.game]?.[weaponType] || [];
-    const weapon = weapons.find((w) => w.name === char.gear.weapon);
+
+    // Clean the weapon name for matching
+    const cleanWeaponName = weaponName
+      .replace(/\s*\(\d+★\)\s*$/, "")
+      .replace(/\s*\d+★\s*$/, "")
+      .trim();
+
+    const weapon = weapons.find((w) => {
+      if (!w.name) return false;
+      const cleanWName = w.name.trim();
+      return cleanWName === cleanWeaponName || w.name === weaponName;
+    });
 
     return weapon?.rarity ? `${weapon.rarity}★` : "";
   }
@@ -1363,11 +1401,18 @@ class StatCalculator {
   }
 
   static calculateWeaponStats(char) {
-    const weaponName =
-      char.gear?.weapon?.replace(/\s*\(\d+★\)\s*$/, "").trim() || "";
+    // Use char.gear.weapon or fall back to char.weaponName
+    const weaponName = char.gear?.weapon || char.weaponName || "";
+
     if (!weaponName) {
       return { baseATK: 0, additionalStat: null };
     }
+
+    // Clean the weapon name
+    const cleanWeaponName = weaponName
+      .replace(/\s*\(\d+★\)\s*$/, "")
+      .replace(/\s*\d+★\s*$/, "")
+      .trim();
 
     const charData = ALL_CHARACTERS[char.game]?.[char.name];
     const weaponType = charData?.weapon;
@@ -1376,8 +1421,16 @@ class StatCalculator {
     }
 
     const weapons = ALL_WEAPONS[char.game]?.[weaponType] || [];
-    const weapon = weapons.find((w) => w.name === weaponName);
+    const weapon = weapons.find((w) => {
+      if (!w.name) return false;
+      const cleanWName = w.name.trim();
+      return cleanWName === cleanWeaponName || w.name === weaponName;
+    });
+
     if (!weapon) {
+      console.warn(
+        `Weapon not found: ${weaponName} (cleaned: ${cleanWeaponName})`,
+      );
       return { baseATK: 0, additionalStat: null };
     }
 
@@ -1617,12 +1670,18 @@ class GearRenderer {
       const defaultSet = GearUtils.getDefaultArtifactSetForWeapon(weaponType);
 
       char.gear = {
-        weapon: char.weaponName || "",
+        weapon: char.weaponName || "", // Sync with character's weaponName
         artifactSet1: defaultSet,
         artifactSet2: defaultSet,
         artifacts: this.createDefaultArtifacts(char, defaultSet),
         goalStats: this.createDefaultGoalStats(),
       };
+      saveMyCharacters();
+    }
+
+    // Always sync weapon from character data to gear
+    if (char.weaponName && char.gear.weapon !== char.weaponName) {
+      char.gear.weapon = char.weaponName;
       saveMyCharacters();
     }
 
@@ -1768,13 +1827,13 @@ class GearRenderer {
   }
 
   static createWeaponDisplay(char) {
+    const weaponName = char.gear?.weapon || char.weaponName || "";
+
     return `
       <div style="margin-bottom: 20px;">
         <strong>Weapon:</strong>
         <div style="display: flex; align-items: center; gap: 12px; margin-top: 8px;">
-          ${
-      char.gear.weapon ? this.renderWeaponInfo(char) : this.renderNoWeapon()
-    }
+          ${weaponName ? this.renderWeaponInfo(char) : this.renderNoWeapon()}
           <button onclick="GearHandler.openWeaponSelector('${char.id}')" 
                   style="padding: 6px 12px; background: #9b59b6; color: white; border: none; border-radius: 6px; font-size: 12px; cursor: pointer;">
             Change
@@ -1785,13 +1844,15 @@ class GearRenderer {
   }
 
   static renderWeaponInfo(char) {
+    const weaponName = char.gear?.weapon || char.weaponName || "";
+
     return `
-      <img src="${GearUtils.getWeaponImage(char)}" alt="${char.gear.weapon}" 
+      <img src="${GearUtils.getWeaponImage(char)}" alt="${weaponName}" 
           style="width: 40px; height: 40px; border-radius: 6px; object-fit: cover; border: 2px solid ${
       GearUtils.getWeaponRarityColor(char)
-    };">
+    };" onerror="this.onerror=null; this.src='/assets/genshin/mora.webp';">
       <div style="flex: 1;">
-        <div style="color: #00ffff; font-weight: bold; font-size: 14px;">${char.gear.weapon}</div>
+        <div style="color: #00ffff; font-weight: bold; font-size: 14px;">${weaponName}</div>
         <div style="color: #ccc; font-size: 11px;">${
       GearUtils.getWeaponRarityText(char)
     }</div>
@@ -2048,13 +2109,25 @@ class GearRenderer {
     rightColumn +=
       `<div style="color: #00ffff; font-weight: bold; margin-bottom: 12px; font-size: 14px;">Weapon Equipped</div>`;
 
-    if (char.gear.weapon) {
+    const weaponName = char.gear?.weapon || char.weaponName || "";
+    if (weaponName) {
       const charData = ALL_CHARACTERS[char.game]?.[char.name];
       const weaponType = charData?.weapon;
       const weapons = weaponType
         ? ALL_WEAPONS[char.game]?.[weaponType] || []
         : [];
-      const weapon = weapons.find((w) => w.name === char.gear.weapon);
+
+      // Clean the weapon name for matching
+      const cleanWeaponName = weaponName
+        .replace(/\s*\(\d+★\)\s*$/, "")
+        .replace(/\s*\d+★\s*$/, "")
+        .trim();
+
+      const weapon = weapons.find((w) => {
+        if (!w.name) return false;
+        const cleanWName = w.name.trim();
+        return cleanWName === cleanWeaponName || w.name === weaponName;
+      });
 
       if (weapon) {
         const rarityStars = "★".repeat(weapon.rarity);
@@ -2084,7 +2157,7 @@ class GearRenderer {
             `<div style="margin: 10px 0; font-size: 11px; color: #888;"><strong>Description:</strong> No passive effect</div>`;
         }
       } else {
-        rightColumn += `<div style="color: #888;">Weapon data not found</div>`;
+        rightColumn += `<div style="color: #888;">Weapon: ${weaponName}</div>`;
       }
     } else {
       rightColumn += `<div style="color: #888;">No weapon equipped</div>`;
@@ -2572,7 +2645,7 @@ class GearRenderer {
 }
 
 // =================================================================
-// GEAR HANDLER (KEEP EXISTING)
+// GEAR HANDLER (UPDATED WITH WEAPON SELECTOR)
 // =================================================================
 
 class GearHandler {
@@ -2622,7 +2695,96 @@ class GearHandler {
 
   static openWeaponSelector(charId) {
     const char = getCharacterById(charId);
-    console.log("Open weapon selector for:", charId);
+    const charData = ALL_CHARACTERS[char.game]?.[char.name];
+    const weaponType = charData?.weapon;
+    const weaponLabel = "Weapon";
+
+    if (!weaponType) {
+      alert("No weapon type found for this character!");
+      return;
+    }
+
+    const allWeapons = ALL_WEAPONS[char.game]?.[weaponType] || [];
+    const currentWeapon = char.gear?.weapon || char.weaponName || "";
+
+    const weaponOptions = allWeapons.length > 0
+      ? allWeapons.map((weapon) => {
+        const displayName = `${weapon.name}${
+          weapon.rarity ? ` (${weapon.rarity}★)` : ""
+        }`;
+        const isSelected = currentWeapon === weapon.name ||
+          currentWeapon === displayName;
+
+        return `<option value="${weapon.name}" ${isSelected ? "selected" : ""}>
+                    ${displayName}
+                  </option>`;
+      }).join("")
+      : `<option value="">No weapons available</option>`;
+
+    // Create a modal for weapon selection
+    const modalHTML = `
+      <div style="text-align: left; color: white; max-width: 500px;">
+        <h3 style="color: #00ffff; margin-bottom: 20px; font-size: 24px;">Select ${weaponLabel}</h3>
+        <div style="margin-bottom: 25px;">
+          <strong style="font-size: 16px;">${weaponLabel}:</strong><br>
+          <select id="gear-weapon-select" style="width: 100%; padding: 12px; background: #2c3e50; border: 2px solid #00ffff; border-radius: 8px; color: white; font-size: 16px; margin-top: 8px;">
+            ${weaponOptions}
+          </select>
+        </div>
+        <div style="display: flex; gap: 15px; justify-content: center;">
+          <button onclick="GearHandler.saveWeaponSelection('${charId}')" 
+                  style="padding: 15px 25px; background: #2ecc71; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px;">
+            💾 Save ${weaponLabel}
+          </button>
+          <button onclick="GearHandler.closeWeaponModal()" 
+                  style="padding: 15px 25px; background: #95a5a6; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px;">
+            Cancel
+          </button>
+        </div>
+      </div>
+    `;
+
+    // Create and show modal
+    const modal = document.createElement("div");
+    modal.id = "gear-weapon-modal";
+    modal.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    `;
+
+    modal.innerHTML = modalHTML;
+    document.body.appendChild(modal);
+  }
+
+  static closeWeaponModal() {
+    const modal = document.getElementById("gear-weapon-modal");
+    if (modal) {
+      document.body.removeChild(modal);
+    }
+  }
+
+  static saveWeaponSelection(charId) {
+    const char = getCharacterById(charId);
+    const weaponSelect = document.getElementById("gear-weapon-select");
+
+    if (weaponSelect && weaponSelect.value) {
+      // Update both gear.weapon and weaponName to keep them in sync
+      char.gear.weapon = weaponSelect.value.trim();
+      char.weaponName = weaponSelect.value.trim();
+      saveMyCharacters();
+
+      // Close modal and refresh gear display
+      this.closeWeaponModal();
+      setTimeout(() => GearRenderer.render(char), 100);
+    }
   }
 
   static updateArtifactSet(charId, setNumber) {

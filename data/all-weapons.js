@@ -592,8 +592,159 @@ export const ALL_WEAPONS = {
       { name: "Mailed Flower", rarity: 4, stat: "Elemental Mastery" },
     ],
     Polearm: [
-      { name: "Staff of Homa", rarity: 5, stat: "HP, CRIT DMG" },
-      { name: "Engulfing Lightning", rarity: 5, stat: "Energy Recharge" },
+      {
+        name: "Beginner's Protector",
+        rarity: 1,
+        baseATK: 185,
+        stat: { type: "none", value: 0 },
+        passive: {
+          description: "none",
+        },
+        image: "/assets/genshin/weapons/Beginner's Protector.webp",
+      },
+      {
+        name: "Iron Point",
+        rarity: 2,
+        baseATK: 243,
+        stat: { type: "none", value: 0 },
+        passive: {
+          description: "none",
+        },
+        image: "/assets/genshin/weapons/Iron Point.webp",
+      },
+      {
+        name: "Black Tassel",
+        rarity: 3,
+        baseATK: 354,
+        stat: { type: "HP", value: 46.9 },
+        passive: {
+          description: "Increases DMG against slimes by 40~80%.",
+        },
+        image: "/assets/genshin/weapons/Deathmatch.webp",
+      },
+      {
+        name: "Halberd",
+        rarity: 3,
+        baseATK: 448,
+        stat: { type: "ATK", value: 23.4 },
+        passive: {
+          description:
+            "Normal Attacks deal an additional 160~320% DMG. Can only occur once every 10s.",
+        },
+        image: "/assets/genshin/weapons/Halberd.webp",
+      },
+      {
+        name: "White Tassel",
+        rarity: 3,
+        baseATK: 401,
+        stat: { type: "Crit Rate", value: 23.4 },
+        passive: {
+          description: "Increases Normal Attack DMG by 24~48%.",
+        },
+        image: "/assets/genshin/weapons/White Tassel.webp",
+      },
+      {
+        name: "Beginner's Protector",
+        rarity: 4,
+        baseATK: 701,
+        stat: { type: "Crit Rate", value: 36.8 },
+        passive: {
+          description: "none",
+        },
+        image: "/assets/genshin/weapons/Deathmatch.webp",
+      },
+      {
+        name: "'The Catch'",
+        rarity: 4,
+        baseATK: 510,
+        stat: { type: "Energy Recharge", value: 45.9 },
+        passive: {
+          description:
+            "Increases Elemental Burst DMG by 16~32% and Elemental Burst CRIT Rate by 6~12%.",
+        },
+        image: "/assets/genshin/weapons/'The Catch'.webp",
+      },
+      {
+        name: "Beginner's Protector",
+        rarity: 4,
+        baseATK: 701,
+        stat: { type: "Crit Rate", value: 36.8 },
+        passive: {
+          description: "none",
+        },
+        image: "/assets/genshin/weapons/Deathmatch.webp",
+      },
+      {
+        name: "Beginner's Protector",
+        rarity: 4,
+        baseATK: 701,
+        stat: { type: "Crit Rate", value: 36.8 },
+        passive: {
+          description: "none",
+        },
+        image: "/assets/genshin/weapons/Deathmatch.webp",
+      },
+      {
+        name: "Beginner's Protector",
+        rarity: 4,
+        baseATK: 701,
+        stat: { type: "Crit Rate", value: 36.8 },
+        passive: {
+          description: "none",
+        },
+        image: "/assets/genshin/weapons/Deathmatch.webp",
+      },
+      {
+        name: "Beginner's Protector",
+        rarity: 4,
+        baseATK: 701,
+        stat: { type: "Crit Rate", value: 36.8 },
+        passive: {
+          description: "none",
+        },
+        image: "/assets/genshin/weapons/Deathmatch.webp",
+      },
+      {
+        name: "Beginner's Protector",
+        rarity: 4,
+        baseATK: 701,
+        stat: { type: "Crit Rate", value: 36.8 },
+        passive: {
+          description: "none",
+        },
+        image: "/assets/genshin/weapons/Deathmatch.webp",
+      },
+      {
+        name: "Beginner's Protector",
+        rarity: 4,
+        baseATK: 701,
+        stat: { type: "Crit Rate", value: 36.8 },
+        passive: {
+          description: "none",
+        },
+        image: "/assets/genshin/weapons/Deathmatch.webp",
+      },
+      {
+        name: "Beginner's Protector",
+        rarity: 4,
+        baseATK: 701,
+        stat: { type: "Crit Rate", value: 36.8 },
+        passive: {
+          description: "none",
+        },
+        image: "/assets/genshin/weapons/Deathmatch.webp",
+      },
+      {
+        name: "Deathmatch",
+        rarity: 4,
+        baseATK: 701,
+        stat: { type: "Crit Rate", value: 36.8 },
+        passive: {
+          description:
+            "If there are at least 2 opponents nearby, ATK is increased by 16~32% and DEF is increased by 16~32%. If there are fewer than 2 opponents nearby, ATK is increased by 24~48%.",
+        },
+        image: "/assets/genshin/weapons/Deathmatch.webp",
+      },
       {
         name: "Calamity Queller",
         rarity: 5,
@@ -605,26 +756,6 @@ export const ALL_WEAPONS = {
         },
         image: "/assets/genshin/weapons/Calamity Queller.webp",
       },
-      { name: "Primordial Jade Winged-Spear", rarity: 5, stat: "CRIT Rate" },
-      { name: "Vortex Vanquisher", rarity: 5, stat: "ATK" },
-      { name: "Skyward Spine", rarity: 5, stat: "Energy Recharge" },
-      { name: "The Catch", rarity: 4, stat: "Energy Recharge" },
-      { name: "Favonius Lance", rarity: 4, stat: "Energy Recharge" },
-      {
-        name: "Deathmatch",
-        rarity: 4,
-        baseATK: 701,
-        stat: { type: "Crit Rate", value: 36.8 },
-        passive: {
-          description:
-            "f there are at least 2 opponents nearby, ATK is increased by 16~32% and DEF is increased by 16~32%. If there are fewer than 2 opponents nearby, ATK is increased by 24~48%.",
-        },
-        image: "/assets/genshin/weapons/Deathmatch.webp",
-      },
-      { name: "Dragon's Bane", rarity: 4, stat: "Elemental Mastery" },
-      { name: "Lithic Spear", rarity: 4, stat: "ATK" },
-      { name: "Missive Windspear", rarity: 4, stat: "ATK" },
-      { name: "Ballad of the Fjords", rarity: 4, stat: "CRIT Rate" },
     ],
     Catalyst: [
       { name: "Lost Prayer to the Sacred Winds", rarity: 5, stat: "CRIT Rate" },
