@@ -2593,14 +2593,18 @@ class GearRenderer {
                       </span>
                     </div>
                     <span style="color: #ccc;">
-                      ${data.availableRolls.min} - ${data.neededRolls.worst} rolls needed
+                      ${data.availableRolls.min} - ${
+          Math.max(data.availableRolls.min, data.neededRolls.worst)
+        } rolls needed
                     </span>
                   </div>
                   
                   <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12px; color: #ccc; margin-bottom: 8px;">
                     <div>Missing Value: ${displayValue}</div>
                     <div style="text-align: right;">
-                      Range: ${data.availableRolls.min} (max rolls) to ${data.neededRolls.worst} (min rolls)
+                      Range: ${data.availableRolls.min} (max rolls) to ${
+          Math.max(data.availableRolls.min, data.neededRolls.worst)
+        } (min rolls)
                     </div>
                   </div>
                   

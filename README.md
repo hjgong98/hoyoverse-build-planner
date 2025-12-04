@@ -4,25 +4,13 @@ genshin impact/honkai star rail/zenless zone zero build planner, making this for
 my final project for my cmpm 169 class
 
 okay so my final project is a genshin/honkai star rail/zenless zone zero build
-calculator/planner it starts out with the main page titled character build
-planner. the main page is titles Character Build Planner and has 4 buttons -
-home, data, inventory, calender data opens up the import data from json, export
-data from json , clear data from planner. inventory is select a game to see what
-materials it has in stock. calender is all the events in all the games and some
-other stuff clicking the + sign opens a pop up asking to chose a game, and then
-either a character from the game or a custom character (which if chosen opens
-another pop up asking for what the character uses to level up and then it lwill
-open another pop up for the goal). choosing a character from the game will just
-go directly to the goal pop up. the goals pop up will ask for the goal for the
-character and what weapon they will use (it is different for each game - max
-level for genshin is 90 and there are only 3 talents to level, max level for hsr
-is 80 and there 4 talents + branch nodes to level up, max level for zzz is 60
-and there are 5 talents to level up) clicking on a character thats been added to
-the planner opens up character details list - which will have the characters
-current stats, the goal stats, a materials list, and a timetable of how long it
-will take to get everything. there is also a start farming button that will put
-this build on the calender and use the timetable to estimate when the enddate is
-main page bottom left corner is inventory - this will affect the timetable (if
-it is in inventory then there are less things needed to farm) main page bottom
-right corner is calender (will include any characters that have builds in
-progress and the events for each game on it)
+calculator/planner
+
+data page - import data, export data, clear data inventory page - inventory of all items calender page - tbd, was supposed to be a way to track how long building a character would take, would also have each game's in game events all in one place character page - add a character from a game (right now its just genshin with the correct details), set a goal for them, click on their pic to see the progress towards the goal, and then go to calculate artifs to try and generate artifacts and stuff
+
+postmortem: everything went alright. making a custom character was harder than i orginally anticipated (still need to figure out how to do that). downloading all the pngs also took way long than i was expecting bc i didnt realize just how much items the game had.
+
+artistic statement: I wanted to make this because I play all three games
+(Genshin Impact, Honkai Star Rail, and Zenless Zone Zero) a lot, and I have a lot of Discord friends who also play those a lot. The gear calculator is something I liked mathing out for my friends who were struggling with character builds. There were a lot of different sites like the one I made with this (character build planner, character build rater, etc) but each on only focused on one game, and none of them did the thing I liked doing, so I decided to make this the focus of my final project.
+
+Credits: all webp files and png files were downloaded from genshin-impact.fandom.com, all of the data related to the game were sourced from genshin-impact.fandom.com, used a combination of deepseek ai and copilot in vs code to iron out the creases and help bug fix stuff ( had an issue earlier where the pngs were showing up correctly on a live server but not on the published site, so consulted copilot on how to fix that ). also was using deepseek help with the structure of the files in my data folder.
