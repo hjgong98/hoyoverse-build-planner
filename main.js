@@ -64,6 +64,29 @@ class App {
   }
 }
 
+// Suppress Chrome extension errors about message ports
+window.addEventListener("error", (event) => {
+  if (
+    event.message &&
+    event.message.includes("message port closed before a response was received")
+  ) {
+    event.preventDefault();
+    return true;
+  }
+});
+
+// Also handle unhandledrejection for similar extension errors
+window.addEventListener("unhandledrejection", (event) => {
+  if (
+    event.reason &&
+    typeof event.reason === "string" &&
+    event.reason.includes("message port closed")
+  ) {
+    event.preventDefault();
+    return true;
+  }
+});
+
 // Initialize app when DOM is ready
 document.addEventListener("DOMContentLoaded", () => {
   new App();
