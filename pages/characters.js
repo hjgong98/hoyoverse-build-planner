@@ -110,11 +110,11 @@ class CharactersPage {
     let charIcon;
     if (char.isCustom && char.customData) {
       // For custom characters, use the custom icon
-      charIcon = char.customData.icon || "/assets/stick figure.png";
+      charIcon = char.customData.icon || "./assets/stick figure.png";
     } else {
       // For regular characters, use the icon from ALL_CHARACTERS
       const charData = ALL_CHARACTERS[char.game]?.[char.name];
-      charIcon = charData?.icon || "/assets/fallback-character.jpg";
+      charIcon = charData?.icon || "./assets/fallback-character.jpg";
     }
 
     const fullName = char.name;
@@ -136,7 +136,7 @@ class CharactersPage {
       <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
         <img src="${charIcon}" alt="${fullName}" 
             style="width: 48px; height: 48px; border-radius: 8px; object-fit: cover; border: 2px solid #e67e22;"
-            onerror="this.src='/assets/fallback-character.jpg'; this.onerror=null;">
+            onerror="this.src='./assets/fallback-character.jpg'; this.onerror=null;">
         <span style="font-size: 12px; text-align: center; line-height: 1.2;">${fullName}</span>
       </div>
     `;
@@ -544,7 +544,7 @@ class CharacterModalHandler {
     if (gemMaterial) {
       // Fix image path
       let imgPath = gemMaterial.img;
-      if (!imgPath.startsWith("/assets/") && !imgPath.startsWith("http")) {
+      if (!imgPath.startsWith("./assets/") && !imgPath.startsWith("http")) {
         imgPath = `/assets${imgPath.startsWith("/") ? "" : "/"}${imgPath}`;
       }
 
@@ -578,7 +578,7 @@ class CharacterModalHandler {
       if (customName) {
         const materialData = {
           name: customName,
-          img: "/assets/question.webp",
+          img: "./assets/question.webp",
         };
         window[`custom-${type}`] = materialData;
         CharacterModalHandler.updateMaterialDisplay(
@@ -598,7 +598,7 @@ class CharacterModalHandler {
         const materialData = JSON.parse(value);
         // Fix image path for all materials
         if (
-          materialData.img && !materialData.img.startsWith("/assets/") &&
+          materialData.img && !materialData.img.startsWith("./assets/") &&
           !materialData.img.startsWith("http")
         ) {
           materialData.img = `/assets${
@@ -644,8 +644,8 @@ class CharacterModalHandler {
     const customCharData = {
       name: name,
       game: game,
-      picture: "/assets/profile pic.jpg",
-      icon: "/assets/stick figure.png",
+      picture: "./assets/profile pic.jpg",
+      icon: "./assets/stick figure.png",
       isCustom: true,
     };
 

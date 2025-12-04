@@ -1322,7 +1322,10 @@ class StatCalculator {
           baseStats.energyRecharge += charAscensionStat.value;
           break;
         default:
-          if (charAscensionStat.type.includes("DMG Bonus")) {
+          if (
+            charAscensionStat.type &&
+            charAscensionStat.type.includes("DMG Bonus")
+          ) {
             baseStats.elementalDmg += charAscensionStat.value;
           }
           break;
@@ -1344,7 +1347,10 @@ class StatCalculator {
           baseStats.energyRecharge += weaponAscensionStat.value;
           break;
         default:
-          if (weaponAscensionStat.type.includes("DMG Bonus")) {
+          if (
+            weaponAscensionStat.type &&
+            weaponAscensionStat.type.includes("DMG Bonus")
+          ) {
             baseStats.elementalDmg += weaponAscensionStat.value;
           }
           break;
@@ -1850,7 +1856,7 @@ class GearRenderer {
       <img src="${GearUtils.getWeaponImage(char)}" alt="${weaponName}" 
           style="width: 40px; height: 40px; border-radius: 6px; object-fit: cover; border: 2px solid ${
       GearUtils.getWeaponRarityColor(char)
-    };" onerror="this.onerror=null; this.src='/assets/genshin/mora.webp';">
+    };" onerror="this.onerror=null; this.src='./assets/genshin/mora.webp';">
       <div style="flex: 1;">
         <div style="color: #00ffff; font-weight: bold; font-size: 14px;">${weaponName}</div>
         <div style="color: #ccc; font-size: 11px;">${

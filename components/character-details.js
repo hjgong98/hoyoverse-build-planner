@@ -219,7 +219,7 @@ function getWeaponImage(char) {
   }
 
   // Fallback to mora.webp
-  return `${BASE_PATH}/assets/genshin/mora.webp`;
+  return `${BASE_PATH}./assets/genshin/mora.webp`;
 }
 
 function getWeaponRarityColor(rarity) {
@@ -294,7 +294,7 @@ function findMaterialByName(materialName, game) {
   // Return a fallback material with the correct image path structure
   return {
     name: decodedName,
-    img: `${BASE_PATH}/assets/genshin/mora.webp`,
+    img: `${BASE_PATH}./assets/genshin/mora.webp`,
     tags: [],
   };
 }
@@ -347,7 +347,7 @@ function findMaterialByTags(game, tag1, tag2 = null, tag3 = null) {
   );
   return {
     name: `${tag1}${tag2 ? ` ${tag2}` : ""}${tag3 ? ` ${tag3}` : ""}`,
-    img: `${BASE_PATH}/assets/genshin/mora.webp`,
+    img: `${BASE_PATH}./assets/genshin/mora.webp`,
     tags: [tag1, tag2, tag3].filter((t) => t !== null),
   };
 }
@@ -386,7 +386,7 @@ function findLocalMaterial(character) {
     console.warn(`No local material found for character: ${character.name}`);
     return {
       name: "Unknown Local Specialty",
-      img: `${BASE_PATH}/assets/genshin/mora.webp`,
+      img: `${BASE_PATH}./assets/genshin/mora.webp`,
       tags: [],
     };
   }
@@ -453,7 +453,7 @@ function findLocalMaterial(character) {
   );
   return {
     name: localName,
-    img: `${BASE_PATH}/assets/genshin/mora.webp`,
+    img: `${BASE_PATH}./assets/genshin/mora.webp`,
     tags: ["local"],
   };
 }
@@ -709,7 +709,7 @@ function renderMaterialRequirements(char) {
               object-fit: cover;
               display: block;
             "
-            onerror="this.onerror=null; this.src='${BASE_PATH}/assets/genshin/mora.webp';"
+            onerror="this.onerror=null; this.src='${BASE_PATH}./assets/genshin/mora.webp';"
           >
           <div style="
             position: absolute;
@@ -1072,7 +1072,7 @@ export function renderCharacterDetail(char) {
               <div id="character-image-container" style="width: 220px; height: 300px; margin: 0 auto; background: #2c3e50; border-radius: 12px; overflow: hidden; border: 2px solid #00ffff44;">
                 <img src="${currentPicture}" alt="${char.name}" 
                      style="width: 100%; height: 100%; object-fit: cover;"
-                     onerror="this.onerror=null; this.src='${BASE_PATH}/assets/fallback-character.jpg';">
+                     onerror="this.onerror=null; this.src='${BASE_PATH}./assets/fallback-character.jpg';">
               </div>
               <div style="margin-top: 15px;">
                 <input type="text" id="image-url-input" placeholder="Paste custom image URL" 
@@ -1108,7 +1108,7 @@ export function renderCharacterDetail(char) {
       };
                           object-fit: cover;
                         "
-                        onerror="this.onerror=null; this.src='${BASE_PATH}/assets/genshin/mora.webp';"
+                        onerror="this.onerror=null; this.src='${BASE_PATH}./assets/genshin/mora.webp';"
                       >
                       ${
         getWeaponData(char)?.rarity
