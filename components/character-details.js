@@ -1316,7 +1316,7 @@ export function renderCharacterDetail(char) {
 
     <!-- Close Button -->
     <div style="flex-shrink: 0; text-align: center; padding: 20px; background: #1c2b33; border-top: 2px solid #00ffff44;">
-      <button onclick="window.closeModal?.()" 
+      <button onclick="window.closeModal?.(); window.initCharactersScene?.();" 
               style="padding: 15px 30px; background: #95a5a6; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold;">
         Close
       </button>
